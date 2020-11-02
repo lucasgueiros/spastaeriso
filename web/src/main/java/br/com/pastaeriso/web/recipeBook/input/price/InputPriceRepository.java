@@ -1,4 +1,4 @@
-package br.com.pastaeriso.web.sales.delivery.deliveryman.contract;
+package br.com.pastaeriso.web.recipeBook.input.price;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -6,6 +6,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 @Repository
 @CrossOrigin
-public interface ContractRepository extends JpaRepository<Contract, Integer> {
+public interface InputPriceRepository extends JpaRepository<InputPrice, Integer> {
 
 }
