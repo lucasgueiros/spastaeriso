@@ -6,7 +6,7 @@ export default class DataService {
 		this.url = theUrl; 
 	}
 
-	getAll() {
+	findAll() {
 		return http.get(this.url);
 	}
 
