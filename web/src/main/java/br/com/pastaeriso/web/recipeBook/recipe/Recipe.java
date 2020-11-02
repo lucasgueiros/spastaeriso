@@ -50,10 +50,8 @@ public class Recipe {
 	private Integer preparationTime;
 	private Integer totalTime;
 
-	@NonNull
 	@OneToMany
 	private List<Ingredient> ingredients;
-	@NonNull
 	@OneToMany
 	private List<Intruction> instructions;
 	@OneToMany
