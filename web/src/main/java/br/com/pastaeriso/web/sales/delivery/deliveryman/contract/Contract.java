@@ -31,7 +31,7 @@ public class Contract {
 	@ManyToOne
 	private ContractTemplate template;
 	@NonNull
-	private LocalDate begin;
-	private LocalDate end;
+	private LocalDate beginDate;
+	private LocalDate endDate;
 	private String coment;
 }
