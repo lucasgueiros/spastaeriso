@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<b-table striped hover :items="items"></b-table>
+		<b-table striped hover :items="items" :fields="fields"></b-table>
 	</div>
 </template>
 
@@ -10,6 +10,23 @@ import RecipeDataService from "./RecipeDataService"
 export default {
 	data() {
 		return {
+			fields: [
+				{
+					key: 'title',
+					label: "Título"
+				},
+				{
+					key: 'data',
+					label: "Criada em"
+				},
+				{
+					key: 'preparationTime',
+					label: "Tempo de preparação (min)"
+				},
+				{
+					key: 'totalTime',
+					label: "Tempo total (min)"
+				}],
 			items: []
 		}
 	},
