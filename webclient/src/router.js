@@ -21,6 +21,11 @@ export default new Router ({
 			alias: "/recipes",
 			name: "recipes-findAll",
 			component: () => import ("./components/recipes/findAll")
+		},
+		{
+			path: "/recipes/detail",
+			name: "recipe-detail",
+			component: () => import ("./components/recipes/detail")
 		}
 	]
 });

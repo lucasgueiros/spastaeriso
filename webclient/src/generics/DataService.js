@@ -3,14 +3,18 @@ import http from "../http-common";
 export default class DataService {
 
 	constructor(theUrl) {
-		this.url = theUrl; 
+		this.url = "http://localhost:8090/api1" + theUrl; 
+	}
+
+	get(theUrl) {
+		return http.get(theUrl);
 	}
 
 	findAll() {
 		return http.get(this.url);
 	}
 
-	get(id) {
+	findById(id) {
 		return http.get(`${this.url}/${id}`);
 	}
 

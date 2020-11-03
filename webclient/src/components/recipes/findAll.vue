@@ -1,8 +1,25 @@
 <template>
 	<div>
-		<b-table striped hover :items="items" :fields="fields"></b-table>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Título</th>
+					<th>Tempo total (min)</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr
+					v-for="(item,index) in items"
+					:key="index"
+					@click="setActive(item,index)">
+						<td> {{ item.title }} </td>
+						<td> <router-link :to="{ path: 'recipes/detail', params: {id: 1}, query: { link: item._links.self.href} }">Details</router-link> </td>
+				</tr>
+			</tbody>
+		</table>
 	</div>
 </template>
+
 
 <script>
 import RecipeDataService from "./RecipeDataService"
@@ -10,24 +27,9 @@ import RecipeDataService from "./RecipeDataService"
 export default {
 	data() {
 		return {
-			fields: [
-				{
-					key: 'title',
-					label: "Título"
-				},
-				{
-					key: 'data',
-					label: "Criada em"
-				},
-				{
-					key: 'preparationTime',
-					label: "Tempo de preparação (min)"
-				},
-				{
-					key: 'totalTime',
-					label: "Tempo total (min)"
-				}],
-			items: []
+			items: [],
+			item: {},
+			index: 0
 		}
 	},
 	methods: {

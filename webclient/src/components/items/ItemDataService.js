@@ -1,9 +1,9 @@
 import DataService from "../../generics/DataService"
 
-class RecipeDataService extends DataService {
+class ItemDataService extends DataService {
 	constructor() {
 		super("/recipes");
 	}
 }
 
-export default new RecipeDataService();
+export default new ItemDataService();
