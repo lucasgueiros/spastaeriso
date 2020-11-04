@@ -49,7 +49,7 @@ public class Item {
 	@NonNull
 	@ManyToOne
 	public Unit unit;
-	public String coment;
+	public String comment;
 	@Transient
 	@Builder.Default
 	public boolean adjusted = false;

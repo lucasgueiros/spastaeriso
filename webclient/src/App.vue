@@ -2,8 +2,9 @@
 	<div id="app">
 		<div>
 			<div class="navbar navbar-expand-sm navbar-dark bg-dark">
-				<router-link class="navbar-brand" to="/">Sistema Pasta
-				e Riso</router-link>
+				<router-link class="navbar-brand" to="/">
+					Sistema Pasta e Riso
+				</router-link>
 				<button class="navbar-toggler" type="button" data-toggle="collapse"
 					data-target="#navbarSupportedContent"
 					aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -14,7 +15,7 @@
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul class="navbar-nav mr-auto">
 						<li class="navbar-item active">
-							<router-link class="navlink" to="/recipes/findAll">
+							<router-link class="nav-link" to="/recipes/findAll">
 								Receitas
 							</router-link>
 						</li>

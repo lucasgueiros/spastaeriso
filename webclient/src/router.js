@@ -12,11 +12,6 @@ export default new Router ({
 			component: () => import ("./components/Home")
 		},
 		{
-			path: "/recipes/create",
-			name: "recipes-create",
-			component: () => import ("./components/recipes/Create")
-		},
-		{
 			path: "/recipes/findAll",
 			alias: "/recipes",
 			name: "recipes-findAll",
