@@ -137,6 +137,7 @@ export default {
 				data: '',
 				preparationTime: 0,
 				totalTime: 0,
+				self: '',
 				output: {
 					quantity: 0,
 					comment: '',
@@ -157,13 +158,15 @@ export default {
 						},
 						input: {
 							name: ''
-						}
+						},
+						self: ''
 					}
 				],
 				intructions: [
 					{
 						index: 0,
-						text: ''
+						text: '',
+						self: ''
 					}
 				],
 				otherItems: [
@@ -175,7 +178,8 @@ export default {
 						unit: {
 							name: ''
 						},
-						comment: ''
+						comment: '',
+						self: ''
 					}
 				]
 			}

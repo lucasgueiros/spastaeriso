@@ -9,7 +9,7 @@
 			</thead>
 			<tbody>
 				<tr
-					v-for="(item,index) in items"
+					v-for="(item,index) in recipes"
 					:key="index">
 						<td> {{ item.title }} </td>
 						<td>
@@ -17,7 +17,7 @@
 							<router-link
 								tag="button"
 								class="btn btn-primary" 
-								:to="{ name: 'recipe-details', params: {link: item._links.self.href} }">
+								:to="{ name: 'recipe-details', params: {link: item.self} }">
 								Details
 							</router-link>
 						</td>
@@ -29,30 +29,23 @@
 
 
 <script>
-import RecipeDataService from "./RecipeDataService"
+import HalNav from "../../generics/HalNav";
 
 export default {
 	data() {
 		return {
-			items: [],
+			recipes: [
+				{
+					title: '',
+					self: ''
+				}
+			],
 			item: {},
 			index: 0
 		}
 	},
-	methods: {
-		retrive() {
-			RecipeDataService.findAll()
-			.then(response => {
-				this.items = response.data._embedded.recipes;
-				console.log(this.items);
-			})
-			.catch(e => {
-				console.log(e);
-			});
-		}
-	},
 	created () {
-		this.retrive();
+		HalNav.retriveArray(this,"recipes",this.$route.params.link);
 	}
 }
 </script>

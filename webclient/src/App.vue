@@ -15,7 +15,8 @@
 				<div class="collapse navbar-collapse" id="navbarSupportedContent">
 					<ul class="navbar-nav mr-auto">
 						<li class="navbar-item active">
-							<router-link class="nav-link" to="/recipes/findAll">
+							<router-link class="nav-link" 
+								:to="{ name: 'recipes-list', params: { link: 'http://localhost:8090/api1/recipes' } }">
 								Receitas
 							</router-link>
 						</li>

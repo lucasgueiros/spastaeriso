@@ -12,10 +12,10 @@ export default new Router ({
 			component: () => import ("./components/Home")
 		},
 		{
-			path: "/recipes/findAll",
+			path: "/recipes/list/:link",
 			alias: "/recipes",
-			name: "recipes-findAll",
-			component: () => import ("./components/recipes/findAll")
+			name: "recipes-list",
+			component: () => import ("./components/recipes/list")
 		},
 		{
 			path: "/recipes/details/:link",
