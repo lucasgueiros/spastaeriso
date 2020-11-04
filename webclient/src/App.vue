@@ -1,20 +1,31 @@
 <template>
-  <div id="app">
-    <div>
-      <b-navbar toggleable="lg" type="dark" variant="dark">
-        <b-navbar-brand to="/">Sistema Pasta e Riso</b-navbar-brand>
-        <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
-        <b-collapse id="nav-collapse" is-nav>
-          <b-navbar-nav>
-            <b-nav-item to="/recipes">Receitas</b-nav-item>
-          </b-navbar-nav>
-        </b-collapse>
-      </b-navbar>
-    </div>
-    <div class="container mt-3">
-      <router-view/>
-    </div>
-  </div>
+	<div id="app">
+		<div>
+			<div class="navbar navbar-expand-sm navbar-dark bg-dark">
+				<router-link class="navbar-brand" to="/">Sistema Pasta
+				e Riso</router-link>
+				<button class="navbar-toggler" type="button" data-toggle="collapse"
+					data-target="#navbarSupportedContent"
+					aria-controls="navbarSupportedContent" aria-expanded="false"
+					aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul class="navbar-nav mr-auto">
+						<li class="navbar-item active">
+							<router-link class="navlink" to="/recipes/findAll">
+								Receitas
+							</router-link>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="container mt-3">
+				<router-view />
+			</div>
+		</div>
+	</div>
 </template>
 
 <script>

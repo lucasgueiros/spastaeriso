@@ -1,0 +1,53 @@
+import http from "../http-common";
+
+export default class HalNav {
+
+	static async retriveArray(item,key,url) {
+		try {
+			var result = (await http.get(url)).data;
+			result = result._embedded[key];
+			if(result.length == 0) {
+				item[key] = [];
+			} else {
+				var i;
+				for(i in result) {
+					var keys = Object.keys(item[key][0]);
+					var j;
+					for(j in keys) {
+						var skey = keys[j];
+						if(Array.isArray(item[key][i][skey])) {
+							await HalNav.retriveArray(item[key][i],skey,result[i]._links[skey].href);
+						} else if (item[key][i][skey] instanceof Object) {
+							await HalNav.retriveObject(item[key][i][skey],result[i]._links[skey].href);
+						} else {
+							item[key][i][skey] = result[i][skey];
+						}
+					}
+				}
+			}
+		} catch(e) {
+			console.log(e);
+		}
+	}
+	
+	static async retriveObject (item, url) {
+		try {
+			var result = (await http.get(url)).data;
+			var itemKeys = Object.keys(item);
+			var i;
+			for(i in itemKeys) {
+				var key = itemKeys[i];
+				if(Array.isArray(item[key])) {
+					await HalNav.retriveArray(item,key,result._links[key].href);
+				} else if (item[key] instanceof Object) {
+					await HalNav.retriveObject(item[key],result._links[key].href);
+				} else {
+					item[key] = result[key];
+				}
+			}
+		} catch(e) {
+			console.log(e);
+		}
+	}
+
+}

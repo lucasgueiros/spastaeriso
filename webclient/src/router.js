@@ -23,9 +23,9 @@ export default new Router ({
 			component: () => import ("./components/recipes/findAll")
 		},
 		{
-			path: "/recipes/detail",
-			name: "recipe-detail",
-			component: () => import ("./components/recipes/detail")
+			path: "/recipes/details/:link",
+			name: "recipe-details",
+			component: () => import ("./components/recipes/details")
 		}
 	]
 });

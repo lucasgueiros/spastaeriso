@@ -10,10 +10,9 @@
 			<tbody>
 				<tr
 					v-for="(item,index) in items"
-					:key="index"
-					@click="setActive(item,index)">
+					:key="index">
 						<td> {{ item.title }} </td>
-						<td> <router-link :to="{ path: 'recipes/detail', params: {id: 1}, query: { link: item._links.self.href} }">Details</router-link> </td>
+						<td> <router-link :to="{ name: 'recipe-details', params: {link: item._links.self.href} }">Details</router-link> </td>
 				</tr>
 			</tbody>
 		</table>

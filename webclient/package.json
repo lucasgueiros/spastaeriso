@@ -9,9 +9,10 @@
   },
   "dependencies": {
     "axios": "^0.21.0",
-    "bootstrap": "^4.5.3",
+    "bootstrap-icons": "^1.1.0",
     "bootstrap-vue": "^2.18.1",
     "core-js": "^3.6.5",
+    "jquery": "^3.5.1",
     "vue": "^2.6.11",
     "vue-router": "^3.4.8"
   },
@@ -21,7 +22,7 @@
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
     "babel-eslint": "^10.1.0",
-    "bootstrap": "^4.5.2",
+    "bootstrap": "^4.5.3",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
     "mutationobserver-shim": "^0.3.7",
