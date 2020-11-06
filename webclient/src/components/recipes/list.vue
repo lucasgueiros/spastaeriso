@@ -17,19 +17,25 @@
 							<router-link
 								tag="button"
 								class="btn btn-primary" 
-								:to="{ name: 'recipe-details', params: {link: item.self} }">
-								Details
+								:to="{ name: 'recipes-details', params: {link: item.self} }">
+								Detalhes
 							</router-link>
 						</td>
 				</tr>
 			</tbody>
 		</table>
+		<router-link
+			tag="button"
+			class="btn btn-primary"
+			:to="{ name: 'recipes-details' }">
+			Nova receita
+		</router-link>
 	</div>
 </template>
 
 
 <script>
-import HalNav from "../../generics/HalNav";
+import DataService from "../../generics/DataService";
 
 export default {
 	data() {
@@ -45,7 +51,7 @@ export default {
 		}
 	},
 	created () {
-		HalNav.retriveArray(this,"recipes",this.$route.params.link);
+		DataService.retriveArray(this,"recipes",this.$route.params.link);
 	}
 }
 </script>

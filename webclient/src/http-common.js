@@ -1,5 +1,12 @@
 import axios from "axios";
 
 export default axios.create ({
-	headers: {"Content-type" : "application/json"}
+	headers: {
+		post: {
+			"Content-type" : "application/json"
+		},
+		put: {
+			"Content-type" : "application/json"
+		}
+	}
 });
