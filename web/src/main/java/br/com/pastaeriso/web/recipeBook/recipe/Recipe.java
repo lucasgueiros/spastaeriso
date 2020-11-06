@@ -57,7 +57,7 @@ public class Recipe {
 	@OneToMany
 	private List<Item> otherItems;
 
-	@NonNull
+	// @NonNull
 	@ManyToOne
 	private Item output;
 

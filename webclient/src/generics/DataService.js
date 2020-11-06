@@ -1,6 +1,20 @@
 import http from "../http-common";
+import axios from "axios";
 
 export default class DataService {
+
+	static async post(url, object) {
+		try {
+			await axios.post(url,object,{
+				headers: {
+					'Content-Type' : 'application/json',
+					'charset' : 'UTF-8'
+				}
+			});
+		} catch (e) {
+			console.log(e);
+		}
+	}
 
 	static async retriveArray(item,key,url) {
 		try {

@@ -1,6 +1,6 @@
 <template>
 	<form>
-		<p>Detalhes da Receita</p>
+		<p>{{ state.editable ? "Criando uma" : "Detalhes da"}} receita</p>
 		<h1>{{ item.title }}</h1>
 		<div class="form-row">
 			<div class="form-group col-md-6">
@@ -24,9 +24,9 @@
 			<div class="form-group col-md-6">
 				<label for="totalTime">Tempo de total</label> <input id="totalTime"
 					type="number"
+					v-model="item.totalTime"
 					v-bind:class="[state.editable ? 'form-control' : 'form-control-plaintext']"
 					v-bind:readonly="!state.editable" />
-				<!-- v-model="item.totalTime" -->
 			</div>
 			<div class="form-group col-md-6">
 				<label for="output-quantity">Rendimento</label> <input
@@ -155,6 +155,10 @@
 				</tbody>
 			</table>
 		</div>
+		<div class="form-row" v-if="state.editable">
+			<button type="button" class="btn btn-block btn-primary"
+				v-on:click="save">Salvar</button>
+		</div>
 	</form>
 </template>
 
@@ -218,6 +222,9 @@ export default {
 					this.item.ingredients[i].index = i + 1;
 				}
 			}
+		},
+		save() {
+			DataService.post("http://localhost:8090/api1/recipes",this.item);
 		}
 	},
 	created () {
