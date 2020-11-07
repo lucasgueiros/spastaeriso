@@ -10,7 +10,7 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>br.com.pastaeriso</groupId>
-	<artifactId>web</artifactId>
+	<artifactId>restapi</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Sistema Pasta e Riso</name>
 	<description>Sistema Web da Pizzaria e Bistrô Pasta e Riso</description>
