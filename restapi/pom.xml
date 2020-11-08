@@ -17,7 +17,6 @@
 
 	<properties>
 		<java.version>11</java.version>
-		<keycloak.version>9.0.2</keycloak.version>
 	</properties>
 
 	<dependencies>
@@ -68,15 +67,6 @@
 			<artifactId>validation-api</artifactId>
 			<version>2.0.1.Final</version>
 		</dependency>
-		<dependency>
-		    <groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
-		</dependency>
-		<dependency>
-	    	<groupId>org.keycloak</groupId>
-	    	<artifactId>keycloak-spring-boot-starter</artifactId>
-	    	<version>${keycloak.version}</version>
-	    </dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -90,18 +80,6 @@
 			</exclusions>
 		</dependency>
 	</dependencies>
-
-	<dependencyManagement>
-	   <dependencies>
-	      <dependency>
-	         <groupId>org.keycloak.bom</groupId>
-	         <artifactId>keycloak-adapter-bom</artifactId>
-	         <version>${keycloak.version}</version>
-	         <type>pom</type>
-	         <scope>import</scope>
-	      </dependency>
-	   </dependencies>
-	</dependencyManagement>
 
 	<build>
 		<plugins>
