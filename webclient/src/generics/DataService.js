@@ -2,22 +2,46 @@ import http from "../http-common";
 import axios from "axios";
 
 export default class DataService {
+	
+	static urls = {
+		output : 'http://localhost:8090/api1/items'
+	};
 
 	static async post(url, object) {
 		try {
-			await axios.post(url,object,{
+		
+			var keys = Object.keys(object);
+			for(var i in keys) {
+				var key = keys[i];
+				if(key == 'self') {
+					continue;
+				} else if(Array.isArray(object[key])) {
+					for(var j in object[key]) {
+						var response1 = DataService.post(DataService.urls[key],object[key][j]);
+						object[key][j] = response1.data._links.self;
+					}
+				} else if (object[key] instanceof Object) {
+					var response2 = DataService.post(DataService.urls[key],object[key]);
+					object[key] = response2.data._links.self;
+				} else {
+					continue;
+				}
+			}
+			
+			var result = await axios.post(url,object,{
 				headers: {
 					'Content-Type' : 'application/json',
 					'charset' : 'UTF-8'
 				}
 			});
+			return result;
 		} catch (e) {
 			console.log(e);
 		}
 	}
 
 	static async retriveArray(item,key,url) {
-		try {
+		//try {
 			var result = (await http.get(url)).data;
 			result = result._embedded[key];
 			console.log(result);
@@ -44,9 +68,9 @@ export default class DataService {
 					}
 				}
 			}
-		} catch(e) {
+		/*} catch(e) {
 			console.log(e);
-		}
+		}*/
 	}
 	
 	static async retriveObject (item, url) {
