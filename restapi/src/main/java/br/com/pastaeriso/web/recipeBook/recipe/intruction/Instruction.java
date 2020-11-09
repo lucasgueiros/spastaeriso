@@ -21,7 +21,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @RequiredArgsConstructor
 @AllArgsConstructor
-public class Intruction {
+public class Instruction {
 
 	@Id
 	@GeneratedValue

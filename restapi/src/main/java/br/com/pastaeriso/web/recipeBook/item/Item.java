@@ -40,19 +40,19 @@ public class Item {
 
 	@Id
 	@GeneratedValue
-	public Integer id;
+	private Integer id;
 	@NonNull
-	public BigDecimal quantity;
-	@NonNull
-	@ManyToOne
-	public Input input;
+	private BigDecimal quantity;
 	@NonNull
 	@ManyToOne
-	public Unit unit;
-	public String comment;
+	private Input input;
+	@NonNull
+	@ManyToOne
+	private Unit unit;
+	private String comment;
 	@Transient
 	@Builder.Default
-	public boolean adjusted = false;
+	private boolean adjusted = false;
 
 	public BigDecimal getCost(UnitReplacementMap replacements, Map<Input, InputPrice> prices)
 			throws NonReplaceableException {

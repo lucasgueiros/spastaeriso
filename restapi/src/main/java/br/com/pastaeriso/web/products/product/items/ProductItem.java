@@ -44,7 +44,7 @@ public class ProductItem extends Item {
 		} else {
 			// se nao e uma receita e eu nao tenho o preco do insumo...
 			throw new NonReplaceableException(
-					"Nao tem nenhuma receita para produzir e o insumo nao tem preco: " + this.input);
+					"Nao tem nenhuma receita para produzir e o insumo nao tem preco: " + super.getInput());
 		}
 	}
 

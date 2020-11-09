@@ -17,7 +17,7 @@ import br.com.pastaeriso.web.recipeBook.input.Input;
 import br.com.pastaeriso.web.recipeBook.input.price.InputPrice;
 import br.com.pastaeriso.web.recipeBook.item.Item;
 import br.com.pastaeriso.web.recipeBook.recipe.ingredient.Ingredient;
-import br.com.pastaeriso.web.recipeBook.recipe.intruction.Intruction;
+import br.com.pastaeriso.web.recipeBook.recipe.intruction.Instruction;
 import br.com.pastaeriso.web.recipeBook.unit.Unit;
 import br.com.pastaeriso.web.recipeBook.unit.replacement.UnitReplacementMap;
 import lombok.AllArgsConstructor;
@@ -53,7 +53,7 @@ public class Recipe {
 	@OneToMany
 	private List<Ingredient> ingredients;
 	@OneToMany
-	private List<Intruction> instructions;
+	private List<Instruction> instructions;
 	@OneToMany
 	private List<Item> otherItems;
 
