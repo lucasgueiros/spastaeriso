@@ -4,8 +4,13 @@ import axios from "axios";
 export default class DataService {
 	
 	static urls = {
-		output : 'http://localhost:8090/api1/items'
+		output : 'http://localhost:8090/api1/items',
+		items: 'http://localhost:8090/api1/items'
 	};
+	
+	static getUrlFor(something) {
+		return DataService.urls[something];
+	}
 
 	static async post(url, object) {
 		try {

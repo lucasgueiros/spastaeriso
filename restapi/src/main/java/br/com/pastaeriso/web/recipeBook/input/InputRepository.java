@@ -8,4 +8,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 @CrossOrigin
 public interface InputRepository extends JpaRepository<Input, Integer> {
 
+	public Input findByName(String name);
+	
 }

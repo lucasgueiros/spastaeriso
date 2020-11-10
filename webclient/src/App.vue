@@ -23,7 +23,7 @@
 					</ul>
 				</div>
 			</div>
-			<div class="container mt-3">
+			<div class="container mt-3 mb-3" >
 				<router-view />
 			</div>
 		</div>

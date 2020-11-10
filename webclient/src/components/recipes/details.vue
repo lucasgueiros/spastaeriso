@@ -28,15 +28,11 @@
 					v-bind:class="[state.editable ? 'form-control' : 'form-control-plaintext']"
 					v-bind:readonly="!state.editable" />
 			</div>
+		</div>
+		<div class="form-row" v-if="recipe._embedded.output">
 			<div class="form-group col-md-6">
 				<label for="output-quantity">Rendimento</label> <input
 					id="output-quantity" type="number" v-model="recipe._embedded.output.quantity"
-					v-bind:class="[state.editable ? 'form-control' : 'form-control-plaintext']"
-					v-bind:readonly="!state.editable" />
-			</div>
-			<div class="form-group col-md-6">
-				<label for="output-input">Resultado</label> <input id="output-input"
-					type="text" v-model="recipe._embedded.output.input.name"
 					v-bind:class="[state.editable ? 'form-control' : 'form-control-plaintext']"
 					v-bind:readonly="!state.editable" />
 			</div>
@@ -47,15 +43,24 @@
 					v-bind:readonly="!state.editable" />
 			</div>
 			<div class="form-group col-md-6">
+				<label for="output-input">Resultado</label> <input id="output-input"
+					type="text" v-model="recipe._embedded.output.input.name"
+					v-bind:class="[state.editable ? 'form-control' : 'form-control-plaintext']"
+					v-bind:readonly="!state.editable" />
+			</div>
+			<div class="form-group col-md-6">
 				<label for="output-comment">Comentarios</label> <input
 					id="output-comment" type="text" v-model="recipe._embedded.output.comment"
 					v-bind:class="[state.editable ? 'form-control' : 'form-control-plaintext']"
 					v-bind:readonly="!state.editable" />
 			</div>
 		</div>
+		<div class="form-row" v-else>
+				Essa receita não tem um resultado definido.
+		</div>
 		<div class="form-row">
 			<div v-if="!recipe._embedded.ingredients">
-				Nenhuma instrução para mostrar.
+				Não há nenhuma instrução nessa receita.
 			</div>
 			<div v-else>
 				<table class="table">
@@ -121,9 +126,9 @@
 		</div>
 		<div class="form-row">
 			<div v-if="!recipe._embedded.instructions">
-				Nenhuma instrução para mostrar.
+				Não há nenhuma instrução nessa receita.
 			</div>
-			<div v-else>
+			<div class="w-100" v-else>
 				<table class="table">
 					<thead>
 						<tr>
@@ -168,18 +173,29 @@
 			</div>
 		</div>
 		
-		<div class="form-row" v-if="!recipe._embedded.otherItems">
-			<p>No other items to show</p>
+		<div class="form-row">
+			<div v-if="!recipe._embedded.otherItems" class="w-100">
+				<p>Não há outros itens nessa receita.</p>
+			</div>
 		</div>
 		<div class="form-row" v-if="state.editable">
 			<button type="button" class="btn btn-block btn-primary"
 				v-on:click="save">Salvar</button>
 		</div>
+		<div v-else>
+			<router-link tag="button" type="button" class="btn btn-block btn-primary"
+					:to="{ name: 'recipes-list', params: { link: 'http://localhost:8090/api1/recipes' } }">
+					Editar receita
+				</router-link>
+				<router-link tag="button" type="button" class="btn btn-block btn-primary"
+					:to="{ name: 'recipes-list', params: { link: 'http://localhost:8090/api1/recipes' } }">
+					Voltar à lista de receitas
+				</router-link>
+		</div>
 	</form>
 </template>
 
 <script>
-import DataService from "../../generics/DataService";
 import axios from "axios";
 
 export default {
@@ -240,8 +256,128 @@ export default {
 				}
 			}
 		},
-		save() {
-			DataService.post("http://localhost:8090/api1/recipes",this.recipe);
+		async save() {
+			//DataService.post("http://localhost:8090/api1/recipes",this.recipe);
+			if(this.state.editable) {
+				var recipe = {
+						title: this.recipe.title,
+						data: this.recipe.date,
+						preparationTime: this.recipe.preparationTime,
+						totalTime: this.recipe.totalTime,
+						output: {
+							input: '',
+							unit: '',
+							quantity: this.recipe._embedded.output.quantity,
+							comment: this.recipe._embedded.output.comment
+						},
+						ingredients: [],
+						instructions: []
+				};
+				
+				// SALVANDO O OUTPUT
+				
+				// recuperando o INPUT
+				recipe.output.input = (
+					await axios.get(
+						"http://localhost:8090/api1/inputs/search/findByName?name=" + this.recipe._embedded.output.input.name,
+						{
+							headers: {
+								'Content-Type' : 'application/json',
+								'charset' : 'UTF-8'
+							}
+						}
+					)
+				).data._links.self.href;
+				
+				// recuperando a UNIT
+				recipe.output.unit = (
+					await axios.get(
+						"http://localhost:8090/api1/units/search/findByName?name=" + this.recipe._embedded.output.unit.name,
+						{
+							headers: {
+								'Content-Type' : 'application/json',
+								'charset' : 'UTF-8'
+							}
+						}
+					)
+				).data._links.self.href;
+				
+				// agora salve o output
+				recipe.output = (await axios.post("http://localhost:8090/api1/items",recipe.output,{
+					headers: {
+						'Content-Type' : 'application/json',
+						'charset' : 'UTF-8'
+					}
+				})).data._links.self.href;
+				
+				// salvando as instrucoes
+				for(var i in this.recipe._embedded.instructions) {
+					recipe.instructions[i] = {
+						index: 	this.recipe._embedded.instructions[i].index,
+						text: 	this.recipe._embedded.instructions[i].text
+					},
+					
+					recipe.instructions[i] = (await axios.post("http://localhost:8090/api1/instructions",recipe.instructions[i],{
+						headers: {
+							'Content-Type' : 'application/json',
+							'charset' : 'UTF-8'
+						}
+					})).data._links.self.href;
+					
+				}
+				
+				// salvando os ingredientes
+				for(var j in this.recipe._embedded.ingredients) {
+					recipe.ingredients[j] = {
+						input: '',
+						unit: '',
+						index: this.recipe._embedded.ingredients[j].index,
+						quantity: this.recipe._embedded.ingredients[j].quantity
+					};
+					// recuperando o INPUT
+					recipe.ingredients[j].input = (
+						await axios.get(
+							"http://localhost:8090/api1/inputs/search/findByName?name=" + this.recipe._embedded.ingredients[j].input.name,
+							{
+								headers: {
+									'Content-Type' : 'application/json',
+									'charset' : 'UTF-8'
+								}
+							}
+						)
+					).data._links.self.href;
+					
+					// recuperando a UNIT
+					recipe.ingredients[j].unit = (
+						await axios.get(
+							"http://localhost:8090/api1/units/search/findByName?name=" + this.recipe._embedded.ingredients[j].unit.name,
+							{
+								headers: {
+									'Content-Type' : 'application/json',
+									'charset' : 'UTF-8'
+								}
+							}
+						)
+					).data._links.self.href;
+					
+					recipe.ingredients[j] = (await axios.post("http://localhost:8090/api1/ingredients",recipe.ingredients[j],{
+						headers: {
+							'Content-Type' : 'application/json',
+							'charset' : 'UTF-8'
+						}
+					})).data._links.self.href;
+					
+				}
+				
+				// agora salve a receita
+				recipe = (await axios.post("http://localhost:8090/api1/recipes",recipe,{
+					headers: {
+						'Content-Type' : 'application/json',
+						'charset' : 'UTF-8'
+					}
+				}));
+				console.log(recipe);
+			}
 		}
 	},
 	async created () {

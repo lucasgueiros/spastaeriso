@@ -9,15 +9,15 @@
 			</thead>
 			<tbody>
 				<tr
-					v-for="(item,index) in recipes"
+					v-for="(recipe,index) in recipes"
 					:key="index">
-						<td> {{ item.title }} </td>
+						<td> {{ recipe.title }} </td>
 						<td>
 							
 							<router-link
 								tag="button"
 								class="btn btn-primary" 
-								:to="{ name: 'recipes-details', params: {link: item.self} }">
+								:to="{ name: 'recipes-details', params: {link: recipe._links.self.href + '?profile=recipeDetails'} }">
 								Detalhes
 							</router-link>
 						</td>
@@ -35,7 +35,7 @@
 
 
 <script>
-import DataService from "../../generics/DataService";
+import axios from "axios";
 
 export default {
 	data() {
@@ -43,15 +43,24 @@ export default {
 			recipes: [
 				{
 					title: '',
-					self: ''
+					_links: {
+						self: {
+							href: ''
+						}
+					}
 				}
 			],
 			item: {},
 			index: 0
 		}
 	},
-	created () {
-		DataService.retriveArray(this,"recipes",this.$route.params.link);
+	async created () {
+		this.recipes = (await axios.get(this.$route.params.link,{
+			headers: {
+				'Content-Type' : 'application/json',
+				'charset' : 'UTF-8'
+			}
+		})).data._embedded.recipes;
 	}
 }
 </script>
