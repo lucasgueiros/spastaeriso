@@ -11,7 +11,7 @@ import javax.persistence.OneToOne;
 
 import br.com.pastaeriso.web.finances.transaction.Transaction;
 import br.com.pastaeriso.web.purchases.provider.Provider;
-import br.com.pastaeriso.web.purchases.purchase.nfe.NFe;
+import br.com.pastaeriso.web.purchases.purchase.nfe.NFeXml;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -40,7 +40,7 @@ public class Purchase {
 	@NonNull
 	private LocalDateTime made;
 	@OneToOne
-	private NFe nfe;
+	private NFeXml nfe;
 	private BigDecimal valorextra;
 	@OneToOne
 	private Transaction transaction;

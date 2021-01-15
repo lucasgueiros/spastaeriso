@@ -23,14 +23,12 @@ import lombok.ToString;
 @NoArgsConstructor
 @RequiredArgsConstructor
 @AllArgsConstructor
-public class NFe {
+public class NFeXml {
 	@Id
 	@GeneratedValue
 	private Integer id;
 	@NonNull
 	private String accessCode;
-	@NonNull
-	private String stateCode;
 	@Nationalized
 	private String xml;
 }

@@ -6,6 +6,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 @Repository
 @CrossOrigin
-public interface NFeRepository extends JpaRepository<NFe, Integer> {
+public interface NFeXmlRepository extends JpaRepository<NFeXml, Integer> {
 
 }
