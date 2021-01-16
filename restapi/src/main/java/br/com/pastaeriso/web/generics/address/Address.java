@@ -5,7 +5,9 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
+import br.com.pastaeriso.web.generics.address.neighborhoods.Neighborhood;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -31,12 +33,13 @@ public class Address {
 	@NonNull
 	private String name = "principal";
 	private String localName;
-	private String rua;
-	private String numero;
-	private String bairro;
-	private String complemento;
-	private String pontoDeReferencia;
-	private String comentarios;
+	private String street;
+	private String number;
+	@OneToMany
+	private Neighborhood neighborhood;
+	private String complement;
+	private String reference;
+	private String comments;
 	@NonNull
 	@Enumerated(EnumType.STRING)
 	private AddressType type;

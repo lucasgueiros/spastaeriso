@@ -37,7 +37,7 @@ public class Person {
 	@GeneratedValue
 	private Integer id;
 	@NonNull
-	private String nome;
+	private String name;
 	@ManyToMany
 	private List<Address> addresses;
 	@ManyToMany

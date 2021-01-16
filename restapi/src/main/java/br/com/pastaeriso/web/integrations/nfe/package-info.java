@@ -6,4 +6,4 @@
 //
 
 @javax.xml.bind.annotation.XmlSchema(namespace = "http://www.portalfiscal.inf.br/nfe", elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED)
-package br.com.pastaeriso.web.purchases.purchase.nfe.xsd;
+package br.com.pastaeriso.web.integrations.nfe;

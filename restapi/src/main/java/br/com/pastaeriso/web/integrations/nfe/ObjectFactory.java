@@ -6,7 +6,7 @@
 //
 
 
-package br.com.pastaeriso.web.purchases.purchase.nfe.xsd;
+package br.com.pastaeriso.web.integrations.nfe;
 
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.XmlElementDecl;
