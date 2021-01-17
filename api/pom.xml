@@ -9,7 +9,7 @@
 		<version>2.3.5.RELEASE</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>br.com.pastaeriso</groupId>
+	<groupId>br.com.pastaeriso.api</groupId>
 	<artifactId>api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Sistema Pasta e Riso - API</name>
