@@ -1,6 +1,7 @@
 package br.com.pastaeriso.recipeBook.input.price;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,6 +19,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+/**
+ * Só é usado pelo sistema quando não há nenhuma entrada desse insumo nas compras.
+ * Usa a entrada mais nova nesse caso.
+ * @author lucas
+ *
+ */
 @Entity
 @Getter
 @Setter
@@ -36,6 +43,8 @@ public class InputPrice {
 	private Input input;
 	@NonNull
 	private BigDecimal priceByUnit;
+	@NonNull
+	private LocalDate date;
 	@NonNull
 	@ManyToOne
 	private Unit unit;
