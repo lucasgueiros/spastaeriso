@@ -1,15 +1,25 @@
 import './App.css';
-import Input from './recipeBook/input/Input.js';
-import Navigator from './generics/Navigator.js';
-import BasicCrud from './generics/BasicCrud.js';
+import InputNavigator from './recipeBook/input/InputNavigator.js';
+import Home from './navigation/Home.js';
+import Header from './navigation/header/Header.js';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 function App() {
   return (
-    <div className="App">
-      <Navigator crud={new BasicCrud("inputs")}>
-        <Input/>
-      </Navigator>
-    </div>
+    <Router>
+      <div>
+        <Header/>
+        <Switch>
+          <Route path="/inputs">
+            <InputNavigator/>
+          </Route>
+          <Route path="/">
+            <Home/>
+          </Route>
+        </Switch>
+      </div>
+
+    </Router>
   );
 }
 
