@@ -28,6 +28,6 @@ public class Input {
 	private Integer id;
 	@NonNull
 	private String name;
-	private String coment;
-	// TODO equivalencia?
+	private String comment;
+
 }

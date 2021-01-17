@@ -5,6 +5,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import br.com.pastaeriso.generics.address.neighborhoods.Neighborhood;
@@ -35,7 +36,7 @@ public class Address {
 	private String localName;
 	private String street;
 	private String number;
-	@OneToMany
+	@ManyToOne
 	private Neighborhood neighborhood;
 	private String complement;
 	private String reference;

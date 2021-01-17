@@ -1,6 +1,8 @@
 package br.com.pastaeriso.recipeBook.unit;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
@@ -27,6 +29,7 @@ public class Unit {
 	@NonNull
 	private String name;
 	@NonNull
+	@Enumerated(EnumType.STRING)
 	private Quantity quantity;
 	private boolean favorite = false;
 
