@@ -1,5 +1,5 @@
-# Created by https://www.toptal.com/developers/gitignore/api/java,java-web,eclipse,maven,vue,vuejs,git
-# Edit at https://www.toptal.com/developers/gitignore?templates=java,java-web,eclipse,maven,vue,vuejs,git
+# Created by https://www.toptal.com/developers/gitignore/api/java,java-web,eclipse,maven,git,react
+# Edit at https://www.toptal.com/developers/gitignore?templates=java,java-web,eclipse,maven,git,react
 
 ### Eclipse ###
 .metadata
@@ -123,23 +123,19 @@ buildNumber.properties
 # https://github.com/takari/maven-wrapper#usage-without-binary-jar
 .mvn/wrapper/maven-wrapper.jar
 
-### Vue ###
-# gitignore template for Vue.js projects
-#
-# Recommended template: Node.gitignore
+### react ###
+.DS_*
+logs
+**/*.backup.*
+**/*.back.*
 
-# TODO: where does this rule come from?
-docs/_book
+node_modules
+bower_components
 
-# TODO: where does this rule come from?
-test/
+*.sublime*
 
-### Vuejs ###
-# Recommended template: Node.gitignore
+psd
+thumb
+sketch
 
-node_modules/
-dist/
-npm-debug.log
-yarn-error.log
-
-# End of https://www.toptal.com/developers/gitignore/api/java,java-web,eclipse,maven,vue,vuejs,git
+# End of https://www.toptal.com/developers/gitignore/api/java,java-web,eclipse,maven,git,react
