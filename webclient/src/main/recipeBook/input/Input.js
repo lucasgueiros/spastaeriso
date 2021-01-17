@@ -1,6 +1,7 @@
 import './Input.css';
 import './InputAux.js';
 import React from 'react';
+import InputPrice from './price/InputPrice.js';
 
 class Input extends React.Component {
 
@@ -15,6 +16,7 @@ class Input extends React.Component {
           <label htmlFor="comment">Comentários: </label>
           <input name="comment" type="text" value={this.props.entity.comment || ''} onChange={this.props.onChange} readOnly={!this.props.editing}></input>
         </div>
+        
       </div>
     );
   }
