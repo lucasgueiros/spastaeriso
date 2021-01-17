@@ -1,6 +1,5 @@
 import axios from 'axios';
 
-
 class BasicCrud {
 
   constructor (url, projection) {
