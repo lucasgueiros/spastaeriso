@@ -10,10 +10,10 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>br.com.pastaeriso</groupId>
-	<artifactId>restapi</artifactId>
+	<artifactId>api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Sistema Pasta e Riso</name>
-	<description>Sistema Web da Pizzaria e Bistrô Pasta e Riso</description>
+	<name>Sistema Pasta e Riso - API</name>
+	<description>API do Sistema Web da Pizzaria e Bistrô Pasta e Riso</description>
 
 	<properties>
 		<java.version>11</java.version>

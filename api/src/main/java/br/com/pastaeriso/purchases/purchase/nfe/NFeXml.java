@@ -25,8 +25,6 @@ import lombok.ToString;
 @AllArgsConstructor
 public class NFeXml {
 	@Id
-	@GeneratedValue
-	private Integer id;
 	@NonNull
 	private String accessCode;
 	@Nationalized
