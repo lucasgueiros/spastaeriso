@@ -49,7 +49,11 @@ class Navigator extends React.Component {
         finished = true;
         i--;
       } else if (!finished) {
-        entityHierarchy[i+1] = {...entityHierarchy[i][names[i]]};
+        if(Array.isArray(entityHierarchy[i][names[i]])) {
+          entityHierarchy[i+1] = [...entityHierarchy[i][names[i]]];
+        } else {
+          entityHierarchy[i+1] = {...entityHierarchy[i][names[i]]};
+        }
         i++;
       } else {
         entityHierarchy[i][names[i]] = entityHierarchy[i+1];
@@ -129,11 +133,12 @@ class Navigator extends React.Component {
   render () {
     //{this.renderEntityRepresentation(this.state.entities[this.state.entity_index], this.state.editing)}
     return (
-      <div className="Navigator">
+      <div className="navigator">
         {React.cloneElement(this.props.children, {
           entity: this.state.entities[this.state.entity_index],
           editing: this.state.editing,
-          onChange: this.handleInputChange
+          onChange: this.handleInputChange,
+          datalist: this.props.datalist
          })}
         {this.renderButtons()}
       </div>

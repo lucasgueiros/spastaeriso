@@ -8,8 +8,16 @@ class Provider extends React.Component {
     return (
       <div class-name="provider">
       <div>
-        <label htmlFor={this.props.prefix + 'modality'}>Modalidade: </label>
-        <input name={this.props.prefix + 'modality'} type="text" value={this.props.entity.modality || ''} onChange={this.props.onChange} readOnly={!this.props.editing}></input>
+        <label htmlFor={this.props.prefix + 'name'}>Estabelecimento: </label>
+        <input name={this.props.prefix + 'name'} type="text" value={this.props.entity.name || ''} onChange={this.props.onChange} readOnly={!this.props.editing}></input>
+      </div>
+      <div>
+        <label htmlFor={this.props.prefix + 'cnpj'}>CNPJ do Estabelecimento: </label>
+        <input name={this.props.prefix + 'cnpj'} type="text" value={this.props.entity.cnpj || ''} onChange={this.props.onChange} readOnly={!this.props.editing}></input>
+      </div>
+      <div>
+        <label htmlFor={this.props.prefix + 'comment'}>Comentários sobre o Estabelecimento: </label>
+        <input name={this.props.prefix + 'comment'} type="text" value={this.props.entity.comment || ''} onChange={this.props.onChange} readOnly={!this.props.editing}></input>
       </div>
 
       </div>

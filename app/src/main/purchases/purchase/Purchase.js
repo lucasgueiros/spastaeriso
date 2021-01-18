@@ -1,15 +1,14 @@
 import './Purchase.css';
 import React from 'react';
-import Nfe from './nfe/Nfe.js';
 import Provider from '../provider/Provider.js';
 import Transaction from '../../finances/transaction/Transaction.js';
 import PurchaseItem from './item/PurchaseItem.js';
-//import InputPrice from './price/InputPrice.js';
 
 function PurchaseItems(props) {
   const items = props.items;
   const listItems = items.map((item,index) =>
     <PurchaseItem
+      key={index}
       entity={item}
       prefix={"items."+index+"."}
       editing={true}
@@ -26,14 +25,23 @@ class Purchase extends React.Component {
     //<Nfe/>
     return (
       <div class-name="purchase">
+        <Provider
+          entity={this.props.entity.provider || {}}
+          prefix="provider."
+          editing={this.props.editing}
+          onChange={this.props.onChange}/>
         <Transaction
           entity={this.props.entity.transaction || {}}
           prefix="transaction."
           editing={this.props.editing}
           onChange={this.props.onChange}/>
         <div>
+          <label htmlFor="nfe.accessCode">NFC-e: </label>
+          <input name="nfe.accessCode" type="text" value={this.props.entity.nfe.accessCode || ''} readOnly={true}></input>
+        </div>
+        <div>
           <label htmlFor="additionalValue">Valor extra: </label>
-          <input name="additionalValue" type="numeric" value={this.props.entity.additionalValue || ''} onChange={this.props.onChange} readOnly={!this.props.editing}></input>
+          <input name="additionalValue" type="numeric" value={this.props.entity.additionalValue || 0} onChange={this.props.onChange} readOnly={!this.props.editing}></input>
         </div>
         <table>
           <thead>
@@ -47,14 +55,14 @@ class Purchase extends React.Component {
             </tr>
           </thead>
           <tbody>
-            <PurchaseItems items={this.props.entity.items}
-              onChange={this.handleInputChange}/>
+            <PurchaseItems
+              items={this.props.entity.items}
+              onChange={this.props.onChange}/>
           </tbody>
         </table>
       </div>
     );
   }
-
 }
 
 export default Purchase;

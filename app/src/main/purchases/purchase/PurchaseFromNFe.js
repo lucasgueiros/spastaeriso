@@ -1,7 +1,6 @@
 import './PurchaseFromNFe.css';
 import React from 'react';
 import axios from 'axios';
-import { useHistory } from "react-router-dom";
 import Purchase from './Purchase.js';
 
 class PurchaseFromNFe extends React.Component {
@@ -35,11 +34,12 @@ class PurchaseFromNFe extends React.Component {
       },
     }).then(
       (response) => {
+        console.log(response.data);
         this.setState({
           showEditor: true,
           entity: response.data
         });
-        console.log(response.data);
+
       }, (error) => {
         console.log(error);
       }
@@ -51,12 +51,28 @@ class PurchaseFromNFe extends React.Component {
     const value = target.type === 'checkbox' ? target.checked : target.value;
     const name = target.name;
 
+    // NOMES ESPECIAIS
+    if(name === "transaction.account.name") {
+      axios.get("accounts/search/findByNameIgnoreCase?name=" + value)
+          .then((response) => {
+            this.setState({
+              entity: {
+                ...this.state.entity,
+                transaction: {
+                  ...this.state.entity.transaction,
+                  account: response.data
+                }
+              }
+            });
+          }, (error) => {
+            console.log(error);
+          })
+    }
+
     // dividindo o nome para encontrar subobjetos
     const names = name.split(".");
 
-    let index = this.state.entity_index;
-    let entities = [...this.state.entities];
-    let entity = {...entities[index]};
+    let entity = {...this.state.entity};
     let entityHierarchy = [entity];
 
     let i = 0;
@@ -67,7 +83,11 @@ class PurchaseFromNFe extends React.Component {
         finished = true;
         i--;
       } else if (!finished) {
-        entityHierarchy[i+1] = {...entityHierarchy[i][names[i]]};
+        if(Array.isArray(entityHierarchy[i][names[i]])) {
+          entityHierarchy[i+1] = [...entityHierarchy[i][names[i]]];
+        } else {
+          entityHierarchy[i+1] = {...entityHierarchy[i][names[i]]};
+        }
         i++;
       } else {
         entityHierarchy[i][names[i]] = entityHierarchy[i+1];
@@ -75,8 +95,7 @@ class PurchaseFromNFe extends React.Component {
       }
     }
 
-    entities[index] = entity;
-    this.setState({entities});
+    this.setState({entity});
   }
 
   render () {

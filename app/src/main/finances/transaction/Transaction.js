@@ -1,6 +1,6 @@
 import './Transaction.css';
 import React from 'react';
-//import InputPrice from './price/InputPrice.js';
+import Account from '../account/Account.js';
 
 class Transaction extends React.Component {
 
@@ -24,11 +24,15 @@ class Transaction extends React.Component {
           <label htmlFor={this.props.prefix + 'comment'}>Comentários: </label>
           <input name={this.props.prefix + 'comment'} type="text" value={this.props.entity.comment || ''} onChange={this.props.onChange} readOnly={!this.props.editing}></input>
         </div>
+        <Account
+          entity={this.props.entity.account || {}}
+          prefix={this.props.prefix + "account."}
+          editing={this.props.editing}
+          onChange={this.props.onChange}/>
 
       </div>
     );
   }
-
 }
 
 export default Transaction;

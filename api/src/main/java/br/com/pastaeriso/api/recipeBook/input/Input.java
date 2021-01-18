@@ -1,5 +1,6 @@
 package br.com.pastaeriso.api.recipeBook.input;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -27,6 +28,7 @@ public class Input {
 	@GeneratedValue
 	private Integer id;
 	@NonNull
+	@Column(unique = true)
 	private String name;
 	private String comment;
 	

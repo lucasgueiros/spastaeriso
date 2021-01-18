@@ -1,6 +1,6 @@
 import './PurchaseItem.css';
 import React from 'react';
-//import InputPrice from './price/InputPrice.js';
+import SimplerInput from '../../../recipeBook/input/SimplerInput.js';
 
 class PurchaseItem extends React.Component {
 
@@ -8,13 +8,20 @@ class PurchaseItem extends React.Component {
     return (
       <tr class-name="purchase-item">
         <td>
-          <div>
-            <input name={this.props.prefix + "inventoryMovement.input.name"} type="text" value={this.props.entity.inventoryMovement.input.name || ''} onChange={this.props.onChange} readOnly={!this.props.editing}></input>
-          </div>
+          <SimplerInput
+            entity={this.props.entity.inventoryMovement.input || {}}
+            prefix={this.props.prefix + "inventoryMovement.input."}
+            onChange={this.props.onChange}
+            editing={this.props.editing}/>
         </td>
         <td>
           <div>
-            <input name={this.props.prefix + "inventoryMovement.quantity"} type="number" value={this.props.entity.inventoryMovement.quantity || ''} onChange={this.props.onChange} readOnly={!this.props.editing}></input>
+            <input
+              name={this.props.prefix + "inventoryMovement.quantity"}
+              type="number"
+              value={this.props.entity.inventoryMovement.quantity || 0}
+              onChange={this.props.onChange}
+              readOnly={!this.props.editing}></input>
           </div>
         </td>
         <td>
@@ -40,7 +47,6 @@ class PurchaseItem extends React.Component {
       </tr>
     );
   }
-
 }
 
 export default PurchaseItem;
