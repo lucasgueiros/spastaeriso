@@ -6,6 +6,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 @Repository
 @CrossOrigin
-public interface IventoryMovementRepository extends JpaRepository<IventoryMovement, Integer> {
+public interface InventoryMovementRepository extends JpaRepository<InventoryMovement, Integer> {
 
 }

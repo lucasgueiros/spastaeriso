@@ -13,7 +13,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import br.com.pastaeriso.api.finances.transaction.TransactionModel;
+import br.com.pastaeriso.api.finances.transaction.TransactionModality;
 import br.com.pastaeriso.api.generics.person.Person;
 import br.com.pastaeriso.api.sales.order.item.OrderItem;
 import br.com.pastaeriso.api.sales.order.item.group.OrderItemGroup;
@@ -49,7 +49,7 @@ public class ClientOrder {
 	@OneToMany
 	private List<OrderItemGroup> groups;
 	@Enumerated(EnumType.STRING)
-	private TransactionModel forecastModeOfTransaction;
+	private TransactionModality forecastModeOfTransaction;
 	private BigDecimal forecastChangeTo;
 	private boolean isDelivery = true;
 	private String comments;

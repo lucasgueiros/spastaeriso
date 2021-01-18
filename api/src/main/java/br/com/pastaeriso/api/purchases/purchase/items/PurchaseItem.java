@@ -8,9 +8,10 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
-import br.com.pastaeriso.api.purchases.inventory.IventoryMovement;
+import br.com.pastaeriso.api.purchases.inventory.InventoryMovement;
 import br.com.pastaeriso.api.recipeBook.unit.Unit;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,20 +28,20 @@ import lombok.ToString;
 @NoArgsConstructor
 @RequiredArgsConstructor
 @AllArgsConstructor
+@Builder
 public class PurchaseItem {
 
 	@Id
 	@GeneratedValue
 	private Integer id;
 	private String brand;
+	@NonNull
 	private BigDecimal pricePerUnit;
 	@ManyToOne
 	private Unit unit;
 	private String description;
-	private String productName;
-	private Integer productCode;
 	@NonNull
 	@OneToOne
-	private IventoryMovement iventoryMovement;
+	private InventoryMovement inventoryMovement;
 
 }

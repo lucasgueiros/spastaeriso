@@ -1,18 +1,17 @@
-package br.com.pastaeriso.api.purchases.provider;
+package br.com.pastaeriso.api.purchases.purchase.products;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.UniqueConstraint;
+import javax.persistence.ManyToOne;
 
+import br.com.pastaeriso.api.recipeBook.input.Input;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -22,19 +21,17 @@ import lombok.ToString;
 @EqualsAndHashCode
 @ToString
 @NoArgsConstructor
-@RequiredArgsConstructor
 @AllArgsConstructor
-@Builder
-public class Provider {
+public class PurchaseProduct {
 
 	@Id
 	@GeneratedValue
 	private Integer id;
-	@NonNull
 	@Column(unique = true)
-	private String name;
-	private String comment;
-	@Column(unique=true)
-	private String cnpj;
-
+	private String productName;
+	@NonNull
+	@ManyToOne
+	private Input input;
+	private String brand;
+	
 }

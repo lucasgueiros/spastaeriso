@@ -32,5 +32,9 @@ public class Account {
 	private String name;
 	private LocalDate created = LocalDate.now();
 	private String comment;
+	@NonNull
+	private AccountType type;
+	@NonNull
+	private Boolean favorite = false;
 
 }

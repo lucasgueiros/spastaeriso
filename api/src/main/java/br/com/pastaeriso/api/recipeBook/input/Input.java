@@ -29,5 +29,5 @@ public class Input {
 	@NonNull
 	private String name;
 	private String comment;
-
+	
 }

@@ -13,6 +13,7 @@ import javax.persistence.ManyToOne;
 
 import br.com.pastaeriso.api.finances.account.Account;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,6 +30,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @RequiredArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Transaction {
 
 	@Id
@@ -40,6 +42,7 @@ public class Transaction {
 	@NonNull
 	private BigDecimal value;
 	@NonNull
+	@Builder.Default
 	private LocalDate date = LocalDate.now();
 	private String comment;
 	@NonNull
@@ -47,7 +50,7 @@ public class Transaction {
 	private TransactionType type;
 	@NonNull
 	@Enumerated(EnumType.STRING)
-	private TransactionModel mode;
+	private TransactionModality modality;
 	@Lob
 	private byte[] voucher;
 }

@@ -10,4 +10,6 @@ public interface UnitRepository extends JpaRepository<Unit, Integer> {
 
 	public Unit findByName(String name);
 	
+	public Unit findByNameIgnoreCase(String name);
+	
 }
