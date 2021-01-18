@@ -32,6 +32,7 @@ class CreatePurchaseFromNFe extends React.Component {
         this.setState({
           message: "success",
         });
+        console.log(response.data);
       }, (error) => {
         console.log(error);
       }
