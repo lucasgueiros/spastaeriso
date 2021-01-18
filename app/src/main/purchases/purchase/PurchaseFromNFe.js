@@ -18,6 +18,7 @@ class PurchaseFromNFe extends React.Component {
     this.onChange = this.onChange.bind(this);
     this.salvar = this.salvar.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.setEntities = this.setEntities.bind(this);
   }
 
   onChange (event) {
@@ -27,6 +28,17 @@ class PurchaseFromNFe extends React.Component {
   }
 
   salvar(event) {
+    this.crud.postOperation (this.setEntities, {
+      ...this.state.entity,
+      nfe: {
+        ...this.state.entity.nfe,
+        xml: this.state.nfe
+      }
+    });
+  }
+
+  //ignore!
+  setEntities(entites) {
 
   }
 

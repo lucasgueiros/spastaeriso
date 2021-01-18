@@ -32,7 +32,7 @@ class BasicCrud {
       }, (error) => {
         console.log(error);
       });
-      return toReturn;
+    return toReturn;
   }
 
   postOperation (setEntities, entityToSave) {
