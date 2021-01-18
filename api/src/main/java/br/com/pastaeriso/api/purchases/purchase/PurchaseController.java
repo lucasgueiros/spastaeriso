@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -21,6 +22,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
+import br.com.pastaeriso.api.finances.account.Account;
+import br.com.pastaeriso.api.finances.account.AccountRepository;
 import br.com.pastaeriso.api.finances.account.AccountType;
 import br.com.pastaeriso.api.finances.transaction.TransactionModality;
 import br.com.pastaeriso.api.finances.transaction.TransactionType;
@@ -37,6 +40,8 @@ import br.com.pastaeriso.api.recipeBook.unit.UnitRepository;
 @RestController
 @CrossOrigin
 public class PurchaseController {
+	@Autowired
+	private AccountRepository accountRepository;
 	@Autowired
 	private ProviderRepository providerRepository;
 	@Autowired
@@ -85,21 +90,26 @@ public class PurchaseController {
 		int tipoDePagamento = Integer.parseInt(proc.getNfeProc().getNFe().getInfNFe().getPag().getDetPag().getTPag());
 		ObjectNode account = mapper.createObjectNode();
 		String modality = TransactionModality.CASH.toString();
+		AccountType accountType = AccountType.CASH_ACCOUNT;
 		
 		switch(tipoDePagamento) {
 			case 01: // dinheiro
-				account = account.put("type",AccountType.CASH_ACCOUNT.toString());
+				modality = TransactionModality.CASH.toString();
+				accountType = AccountType.CASH_ACCOUNT;
 			break;
 			case 03: // cartao de credito
-				account = account.put("type",AccountType.CREDIT_CARD.toString());
 				modality = TransactionModality.CREDIT_CARD.toString();
+				accountType = AccountType.CREDIT_CARD;
 			break;
 			case 04: // cartaod de debito
-				account = account.put("type",AccountType.BANK_ACCOUNT.toString());
 				modality = TransactionModality.DEBIT_CARD.toString();
+				accountType = AccountType.BANK_ACCOUNT;
 			break;
-			default:
-				account = account.put("type",AccountType.CASH_ACCOUNT.toString());
+		}
+		account = account.put("type",accountType.toString());
+		Optional<Account> theAccount = accountRepository.findFavoriteByType(accountType);
+		if(theAccount.isPresent()) {
+			account = account.put("name", theAccount.get().getName());
 		}
 		ObjectNode transaction = ((ObjectNode)mapper.createObjectNode()
 				.set("account",account))

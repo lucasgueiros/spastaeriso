@@ -2,6 +2,7 @@ import './PurchaseFromNFe.css';
 import React from 'react';
 import axios from 'axios';
 import Purchase from './Purchase.js';
+import PurchaseCrud from './PurchaseCrud.js';
 
 class PurchaseFromNFe extends React.Component {
 
@@ -12,8 +13,10 @@ class PurchaseFromNFe extends React.Component {
       showEditor: false,
       entity: {}
     }
-    this.onClick = this.onClick.bind(this);
+    this.crud = new PurchaseCrud();
+    this.upload = this.upload.bind(this);
     this.onChange = this.onChange.bind(this);
+    this.salvar = this.salvar.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
   }
 
@@ -23,7 +26,11 @@ class PurchaseFromNFe extends React.Component {
     });
   }
 
-  onClick(event) {
+  salvar(event) {
+
+  }
+
+  upload(event) {
     let formData = new FormData();
 
     formData.append("nfe", this.state.nfe);
@@ -108,6 +115,7 @@ class PurchaseFromNFe extends React.Component {
             entity={this.state.entity}
             editing={true}
             onChange={this.handleInputChange}/>
+          <button onClick={this.salvar}>Salvar</button>
         </div>;
     }
 
@@ -117,7 +125,7 @@ class PurchaseFromNFe extends React.Component {
           <label htmlFor="nfe">Nota Fiscal Eletrônica em XML: </label>
           <input name="nfe" type="file" onChange={this.onChange}></input>
         </div>
-        <button onClick={this.onClick}>Upload</button>
+        <button onClick={this.upload}>Upload</button>
         {editor}
       </div>
     );

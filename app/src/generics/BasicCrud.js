@@ -21,9 +21,9 @@ class BasicCrud {
       });
   }
 
-  async postRelationOperation (relationUrl, relationName, entityToSave) {
+  async postRelationOperation (relationName, entityToSave) {
     let toReturn;
-    await axios.post("/"+relationUrl+"/", entityToSave[relationName])
+    await axios.post("/"+this.url+"/", entityToSave[relationName])
       .then( (response) => {
         toReturn = {
           ...entityToSave,
@@ -55,9 +55,9 @@ class BasicCrud {
       });
   }
 
-  async putRelationOperation (url, relationName, entityToSave) {
+  async putRelationOperation ( relationName, entityToSave) {
     let relationUrl = {};
-    await axios.get(url + "/" + relationName)
+    await axios.get(this.url + "/" + relationName)
       .then( (response) => {
         relationUrl = response.data._links.self.href;
         axios.put(relationUrl, entityToSave[relationName], this.jsonConfig)
