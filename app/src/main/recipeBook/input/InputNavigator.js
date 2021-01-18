@@ -5,7 +5,7 @@ import BasicCrud from '../../../generics/BasicCrud.js';
 
 function InputNavigator() {
   return (
-    <div className="App">
+    <div className="input-navigator">
       <Navigator crud={new BasicCrud("inputs")}>
         <Input/>
       </Navigator>

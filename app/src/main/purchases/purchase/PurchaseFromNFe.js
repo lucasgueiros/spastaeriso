@@ -1,0 +1,109 @@
+import './PurchaseFromNFe.css';
+import React from 'react';
+import axios from 'axios';
+import { useHistory } from "react-router-dom";
+import Purchase from './Purchase.js';
+
+class PurchaseFromNFe extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      nfe: undefined,
+      showEditor: false,
+      entity: {}
+    }
+    this.onClick = this.onClick.bind(this);
+    this.onChange = this.onChange.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this);
+  }
+
+  onChange (event) {
+    this.setState({
+      nfe: event.target.files[0],
+    });
+  }
+
+  onClick(event) {
+    let formData = new FormData();
+
+    formData.append("nfe", this.state.nfe);
+
+    axios.post("/purchases/fromNFe", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }).then(
+      (response) => {
+        this.setState({
+          showEditor: true,
+          entity: response.data
+        });
+        console.log(response.data);
+      }, (error) => {
+        console.log(error);
+      }
+    );
+  }
+
+  handleInputChange(event) {
+    const target = event.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
+
+    // dividindo o nome para encontrar subobjetos
+    const names = name.split(".");
+
+    let index = this.state.entity_index;
+    let entities = [...this.state.entities];
+    let entity = {...entities[index]};
+    let entityHierarchy = [entity];
+
+    let i = 0;
+    let finished = false;
+    while(i >= 0) {
+      if(!finished && i === names.length - 1) { // então chegamos ao último
+        entityHierarchy[i][names[i]] = value;
+        finished = true;
+        i--;
+      } else if (!finished) {
+        entityHierarchy[i+1] = {...entityHierarchy[i][names[i]]};
+        i++;
+      } else {
+        entityHierarchy[i][names[i]] = entityHierarchy[i+1];
+        i--;
+      }
+    }
+
+    entities[index] = entity;
+    this.setState({entities});
+  }
+
+  render () {
+    let editor = "";
+    if(this.state.showEditor) {
+      editor =
+        <div>
+          <h3>Compra</h3>
+          <Purchase
+            entity={this.state.entity}
+            editing={true}
+            onChange={this.handleInputChange}/>
+        </div>;
+    }
+
+    return (
+      <div class-name="create-purchase-from-nfe">
+        <div>
+          <label htmlFor="nfe">Nota Fiscal Eletrônica em XML: </label>
+          <input name="nfe" type="file" onChange={this.onChange}></input>
+        </div>
+        <button onClick={this.onClick}>Upload</button>
+        {editor}
+      </div>
+    );
+  }
+
+}
+
+export default PurchaseFromNFe;

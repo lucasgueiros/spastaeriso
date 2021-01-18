@@ -44,7 +44,7 @@ public class Purchase {
 	private Provider provider;
 	@OneToOne
 	private NFeXml nfe;
-	private BigDecimal valorextra;
+	private BigDecimal additionalValue;
 	@OneToOne
 	private Transaction transaction;
 	@OneToMany
