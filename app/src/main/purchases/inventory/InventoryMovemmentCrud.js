@@ -4,18 +4,24 @@ import BasicCrud from '../../../generics/BasicCrud.js';
 class InventoryMovemmentCrud extends BasicCrud{
 
   constructor () {
-    super("inventoryMovemmentCrud");
-    this.inventoryMovemmentCrud = new InventoryMovemmentCrud();
-    this.unitCrud = new BasicCrud("units");
-    // nfe, provider, items, transaction
+    super("inventoryMovements");
+    this.inputCrud = new BasicCrud("inputs");
+  	this.unitCrud = new BasicCrud("units");
   }
 
-  async postOperation (setEntities, entityToSave) {
-    // Salvando o endereço
-    entityToSave = await super.postRelationOperation("enderecos","endereco",entityToSave);
-    // Salvando o responsavelTecnico
-    entityToSave = await super.postRelationOperation("pessoas","responsavelTecnico",entityToSave);
-    super.postOperation(setEntities, entityToSave);
+  async postRelationOperation (relationName, entityToSave) {
+    const unit = await axios.get("/units/search/findByNameIgnoreCase?name="+entityToSave[relationName].unit.name);
+    const input = await axios.get("/inputs/search/findByName?name="+entityToSave[relationName].input.name);
+    entityToSave = {
+      ...entityToSave,
+      [relationName]: {
+        ...entityToSave[relationName],
+        unit: unit.data._links.self.href,
+        input: input.data._links.self.href,
+      }
+
+    };
+    return await super.postRelationOperation(relationName, entityToSave);
   }
 
   async putOperation (setEntities, url, entityToSave) {

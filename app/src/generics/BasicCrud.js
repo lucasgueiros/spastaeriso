@@ -25,10 +25,16 @@ class BasicCrud {
     let toReturn;
     await axios.post("/"+this.url+"/", entityToSave[relationName])
       .then( (response) => {
-        toReturn = {
-          ...entityToSave,
-          [relationName]: response.data._links.self.href
-        };
+        if(Array.isArray(entityToSave)) {
+          toReturn = [...entityToSave];
+          toReturn[relationName] = response.data._links.self.href;
+        } else {
+          toReturn = {
+            ...entityToSave,
+            [relationName]: response.data._links.self.href
+          };
+        }
+
       }, (error) => {
         console.log(error);
       });

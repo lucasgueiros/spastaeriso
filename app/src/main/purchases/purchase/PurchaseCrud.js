@@ -10,7 +10,7 @@ class PurchaseCrud extends BasicCrud{
     super("purchases");
     this.transactionCrud = new TransactionCrud();
     this.providerCrud = new BasicCrud("providers");
-    //this.itemCrud = new PurchaseItemCrud();
+    this.itemCrud = new PurchaseItemCrud();
     this.nfeCrud = new NfeCrud("nFeXmls");
     // nfe, provider, items, transaction
   }
@@ -28,10 +28,11 @@ class PurchaseCrud extends BasicCrud{
       entityToSave = await this.providerCrud.postRelationOperation("provider",entityToSave);
     }
     entityToSave = await this.transactionCrud.postRelationOperation("transaction",entityToSave);
-    entityToSave = {
-      ...entityToSave,
-      items: []
-    };
+    let item;
+    let items = [...entityToSave.items];
+    for(let i =0; i < items.length; i++) {
+      entityToSave = await this.itemCrud.postRelationOperation(i,"items",entityToSave);
+    }
     super.postOperation(setEntities, entityToSave);
   }
 
