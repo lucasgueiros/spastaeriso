@@ -10,13 +10,12 @@ class InventoryMovemmentCrud extends BasicCrud{
   }
 
   async postRelationOperation (relationName, entityToSave) {
-    const unit = await axios.get("/units/search/findByNameIgnoreCase?name="+entityToSave[relationName].unit.name);
+    //const unit = await axios.get("/units/search/findByNameIgnoreCase?name="+entityToSave[relationName].unit.name);
     const input = await axios.get("/inputs/search/findByName?name="+entityToSave[relationName].input.name);
     entityToSave = {
       ...entityToSave,
       [relationName]: {
         ...entityToSave[relationName],
-        unit: unit.data._links.self.href,
         input: input.data._links.self.href,
       }
 

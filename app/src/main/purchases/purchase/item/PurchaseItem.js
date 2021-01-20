@@ -1,6 +1,7 @@
 import './PurchaseItem.css';
 import React from 'react';
 import SimplerInput from '../../../recipeBook/input/SimplerInput.js';
+import SimplerUnit from '../../../recipeBook/unit/SimplerUnit.js';
 
 class PurchaseItem extends React.Component {
 
@@ -26,7 +27,11 @@ class PurchaseItem extends React.Component {
         </td>
         <td>
           <div>
-            <input name={this.props.prefix + "unit.name"} type="text" value={this.props.entity.unit.name || ''} onChange={this.props.onChange} readOnly={!this.props.editing}></input>
+            <SimplerUnit
+              entity={this.props.entity.unit || {}}
+              prefix={this.props.prefix + "unit."}
+              onChange={this.props.onChange}
+              editing={this.props.editing}/>
           </div>
         </td>
         <td>
@@ -48,5 +53,13 @@ class PurchaseItem extends React.Component {
     );
   }
 }
+
+//
+//<input
+//name={this.props.prefix + "unit.name"}
+//type="text"
+//value={this.props.entity.unit.name || ''}
+//onChange={this.props.onChange}
+//readOnly={!this.props.editing} />
 
 export default PurchaseItem;
