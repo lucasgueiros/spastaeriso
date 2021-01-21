@@ -53,7 +53,6 @@ class PurchaseFromNFe extends React.Component {
       },
     }).then(
       (response) => {
-        console.log(response.data);
         this.setState({
           showEditor: true,
           entity: response.data

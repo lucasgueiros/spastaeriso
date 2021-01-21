@@ -3,7 +3,6 @@ import React from 'react';
 import Provider from '../provider/Provider.js';
 import Transaction from '../../finances/transaction/Transaction.js';
 import PurchaseItem from './item/PurchaseItem.js';
-import axios from 'axios';
 import Datalist from '../../../generics/Datalist.js';
 
 function PurchaseItems(props) {
