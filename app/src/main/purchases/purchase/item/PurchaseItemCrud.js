@@ -12,9 +12,17 @@ class PurchaseItemCrud extends BasicCrud{
     // nfe, provider, items, transaction
   }
 
+  async getRelationsWithIndexOperation(index, relationName, entity) {
+    let item = {...entity[relationName][index]};
+    item = await this.unitCrud.getRelationOperation("unit",item);
+    item = await this.inventoryMovemmentCrud.getRelationOperation("inventoryMovement",item);
+    entity[relationName][index] = item;
+    return entity;
+  }
+
   async postRelationOperation (index, relationName, entityToSave) {
     const unit = await axios.get("/units/search/findByNameIgnoreCase?name="+entityToSave[relationName][index].unit.name);
-    entityToSave[relationName][index].inventoryMovement.unit = unit.data._links.self.href;
+    //entityToSave[relationName][index].inventoryMovement.unit = unit.data._links.self.href;
     entityToSave[relationName][index] = await this.inventoryMovemmentCrud.postRelationOperation("inventoryMovement",entityToSave[relationName][index]);
     const r = {
       ...entityToSave[relationName][index],

@@ -10,7 +10,7 @@ class PurchaseItem extends React.Component {
       <tr class-name="purchase-item">
         <td>
           <SimplerInput
-            entity={this.props.entity.inventoryMovement.input || {}}
+            entity={this.props.entity.inventoryMovement ? this.props.entity.inventoryMovement.input || {} : {}}
             prefix={this.props.prefix + "inventoryMovement.input."}
             onChange={this.props.onChange}
             editing={this.props.editing}/>
@@ -20,7 +20,7 @@ class PurchaseItem extends React.Component {
             <input
               name={this.props.prefix + "inventoryMovement.quantity"}
               type="number"
-              value={this.props.entity.inventoryMovement.quantity || 0}
+              value={this.props.entity.inventoryMovement ? this.props.entity.inventoryMovement.quantity || {} : {}}
               onChange={this.props.onChange}
               readOnly={!this.props.editing}></input>
           </div>

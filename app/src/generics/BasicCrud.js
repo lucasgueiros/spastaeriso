@@ -12,6 +12,17 @@ class BasicCrud {
     }
   }
 
+  async getWithUrlOperation(url) {
+    let toReturn = {};
+    await axios.get(url.replace("{?projection}",""))
+      .then( (response) => {
+        toReturn = response.data;
+      }, (error) => {
+        console.log(error);
+      });
+    return toReturn;
+  }
+
   getOperation (setEntities) {
     axios.get("/" + this.url + "/" + (this.projection ? this.projection : ""))
       .then( (response) => {
@@ -19,6 +30,54 @@ class BasicCrud {
       }, (error) => {
         console.log(error);
       });
+  }
+
+  async getOperationNoSetEntities () {
+    let toReturn = [];
+    await axios.get("/" + this.url + "/" + (this.projection ? this.projection : ""))
+      .then( (response) => {
+        toReturn = [...response.data._embedded[this.url]];
+      }, (error) => {
+        toReturn = [];
+        console.log(error);
+      });
+    return toReturn;
+  }
+
+  async getRelationWithIndexOperation(index, relationName, entity) {
+    let toReturn;
+    await axios.get(entity._links[relationName].href.replace("{?projection}",""))
+      .then( (response) => {
+        toReturn = {
+          ...entity,
+          [relationName]: response.data
+        }
+      }, (error) => {
+        console.log(error);
+        toReturn = {
+          ...entity,
+          [relationName]: {}
+        }
+      });
+    return toReturn;
+  }
+
+  async getRelationOperation(relationName, entity) {
+    let toReturn;
+    await axios.get(entity._links[relationName].href.replace("{?projection}",""))
+      .then( (response) => {
+        toReturn = {
+          ...entity,
+          [relationName]: response.data
+        }
+      }, (error) => {
+        console.log(error);
+        toReturn = {
+          ...entity,
+          [relationName]: {}
+        }
+      });
+    return toReturn;
   }
 
   async postRelationOperation (relationName, entityToSave) {

@@ -5,6 +5,9 @@ import Transaction from '../../finances/transaction/Transaction.js';
 import PurchaseItem from './item/PurchaseItem.js';
 
 function PurchaseItems(props) {
+  if(typeof props.items.map !== "function") {
+    return "";
+  }
   const items = props.items;
   const listItems = items.map((item,index) =>
     <PurchaseItem
@@ -37,7 +40,7 @@ class Purchase extends React.Component {
           onChange={this.props.onChange}/>
         <div>
           <label htmlFor="nfe.accessCode">NFC-e: </label>
-          <input name="nfe.accessCode" type="text" value={this.props.entity.nfe.accessCode || ''} readOnly={true}></input>
+          <input name="nfe.accessCode" type="text" value={this.props.entity.nfe ? this.props.entity.nfe.accessCode : ''} readOnly={true}></input>
         </div>
         <div>
           <label htmlFor="additionalValue">Valor extra: </label>
@@ -56,7 +59,7 @@ class Purchase extends React.Component {
           </thead>
           <tbody>
             <PurchaseItems
-              items={this.props.entity.items}
+              items={this.props.entity.items || {}}
               onChange={this.props.onChange}/>
           </tbody>
         </table>
