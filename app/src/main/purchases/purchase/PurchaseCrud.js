@@ -11,7 +11,24 @@ class PurchaseCrud extends BasicCrud{
     this.transactionCrud = new TransactionCrud();
     this.providerCrud = new BasicCrud("providers");
     this.itemCrud = new PurchaseItemCrud();
-    this.nfeCrud = new NfeCrud("nFeXmls");
+    this.nfeCrud = new NfeCrud("nFeXmls","nFeXmlProjection");
+  }
+
+  async getOperation (setEntities) {
+    let purchases = await super.getOperationNoSetEntities();
+    for(let i =0; i < purchases.length; i++) {
+      let purchase = {...purchases[i]};
+      purchase = await this.providerCrud.getRelationOperation("provider",purchase);
+      purchase = await this.transactionCrud.getRelationOperation("transaction",purchase);
+      purchase = await this.nfeCrud.getRelationOperation("nfe",purchase);
+      let items = await super.getWithUrlOperation(purchase._links.items.href);
+      purchase = {...purchase, items: items._embedded.purchaseItems};
+      for(let j =0; j < purchase.items.length; j++) {
+        purchase = await this.itemCrud.getRelationsWithIndexOperation(j,"items",purchase);
+      }
+      purchases[i] = purchase;
+    }
+    setEntities(purchases);
   }
 
   async postOperation (setEntities, entityToSave) {

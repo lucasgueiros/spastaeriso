@@ -8,6 +8,16 @@ class TransactionCrud extends BasicCrud{
     this.accountCrud = new BasicCrud("accounts");
   }
 
+  async getRelationOperation (relationName, entity) {
+    let toReturn = await super.getWithUrlOperation(entity._links[relationName].href);
+    toReturn = await this.accountCrud.getRelationOperation("account",toReturn);
+    entity = {
+      ...entity,
+      [relationName]: toReturn,
+    }
+    return entity;
+  }
+
   async postOperation (setEntities, entityToSave) {
     entityToSave = await this.accountCrud.postRelationOperation("account",entityToSave);
     super.postOperation(setEntities, entityToSave);

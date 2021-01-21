@@ -9,6 +9,17 @@ class InventoryMovemmentCrud extends BasicCrud{
   	this.unitCrud = new BasicCrud("units");
   }
 
+  async getRelationOperation(relationName, entity) {
+    let im = await super.getWithUrlOperation(entity._links[relationName].href);
+    im = await this.inputCrud.getRelationOperation("input",im);
+    im = await this.unitCrud.getRelationOperation("unit",im);
+    entity = {
+      ...entity,
+      [relationName]: im,
+    }
+    return entity;
+  }
+
   async postRelationOperation (relationName, entityToSave) {
     //const unit = await axios.get("/units/search/findByNameIgnoreCase?name="+entityToSave[relationName].unit.name);
     const input = await axios.get("/inputs/search/findByName?name="+entityToSave[relationName].input.name);
