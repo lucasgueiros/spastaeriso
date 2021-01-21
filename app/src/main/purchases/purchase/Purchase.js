@@ -4,6 +4,7 @@ import Provider from '../provider/Provider.js';
 import Transaction from '../../finances/transaction/Transaction.js';
 import PurchaseItem from './item/PurchaseItem.js';
 import axios from 'axios';
+import Datalist from '../../../generics/Datalist.js';
 
 function PurchaseItems(props) {
   if(typeof props.items.map !== "function") {
@@ -32,27 +33,15 @@ class Purchase extends React.Component {
   state = {
     inputs_datalist: [],
     units_datalist: [],
+    datalist_updater: 0
   };
 
   componentDidMount () {
-    this.updateDatalists();
+    this.setState({datalist_updater: 1});
   }
 
   updateDatalists () {
-    axios.get("inputs").then( (response) => {
-      this.setState({
-        inputs_datalist: response.data._embedded.inputs,
-      });
-    }, (error) => {
-      console.log(error);
-    });
-    axios.get("units").then( (response) => {
-      this.setState({
-        units_datalist: response.data._embedded.units,
-      });
-    }, (error) => {
-      console.log(error);
-    });
+    this.setState({datalist_updater: this.state.datalist_updater+1});
   }
 
   render () {
@@ -101,16 +90,14 @@ class Purchase extends React.Component {
           </tbody>
         </table>
         {updateDatalistsButton}
-        <datalist id="inputs-datalist">
-          {this.state.inputs_datalist.map((input, key) =>
-            <option key={key} value={input.name} />
-          )}
-        </datalist>
-        <datalist id="units-datalist">
-          {this.state.units_datalist.map((unit, key) =>
-            <option key={key} value={unit.name} />
-          )}
-        </datalist>
+        <Datalist
+          name="inputs"
+          propertyName="name"
+          updater={this.state.datalist_updater}/>
+        <Datalist
+          name="units"
+          propertyName="name"
+          updater={this.state.datalist_updater}/>
       </div>
     );
   }
