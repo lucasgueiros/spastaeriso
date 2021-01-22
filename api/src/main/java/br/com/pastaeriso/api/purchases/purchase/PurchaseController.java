@@ -12,6 +12,7 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.server.EntityLinks;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,6 +34,7 @@ import br.com.pastaeriso.api.purchases.provider.ProviderRepository;
 import br.com.pastaeriso.api.purchases.purchase.products.PurchaseProduct;
 import br.com.pastaeriso.api.purchases.purchase.products.PurchaseProductRepository;
 import br.com.pastaeriso.api.recipeBook.input.Input;
+import br.com.pastaeriso.api.recipeBook.item.Item;
 import br.com.pastaeriso.api.recipeBook.unit.Unit;
 import br.com.pastaeriso.api.recipeBook.unit.UnitRepository;
 
@@ -48,6 +50,9 @@ public class PurchaseController {
 	private UnitRepository unitRepository;
 	@Autowired
 	private PurchaseProductRepository purchaseProductRepository;
+	@Autowired
+	private EntityLinks entityLinks;
+
 
 	@SuppressWarnings("rawtypes")
 	@PostMapping("/purchases/fromNFe")
@@ -148,13 +153,16 @@ public class PurchaseController {
 			if(theUnit == null) {
 				theUnit = unitRepository.findByNameIgnoreCase("UN");
 			}
-			ObjectNode unit = mapper.createObjectNode()
-					.put("name",theUnit.getName())
-					.put("quantity",theUnit.getQuantity().toString());
+			ObjectNode unit = mapper.createObjectNode().put("href", entityLinks.linkToItemResource(Unit.class, theUnit.getId()).getHref());
+			ObjectNode links = mapper.createObjectNode();
+			links.set("unit", unit);
+			//		.put("name",theUnit.getName())
+			//		.put("quantity",theUnit.getQuantity().toString());
+			
 			ObjectNode inventoryMovement = ( (ObjectNode)mapper.createObjectNode()
 					.put("date",made.toLocalDate().toString())
 					.put("quantity",quantity)
-					.set("unit",unit))
+					.set("_links",links))
 					.set("input",input);
 			
 			items.add(
@@ -163,7 +171,7 @@ public class PurchaseController {
 							.put("brand",brand)
 							.put("description", inputAsString + " (" + unitAsString + ")")
 							.put("pricePerUnit",pricePerUnit)
-							.set("unit",unit)
+							.set("_links",links)
 					)
 					.set("inventoryMovement", inventoryMovement));
 		}

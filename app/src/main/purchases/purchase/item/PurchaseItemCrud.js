@@ -21,12 +21,12 @@ class PurchaseItemCrud extends BasicCrud{
   }
 
   async postRelationOperation (index, relationName, entityToSave) {
-    const unit = await axios.get("/units/search/findByNameIgnoreCase?name="+entityToSave[relationName][index].unit.name);
-    //entityToSave[relationName][index].inventoryMovement.unit = unit.data._links.self.href;
+    //const unit = await axios.get("/units/search/findByNameIgnoreCase?name="+entityToSave[relationName][index].unit.name);
+    entityToSave[relationName][index].inventoryMovement.unit = entityToSave[relationName][index]._links.unit.href;
     entityToSave[relationName][index] = await this.inventoryMovemmentCrud.postRelationOperation("inventoryMovement",entityToSave[relationName][index]);
     const r = {
       ...entityToSave[relationName][index],
-      unit: unit.data._links.self.href,
+      unit: entityToSave[relationName][index]._links.unit.href,
     };
     entityToSave[relationName][index] = r;
     const result = await super.postRelationOperation(index, entityToSave[relationName])

@@ -28,8 +28,8 @@ class PurchaseItem extends React.Component {
         <td>
           <div>
             <SimplerUnit
-              entity={this.props.entity.unit || {}}
-              prefix={this.props.prefix + "unit."}
+              entity={this.props.entity._links.unit || {}}
+              prefix={this.props.prefix + "_links.unit"}
               onChange={this.props.onChange}
               editing={this.props.editing}
               unitsOptionsList={this.props.unitsOptionsList}/>
