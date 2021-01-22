@@ -47,7 +47,7 @@ class PurchaseFromNFe extends React.Component {
 
     formData.append("nfe", this.state.nfe);
 
-    axios.post("/purchases/fromNFe", formData, {
+    axios.post("/nFeXmls/fromNFe", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
