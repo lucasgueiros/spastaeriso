@@ -30,21 +30,30 @@ class Purchase extends React.Component {
     this.state = {
       unitsOptionsList: []
     }
+    this.updateOptionsLists = this.updateOptionsLists.bind(this);
   }
 
   componentDidMount () {
+    this.updateOptionsLists();
+  }
+
+  updateOptionsLists () {
     axios.get("units").then( (response) => {
       this.setState({
         unitsOptionsList: response.data._embedded.units,
       });
     }, (error) => {
       console.log(error);
-    })
+    });
   }
 
   render () {
-    //<Provider/>
-    //<Nfe/>
+    let updateOptionsListsButton = '';
+    if(this.props.editing) {
+      updateOptionsListsButton = <button onClick={() => this.updateOptionsLists()}>Atualizar opções</button>
+    }
+
+
     return (
       <div class-name="purchase">
         <Provider
@@ -83,6 +92,7 @@ class Purchase extends React.Component {
               unitsOptionsList={this.state.unitsOptionsList}/>
           </tbody>
         </table>
+        {updateOptionsListsButton}
       </div>
     );
   }
