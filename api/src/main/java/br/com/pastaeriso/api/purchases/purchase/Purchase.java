@@ -1,7 +1,6 @@
 package br.com.pastaeriso.api.purchases.purchase;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.Entity;

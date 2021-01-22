@@ -3,6 +3,7 @@ import React from 'react';
 import Provider from '../provider/Provider.js';
 import Transaction from '../../finances/transaction/Transaction.js';
 import PurchaseItem from './item/PurchaseItem.js';
+import axios from 'axios';
 
 function PurchaseItems(props) {
   if(typeof props.items.map !== "function") {
@@ -16,12 +17,30 @@ function PurchaseItems(props) {
       prefix={"items."+index+"."}
       editing={true}
       onChange={props.onChange}
+      unitsOptionsList={props.unitsOptionsList}
     />
   );
   return listItems;
 }
 
 class Purchase extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      unitsOptionsList: []
+    }
+  }
+
+  componentDidMount () {
+    axios.get("units").then( (response) => {
+      this.setState({
+        unitsOptionsList: response.data._embedded.units,
+      });
+    }, (error) => {
+      console.log(error);
+    })
+  }
 
   render () {
     //<Provider/>
@@ -60,7 +79,8 @@ class Purchase extends React.Component {
           <tbody>
             <PurchaseItems
               items={this.props.entity.items || {}}
-              onChange={this.props.onChange}/>
+              onChange={this.props.onChange}
+              unitsOptionsList={this.state.unitsOptionsList}/>
           </tbody>
         </table>
       </div>

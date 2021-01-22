@@ -12,7 +12,6 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -34,7 +33,6 @@ import br.com.pastaeriso.api.purchases.provider.ProviderRepository;
 import br.com.pastaeriso.api.purchases.purchase.products.PurchaseProduct;
 import br.com.pastaeriso.api.purchases.purchase.products.PurchaseProductRepository;
 import br.com.pastaeriso.api.recipeBook.input.Input;
-import br.com.pastaeriso.api.recipeBook.unit.Quantity;
 import br.com.pastaeriso.api.recipeBook.unit.Unit;
 import br.com.pastaeriso.api.recipeBook.unit.UnitRepository;
 
@@ -147,14 +145,12 @@ public class PurchaseController {
 			// UNIT
 			String unitAsString = det.getProd().getUCom();
 			Unit theUnit = unitRepository.findByNameIgnoreCase(unitAsString);
-			ObjectNode unit = mapper.createObjectNode()
-					.put("name",unitAsString)
-					.put("quantity",Quantity.NON_CONVERTIBLE.toString());
-			if(theUnit != null) {
-				unit.put("name",theUnit.getName())
-					.put("quantity",theUnit.getQuantity().toString());
+			if(theUnit == null) {
+				theUnit = unitRepository.findByNameIgnoreCase("UN");
 			}
-			
+			ObjectNode unit = mapper.createObjectNode()
+					.put("name",theUnit.getName())
+					.put("quantity",theUnit.getQuantity().toString());
 			ObjectNode inventoryMovement = ( (ObjectNode)mapper.createObjectNode()
 					.put("date",made.toLocalDate().toString())
 					.put("quantity",quantity)
@@ -165,7 +161,7 @@ public class PurchaseController {
 					(
 							(ObjectNode)mapper.createObjectNode()
 							.put("brand",brand)
-							.put("description", inputAsString)
+							.put("description", inputAsString + " (" + unitAsString + ")")
 							.put("pricePerUnit",pricePerUnit)
 							.set("unit",unit)
 					)

@@ -6,7 +6,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 import br.com.pastaeriso.api.generics.address.neighborhoods.Neighborhood;
 import lombok.AllArgsConstructor;

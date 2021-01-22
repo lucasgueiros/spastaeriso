@@ -31,7 +31,8 @@ class PurchaseItem extends React.Component {
               entity={this.props.entity.unit || {}}
               prefix={this.props.prefix + "unit."}
               onChange={this.props.onChange}
-              editing={this.props.editing}/>
+              editing={this.props.editing}
+              unitsOptionsList={this.props.unitsOptionsList}/>
           </div>
         </td>
         <td>

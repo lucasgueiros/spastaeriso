@@ -1,7 +1,6 @@
 package br.com.pastaeriso.api.recipeBook.unit.replacement;
 
 import java.math.BigDecimal;
-import java.util.List;
 import java.util.Map;
 
 import br.com.pastaeriso.api.recipeBook.unit.Quantity;
@@ -13,7 +12,6 @@ public class UnitReplacementMap {
 
 	private Map<Quantity, Unit> favorites;
 	private Map<Unit, UnitReplacement> replacements;
-	private List<Unit> units;
 
 	public Unit getFavorite(Unit unit) {
 		return favorites.get(unit.getQuantity());

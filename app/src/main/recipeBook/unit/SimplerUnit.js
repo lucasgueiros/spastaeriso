@@ -3,37 +3,18 @@ import React from 'react';
 import axios from 'axios';
 
 class SimplerUnit extends React.Component {
-
-  state = {
-    datalist: [],
-  };
-
-  componentDidMount () {
-    axios.get("units").then( (response) => {
-      this.setState({
-        datalist: response.data._embedded.units,
-      });
-    }, (error) => {
-      console.log(error);
-    })
-  }
-
   render () {
     return (
       <div class-name="simpler-unit">
-        <input
+        <select
           name={this.props.prefix + "name"}
-          type="text"
           value={this.props.entity.name || ''}
           onChange={this.props.onChange}
-          readOnly={!this.props.editing}
-          list="units-datalist"></input>
-        <datalist id="units-datalist">
-          {this.state.datalist.map((unit, key) =>
-            <option key={key} value={unit.name} />
+          readOnly={!this.props.editing}>
+          {this.props.unitsOptionsList.map((unit, key) =>
+            <option key={key} value={unit._links.self.href}>{unit.name}</option>
           )}
-        </datalist>
-
+        </select>
       </div>
     );
   }
