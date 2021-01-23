@@ -1,10 +1,11 @@
-package br.com.pastaeriso.api.accounting.transaction.modality;
+package br.com.pastaeriso.api.accounting.transaction.type;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+import br.com.pastaeriso.api.accounting.transaction.modality.TransactionModality;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -25,11 +26,11 @@ import lombok.ToString;
 @AllArgsConstructor
 @Builder
 /**
- * Indica a modalidade, tipo, dinheiro mesmo, ou pagamento no cartao, transferencia bancaria etc.
+ * Indica o que é essa transacao: compra, venda, pagamento, investimento etc.
  * @author lucas
  *
  */
-public class TransactionModality {
+public class TransactionType {
 
 	@Id
 	@GeneratedValue

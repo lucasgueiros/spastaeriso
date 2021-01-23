@@ -43,9 +43,6 @@ public class Entry {
 	private Account account;
 	@NonNull
 	private BigDecimal value;
-	@NonNull
-	@Builder.Default
-	private LocalDate date = LocalDate.now();
 	private String comment;
 	
 }

@@ -7,6 +7,7 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 
 import br.com.pastaeriso.api.accounting.transaction.modality.TransactionModality;
+import br.com.pastaeriso.api.accounting.transaction.type.TransactionType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -36,6 +37,9 @@ public class Transaction {
 	@NonNull
 	@ManyToOne
 	private TransactionModality modality;
+	@NonNull
+	@ManyToOne
+	private TransactionType type;
 	@Lob
 	private byte[] voucher;
 }
