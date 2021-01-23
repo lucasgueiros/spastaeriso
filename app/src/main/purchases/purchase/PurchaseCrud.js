@@ -1,6 +1,6 @@
 import axios from 'axios';
 import BasicCrud from '../../../generics/BasicCrud.js';
-import TransactionCrud from '../../finances/transaction/TransactionCrud.js';
+import TransactionCrud from '../../accounting/transaction/TransactionCrud.js';
 import PurchaseItemCrud from './item/PurchaseItemCrud.js';
 import NfeCrud from './nfe/NfeCrud.js';
 

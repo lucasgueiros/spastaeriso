@@ -1,7 +1,7 @@
 import './Purchase.css';
 import React from 'react';
 import Provider from '../provider/Provider.js';
-import Transaction from '../../finances/transaction/Transaction.js';
+import Transaction from '../../accounting/transaction/Transaction.js';
 import PurchaseItem from './item/PurchaseItem.js';
 import axios from 'axios';
 
