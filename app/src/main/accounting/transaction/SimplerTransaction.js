@@ -2,6 +2,7 @@ import './SimplerTransaction.css';
 import React from 'react';
 import axios from 'axios';
 import SimplerLinkSelect from '../../../generics/SimplerLinkSelect.js';
+import Entry from '../entry/Entry.js';
 
 class SimplerTransaction extends React.Component {
 
@@ -18,20 +19,13 @@ class SimplerTransaction extends React.Component {
             <td></td>
             <td></td>
             <td></td>
-            <td>
-              <SimplerLinkSelect
-                entity={this.props.entity.entries[index].account._links.self || ''}
-                prefix={this.props.prefix + "entries."+index+".account."}
-                onChange={this.props.onChange}
-                editing={this.props.editing}
-                optionsList={this.props.accountsOptionsList}/>
-            </td>
-            <td><input
-              name={this.props.prefix + "entries."+index+".value"}
-              type="number"
-              value={entry.value}
+            <Entry
+              entity={entry}
+              prefix={this.props.prefix + "entries."+index+".account."}
               onChange={this.props.onChange}
-              readOnly={!this.props.editing}></input></td>
+              editing={this.props.editing}
+              accountsOptionsList={this.props.accountsOptionsList}
+              />
             <td></td>
           </tr>);
       }
@@ -65,22 +59,13 @@ class SimplerTransaction extends React.Component {
               editing={this.props.editing}
               optionsList={this.props.modalitiesOptionsList}/>
           </td>
-          <td>
-          <SimplerLinkSelect
-            entity={this.props.entity.entries[0].account._links.self || ''}
+          <Entry
+            entity={this.props.entity.entries[0]}
             prefix={this.props.prefix + "entries.0.account."}
             onChange={this.props.onChange}
             editing={this.props.editing}
-            optionsList={this.props.accountsOptionsList}/>
-          </td>
-          <td>
-            <input
-              name={this.props.prefix + "entries.0.value"}
-              type="number"
-              value={this.props.entity.entries[0].value}
-              onChange={this.props.onChange}
-              readOnly={!this.props.editing}></input>
-          </td>
+            accountsOptionsList={this.props.accountsOptionsList}
+            />
           <td>
             <input
               name={this.props.prefix + "description"}

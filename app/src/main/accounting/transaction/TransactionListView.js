@@ -57,7 +57,8 @@ class TransactionListView extends React.Component {
             <SimplerTransaction
               typesOptionsList={this.state.typesOptionsList}
               modalitiesOptionsList={this.state.modalitiesOptionsList}
-              accountsOptionsList={this.state.accountsOptionsList}/>
+              accountsOptionsList={this.state.accountsOptionsList}
+              prefix=""/>
           </ListView>
         </table>
       </>
