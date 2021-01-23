@@ -1,13 +1,16 @@
 package br.com.pastaeriso.api.accounting.transaction;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
+import br.com.pastaeriso.api.accounting.entry.Entry;
 import br.com.pastaeriso.api.accounting.transaction.modality.TransactionModality;
 import br.com.pastaeriso.api.accounting.transaction.type.TransactionType;
 import lombok.AllArgsConstructor;
@@ -45,4 +48,6 @@ public class Transaction {
 	private LocalDateTime dateTime = LocalDateTime.now();
 	@Lob
 	private byte[] voucher;
+	@OneToMany
+	private List<Entry> entries;
 }

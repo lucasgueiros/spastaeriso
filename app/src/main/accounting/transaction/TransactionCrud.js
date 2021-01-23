@@ -1,5 +1,6 @@
 import axios from 'axios';
 import BasicCrud from '../../../generics/BasicCrud.js';
+import EntryCrud from '../entry/EntryCrud.js';
 
 class TransactionCrud extends BasicCrud{
 
@@ -8,6 +9,7 @@ class TransactionCrud extends BasicCrud{
     this.accountCrud = new BasicCrud("accounts");
     this.typeCrud = new BasicCrud("transactionTypes");
     this.modalityCrud = new BasicCrud("transactionModalities");
+    this.entryCrud = new EntryCrud();
   }
 
   async getOperation() {
@@ -16,6 +18,7 @@ class TransactionCrud extends BasicCrud{
     for(; i < transactions.length; i++ ){
       transactions[i] = await this.typeCrud.getRelationOperation("type",transactions[i]);
       transactions[i] = await this.modalityCrud.getRelationOperation("modality",transactions[i]);
+      transactions[i] = await this.entryCrud.getToManyRelationOperation("entries",transactions[i]);
     }
     return transactions;
   }

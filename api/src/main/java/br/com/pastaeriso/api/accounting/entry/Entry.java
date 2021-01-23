@@ -35,8 +35,6 @@ public class Entry {
 	@Id
 	@GeneratedValue
 	private Long id;
-	@ManyToOne
-	private Transaction transaction;
 	@NonNull
 	@ManyToOne
 	private Account account;

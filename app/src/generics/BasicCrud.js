@@ -12,6 +12,15 @@ class BasicCrud {
     }
   }
 
+  async getToManyRelationOperation(relationName, entity) {
+    let relatives = await this.getWithUrlOperation(entity._links[relationName].href);
+    entity = {...entity, [relationName]: relatives._embedded[this.url]};
+    for(let j =0; j < entity[relationName].length; j++) {
+      entity = await this.getRelationWithIndexOperation(j,relationName,entity);
+    }
+    return entity;
+  }
+
   async getWithUrlOperation(url) {
     let toReturn = {};
     await axios.get(url.replace("{?projection}",""))
@@ -35,13 +44,33 @@ class BasicCrud {
     return toReturn;
   }
 
-  async getRelationWithIndexOperation(index, relationName, entity) {
+  /*async getRelationWithIndexOperation(index, relationName, entity) {
     let toReturn;
     await axios.get(entity._links[relationName].href.replace("{?projection}",""))
       .then( (response) => {
         toReturn = {
           ...entity,
           [relationName]: response.data
+        }
+      }, (error) => {
+        console.log(error);
+        toReturn = {
+          ...entity,
+          [relationName]: {}
+        }
+      });
+    return toReturn;
+  }*/
+
+  async getRelationWithIndexOperation(index, relationName, entity) {
+    let toReturn;
+    await axios.get(entity[relationName][index]._links.self.href.replace("{?projection}",""))
+      .then( (response) => {
+        let arrayCopy = [...entity[relationName]];
+        arrayCopy[index] = response.data;
+        toReturn = {
+          ...entity,
+          [relationName]: arrayCopy
         }
       }, (error) => {
         console.log(error);
