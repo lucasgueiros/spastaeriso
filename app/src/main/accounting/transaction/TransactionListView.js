@@ -12,6 +12,7 @@ class TransactionListView extends React.Component {
     this.state = {
       typesOptionsList: [{}],
       modalitiesOptionsList: [{}],
+      accountsOptionsList: [{}],
     }
     this.updateOptionsLists = this.updateOptionsLists.bind(this);
   }
@@ -37,6 +38,14 @@ class TransactionListView extends React.Component {
       }, (error) => {
         console.log(error);
       });
+    axios.get("accounts")
+      .then((response) => {
+        this.setState({
+            accountsOptionsList: response.data._embedded.accounts,
+        })
+      }, (error) => {
+        console.log(error);
+      });
   }
 
   render() {
@@ -47,7 +56,8 @@ class TransactionListView extends React.Component {
           <ListView crud={new TransactionCrud()}>
             <SimplerTransaction
               typesOptionsList={this.state.typesOptionsList}
-              modalitiesOptionsList={this.state.modalitiesOptionsList}/>
+              modalitiesOptionsList={this.state.modalitiesOptionsList}
+              accountsOptionsList={this.state.accountsOptionsList}/>
           </ListView>
         </table>
       </>
