@@ -1,5 +1,7 @@
 package br.com.pastaeriso.api.accounting.transaction;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -40,6 +42,7 @@ public class Transaction {
 	@NonNull
 	@ManyToOne
 	private TransactionType type;
+	private LocalDateTime dateTime = LocalDateTime.now();
 	@Lob
 	private byte[] voucher;
 }

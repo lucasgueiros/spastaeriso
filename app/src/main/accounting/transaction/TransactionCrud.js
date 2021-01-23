@@ -6,6 +6,18 @@ class TransactionCrud extends BasicCrud{
   constructor () {
     super("transactions");
     this.accountCrud = new BasicCrud("accounts");
+    this.typeCrud = new BasicCrud("transactionTypes");
+    this.modalityCrud = new BasicCrud("transactionModalities");
+  }
+
+  async getOperation() {
+    let transactions = await super.getOperation();
+    let i = 0;
+    for(; i < transactions.length; i++ ){
+      transactions[i] = await this.typeCrud.getRelationOperation("type",transactions[i]);
+      transactions[i] = await this.modalityCrud.getRelationOperation("modality",transactions[i]);
+    }
+    return transactions;
   }
 
   async getRelationOperation (relationName, entity) {

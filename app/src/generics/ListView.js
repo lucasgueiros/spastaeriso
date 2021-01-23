@@ -8,25 +8,35 @@ class ListView extends React.Component {
   };
 
   componentDidMount () {
-    this.props.crud.getOperation(this.setEntities, this.setEntities);
+    this.props.crud.getOperation().then(
+      (r) => {
+        this.setEntities(r);
+      }
+    );
   }
 
   setEntities(entities) {
     if(entities.length !== 0 ) {
       this.setState({
         entities: entities,
-        creating: false,
-        editing: false,
       });
     }
   }
 
 
   render() {
-    return (
+    const listEntities = this.state.entities.map ((entity,index) =>
       <>
-        <h1>ListView</h1>
-      </>
+        {React.cloneElement(this.props.children, {
+          entity: entity,
+          editing: this.state.editing,
+          onChange: this.handleInputChange
+         })}
+      </>);
+    return (
+      <tbody>
+        {listEntities}
+      </tbody>
     );
   }
 

@@ -7,14 +7,14 @@ class AccountCrud extends BasicCrud{
     super("accounts");
   }
 
-  async getOperation (setEntities) {
-    let accounts = await super.getOperationNoSetEntities();
+  async getOperation () {
+    let accounts = await super.getOperation();
     for(let i =0; i < accounts.length; i++) {
       let account = {...accounts[i]};
       account = await super.getRelationOperation("motherAccount",account);
       accounts[i] = account;
     }
-    setEntities(accounts);
+    return accounts;
   }
 }
 
