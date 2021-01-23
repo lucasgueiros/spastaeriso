@@ -1,15 +1,10 @@
-package br.com.pastaeriso.api.accounting.transaction;
+package br.com.pastaeriso.api.people.address.type;
 
-import java.util.List;
-
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
-import br.com.pastaeriso.api.accounting.entry.Entry;
 import br.com.pastaeriso.api.accounting.transaction.modality.TransactionModality;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -30,18 +25,14 @@ import lombok.ToString;
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Transaction {
+public class AddressType {
 
 	@Id
 	@GeneratedValue
 	private Long id;
-	@OneToMany
-	private List<Entry> entries;
-	// TODO @NonNull
-	private String description;
 	@NonNull
-	@ManyToOne
-	private TransactionModality modality;
-	@Lob
-	private byte[] voucher;
+	@Column(unique=true)
+	private String name;
+	private String description;
+	
 }

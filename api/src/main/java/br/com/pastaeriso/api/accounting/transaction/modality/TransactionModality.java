@@ -1,10 +1,12 @@
-package br.com.pastaeriso.api.generics.address.neighborhoods;
+package br.com.pastaeriso.api.accounting.transaction.modality;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,17 +23,15 @@ import lombok.ToString;
 @NoArgsConstructor
 @RequiredArgsConstructor
 @AllArgsConstructor
-public class Neighborhood {
+@Builder
+public class TransactionModality {
 
 	@Id
 	@GeneratedValue
 	private Long id;
 	@NonNull
+	@Column(unique=true)
 	private String name;
-	@NonNull
-	private String city = "Garanhuns";
-	@NonNull
-	private String state = "PE";
-	private String postalCode;
+	private String description;
 	
 }

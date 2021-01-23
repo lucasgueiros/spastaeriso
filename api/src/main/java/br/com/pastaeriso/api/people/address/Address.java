@@ -1,4 +1,4 @@
-package br.com.pastaeriso.api.generics.address;
+package br.com.pastaeriso.api.people.address;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -7,7 +7,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
-import br.com.pastaeriso.api.generics.address.neighborhoods.Neighborhood;
+import br.com.pastaeriso.api.people.address.neighborhoods.Neighborhood;
+import br.com.pastaeriso.api.people.address.type.AddressType;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -41,7 +42,7 @@ public class Address {
 	private String reference;
 	private String comments;
 	@NonNull
-	@Enumerated(EnumType.STRING)
+	@ManyToOne
 	private AddressType type;
 
 }

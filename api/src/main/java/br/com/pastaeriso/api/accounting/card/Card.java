@@ -1,13 +1,13 @@
-package br.com.pastaeriso.api.accounting.account;
+package br.com.pastaeriso.api.accounting.card;
 
 import java.time.LocalDate;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
+import br.com.pastaeriso.api.accounting.account.Account;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -25,16 +25,18 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @RequiredArgsConstructor
-public class Account {
+public class Card {
 
 	@Id
 	@GeneratedValue
 	private Long id;
 	@NonNull
-	@Column(unique = true)
-	private String name;
-	private LocalDate created = LocalDate.now();
-	private String comment;
-	@ManyToOne
-	private Account motherAccount;
+	@OneToOne
+	private Account account;
+	/**
+	 * CNPJ do fornecedor do cartao
+	 */
+	private String cnpj;
+	private boolean favorite;
+	
 }

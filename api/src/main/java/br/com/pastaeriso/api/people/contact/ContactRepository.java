@@ -1,4 +1,4 @@
-package br.com.pastaeriso.api.generics.contact;
+package br.com.pastaeriso.api.people.contact;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

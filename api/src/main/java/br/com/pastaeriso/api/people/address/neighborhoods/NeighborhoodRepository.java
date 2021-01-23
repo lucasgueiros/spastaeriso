@@ -1,4 +1,4 @@
-package br.com.pastaeriso.api.generics.address;
+package br.com.pastaeriso.api.people.address.neighborhoods;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -6,6 +6,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 @Repository
 @CrossOrigin
-public interface AddressRepository extends JpaRepository<Address, Long> {
+public interface NeighborhoodRepository extends JpaRepository<Neighborhood, Long>{
 
 }

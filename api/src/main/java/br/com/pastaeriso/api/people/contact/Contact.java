@@ -1,18 +1,14 @@
-package br.com.pastaeriso.api.accounting.transaction;
-
-import java.util.List;
+package br.com.pastaeriso.api.people.contact;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
-import br.com.pastaeriso.api.accounting.entry.Entry;
-import br.com.pastaeriso.api.accounting.transaction.modality.TransactionModality;
+import br.com.pastaeriso.api.people.contact.channel.ContactChannel;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,19 +25,17 @@ import lombok.ToString;
 @NoArgsConstructor
 @RequiredArgsConstructor
 @AllArgsConstructor
-@Builder
-public class Transaction {
+public class Contact {
 
 	@Id
 	@GeneratedValue
 	private Long id;
-	@OneToMany
-	private List<Entry> entries;
-	// TODO @NonNull
-	private String description;
+	@NonNull
+	private String name = "default";
+	@NonNull
+	private String contact;
 	@NonNull
 	@ManyToOne
-	private TransactionModality modality;
-	@Lob
-	private byte[] voucher;
+	private ContactChannel channel;
+
 }

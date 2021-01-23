@@ -1,4 +1,4 @@
-package br.com.pastaeriso.api.generics.person;
+package br.com.pastaeriso.api.people.person;
 
 import java.util.List;
 
@@ -8,9 +8,11 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
-import br.com.pastaeriso.api.generics.address.Address;
-import br.com.pastaeriso.api.generics.contact.Contact;
+import br.com.pastaeriso.api.accounting.account.Account;
+import br.com.pastaeriso.api.people.address.Address;
+import br.com.pastaeriso.api.people.contact.Contact;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -45,5 +47,8 @@ public class Person {
 	@ManyToOne
 	private Address primaryAddress;
 	@ManyToOne
-	private Contact privaryContact;
+	private Contact primaryContact;
+	@OneToOne
+	private Account account;
+	private String comment;
 }

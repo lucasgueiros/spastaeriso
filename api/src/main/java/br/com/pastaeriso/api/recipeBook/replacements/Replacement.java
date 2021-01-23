@@ -1,4 +1,4 @@
-package br.com.pastaeriso.api.generics.replacements;
+package br.com.pastaeriso.api.recipeBook.replacements;
 
 import java.math.BigDecimal;
 

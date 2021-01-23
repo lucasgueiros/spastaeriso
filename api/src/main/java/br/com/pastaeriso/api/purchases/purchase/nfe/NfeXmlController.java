@@ -18,9 +18,8 @@ import org.springframework.http.ResponseEntity;
 
 import br.com.pastaeriso.api.accounting.account.Account;
 import br.com.pastaeriso.api.accounting.account.AccountRepository;
-import br.com.pastaeriso.api.accounting.account.AccountType;
-import br.com.pastaeriso.api.accounting.transaction.TransactionModality;
-import br.com.pastaeriso.api.accounting.transaction.TransactionType;
+import br.com.pastaeriso.api.accounting.transaction.modality.TransactionModality;
+import br.com.pastaeriso.api.accounting.transaction.modality.TransactionModalityRepository;
 import br.com.pastaeriso.api.integrations.nfe.NfeProc;
 import br.com.pastaeriso.api.purchases.provider.Provider;
 import br.com.pastaeriso.api.purchases.provider.ProviderRepository;
@@ -85,6 +84,8 @@ public class NfeXmlController {
 	private EntityLinks entityLinks;
 	@Autowired
 	private InputRepository inputRepository;
+	@Autowired
+	private TransactionModalityRepository transactionModalityRepository;
 
 
 	@SuppressWarnings("rawtypes")
@@ -126,35 +127,45 @@ public class NfeXmlController {
 		
 		// Transaction
 		int tipoDePagamento = Integer.parseInt(proc.getNfeProc().getNFe().getInfNFe().getPag().getDetPag().getTPag());
-		ObjectNode account = mapper.createObjectNode();
-		String modality = TransactionModality.CASH.toString();
-		AccountType accountType = AccountType.CASH_ACCOUNT;
 		
+		ObjectNode transactionLinks = mapper.createObjectNode();
+		
+		// Conseguindo a modalidade da transação
+		String modalityName = "Espécie";
 		switch(tipoDePagamento) {
 			case 01: // dinheiro
-				modality = TransactionModality.CASH.toString();
-				accountType = AccountType.CASH_ACCOUNT;
+				modalityName = "Espécie";
 			break;
 			case 03: // cartao de credito
-				modality = TransactionModality.CREDIT_CARD.toString();
-				accountType = AccountType.CREDIT_CARD;
+				modalityName = "Cartão de crédito";
 			break;
 			case 04: // cartaod de debito
-				modality = TransactionModality.DEBIT_CARD.toString();
-				accountType = AccountType.BANK_ACCOUNT;
+				modalityName = "Cartão de débito";
 			break;
 		}
-		account = account.put("type",accountType.toString());
-		Optional<Account> theAccount = accountRepository.findFavoriteByType(accountType);
+		TransactionModality theModality = null;
+		Optional<TransactionModality> optionalModality = transactionModalityRepository.findByName(modalityName);
+		if(optionalModality.isEmpty()) {
+			TransactionModality newTransactionModality = new TransactionModality(modalityName);
+			theModality = transactionModalityRepository.save(newTransactionModality);
+		} else {
+			theModality = optionalModality.get();
+		}
+		String modalityUri = entityLinks.linkToItemResource(TransactionModality.class, theModality.getId()).getHref();
+		ObjectNode modalityLink = mapper.createObjectNode();
+		modalityLink.put("href",modalityUri);
+		transactionLinks.set("modality", modalityLink);
+		
+		ObjectNode account = mapper.createObjectNode();
+		String accountName = "caixa";
+		Optional<Account> theAccount = accountRepository.findByNameIgnoreCase(accountName);
 		if(theAccount.isPresent()) {
 			account = account.put("name", theAccount.get().getName());
 		}
 		ObjectNode transaction = ((ObjectNode)mapper.createObjectNode()
-				.set("account",account))
+				.set("links",transactionLinks))
 				.put("value",value.toString())
-				.put("date",made.toLocalDate().toString())
-				.put("modality",modality)
-				.put("type",TransactionType.PURCHASE.toString());
+				.put("date",made.toLocalDate().toString());
 	
 		// ITEMS
 		ArrayNode items = mapper.createArrayNode();

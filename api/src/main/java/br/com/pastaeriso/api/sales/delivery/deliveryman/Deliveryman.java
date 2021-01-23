@@ -1,16 +1,19 @@
 package br.com.pastaeriso.api.sales.delivery.deliveryman;
 
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
+import javax.persistence.Enumerated;
 
-import br.com.pastaeriso.api.generics.person.Person;
-import br.com.pastaeriso.api.sales.delivery.deliveryman.contract.template.ContractTemplate;
+import br.com.pastaeriso.api.people.person.Person;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
+import java.time.DayOfWeek;
+import java.util.List;
 
 @Entity
 @Getter
@@ -21,7 +24,9 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class Deliveryman extends Person {
 
-	@ManyToOne
-	public ContractTemplate contract;
+	@Column
+	@Enumerated
+	@ElementCollection(targetClass = DayOfWeek.class)
+	public List<DayOfWeek> avaliableDays;
 
 }

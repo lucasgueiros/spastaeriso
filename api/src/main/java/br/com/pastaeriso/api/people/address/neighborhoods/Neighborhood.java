@@ -1,12 +1,8 @@
-package br.com.pastaeriso.api.accounting.account;
+package br.com.pastaeriso.api.people.address.neighborhoods;
 
-import java.time.LocalDate;
-
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -22,19 +18,20 @@ import lombok.ToString;
 @Setter
 @EqualsAndHashCode
 @ToString
-@AllArgsConstructor
 @NoArgsConstructor
 @RequiredArgsConstructor
-public class Account {
+@AllArgsConstructor
+public class Neighborhood {
 
 	@Id
 	@GeneratedValue
 	private Long id;
 	@NonNull
-	@Column(unique = true)
 	private String name;
-	private LocalDate created = LocalDate.now();
-	private String comment;
-	@ManyToOne
-	private Account motherAccount;
+	@NonNull
+	private String city = "Garanhuns";
+	@NonNull
+	private String state = "PE";
+	private String postalCode;
+	
 }

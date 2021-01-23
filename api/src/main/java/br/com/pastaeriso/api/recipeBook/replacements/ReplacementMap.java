@@ -1,4 +1,4 @@
-package br.com.pastaeriso.api.generics.replacements;
+package br.com.pastaeriso.api.recipeBook.replacements;
 
 import java.util.Map;
 import java.util.Set;
