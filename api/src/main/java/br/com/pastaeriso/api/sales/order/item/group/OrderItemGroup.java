@@ -29,7 +29,7 @@ public class OrderItemGroup {
 
 	@Id
 	@GeneratedValue
-	private Integer id;
+	private Long id;
 	@NonNull
 	@OneToMany
 	private List<OrderItem> items;

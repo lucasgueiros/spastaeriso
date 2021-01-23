@@ -8,6 +8,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 @Repository
 @CrossOrigin
 @RepositoryRestResource(excerptProjection = InstructionDetails.class)
-public interface InstructionRepository extends JpaRepository<Instruction, Integer> {
+public interface InstructionRepository extends JpaRepository<Instruction, Long> {
 
 }

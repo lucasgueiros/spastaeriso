@@ -29,7 +29,7 @@ import lombok.ToString;
 public class NFeXml {
 	@Id
 	@GeneratedValue
-	private Integer id;
+	private Long id;
 	@Column(unique=true)
 	@NonNull
 	private String accessCode;

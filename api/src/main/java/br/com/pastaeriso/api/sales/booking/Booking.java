@@ -31,7 +31,7 @@ public class Booking {
 
 	@Id
 	@GeneratedValue
-	private Integer id;
+	private Long id;
 	@OneToOne
 	@NonNull
 	private ClientOrder order;

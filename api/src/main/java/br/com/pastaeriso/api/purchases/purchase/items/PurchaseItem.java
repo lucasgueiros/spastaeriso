@@ -33,7 +33,7 @@ public class PurchaseItem {
 
 	@Id
 	@GeneratedValue
-	private Integer id;
+	private Long id;
 	private String brand;
 	@NonNull
 	private BigDecimal pricePerUnit;

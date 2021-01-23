@@ -18,6 +18,8 @@ function PurchaseItems(props) {
       editing={true}
       onChange={props.onChange}
       unitsOptionsList={props.unitsOptionsList}
+      inputOptionsList={props.inputOptionsList}
+      accountsOptionsList={props.accountsOptionsList}
     />
   );
   return listItems;
@@ -28,7 +30,8 @@ class Purchase extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      unitsOptionsList: []
+      unitsOptionsList: [],
+      inputOptionsList: []
     }
     this.updateOptionsLists = this.updateOptionsLists.bind(this);
   }
@@ -42,6 +45,35 @@ class Purchase extends React.Component {
       this.setState({
         unitsOptionsList: response.data._embedded.units,
       });
+    }, (error) => {
+      console.log(error);
+    });
+    axios.get("inputs").then( (response) => {
+      this.setState({
+        inputOptionsList: response.data._embedded.inputs,
+      });
+    }, (error) => {
+      console.log(error);
+    });
+    axios.get("accounts").then( (response) => {
+      this.setState({
+        accountsOptionsList: response.data._embedded.units,
+      });
+    }, (error) => {
+      console.log(error);
+    });
+    axios.get("profile/transactions").then( (response) => {
+      const fields = response.data.alps.descriptor.descriptor;
+      const options = fields[i].doc.value.split(", ");
+      let i;
+      for(i=0; i < fields.length;i++) {
+        if(fields[i].name === "type") {
+          this.setState({
+            transactionModalitiesOptionsList: options,
+          });
+          break;
+        }
+      }
     }, (error) => {
       console.log(error);
     });
@@ -89,7 +121,9 @@ class Purchase extends React.Component {
             <PurchaseItems
               items={this.props.entity.items || {}}
               onChange={this.props.onChange}
-              unitsOptionsList={this.state.unitsOptionsList}/>
+              unitsOptionsList={this.state.unitsOptionsList}
+              inputOptionsList={this.state.inputOptionsList}
+              accountsOptionsList={this.state.accountsOptionsList}/>
           </tbody>
         </table>
         {updateOptionsListsButton}

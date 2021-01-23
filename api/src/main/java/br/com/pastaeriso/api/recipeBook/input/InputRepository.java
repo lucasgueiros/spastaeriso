@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 @Repository
 @CrossOrigin
-public interface InputRepository extends JpaRepository<Input, Integer> {
+public interface InputRepository extends JpaRepository<Input, Long> {
 
 	public Input findByName(String name);
 	

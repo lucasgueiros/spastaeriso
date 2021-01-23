@@ -6,6 +6,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 @Repository
 @CrossOrigin
-public interface ContractTemplateRepository extends JpaRepository<ContractTemplate, Integer> {
+public interface ContractTemplateRepository extends JpaRepository<ContractTemplate, Long> {
 
 }

@@ -13,7 +13,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import br.com.pastaeriso.api.finances.transaction.TransactionModality;
+import br.com.pastaeriso.api.accounting.transaction.TransactionModality;
 import br.com.pastaeriso.api.generics.person.Person;
 import br.com.pastaeriso.api.sales.order.item.OrderItem;
 import br.com.pastaeriso.api.sales.order.item.group.OrderItemGroup;
@@ -38,7 +38,7 @@ public class ClientOrder {
 
 	@Id
 	@GeneratedValue
-	private Integer id;
+	private Long id;
 	@ManyToOne
 	@NonNull
 	private Person client;

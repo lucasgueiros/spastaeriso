@@ -1,17 +1,14 @@
-package br.com.pastaeriso.api.finances.transaction;
+package br.com.pastaeriso.api.accounting.entry;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 
-import br.com.pastaeriso.api.finances.account.Account;
+import br.com.pastaeriso.api.accounting.account.Account;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -31,11 +28,11 @@ import lombok.ToString;
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Transaction {
+public class Entry {
 
 	@Id
 	@GeneratedValue
-	private Integer id;
+	private Long id;
 	@NonNull
 	@ManyToOne
 	private Account account;
@@ -45,12 +42,5 @@ public class Transaction {
 	@Builder.Default
 	private LocalDate date = LocalDate.now();
 	private String comment;
-	@NonNull
-	@Enumerated(EnumType.STRING)
-	private TransactionType type;
-	@NonNull
-	@Enumerated(EnumType.STRING)
-	private TransactionModality modality;
-	@Lob
-	private byte[] voucher;
+	
 }

@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 @Repository
 @CrossOrigin
-public interface ProviderRepository extends JpaRepository<Provider, Integer> {
+public interface ProviderRepository extends JpaRepository<Provider, Long> {
 
 	public Provider findByCnpj(String cnpj);
 	

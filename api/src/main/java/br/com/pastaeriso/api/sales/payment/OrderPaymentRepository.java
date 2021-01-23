@@ -6,6 +6,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 @Repository
 @CrossOrigin
-public interface OrderPaymentRepository extends JpaRepository<OrderPayment, Integer> {
+public interface OrderPaymentRepository extends JpaRepository<OrderPayment, Long> {
 
 }

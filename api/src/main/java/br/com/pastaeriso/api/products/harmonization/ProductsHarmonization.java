@@ -27,7 +27,7 @@ public class ProductsHarmonization {
 
 	@Id
 	@GeneratedValue
-	private Integer id;
+	private Long id;
 	@NonNull
 	@ManyToOne
 	private Product a;

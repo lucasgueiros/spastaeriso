@@ -6,6 +6,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 @Repository
 @CrossOrigin
-public interface InputReplacementRepository extends JpaRepository<InputReplacement, Integer> {
+public interface InputReplacementRepository extends JpaRepository<InputReplacement, Long> {
 
 }

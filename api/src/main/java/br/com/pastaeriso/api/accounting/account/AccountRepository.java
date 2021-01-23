@@ -1,4 +1,4 @@
-package br.com.pastaeriso.api.finances.account;
+package br.com.pastaeriso.api.accounting.account;
 
 import java.util.Optional;
 
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 @Repository
 @CrossOrigin
-public interface AccountRepository extends JpaRepository<Account, Integer> {
+public interface AccountRepository extends JpaRepository<Account, Long> {
 
 	@Query("FROM Account WHERE 	type = ?1 AND favorite = TRUE")
 	public Optional<Account> findFavoriteByType(AccountType type);

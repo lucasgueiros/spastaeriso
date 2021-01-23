@@ -6,6 +6,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 @Repository
 @CrossOrigin
-public interface UnitReplacementRepository extends JpaRepository<UnitReplacement, Integer> {
+public interface UnitReplacementRepository extends JpaRepository<UnitReplacement, Long> {
 
 }

@@ -1,6 +1,6 @@
 import './PurchaseItem.css';
 import React from 'react';
-import SimplerInput from '../../../recipeBook/input/SimplerInput.js';
+import SimplerLinkSelect from '../../../../generics/SimplerLinkSelect.js';
 import SimplerUnit from '../../../recipeBook/unit/SimplerUnit.js';
 
 class PurchaseItem extends React.Component {
@@ -9,11 +9,12 @@ class PurchaseItem extends React.Component {
     return (
       <tr class-name="purchase-item">
         <td>
-          <SimplerInput
-            entity={this.props.entity.inventoryMovement ? this.props.entity.inventoryMovement.input || {} : {}}
-            prefix={this.props.prefix + "inventoryMovement.input."}
+          <SimplerLinkSelect
+            entity={this.props.entity.inventoryMovement._links.input || {}}
+            prefix={this.props.prefix + "inventoryMovement._links.input."}
             onChange={this.props.onChange}
-            editing={this.props.editing}/>
+            editing={this.props.editing}
+            optionsList={this.props.inputOptionsList}/>
         </td>
         <td>
           <div>

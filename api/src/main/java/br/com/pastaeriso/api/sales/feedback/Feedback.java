@@ -28,7 +28,7 @@ import lombok.ToString;
 public class Feedback {
 	@Id
 	@GeneratedValue
-	private Integer id;
+	private Long id;
 	@NonNull
 	private LocalDateTime made;
 	@ManyToOne

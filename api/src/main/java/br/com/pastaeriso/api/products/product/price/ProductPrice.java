@@ -28,7 +28,7 @@ public class ProductPrice {
 
 	@Id
 	@GeneratedValue
-	private Integer id;
+	private Long id;
 	@NonNull
 	private BigDecimal price;
 	@NonNull

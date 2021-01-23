@@ -1,10 +1,12 @@
-package br.com.pastaeriso.api.finances.account;
+package br.com.pastaeriso.api.accounting.account;
 
 import java.time.LocalDate;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -27,8 +29,9 @@ public class Account {
 
 	@Id
 	@GeneratedValue
-	private Integer id;
+	private Long id;
 	@NonNull
+	@Column(unique = true)
 	private String name;
 	private LocalDate created = LocalDate.now();
 	private String comment;
@@ -36,5 +39,6 @@ public class Account {
 	private AccountType type;
 	@NonNull
 	private Boolean favorite = false;
-
+	@ManyToOne
+	private Account motherAccount;
 }

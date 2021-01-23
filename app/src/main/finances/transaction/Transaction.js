@@ -1,11 +1,20 @@
 import './Transaction.css';
 import React from 'react';
 import Account from '../account/Account.js';
+import SimplerLinkSelect from '../../../generics/SimplerLinkSelect.js';
 
 class Transaction extends React.Component {
 
   render () {
-    // ACCOUNT
+    let accountSelect= '';
+    if(this.props.entity._links) {
+      accountSelect = <SimplerLinkSelect
+        entity={this.props.entity._links.account}
+        prefix={this.props.prefix + "_links.account."}
+        onChange={this.props.onChange}
+        editing={this.props.editing}
+        optionsList={this.props.accountsOptionsList}/>;
+    }
     return (
       <div class-name="transaction">
         <div>
@@ -24,12 +33,7 @@ class Transaction extends React.Component {
           <label htmlFor={this.props.prefix + 'comment'}>Comentários: </label>
           <input name={this.props.prefix + 'comment'} type="text" value={this.props.entity.comment || ''} onChange={this.props.onChange} readOnly={!this.props.editing}></input>
         </div>
-        <Account
-          entity={this.props.entity.account || {}}
-          prefix={this.props.prefix + "account."}
-          editing={this.props.editing}
-          onChange={this.props.onChange}/>
-
+        {accountSelect}
       </div>
     );
   }

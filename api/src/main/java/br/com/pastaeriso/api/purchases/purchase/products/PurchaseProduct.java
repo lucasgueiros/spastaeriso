@@ -26,7 +26,7 @@ public class PurchaseProduct {
 
 	@Id
 	@GeneratedValue
-	private Integer id;
+	private Long id;
 	@Column(unique = true)
 	private String productName;
 	@NonNull

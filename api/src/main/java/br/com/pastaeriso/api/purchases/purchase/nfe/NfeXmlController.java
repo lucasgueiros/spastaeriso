@@ -16,17 +16,18 @@ import org.springframework.hateoas.server.EntityLinks;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import br.com.pastaeriso.api.finances.account.Account;
-import br.com.pastaeriso.api.finances.account.AccountRepository;
-import br.com.pastaeriso.api.finances.account.AccountType;
-import br.com.pastaeriso.api.finances.transaction.TransactionModality;
-import br.com.pastaeriso.api.finances.transaction.TransactionType;
+import br.com.pastaeriso.api.accounting.account.Account;
+import br.com.pastaeriso.api.accounting.account.AccountRepository;
+import br.com.pastaeriso.api.accounting.account.AccountType;
+import br.com.pastaeriso.api.accounting.transaction.TransactionModality;
+import br.com.pastaeriso.api.accounting.transaction.TransactionType;
 import br.com.pastaeriso.api.integrations.nfe.NfeProc;
 import br.com.pastaeriso.api.purchases.provider.Provider;
 import br.com.pastaeriso.api.purchases.provider.ProviderRepository;
 import br.com.pastaeriso.api.purchases.purchase.products.PurchaseProduct;
 import br.com.pastaeriso.api.purchases.purchase.products.PurchaseProductRepository;
 import br.com.pastaeriso.api.recipeBook.input.Input;
+import br.com.pastaeriso.api.recipeBook.input.InputRepository;
 import br.com.pastaeriso.api.recipeBook.unit.Unit;
 import br.com.pastaeriso.api.recipeBook.unit.UnitRepository;
 
@@ -82,6 +83,8 @@ public class NfeXmlController {
 	private PurchaseProductRepository purchaseProductRepository;
 	@Autowired
 	private EntityLinks entityLinks;
+	@Autowired
+	private InputRepository inputRepository;
 
 
 	@SuppressWarnings("rawtypes")
@@ -161,15 +164,18 @@ public class NfeXmlController {
 			String brand = null;
 			String inputAsString = det.getProd().getXProd();
 			List<PurchaseProduct> purchaseProduct = purchaseProductRepository.findByProductNameIgnoreCase(inputAsString);
-			
-			ObjectNode input = mapper.createObjectNode().put("name", "");
+			Input theInput = null;
 			if(!purchaseProduct.isEmpty()) {
-				Input theInput = purchaseProduct.get(0).getInput();
-				input = input
-						.put("name", theInput.getName())
-						.put("comment", theInput.getComment());
+				theInput = purchaseProduct.get(0).getInput();
 				brand = purchaseProduct.get(0).getBrand();
+			} else {
+				theInput = this.inputRepository.findByName("?");
 			}
+			ObjectNode input = mapper.createObjectNode().put("href", entityLinks.linkToItemResource(Input.class, theInput.getId()).getHref());
+			ObjectNode links = mapper.createObjectNode();
+			links.set("input", input);
+			
+			
 			
 			// quantidades e precos
 			BigDecimal quantity = new BigDecimal(det.getProd().getQCom());
@@ -184,7 +190,6 @@ public class NfeXmlController {
 				theUnit = unitRepository.findByNameIgnoreCase("UN");
 			}
 			ObjectNode unit = mapper.createObjectNode().put("href", entityLinks.linkToItemResource(Unit.class, theUnit.getId()).getHref());
-			ObjectNode links = mapper.createObjectNode();
 			links.set("unit", unit);
 			//		.put("name",theUnit.getName())
 			//		.put("quantity",theUnit.getQuantity().toString());

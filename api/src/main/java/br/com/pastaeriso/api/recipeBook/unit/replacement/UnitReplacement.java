@@ -28,7 +28,7 @@ public class UnitReplacement implements Replacement<Unit> {
 
 	@Id
 	@GeneratedValue
-	private Integer id;
+	private Long id;
 
 	@NonNull
 	@ManyToOne

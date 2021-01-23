@@ -27,7 +27,7 @@ import lombok.ToString;
 public class InputReplacement implements Replacement<Input> {
 	@Id
 	@GeneratedValue
-	private Integer id;
+	private Long id;
 
 	@NonNull
 	@ManyToOne

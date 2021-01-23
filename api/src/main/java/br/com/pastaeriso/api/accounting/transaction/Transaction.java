@@ -1,19 +1,20 @@
-package br.com.pastaeriso.api.purchases.purchase;
+package br.com.pastaeriso.api.accounting.transaction;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 
-import br.com.pastaeriso.api.accounting.transaction.Transaction;
-import br.com.pastaeriso.api.purchases.provider.Provider;
-import br.com.pastaeriso.api.purchases.purchase.items.PurchaseItem;
-import br.com.pastaeriso.api.purchases.purchase.nfe.NFeXml;
+import br.com.pastaeriso.api.accounting.account.Account;
+import br.com.pastaeriso.api.accounting.entry.Entry;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -33,20 +34,20 @@ import lombok.ToString;
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Purchase {
+public class Transaction {
 
 	@Id
 	@GeneratedValue
 	private Long id;
-	@NonNull
-	@ManyToOne
-	private Provider provider;
-	@OneToOne
-	private NFeXml nfe;
-	private BigDecimal additionalValue;
-	@OneToOne
-	private Transaction transaction;
 	@OneToMany
-	private List<PurchaseItem> items;
-
+	private List<Entry> entries;
+	private String comment;
+	@NonNull
+	@Enumerated(EnumType.STRING)
+	private TransactionType type;
+	@NonNull
+	@Enumerated(EnumType.STRING)
+	private TransactionModality modality;
+	@Lob
+	private byte[] voucher;
 }

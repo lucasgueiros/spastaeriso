@@ -29,7 +29,7 @@ public class Address {
 
 	@Id
 	@GeneratedValue
-	private Integer id;
+	private Long id;
 	@NonNull
 	private String name = "principal";
 	private String localName;

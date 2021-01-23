@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 @Repository
 @CrossOrigin
-public interface NFeXmlRepository extends JpaRepository<NFeXml, Integer> {
+public interface NFeXmlRepository extends JpaRepository<NFeXml, Long> {
 
 	public Optional<NFeXml> findByAccessCode(String accessCode);
 	

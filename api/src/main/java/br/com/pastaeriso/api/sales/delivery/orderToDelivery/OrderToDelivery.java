@@ -35,7 +35,7 @@ public class OrderToDelivery {
 
 	@Id
 	@GeneratedValue
-	private Integer id;
+	private Long id;
 	@NonNull
 	@ManyToOne
 	private ClientOrder order;

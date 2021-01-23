@@ -26,7 +26,7 @@ import lombok.ToString;
 public class Contract {
 	@Id
 	@GeneratedValue
-	private Integer id;
+	private Long id;
 	@NonNull
 	@ManyToOne
 	private ContractTemplate template;

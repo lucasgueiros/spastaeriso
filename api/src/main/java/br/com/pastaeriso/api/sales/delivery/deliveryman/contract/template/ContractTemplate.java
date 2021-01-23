@@ -27,7 +27,7 @@ public class ContractTemplate {
 
 	@Id
 	@GeneratedValue
-	private Integer id;
+	private Long id;
 	@NonNull
 	@Enumerated(EnumType.STRING)
 	private ContractType type;

@@ -6,6 +6,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 @Repository
 @CrossOrigin
-public interface MenuSectionRepository extends JpaRepository<MenuSection, Integer> {
+public interface MenuSectionRepository extends JpaRepository<MenuSection, Long> {
 
 }
