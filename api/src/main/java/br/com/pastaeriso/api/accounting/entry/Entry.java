@@ -36,7 +36,6 @@ public class Entry {
 	@GeneratedValue
 	private Long id;
 	@ManyToOne
-	@Column(nullable = false)
 	private Transaction transaction;
 	@NonNull
 	@ManyToOne

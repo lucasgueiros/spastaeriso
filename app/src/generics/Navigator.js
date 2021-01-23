@@ -66,7 +66,11 @@ class Navigator extends React.Component {
   }
 
   componentDidMount () {
-    this.props.crud.getOperation(this.setEntities, this.setEntities);
+    this.props.crud.getOperation().then(
+      (r) => {
+        this.setEntities(r);
+      }
+    );
   }
 
   setEntities(entities) {
@@ -145,19 +149,19 @@ class Navigator extends React.Component {
     );
   }
 
-  save () {
+  async save () {
     const entityToSave = { ...this.state.entities[this.state.entity_index]};
     if(this.state.creating) {
-      this.props.crud.postOperation(this.setEntities, entityToSave);
+      this.setEntities(await this.props.crud.postOperation(entityToSave));
     } else {
       const url = this.state.entities[this.state.entity_index]._links.self.href;
-      this.props.crud.putOperation(this.setEntities, url, entityToSave);
+      this.setEntities(await this.props.crud.putOperation(url, entityToSave));
     }
   }
 
-  remove() {
+  async remove() {
     const url = this.state.entities[this.state.entity_index]._links.self.href;
-    this.props.crud.deleteOperation(this.setEntities, url);
+    this.setEntities(await this.props.crud.deleteOperation(url));
   }
 
 }

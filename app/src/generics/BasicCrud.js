@@ -23,16 +23,7 @@ class BasicCrud {
     return toReturn;
   }
 
-  getOperation (setEntities) {
-    axios.get("/" + this.url + "/" + (this.projection ? this.projection : ""))
-      .then( (response) => {
-        setEntities(response.data._embedded[this.url]);
-      }, (error) => {
-        console.log(error);
-      });
-  }
-
-  async getOperationNoSetEntities () {
+  async getOperation () {
     let toReturn = [];
     await axios.get("/" + this.url + "/" + (this.projection ? this.projection : ""))
       .then( (response) => {
@@ -74,8 +65,8 @@ class BasicCrud {
         console.log(error);
         toReturn = {
           ...entity,
-          [relationName]: {}
-        }
+          [relationName]: {},
+        };
       });
     return toReturn;
   }
@@ -100,24 +91,26 @@ class BasicCrud {
     return toReturn;
   }
 
-  postOperation (setEntities, entityToSave) {
-    axios.post(this.url, entityToSave, this.jsonConfig)
-      .then( (response) => {
-        console.log(response);
-        this.getOperation(setEntities);
+  async postOperation (entityToSave) {
+    let toReturn = [{}];
+    await axios.post(this.url, entityToSave, this.jsonConfig)
+      .then( (response) =>  {
+        toReturn = this.getOperation();
       }, (error) => {
         console.log(error);
       });
+    return toReturn;
   }
 
-  putOperation (setEntities, url, entityToSave) {
-    axios.put(url, entityToSave, this.jsonConfig)
-      .then( (response) => {
-        console.log(response);
-        this.getOperation(setEntities);
+  async putOperation (url, entityToSave) {
+    let toReturn = [{}];
+    await axios.put(url, entityToSave, this.jsonConfig)
+      .then(  (response) => {
+        toReturn = this.getOperation();
       }, (error) => {
         console.log(error);
       });
+    return toReturn;
   }
 
   async putRelationOperation ( relationName, entityToSave) {
@@ -142,14 +135,15 @@ class BasicCrud {
   }
 
 
-  deleteOperation (setEntities, url) {
-    axios.delete(url)
+  async deleteOperation (url) {
+    let toReturn = [{}];
+    await axios.delete(url)
       .then( (response) => {
-        console.log(response);
-        this.getOperation(setEntities);
+        toReturn = this.getOperation();
       }, (error) => {
         console.log(error);
       });
+    return toReturn;
   }
 
   async getSelfHrefOperation(relationUrl) {
