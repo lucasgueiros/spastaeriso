@@ -1,7 +1,5 @@
-import axios from 'axios';
 import BasicCrud from '../../../../generics/BasicCrud.js';
 import InventoryMovemmentCrud from '../../inventory/InventoryMovemmentCrud.js';
-import React from 'react';
 
 class PurchaseItemCrud extends BasicCrud{
 

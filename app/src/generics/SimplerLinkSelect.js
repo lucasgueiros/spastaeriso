@@ -1,6 +1,5 @@
 import './SimplerLinkSelect.css';
 import React from 'react';
-import axios from 'axios';
 
 class SimplerLinkSelect extends React.Component {
   render () {

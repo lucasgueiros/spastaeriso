@@ -1,6 +1,5 @@
 import './SimplerUnit.css';
 import React from 'react';
-import axios from 'axios';
 
 class SimplerUnit extends React.Component {
   render () {
