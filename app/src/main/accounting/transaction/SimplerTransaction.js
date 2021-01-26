@@ -21,6 +21,8 @@ class SimplerTransaction extends React.Component {
     return (
       <>
         <tr>
+          {this.props.children}
+          
           <td>
             <input
               name={this.props.prefix + "date"}

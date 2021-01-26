@@ -10,6 +10,8 @@ class TransactionListView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      entities: [{}],
+      fetchingData: true,
       typesOptionsList: [{}],
       modalitiesOptionsList: [{}],
       accountsOptionsList: [{}],
@@ -22,6 +24,14 @@ class TransactionListView extends React.Component {
     this.addEntry = this.addEntry.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.transactionCrud = new TransactionCrud();
+    this.handleSelectedChange = this.handleSelectedChange.bind(this);
+  }
+
+  handleSelectedChange(event, index) {
+    const checked = event.target.checked;
+    let selecteds = [...this.state.selecteds];
+    selecteds[index] = checked;
+    this.setState({selecteds});
   }
 
   handleInputChange(event) {
@@ -58,8 +68,25 @@ class TransactionListView extends React.Component {
     this.setState({entity});
   }
 
-  componentDidMount() {
+  componentDidMount () {
     this.updateOptionsLists()
+    this.transactionCrud.getOperation().then(
+      (r) => {
+        this.setEntities(r);
+        this.setState({
+          fetchingData: false,
+          selecteds: new Array(r.length).fill(false)
+        });
+      }
+    );
+  }
+
+  setEntities(entities) {
+    if(entities.length !== 0 ) {
+      this.setState({
+        entities: entities
+      });
+    }
   }
 
   updateOptionsLists() {
@@ -100,6 +127,10 @@ class TransactionListView extends React.Component {
     });
   }
 
+  modificar() {
+
+  }
+
   salvar() {
     this.transactionCrud.postOperation(this.state.entity);
   }
@@ -115,6 +146,30 @@ class TransactionListView extends React.Component {
   }
 
   render() {
+    if(this.state.fetchingData) {
+      return <h3>Carregando...</h3>
+    }
+    let listEntities = "";
+
+    listEntities = this.state.entities.map ((entity,index) =>
+      <>
+        <SimplerTransaction
+          typesOptionsList={this.state.typesOptionsList}
+          modalitiesOptionsList={this.state.modalitiesOptionsList}
+          accountsOptionsList={this.state.accountsOptionsList}
+          editing={false}
+          entity={entity}
+          prefix={"" + index + "."}>
+          <td>
+            <input
+              type="checkbox"
+              name={index + "._selected"}
+              value={entity._selected}
+              onChange={(event) => this.handleSelectedChange(event,index)}>
+            </input>
+          </td>
+        </SimplerTransaction>
+      </>);
     let editing = <></>;
     if(this.state.editing) {
       editing = (
@@ -136,15 +191,7 @@ class TransactionListView extends React.Component {
       <>
         <h3>Transações</h3>
         <table>
-          <ListView
-            crud={this.transactionCrud}
-            colspan={6}
-            noEditControls={true}>
-            <SimplerTransaction
-              typesOptionsList={this.state.typesOptionsList}
-              modalitiesOptionsList={this.state.modalitiesOptionsList}
-              accountsOptionsList={this.state.accountsOptionsList} />
-          </ListView>
+          {listEntities}
           <button onClick={() => this.adicionar()}>Adicionar</button>
           {editing}
         </table>
