@@ -12,6 +12,20 @@ class BasicCrud {
     }
   }
 
+  async postToManyRelationOperation (relationName, entity) {
+    let links = [];
+    for(let i =0; i < entity[relationName].length; i++) {
+      let relationEntity = {...entity[relationName][i]};
+      relationEntity = await this.postOperation(relationEntity);
+      links[i] = relationEntity._links.self.href;
+    }
+    entity = {
+      ...entity,
+      [relationName]: links
+    };
+    return entity;
+  }
+
   async getToManyRelationOperation(relationName, entity) {
     let relatives = await this.getWithUrlOperation(entity._links[relationName].href);
     entity = {...entity, [relationName]: relatives._embedded[this.url]};
@@ -121,10 +135,10 @@ class BasicCrud {
   }
 
   async postOperation (entityToSave) {
-    let toReturn = [{}];
+    let toReturn = {};
     await axios.post(this.url, entityToSave, this.jsonConfig)
       .then( (response) =>  {
-        toReturn = this.getOperation();
+        toReturn = response.data;
       }, (error) => {
         console.log(error);
       });

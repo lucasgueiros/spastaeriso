@@ -33,8 +33,9 @@ class TransactionCrud extends BasicCrud{
     return entity;
   }
 
-  async postOperation (entityToSave) {
-    super.postOperation(entityToSave);
+  async postOperation (entity) {
+    entity = await this.entryCrud.postToManyRelationOperation("entries",entity);
+    super.postOperation(entity);
   }
 
   async postRelationOperation(relationName, entityToSave) {

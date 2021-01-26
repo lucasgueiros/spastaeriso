@@ -92,6 +92,9 @@ class ListView extends React.Component {
     for(let i=0;i<this.state.editing.length;i++) {
       if(this.state.editing[i]) {
         this.props.crud.postOperation(this.state.entities[i]);
+        this.setState({
+          entities: this.props.crud.getOperation()
+        });
       }
     }
   }
@@ -111,13 +114,12 @@ class ListView extends React.Component {
             prefix: "" + index + "."
            })}
         </>);
-
-    return (
-      <tbody>
-        {listEntities}
+    let editControls = "";
+    if(!this.props.noEditControls){
+      editControls = (
         <tr>
          <td colspan={this.props.colspan || 20}>
-           <button onClick={() => this.adicionar()}>
+           <button onClick={() => this.props.adicionar ? this.props.adicionar() : this.adicionar()}>
              Adicionar
            </button>
            <button onClick={() => this.salvar()}>
@@ -125,6 +127,12 @@ class ListView extends React.Component {
            </button>
          </td>
         </tr>
+      );
+    }
+    return (
+      <tbody>
+        {listEntities}
+        {editControls}
       </tbody>
     );
   }

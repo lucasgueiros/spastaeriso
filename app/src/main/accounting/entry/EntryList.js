@@ -9,7 +9,7 @@ function EntryList(props) {
             <td></td>
             <Entry
               entity={entry}
-              prefix={props.prefix + "entries."+index+".account."}
+              prefix={props.prefix+index+"."}
               onChange={props.onChange}
               editing={props.editing}
               accountsOptionsList={props.accountsOptionsList}

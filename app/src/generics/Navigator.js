@@ -152,7 +152,8 @@ class Navigator extends React.Component {
   async save () {
     const entityToSave = { ...this.state.entities[this.state.entity_index]};
     if(this.state.creating) {
-      this.setEntities(await this.props.crud.postOperation(entityToSave));
+      await this.props.crud.postOperation(entityToSave);
+      this.setEntities(await this.props.crud.getOperation());
     } else {
       const url = this.state.entities[this.state.entity_index]._links.self.href;
       this.setEntities(await this.props.crud.putOperation(url, entityToSave));

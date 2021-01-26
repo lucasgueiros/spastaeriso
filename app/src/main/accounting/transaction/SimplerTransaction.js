@@ -7,6 +7,17 @@ import EntryList from '../entry/EntryList.js';
 class SimplerTransaction extends React.Component {
 
   render() {
+    if(this.props.editing){
+      var buttons = (
+        <>
+          <td>
+            <button onClick={() => this.props.addEntry()}>Adicionar entrada</button>
+          </td>
+        </>
+      );
+    }
+
+
     return (
       <>
         <tr>
@@ -50,6 +61,7 @@ class SimplerTransaction extends React.Component {
           onChange={this.props.onChange}
           editing={this.props.editing}
           accountsOptionsList={this.props.accountsOptionsList}/>
+        {buttons}
       </>
     );
   }
