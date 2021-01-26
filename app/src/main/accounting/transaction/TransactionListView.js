@@ -19,6 +19,7 @@ class TransactionListView extends React.Component {
     this.updateOptionsLists = this.updateOptionsLists.bind(this);
     this.adicionar = this.adicionar.bind(this);
     this.salvar = this.salvar.bind(this);
+    this.addEntry = this.addEntry.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.transactionCrud = new TransactionCrud();
   }
@@ -93,7 +94,7 @@ class TransactionListView extends React.Component {
       editing: true,
       entity: {
         entries:[
-          {}
+          {},{}
         ]
       }
     });
@@ -101,6 +102,16 @@ class TransactionListView extends React.Component {
 
   salvar() {
     this.transactionCrud.postOperation(this.state.entity);
+  }
+
+  addEntry() {
+    let entries = [...this.state.entity.entries];
+    entries.push({});
+    let entity = {
+      ...this.state.entity,
+      entries: entries
+    };
+    this.setState({entity});
   }
 
   render() {
