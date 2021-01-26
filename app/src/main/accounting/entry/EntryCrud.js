@@ -23,7 +23,7 @@ class EntryCrud extends BasicCrud{
         }
       });
     // recuperando os elementos proprios do entry (account)
-    entry = await this.accountCrud.getRelationOperation("account",entry);
+    entry = await this.accountCrud.getRelationOperation("account",entry, true);
 
     let arrayCopy = [...entity[relationName]];
     arrayCopy[index] = entry;

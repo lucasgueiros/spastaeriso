@@ -53,12 +53,11 @@ class TransactionListView extends React.Component {
       <>
         <h3>Transações</h3>
         <table>
-          <ListView crud={new TransactionCrud()}>
+          <ListView crud={new TransactionCrud()} colspan={6}>
             <SimplerTransaction
               typesOptionsList={this.state.typesOptionsList}
               modalitiesOptionsList={this.state.modalitiesOptionsList}
-              accountsOptionsList={this.state.accountsOptionsList}
-              prefix=""/>
+              accountsOptionsList={this.state.accountsOptionsList} />
           </ListView>
         </table>
       </>

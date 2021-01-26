@@ -3,10 +3,11 @@ import React from 'react';
 
 class SimplerLinkSelect extends React.Component {
   render () {
+
     return (
         <select
-          name={this.props.prefix + "href"}
-          value={this.props.entity.href || ''}
+          name={this.props.prefix}
+          value={this.props.entity || 'none'}
           onChange={this.props.onChange}
           disabled={!this.props.editing} >
           {this.props.optionsList.map((entity, key) =>

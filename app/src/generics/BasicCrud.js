@@ -82,19 +82,19 @@ class BasicCrud {
     return toReturn;
   }
 
-  async getRelationOperation(relationName, entity) {
+  async getRelationOperation(relationName, entity, uriOnly = false) {
     let toReturn;
     await axios.get(entity._links[relationName].href.replace("{?projection}",""))
       .then( (response) => {
         toReturn = {
           ...entity,
-          [relationName]: response.data
+          [relationName]: uriOnly ? response.data._links.self.href : response.data
         }
       }, (error) => {
         console.log(error);
         toReturn = {
           ...entity,
-          [relationName]: {},
+          [relationName]: uriOnly ? "" : {},
         };
       });
     return toReturn;

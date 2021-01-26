@@ -1,6 +1,8 @@
 package br.com.pastaeriso.api.accounting.transaction;
 
 import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -9,6 +11,10 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import br.com.pastaeriso.api.accounting.entry.Entry;
 import br.com.pastaeriso.api.accounting.transaction.modality.TransactionModality;
@@ -45,7 +51,9 @@ public class Transaction {
 	@NonNull
 	@ManyToOne
 	private TransactionType type;
-	private LocalDateTime dateTime = LocalDateTime.now();
+	//@JsonFormat(pattern="yyyy-MM-dd'T'hh:mm:ss")
+	//@DateTimeFormat(pattern = "yyyy-MM-dd'T'hh:mm:ss")
+	private LocalDate date = LocalDateTime.now().toLocalDate();
 	@Lob
 	private byte[] voucher;
 	@OneToMany

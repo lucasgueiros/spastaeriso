@@ -16,8 +16,8 @@ class TransactionCrud extends BasicCrud{
     let transactions = await super.getOperation();
     let i = 0;
     for(; i < transactions.length; i++ ){
-      transactions[i] = await this.typeCrud.getRelationOperation("type",transactions[i]);
-      transactions[i] = await this.modalityCrud.getRelationOperation("modality",transactions[i]);
+      transactions[i] = await this.typeCrud.getRelationOperation("type",transactions[i], true);
+      transactions[i] = await this.modalityCrud.getRelationOperation("modality",transactions[i], true);
       transactions[i] = await this.entryCrud.getToManyRelationOperation("entries",transactions[i]);
     }
     return transactions;
@@ -33,9 +33,8 @@ class TransactionCrud extends BasicCrud{
     return entity;
   }
 
-  async postOperation (setEntities, entityToSave) {
-    entityToSave = await this.accountCrud.postRelationOperation("account",entityToSave);
-    super.postOperation(setEntities, entityToSave);
+  async postOperation (entityToSave) {
+    super.postOperation(entityToSave);
   }
 
   async postRelationOperation(relationName, entityToSave) {
@@ -54,9 +53,9 @@ class TransactionCrud extends BasicCrud{
     return await super.postRelationOperation(relationName, entityToSave);
   }
 
-  async putOperation (setEntities, url, entityToSave) {
+  async putOperation (url, entityToSave) {
     entityToSave = await this.accountCrud.putRelationOperation("account",entityToSave);
-    super.putOperation(setEntities, url, entityToSave);
+    super.putOperation(url, entityToSave);
   }
 }
 

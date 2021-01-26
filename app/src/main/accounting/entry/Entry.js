@@ -8,8 +8,8 @@ class Entry extends React.Component {
       <>
         <td>
           <SimplerLinkSelect
-            entity={this.props.entity.account._links.self || {}}
-            prefix={this.props.prefix+"account"}
+            entity={this.props.entity.account || ""}
+            prefix={this.props.prefix+"account."}
             onChange={this.props.onChange}
             editing={this.props.editing}
             optionsList={this.props.accountsOptionsList}/>
