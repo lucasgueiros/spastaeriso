@@ -9,11 +9,15 @@ class SimplerTransaction extends React.Component {
   render() {
     if(this.props.editing){
       var buttons = (
-        <>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
           <td>
-            <button onClick={() => this.props.addEntry()}>Adicionar entrada</button>
+            <button onClick={() => this.props.addToManyRelation(this.props.prefix + "entries")}>Adicionar entrada</button>
           </td>
-        </>
+          <td></td>
+        </tr>
       );
     }
 
@@ -22,7 +26,7 @@ class SimplerTransaction extends React.Component {
       <>
         <tr>
           {this.props.children}
-          
+
           <td>
             <input
               name={this.props.prefix + "date"}

@@ -10,12 +10,14 @@ class ListView extends React.Component {
     this.salvar = this.salvar.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSelectedChange = this.handleSelectedChange.bind(this);
+    this.addToManyRelation = this.addToManyRelation.bind(this);
   }
 
   state = {
     entities: [],
     fetchingData: true,
     editing: [],
+    selecteds: []
   };
 
   handleSelectedChange(event, index) {
@@ -75,31 +77,36 @@ class ListView extends React.Component {
     });
     this.props.crud.getOperation().then(
       (r) => {
-        this.setEntities(r);
         this.setState({
+          entities: r,
           fetchingData: false,
+          editing: new Array(r.length).fill(false),
+          selecteds: new Array(r.length).fill(false),
         });
       }
     );
   }
 
-  setEntities(entities) {
-    if(entities.length !== 0 ) {
-      this.setState({
-        entities: entities,
-        editing: new Array(entities.length).fill(false)
-      });
+  apagar() {
+    for(let i = 0; i < this.state.selecteds.length; i++ ) {
+      if(this.state.selecteds[i]) {
+        this.props.crud.deleteOperation(this.state.entities[i]._links.self.href);
+        this.fetchData();
+      }
     }
   }
 
   adicionar() {
     let entities = [...this.state.entities];
     let editing = [...this.state.editing];
-    entities.push({_selected: true,});
+    let selecteds = [...this.state.selecteds];
+    entities.push({});
     editing.push(true);
+    selecteds.push(true);
     this.setState({
       entities: entities,
-      editing: editing
+      editing: editing,
+      selecteds: selecteds
     });
   }
 
@@ -110,6 +117,46 @@ class ListView extends React.Component {
       }
     }
     this.fetchData();
+  }
+
+  addToManyRelation(name) {
+    let names = name.split(".");
+
+    const index = names[0];
+    names.splice(0,1);
+    let entity = {...this.state.entities[index]};
+    let entityHierarchy = [entity];
+
+    let i = 0;
+    let finished = false;
+    if(names.length===0) {
+      return;
+    }
+    while(i >= 0) {
+      if(!finished && i === names.length - 1) { // então chegamos ao último
+        let relation = [];
+        if(entityHierarchy[i][names[i]] !== undefined) {
+          relation = [...entityHierarchy[i][names[i]]];
+        }
+        relation.push({});
+        entityHierarchy[i][names[i]] = relation;
+        finished = true;
+        i--;
+      } else if (!finished) {
+        if(Array.isArray(entityHierarchy[i][names[i]])) {
+          entityHierarchy[i+1] = [...entityHierarchy[i][names[i]]];
+        } else {
+          entityHierarchy[i+1] = {...entityHierarchy[i][names[i]]};
+        }
+        i++;
+      } else {
+        entityHierarchy[i][names[i]] = entityHierarchy[i+1];
+        i--;
+      }
+    }
+    let entities = [...this.state.entities];
+    entities[index] = entity;
+    this.setState({entities});
   }
 
   render() {
@@ -125,12 +172,13 @@ class ListView extends React.Component {
             editing: this.state.editing[index],
             onChange: this.handleInputChange,
             prefix: "" + index + ".",
+            addToManyRelation: this.addToManyRelation,
             children: (
               <td>
                 <input
                   type="checkbox"
                   name={index + "._selected"}
-                  checked={entity._selected}
+                  checked={this.state.selecteds[index]}
                   onChange={(event) => this.handleSelectedChange(event,index)}>
                 </input>
               </td>

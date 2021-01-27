@@ -3,6 +3,7 @@ import Entry from './Entry.js';
 function EntryList(props) {
   return props.entity.map((entry,index) => {
       return (
+        <>
           <tr>
             <td></td>
             <td></td>
@@ -12,10 +13,10 @@ function EntryList(props) {
               prefix={props.prefix+index+"."}
               onChange={props.onChange}
               editing={props.editing}
-              accountsOptionsList={props.accountsOptionsList}
-              />
+              accountsOptionsList={props.accountsOptionsList} />
             <td></td>
-          </tr>);
+          </tr>
+        </>);
       });
 }
 
