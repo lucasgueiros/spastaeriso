@@ -10,6 +10,7 @@ class Navigator extends React.Component {
     entities_index_saved: [],
     editing: false,
     creating: false,
+    fetchingData: true,
   };
 
   constructor (props) {
@@ -24,8 +25,8 @@ class Navigator extends React.Component {
     this.cancel = this.cancel.bind(this);
     this.edit = this.edit.bind(this);
 
-    this.setEntities = this.setEntities.bind(this);
     this.renderButtons = this.renderButtons.bind(this);
+    this.fetchData = this.fetchData.bind(this);
   }
 
   handleInputChange(event) {
@@ -66,21 +67,23 @@ class Navigator extends React.Component {
   }
 
   componentDidMount () {
-    this.props.crud.getOperation().then(
-      (r) => {
-        this.setEntities(r);
-      }
-    );
+    this.fetchData();
   }
 
-  setEntities(entities) {
-    if(entities.length !== 0 ) {
-      this.setState({
-        entities: entities,
-        creating: false,
-        editing: false,
-      });
-    }
+  fetchData() {
+    this.setState({
+      fetchingData: true
+    });
+    this.props.crud.getOperation().then(
+      (entities) => {
+        this.setState({
+          entities: entities,
+          creating: false,
+          editing: false,
+          fetchingData: false,
+        });
+      }
+    );
   }
 
   cancel() {
@@ -135,7 +138,9 @@ class Navigator extends React.Component {
   }
 
   render () {
-    //{this.renderEntityRepresentation(this.state.entities[this.state.entity_index], this.state.editing)}
+    if(this.state.fetchingData) {
+      return <h3>Carregando...</h3>;
+    }
     return (
       <div className="navigator">
         {React.cloneElement(this.props.children, {
@@ -153,16 +158,18 @@ class Navigator extends React.Component {
     const entityToSave = { ...this.state.entities[this.state.entity_index]};
     if(this.state.creating) {
       await this.props.crud.postOperation(entityToSave);
-      this.setEntities(await this.props.crud.getOperation());
+      this.fetchData();
     } else {
       const url = this.state.entities[this.state.entity_index]._links.self.href;
-      this.setEntities(await this.props.crud.putOperation(url, entityToSave));
+      await this.props.crud.putOperation(url, entityToSave);
+      this.fetchData();
     }
   }
 
   async remove() {
     const url = this.state.entities[this.state.entity_index]._links.self.href;
-    this.setEntities(await this.props.crud.deleteOperation(url));
+    await this.props.crud.deleteOperation(url);
+    this.fetchData();
   }
 
 }
