@@ -1,0 +1,4 @@
+#/bin/bash
+rm logs/api.log
+rm logs/app.log
+rm logs/sql.log

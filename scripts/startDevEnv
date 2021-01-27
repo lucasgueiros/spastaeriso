@@ -1,0 +1,6 @@
+#!/bin/sh
+gnome-terminal --tab --working-directory=/data/lucas/archive/2021/2021\ Sistema\ Pasta\ e\ Riso/spastaeriso/api/ -- bash -c 'unbuffer mvn spring-boot:run |& tee -a /data/lucas/archive/2021/2021\ Sistema\ Pasta\ e\ Riso/spastaeriso/logs/api.log'
+gnome-terminal --tab --working-directory=/data/lucas/archive/2021/2021\ Sistema\ Pasta\ e\ Riso/spastaeriso/app/ -- bash -c 'unbuffer npm start |& tee -a /data/lucas/archive/2021/2021\ Sistema\ Pasta\ e\ Riso/spastaeriso/logs/app.log'
+gnome-terminal --tab --working-directory=/data/lucas/archive/2021/2021\ Sistema\ Pasta\ e\ Riso/spastaeriso/ -- bash -c 'psql -U development -h 0.0.0.0 -p 5432 -d spastaeriso'
+cd /data/lucas/archive/2021/2021\ Sistema\ Pasta\ e\ Riso/spastaeriso/
+atom

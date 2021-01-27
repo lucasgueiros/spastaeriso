@@ -1,0 +1,2 @@
+#/bin/bash
+docker stop ef932a6b8623
