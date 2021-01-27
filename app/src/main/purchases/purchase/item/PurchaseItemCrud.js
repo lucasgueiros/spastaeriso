@@ -35,8 +35,8 @@ class PurchaseItemCrud extends BasicCrud{
     return entityToSave;
   }
 
-  async putOperation (setEntities, url, entityToSave) {
-    super.putOperation(setEntities, url, entityToSave);
+  async patchOperation (setEntities, url, entityToSave) {
+    super.patchOperation(setEntities, url, entityToSave);
   }
 }
 

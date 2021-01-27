@@ -11,7 +11,7 @@ class AccountCrud extends BasicCrud{
     let accounts = await super.getOperation();
     for(let i =0; i < accounts.length; i++) {
       let account = {...accounts[i]};
-      account = await super.getRelationOperation("motherAccount",account);
+      account = await super.getRelationOperation("motherAccount",account, true);
       accounts[i] = account;
     }
     return accounts;

@@ -34,7 +34,7 @@ class AccountNavigator extends React.Component {
     return (
       <div className="account-navigator">
         <Navigator crud={new AccountCrud()}>
-          <Account prefix="" accountOptionsList={this.state.accountOptionsList}/>
+          <Account prefix="" accountsOptionsList={this.state.accountOptionsList}/>
         </Navigator>
       </div>
     );

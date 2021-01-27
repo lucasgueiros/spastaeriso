@@ -161,7 +161,7 @@ class Navigator extends React.Component {
       this.fetchData();
     } else {
       const url = this.state.entities[this.state.entity_index]._links.self.href;
-      await this.props.crud.putOperation(url, entityToSave);
+      await this.props.crud.patchOperation(url, entityToSave);
       this.fetchData();
     }
   }

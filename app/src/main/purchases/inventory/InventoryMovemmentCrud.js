@@ -34,10 +34,10 @@ class InventoryMovemmentCrud extends BasicCrud{
     return await super.postRelationOperation(relationName, entityToSave);
   }
 
-  async putOperation (setEntities, url, entityToSave) {
-    entityToSave = await super.putRelationOperation(url, "responsavelTecnico", entityToSave);
-    entityToSave = await super.putRelationOperation(url, "endereco", entityToSave);
-    super.putOperation(setEntities, url, entityToSave);
+  async patchOperation (setEntities, url, entityToSave) {
+    entityToSave = await super.patchRelationOperation(url, "responsavelTecnico", entityToSave);
+    entityToSave = await super.patchRelationOperation(url, "endereco", entityToSave);
+    super.patchOperation(setEntities, url, entityToSave);
   }
 }
 

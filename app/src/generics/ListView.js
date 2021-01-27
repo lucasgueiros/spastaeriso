@@ -121,7 +121,7 @@ class ListView extends React.Component {
       if(this.state.creating[i] && this.state.editing[i]) {
         this.props.crud.postOperation(this.state.entities[i]);
       } else if (this.state.editing[i]) {
-        this.props.crud.putOperation(this.state.entities[i]._links.self.href, this.state.entities[i]);
+        this.props.crud.patchOperation(this.state.entities[i]._links.self.href, this.state.entities[i]);
       }
     }
     this.fetchData();

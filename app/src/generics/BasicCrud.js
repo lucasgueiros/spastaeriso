@@ -12,7 +12,7 @@ class BasicCrud {
     }
   }
 
-  async putToManyRelationOperation (relationName, entity) {
+  async patchToManyRelationOperation (relationName, entity) {
     if(entity[relationName] == undefined) {
       return entity;
     }

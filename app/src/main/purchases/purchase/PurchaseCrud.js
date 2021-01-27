@@ -52,15 +52,15 @@ class PurchaseCrud extends BasicCrud{
     super.postOperation(setEntities, entityToSave);
   }
 
-  async putOperation (setEntities, url, entityToSave) {
-    entityToSave = await this.nfeCrud.putRelationOperation("nfe",entityToSave);
-    entityToSave = await this.providerCrud.putRelationOperation("provider",entityToSave);
-    entityToSave = await this.transactionCrud.putRelationOperation("transaction",entityToSave);
+  async patchOperation (setEntities, url, entityToSave) {
+    entityToSave = await this.nfeCrud.patchRelationOperation("nfe",entityToSave);
+    entityToSave = await this.providerCrud.patchRelationOperation("provider",entityToSave);
+    entityToSave = await this.transactionCrud.patchRelationOperation("transaction",entityToSave);
     entityToSave = {
       ...entityToSave,
       items: []
     }
-    super.putOperation(setEntities, url, entityToSave);
+    super.patchOperation(setEntities, url, entityToSave);
   }
 }
 
