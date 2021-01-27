@@ -10,7 +10,7 @@ class TransactionListView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      entities: [{}],
+      entities: [],
       fetchingData: true,
       typesOptionsList: [{}],
       modalitiesOptionsList: [{}],
@@ -21,10 +21,12 @@ class TransactionListView extends React.Component {
     this.updateOptionsLists = this.updateOptionsLists.bind(this);
     this.adicionar = this.adicionar.bind(this);
     this.salvar = this.salvar.bind(this);
+    this.apagar = this.apagar.bind(this);
     this.addEntry = this.addEntry.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.transactionCrud = new TransactionCrud();
     this.handleSelectedChange = this.handleSelectedChange.bind(this);
+    this.refresh = this.refresh.bind(this);
   }
 
   handleSelectedChange(event, index) {
@@ -70,6 +72,10 @@ class TransactionListView extends React.Component {
 
   componentDidMount () {
     this.updateOptionsLists()
+    this.refresh();
+  }
+
+  refresh() {
     this.transactionCrud.getOperation().then(
       (r) => {
         this.setEntities(r);
@@ -131,8 +137,18 @@ class TransactionListView extends React.Component {
 
   }
 
+  apagar() {
+    for(let i = 0; i < this.state.selecteds.length; i++ ) {
+      if(this.state.selecteds[i]) {
+        this.transactionCrud.deleteOperation(this.state.entities[i]._links.self.href);
+        this.refresh();
+      }
+    }
+  }
+
   salvar() {
     this.transactionCrud.postOperation(this.state.entity);
+    this.refresh();
   }
 
   addEntry() {
@@ -193,6 +209,7 @@ class TransactionListView extends React.Component {
         <table>
           {listEntities}
           <button onClick={() => this.adicionar()}>Adicionar</button>
+          <button onClick={() => this.apagar()}>Apagar</button>
           {editing}
         </table>
       </>
