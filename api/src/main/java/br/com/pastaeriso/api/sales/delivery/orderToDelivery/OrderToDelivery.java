@@ -11,7 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import br.com.pastaeriso.api.generics.address.Address;
+import br.com.pastaeriso.api.people.address.Address;
 import br.com.pastaeriso.api.sales.order.ClientOrder;
 import br.com.pastaeriso.api.sales.order.item.OrderItem;
 import lombok.AllArgsConstructor;
@@ -35,7 +35,7 @@ public class OrderToDelivery {
 
 	@Id
 	@GeneratedValue
-	private Integer id;
+	private Long id;
 	@NonNull
 	@ManyToOne
 	private ClientOrder order;

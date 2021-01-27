@@ -1,9 +1,9 @@
 import './Purchase.css';
 import React from 'react';
 import Provider from '../provider/Provider.js';
-import Transaction from '../../finances/transaction/Transaction.js';
+import Transaction from '../../accounting/transaction/Transaction.js';
 import PurchaseItem from './item/PurchaseItem.js';
-import Datalist from '../../../generics/Datalist.js';
+import axios from 'axios';
 
 function PurchaseItems(props) {
   if(typeof props.items.map !== "function") {
@@ -17,6 +17,9 @@ function PurchaseItems(props) {
       prefix={"items."+index+"."}
       editing={true}
       onChange={props.onChange}
+      unitsOptionsList={props.unitsOptionsList}
+      inputOptionsList={props.inputOptionsList}
+      accountsOptionsList={props.accountsOptionsList}
     />
   );
   return listItems;
@@ -26,31 +29,64 @@ class Purchase extends React.Component {
 
   constructor(props) {
     super(props);
-    this.updateDatalists = this.updateDatalists.bind(this);
+    this.state = {
+      unitsOptionsList: [],
+      inputOptionsList: []
+    }
+    this.updateOptionsLists = this.updateOptionsLists.bind(this);
   }
-
-  state = {
-    inputs_datalist: [],
-    units_datalist: [],
-    datalist_updater: 0
-  };
 
   componentDidMount () {
-    this.setState({datalist_updater: 1});
+    this.updateOptionsLists();
   }
 
-  updateDatalists () {
-    this.setState({datalist_updater: this.state.datalist_updater+1});
+  updateOptionsLists () {
+    axios.get("units").then( (response) => {
+      this.setState({
+        unitsOptionsList: response.data._embedded.units,
+      });
+    }, (error) => {
+      console.log(error);
+    });
+    axios.get("inputs").then( (response) => {
+      this.setState({
+        inputOptionsList: response.data._embedded.inputs,
+      });
+    }, (error) => {
+      console.log(error);
+    });
+    axios.get("accounts").then( (response) => {
+      this.setState({
+        accountsOptionsList: response.data._embedded.units,
+      });
+    }, (error) => {
+      console.log(error);
+    });
+    axios.get("profile/transactions").then( (response) => {
+      const fields = response.data.alps.descriptor.descriptor;
+      let options = [];
+      let i;
+      for(i=0; i < fields.length;i++) {
+        if(fields[i].name === "type") {
+          options = fields[i].doc.value.split(", ");
+          break;
+        }
+      }
+      this.setState({
+        transactionModalitiesOptionsList: options,
+      });
+    }, (error) => {
+      console.log(error);
+    });
   }
 
   render () {
-    const updateDatalistsButton = (
-      <div>
-        <button onClick={() => this.updateDatalists()}>
-          Atualizar listas
-        </button>
-      </div>
-    );
+    let updateOptionsListsButton = '';
+    if(this.props.editing) {
+      updateOptionsListsButton = <button onClick={() => this.updateOptionsLists()}>Atualizar opções</button>
+    }
+
+
     return (
       <div class-name="purchase">
         <Provider
@@ -85,18 +121,13 @@ class Purchase extends React.Component {
           <tbody>
             <PurchaseItems
               items={this.props.entity.items || {}}
-              onChange={this.props.onChange}/>
+              onChange={this.props.onChange}
+              unitsOptionsList={this.state.unitsOptionsList}
+              inputOptionsList={this.state.inputOptionsList}
+              accountsOptionsList={this.state.accountsOptionsList}/>
           </tbody>
         </table>
-        {updateDatalistsButton}
-        <Datalist
-          name="inputs"
-          propertyName="name"
-          updater={this.state.datalist_updater}/>
-        <Datalist
-          name="units"
-          propertyName="name"
-          updater={this.state.datalist_updater}/>
+        {updateOptionsListsButton}
       </div>
     );
   }

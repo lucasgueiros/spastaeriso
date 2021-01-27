@@ -12,6 +12,29 @@ class BasicCrud {
     }
   }
 
+  async postToManyRelationOperation (relationName, entity) {
+    let links = [];
+    for(let i =0; i < entity[relationName].length; i++) {
+      let relationEntity = {...entity[relationName][i]};
+      relationEntity = await this.postOperation(relationEntity);
+      links[i] = relationEntity._links.self.href;
+    }
+    entity = {
+      ...entity,
+      [relationName]: links
+    };
+    return entity;
+  }
+
+  async getToManyRelationOperation(relationName, entity) {
+    let relatives = await this.getWithUrlOperation(entity._links[relationName].href);
+    entity = {...entity, [relationName]: relatives._embedded[this.url]};
+    for(let j =0; j < entity[relationName].length; j++) {
+      entity = await this.getRelationWithIndexOperation(j,relationName,entity);
+    }
+    return entity;
+  }
+
   async getWithUrlOperation(url) {
     let toReturn = {};
     await axios.get(url.replace("{?projection}",""))
@@ -23,16 +46,7 @@ class BasicCrud {
     return toReturn;
   }
 
-  getOperation (setEntities) {
-    axios.get("/" + this.url + "/" + (this.projection ? this.projection : ""))
-      .then( (response) => {
-        setEntities(response.data._embedded[this.url]);
-      }, (error) => {
-        console.log(error);
-      });
-  }
-
-  async getOperationNoSetEntities () {
+  async getOperation () {
     let toReturn = [];
     await axios.get("/" + this.url + "/" + (this.projection ? this.projection : ""))
       .then( (response) => {
@@ -44,7 +58,7 @@ class BasicCrud {
     return toReturn;
   }
 
-  async getRelationWithIndexOperation(index, relationName, entity) {
+  /*async getRelationWithIndexOperation(index, relationName, entity) {
     let toReturn;
     await axios.get(entity._links[relationName].href.replace("{?projection}",""))
       .then( (response) => {
@@ -60,15 +74,17 @@ class BasicCrud {
         }
       });
     return toReturn;
-  }
+  }*/
 
-  async getRelationOperation(relationName, entity) {
+  async getRelationWithIndexOperation(index, relationName, entity) {
     let toReturn;
-    await axios.get(entity._links[relationName].href.replace("{?projection}",""))
+    await axios.get(entity[relationName][index]._links.self.href.replace("{?projection}",""))
       .then( (response) => {
+        let arrayCopy = [...entity[relationName]];
+        arrayCopy[index] = response.data;
         toReturn = {
           ...entity,
-          [relationName]: response.data
+          [relationName]: arrayCopy
         }
       }, (error) => {
         console.log(error);
@@ -76,6 +92,24 @@ class BasicCrud {
           ...entity,
           [relationName]: {}
         }
+      });
+    return toReturn;
+  }
+
+  async getRelationOperation(relationName, entity, uriOnly = false) {
+    let toReturn;
+    await axios.get(entity._links[relationName].href.replace("{?projection}",""))
+      .then( (response) => {
+        toReturn = {
+          ...entity,
+          [relationName]: uriOnly ? response.data._links.self.href : response.data
+        }
+      }, (error) => {
+        console.log(error);
+        toReturn = {
+          ...entity,
+          [relationName]: uriOnly ? "" : {},
+        };
       });
     return toReturn;
   }
@@ -100,24 +134,26 @@ class BasicCrud {
     return toReturn;
   }
 
-  postOperation (setEntities, entityToSave) {
-    axios.post(this.url, entityToSave, this.jsonConfig)
-      .then( (response) => {
-        console.log(response);
-        this.getOperation(setEntities);
+  async postOperation (entityToSave) {
+    let toReturn = {};
+    await axios.post(this.url, entityToSave, this.jsonConfig)
+      .then( (response) =>  {
+        toReturn = response.data;
       }, (error) => {
         console.log(error);
       });
+    return toReturn;
   }
 
-  putOperation (setEntities, url, entityToSave) {
-    axios.put(url, entityToSave, this.jsonConfig)
-      .then( (response) => {
-        console.log(response);
-        this.getOperation(setEntities);
+  async putOperation (url, entityToSave) {
+    let toReturn = [{}];
+    await axios.put(url, entityToSave, this.jsonConfig)
+      .then(  (response) => {
+        toReturn = this.getOperation();
       }, (error) => {
         console.log(error);
       });
+    return toReturn;
   }
 
   async putRelationOperation ( relationName, entityToSave) {
@@ -142,14 +178,15 @@ class BasicCrud {
   }
 
 
-  deleteOperation (setEntities, url) {
-    axios.delete(url)
+  async deleteOperation (url) {
+    let toReturn = [{}];
+    await axios.delete(url)
       .then( (response) => {
-        console.log(response);
-        this.getOperation(setEntities);
+        toReturn = this.getOperation();
       }, (error) => {
         console.log(error);
       });
+    return toReturn;
   }
 
   async getSelfHrefOperation(relationUrl) {

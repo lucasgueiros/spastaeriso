@@ -28,7 +28,7 @@ import lombok.experimental.SuperBuilder;
 public class MenuItem {
 	@Id
 	@GeneratedValue
-	private Integer id;
+	private Long id;
 	@NonNull
 	private Integer index;
 	private String comments;

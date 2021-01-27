@@ -10,7 +10,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 
-import br.com.pastaeriso.api.generics.replacements.NonReplaceableException;
+import br.com.pastaeriso.api.recipeBook.replacements.NonReplaceableException;
 import br.com.pastaeriso.api.recipeBook.input.Input;
 import br.com.pastaeriso.api.recipeBook.input.price.InputPrice;
 import br.com.pastaeriso.api.recipeBook.unit.Unit;
@@ -40,7 +40,7 @@ public class Item {
 
 	@Id
 	@GeneratedValue
-	private Integer id;
+	private Long id;
 	@NonNull
 	private BigDecimal quantity;
 	@NonNull

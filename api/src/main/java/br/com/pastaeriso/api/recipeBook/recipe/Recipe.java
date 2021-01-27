@@ -12,7 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
-import br.com.pastaeriso.api.generics.replacements.NonReplaceableException;
+import br.com.pastaeriso.api.recipeBook.replacements.NonReplaceableException;
 import br.com.pastaeriso.api.recipeBook.input.Input;
 import br.com.pastaeriso.api.recipeBook.input.price.InputPrice;
 import br.com.pastaeriso.api.recipeBook.item.Item;
@@ -41,7 +41,7 @@ public class Recipe {
 
 	@Id
 	@GeneratedValue
-	private Integer id;
+	private Long id;
 	@NonNull
 	private String title;
 	@NonNull

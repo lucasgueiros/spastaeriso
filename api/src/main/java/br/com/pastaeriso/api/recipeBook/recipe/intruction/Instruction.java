@@ -25,7 +25,7 @@ public class Instruction {
 
 	@Id
 	@GeneratedValue
-	private Integer id;
+	private Long id;
 	@NonNull
 	private String text;
 	private Integer index;

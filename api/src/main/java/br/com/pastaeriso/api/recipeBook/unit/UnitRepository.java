@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 @Repository
 @CrossOrigin
-public interface UnitRepository extends JpaRepository<Unit, Integer> {
+public interface UnitRepository extends JpaRepository<Unit, Long> {
 
 	public Unit findByName(String name);
 	

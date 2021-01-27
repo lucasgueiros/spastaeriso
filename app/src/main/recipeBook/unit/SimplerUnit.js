@@ -2,17 +2,18 @@ import './SimplerUnit.css';
 import React from 'react';
 
 class SimplerUnit extends React.Component {
-
   render () {
     return (
       <div class-name="simpler-unit">
-        <input
-          name={this.props.prefix + "name"}
-          type="text"
-          value={this.props.entity.name || ''}
+        <select
+          name={this.props.prefix + "href"}
+          value={this.props.entity.href || ''}
           onChange={this.props.onChange}
-          readOnly={!this.props.editing}
-          list="units-datalist"></input>
+          readOnly={!this.props.editing}>
+          {this.props.unitsOptionsList.map((unit, key) =>
+            <option key={key} value={unit._links.self.href}>{unit.name}</option>
+          )}
+        </select>
       </div>
     );
   }

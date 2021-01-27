@@ -26,7 +26,7 @@ public class ProductCategory {
 
 	@Id
 	@GeneratedValue
-	private Integer id;
+	private Long id;
 	@NonNull
 	@Column(unique = true)
 	private String category;

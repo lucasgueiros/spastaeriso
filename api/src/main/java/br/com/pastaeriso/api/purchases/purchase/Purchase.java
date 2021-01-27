@@ -1,7 +1,6 @@
 package br.com.pastaeriso.api.purchases.purchase;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -11,7 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
-import br.com.pastaeriso.api.finances.transaction.Transaction;
+import br.com.pastaeriso.api.accounting.transaction.Transaction;
 import br.com.pastaeriso.api.purchases.provider.Provider;
 import br.com.pastaeriso.api.purchases.purchase.items.PurchaseItem;
 import br.com.pastaeriso.api.purchases.purchase.nfe.NFeXml;
@@ -38,7 +37,7 @@ public class Purchase {
 
 	@Id
 	@GeneratedValue
-	private Integer id;
+	private Long id;
 	@NonNull
 	@ManyToOne
 	private Provider provider;

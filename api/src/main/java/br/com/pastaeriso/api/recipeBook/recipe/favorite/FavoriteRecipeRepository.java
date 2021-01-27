@@ -6,6 +6,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 @Repository
 @CrossOrigin
-public interface FavoriteRecipeRepository extends JpaRepository<FavoriteRecipe, Integer> {
+public interface FavoriteRecipeRepository extends JpaRepository<FavoriteRecipe, Long> {
 
 }

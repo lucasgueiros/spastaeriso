@@ -13,8 +13,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import br.com.pastaeriso.api.finances.transaction.TransactionModality;
-import br.com.pastaeriso.api.generics.person.Person;
+import br.com.pastaeriso.api.accounting.transaction.modality.TransactionModality;
+import br.com.pastaeriso.api.people.person.Person;
 import br.com.pastaeriso.api.sales.order.item.OrderItem;
 import br.com.pastaeriso.api.sales.order.item.group.OrderItemGroup;
 import lombok.AllArgsConstructor;
@@ -38,7 +38,7 @@ public class ClientOrder {
 
 	@Id
 	@GeneratedValue
-	private Integer id;
+	private Long id;
 	@ManyToOne
 	@NonNull
 	private Person client;
@@ -48,8 +48,8 @@ public class ClientOrder {
 	private List<OrderItem> items;
 	@OneToMany
 	private List<OrderItemGroup> groups;
-	@Enumerated(EnumType.STRING)
-	private TransactionModality forecastModeOfTransaction;
+	@ManyToOne
+	private TransactionModality forecastPaymentModality;
 	private BigDecimal forecastChangeTo;
 	private boolean isDelivery = true;
 	private String comments;

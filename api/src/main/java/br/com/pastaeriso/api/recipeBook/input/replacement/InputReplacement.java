@@ -7,7 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
-import br.com.pastaeriso.api.generics.replacements.Replacement;
+import br.com.pastaeriso.api.recipeBook.replacements.Replacement;
 import br.com.pastaeriso.api.recipeBook.input.Input;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -27,7 +27,7 @@ import lombok.ToString;
 public class InputReplacement implements Replacement<Input> {
 	@Id
 	@GeneratedValue
-	private Integer id;
+	private Long id;
 
 	@NonNull
 	@ManyToOne

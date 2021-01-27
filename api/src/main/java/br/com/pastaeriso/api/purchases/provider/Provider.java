@@ -4,8 +4,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.UniqueConstraint;
+import javax.persistence.OneToOne;
 
+import br.com.pastaeriso.api.accounting.account.Account;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -29,12 +30,14 @@ public class Provider {
 
 	@Id
 	@GeneratedValue
-	private Integer id;
+	private Long id;
 	@NonNull
 	@Column(unique = true)
 	private String name;
 	private String comment;
 	@Column(unique=true)
 	private String cnpj;
+	@OneToOne
+	private Account account;
 
 }

@@ -6,6 +6,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 @Repository
 @CrossOrigin
-public interface DeliverymanRepository extends JpaRepository<Deliveryman, Integer> {
+public interface DeliverymanRepository extends JpaRepository<Deliveryman, Long> {
 
 }

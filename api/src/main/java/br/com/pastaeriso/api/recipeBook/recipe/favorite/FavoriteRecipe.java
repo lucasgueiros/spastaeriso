@@ -29,7 +29,7 @@ public class FavoriteRecipe {
 
 	@Id
 	@GeneratedValue
-	private Integer id;
+	private Long id;
 
 	@OneToOne
 	@NonNull

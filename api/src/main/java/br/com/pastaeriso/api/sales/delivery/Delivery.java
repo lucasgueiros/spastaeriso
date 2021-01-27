@@ -32,7 +32,7 @@ public class Delivery {
 
 	@Id
 	@GeneratedValue
-	private Integer id;
+	private Long id;
 	@NonNull
 	@ManyToOne
 	private Deliveryman deliveryman;

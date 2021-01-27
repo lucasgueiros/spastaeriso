@@ -29,7 +29,7 @@ public class OrderItem {
 
 	@Id
 	@GeneratedValue
-	private Integer id;
+	private Long id;
 	@NonNull
 	@ManyToOne
 	private Product product;

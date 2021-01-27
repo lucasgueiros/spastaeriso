@@ -37,7 +37,7 @@ public class InputPrice {
 
 	@Id
 	@GeneratedValue
-	private Integer id;
+	private Long id;
 	@NonNull
 	@ManyToOne
 	private Input input;

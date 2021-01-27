@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import RecipeBook from './recipeBook/RecipeBook.js';
 import Purchases from './purchases/Purchases.js';
+import Accounting from './accounting/Accounting.js';
 
 function Main() {
   return (
@@ -16,10 +17,14 @@ function Main() {
               <li><Link to="/">Home</Link></li>
               <li><Link to="/recipeBook">Livro de Receitas</Link></li>
               <li><Link to="/purchases">Compras</Link></li>
+              <li><Link to="/accounting">Finanças</Link></li>
             </ul>
           </nav>
           <div>
             <Switch>
+              <Route path="/accounting">
+                <Accounting/>
+              </Route>
               <Route path="/recipeBook">
                 <RecipeBook/>
               </Route>

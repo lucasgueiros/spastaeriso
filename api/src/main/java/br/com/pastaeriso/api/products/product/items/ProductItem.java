@@ -5,7 +5,7 @@ import java.util.Map;
 
 import javax.persistence.Entity;
 
-import br.com.pastaeriso.api.generics.replacements.NonReplaceableException;
+import br.com.pastaeriso.api.recipeBook.replacements.NonReplaceableException;
 import br.com.pastaeriso.api.recipeBook.input.Input;
 import br.com.pastaeriso.api.recipeBook.input.price.InputPrice;
 import br.com.pastaeriso.api.recipeBook.item.Item;

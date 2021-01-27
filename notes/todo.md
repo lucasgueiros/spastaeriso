@@ -1,2 +1,4 @@
  - Adicionar Optional a alguns metodos dos repositorios onde não tiver
  - Caso não encontre alguma coisa no processamento da NFe, salvar as informaçõe que tem e dar para o usuário completar!
+ - Como lidar com pedidos cancelados?
+ - Como automaticamente retirar do inventário aquilo que foi gasto na produção das receitas?

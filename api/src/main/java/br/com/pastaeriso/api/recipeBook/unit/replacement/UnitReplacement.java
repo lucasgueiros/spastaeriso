@@ -7,7 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
-import br.com.pastaeriso.api.generics.replacements.Replacement;
+import br.com.pastaeriso.api.recipeBook.replacements.Replacement;
 import br.com.pastaeriso.api.recipeBook.unit.Unit;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -28,7 +28,7 @@ public class UnitReplacement implements Replacement<Unit> {
 
 	@Id
 	@GeneratedValue
-	private Integer id;
+	private Long id;
 
 	@NonNull
 	@ManyToOne

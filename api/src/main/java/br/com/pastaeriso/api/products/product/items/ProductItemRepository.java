@@ -6,6 +6,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 @Repository
 @CrossOrigin
-public interface ProductItemRepository extends JpaRepository<ProductItem, Integer> {
+public interface ProductItemRepository extends JpaRepository<ProductItem, Long> {
 
 }

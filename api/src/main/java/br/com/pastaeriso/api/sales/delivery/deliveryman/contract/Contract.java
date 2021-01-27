@@ -7,6 +7,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import br.com.pastaeriso.api.people.person.Person;
+import br.com.pastaeriso.api.sales.delivery.deliveryman.Deliveryman;
 import br.com.pastaeriso.api.sales.delivery.deliveryman.contract.template.ContractTemplate;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -26,7 +28,7 @@ import lombok.ToString;
 public class Contract {
 	@Id
 	@GeneratedValue
-	private Integer id;
+	private Long id;
 	@NonNull
 	@ManyToOne
 	private ContractTemplate template;
@@ -34,4 +36,6 @@ public class Contract {
 	private LocalDate beginDate;
 	private LocalDate endDate;
 	private String coment;
+	@ManyToOne
+	private Deliveryman deliveryman;
 }

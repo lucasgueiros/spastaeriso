@@ -1,6 +1,6 @@
 import axios from 'axios';
 import BasicCrud from '../../../generics/BasicCrud.js';
-import TransactionCrud from '../../finances/transaction/TransactionCrud.js';
+import TransactionCrud from '../../accounting/transaction/TransactionCrud.js';
 import PurchaseItemCrud from './item/PurchaseItemCrud.js';
 import NfeCrud from './nfe/NfeCrud.js';
 
@@ -44,6 +44,7 @@ class PurchaseCrud extends BasicCrud{
         entityToSave = await this.providerCrud.postRelationOperation("provider",entityToSave);
       });
     entityToSave = await this.transactionCrud.postRelationOperation("transaction",entityToSave);
+    let item;
     let items = [...entityToSave.items];
     for(let i =0; i < items.length; i++) {
       entityToSave = await this.itemCrud.postRelationOperation(i,"items",entityToSave);

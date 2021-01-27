@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import br.com.pastaeriso.api.finances.transaction.Transaction;
+import br.com.pastaeriso.api.accounting.transaction.Transaction;
 import br.com.pastaeriso.api.sales.order.ClientOrder;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -30,7 +30,7 @@ import lombok.ToString;
 public class OrderPayment {
 	@Id
 	@GeneratedValue
-	private Integer id;
+	private Long id;
 	@NonNull
 	@OneToMany
 	private List<Transaction> transaction;
