@@ -13,6 +13,9 @@ class BasicCrud {
   }
 
   async postToManyRelationOperation (relationName, entity) {
+    if(entity[relationName] == undefined) {
+      return entity;
+    }
     let links = [];
     for(let i =0; i < entity[relationName].length; i++) {
       let relationEntity = {...entity[relationName][i]};

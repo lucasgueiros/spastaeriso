@@ -162,7 +162,7 @@ class TransactionListView extends React.Component {
   }
 
   render() {
-    if(this.state.fetchingData) {
+    /*if(this.state.fetchingData) {
       return <h3>Carregando...</h3>
     }
     let listEntities = "";
@@ -202,15 +202,17 @@ class TransactionListView extends React.Component {
         <button onClick={() => this.addEntry()}>Adicionar entrada</button>
         </>
       );
-    }
+    }*/
     return (
       <>
         <h3>Transações</h3>
         <table>
-          {listEntities}
-          <button onClick={() => this.adicionar()}>Adicionar</button>
-          <button onClick={() => this.apagar()}>Apagar</button>
-          {editing}
+          <ListView crud={this.transactionCrud}>
+          <SimplerTransaction
+            typesOptionsList={this.state.typesOptionsList}
+            modalitiesOptionsList={this.state.modalitiesOptionsList}
+            accountsOptionsList={this.state.accountsOptionsList}/>
+          </ListView>
         </table>
       </>
     );

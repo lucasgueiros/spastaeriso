@@ -9,13 +9,21 @@ class ListView extends React.Component {
     this.adicionar = this.adicionar.bind(this);
     this.salvar = this.salvar.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleSelectedChange = this.handleSelectedChange.bind(this);
   }
 
   state = {
-    entities: [{}],
+    entities: [],
     fetchingData: true,
-    editing: [false],
+    editing: [],
   };
+
+  handleSelectedChange(event, index) {
+    const checked = event.target.checked;
+    let selecteds = [...this.state.selecteds];
+    selecteds[index] = checked;
+    this.setState({selecteds});
+  }
 
   handleInputChange(event) {
     const target = event.target;
@@ -58,6 +66,13 @@ class ListView extends React.Component {
   }
 
   componentDidMount () {
+    this.fetchData();
+  }
+
+  fetchData() {
+    this.setState({
+      fetchingData: true,
+    });
     this.props.crud.getOperation().then(
       (r) => {
         this.setEntities(r);
@@ -80,7 +95,7 @@ class ListView extends React.Component {
   adicionar() {
     let entities = [...this.state.entities];
     let editing = [...this.state.editing];
-    entities.push({});
+    entities.push({_selected: true,});
     editing.push(true);
     this.setState({
       entities: entities,
@@ -92,11 +107,9 @@ class ListView extends React.Component {
     for(let i=0;i<this.state.editing.length;i++) {
       if(this.state.editing[i]) {
         this.props.crud.postOperation(this.state.entities[i]);
-        this.setState({
-          entities: this.props.crud.getOperation()
-        });
       }
     }
+    this.fetchData();
   }
 
   render() {
@@ -111,28 +124,26 @@ class ListView extends React.Component {
             entity: entity,
             editing: this.state.editing[index],
             onChange: this.handleInputChange,
-            prefix: "" + index + "."
+            prefix: "" + index + ".",
+            children: (
+              <td>
+                <input
+                  type="checkbox"
+                  name={index + "._selected"}
+                  checked={entity._selected}
+                  onChange={(event) => this.handleSelectedChange(event,index)}>
+                </input>
+              </td>
+            )
            })}
         </>);
-    let editControls = "";
-    if(!this.props.noEditControls){
-      editControls = (
-        <tr>
-         <td colspan={this.props.colspan || 20}>
-           <button onClick={() => this.props.adicionar ? this.props.adicionar() : this.adicionar()}>
-             Adicionar
-           </button>
-           <button onClick={() => this.salvar()}>
-             Salvar
-           </button>
-         </td>
-        </tr>
-      );
-    }
     return (
       <tbody>
         {listEntities}
-        {editControls}
+        <button onClick={() => this.adicionar()}>Adicionar</button>
+        <button onClick={() => this.apagar()}>Apagar</button>
+        <button onClick={() => this.salvar()}>Salvar</button>
+        <button onClick={() => this.addEntry()}>Adicionar entrada</button>
       </tbody>
     );
   }
