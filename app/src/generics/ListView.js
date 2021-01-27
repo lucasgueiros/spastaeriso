@@ -11,12 +11,14 @@ class ListView extends React.Component {
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSelectedChange = this.handleSelectedChange.bind(this);
     this.addToManyRelation = this.addToManyRelation.bind(this);
+    this.modify = this.modify.bind(this);
   }
 
   state = {
     entities: [],
     fetchingData: true,
     editing: [],
+    creating: [],
     selecteds: []
   };
 
@@ -82,6 +84,7 @@ class ListView extends React.Component {
           fetchingData: false,
           editing: new Array(r.length).fill(false),
           selecteds: new Array(r.length).fill(false),
+          creating: new Array(r.length).fill(false),
         });
       }
     );
@@ -100,24 +103,40 @@ class ListView extends React.Component {
     let entities = [...this.state.entities];
     let editing = [...this.state.editing];
     let selecteds = [...this.state.selecteds];
+    let creating = [...this.state.creating];
+    creating.push(true);
     entities.push({});
     editing.push(true);
     selecteds.push(true);
     this.setState({
       entities: entities,
       editing: editing,
-      selecteds: selecteds
+      selecteds: selecteds,
+      creating: creating
     });
   }
 
   salvar() {
     for(let i=0;i<this.state.editing.length;i++) {
-      if(this.state.editing[i]) {
+      if(this.state.creating[i] && this.state.editing[i]) {
         this.props.crud.postOperation(this.state.entities[i]);
+      } else if (this.state.editing[i]) {
+        this.props.crud.putOperation(this.state.entities[i]._links.self.href, this.state.entities[i]);
       }
     }
     this.fetchData();
   }
+
+  modify() {
+    let editing = [...this.state.editing];
+    for(let i=0;i<this.state.selecteds.length;i++) {
+      if(this.state.selecteds[i]) {
+        editing[i] = true;
+      }
+    }
+    this.setState({editing: editing});
+  }
+
 
   addToManyRelation(name) {
     let names = name.split(".");
@@ -168,6 +187,7 @@ class ListView extends React.Component {
       listEntities = this.state.entities.map ((entity,index) =>
         <>
           {React.cloneElement(this.props.children, {
+            key: index,
             entity: entity,
             editing: this.state.editing[index],
             onChange: this.handleInputChange,
@@ -186,13 +206,22 @@ class ListView extends React.Component {
            })}
         </>);
     return (
-      <tbody>
-        {listEntities}
-        <button onClick={() => this.adicionar()}>Adicionar</button>
-        <button onClick={() => this.apagar()}>Apagar</button>
-        <button onClick={() => this.salvar()}>Salvar</button>
-        <button onClick={() => this.addEntry()}>Adicionar entrada</button>
-      </tbody>
+      <>
+        <tbody>
+          {listEntities}
+
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colSpan="100">
+              <button onClick={() => this.adicionar()}>Adicionar</button>
+              <button onClick={() => this.apagar()}>Apagar</button>
+              <button onClick={() => this.salvar()}>Salvar</button>
+              <button onClick={() => this.modify()}>Alterar</button>
+            </td>
+          </tr>
+        </tfoot>
+      </>
     );
   }
 

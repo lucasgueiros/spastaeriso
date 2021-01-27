@@ -54,9 +54,9 @@ class TransactionCrud extends BasicCrud{
     return await super.postRelationOperation(relationName, entityToSave);
   }
 
-  async putOperation (url, entityToSave) {
-    entityToSave = await this.accountCrud.putRelationOperation("account",entityToSave);
-    super.putOperation(url, entityToSave);
+  async putOperation (url, entity) {
+    entity = await this.entryCrud.putToManyRelationOperation("entries",entity);
+    return await super.patchOperation(url, entity);
   }
 }
 

@@ -12,6 +12,27 @@ class BasicCrud {
     }
   }
 
+  async putToManyRelationOperation (relationName, entity) {
+    if(entity[relationName] == undefined) {
+      return entity;
+    }
+    let links = [];
+    for(let i =0; i < entity[relationName].length; i++) {
+      let relationEntity = {...entity[relationName][i]};
+      if(relationEntity._links == undefined) {
+        relationEntity = await this.postOperation(relationEntity);
+      } else {
+        relationEntity = await this.patchOperation(relationEntity._links.self.href, relationEntity);
+      }
+      links[i] = relationEntity._links.self.href;
+    }
+    entity = {
+      ...entity,
+      [relationName]: links
+    };
+    return entity;
+  }
+
   async postToManyRelationOperation (relationName, entity) {
     if(entity[relationName] == undefined) {
       return entity;
@@ -152,7 +173,18 @@ class BasicCrud {
     let toReturn = [{}];
     await axios.put(url, entityToSave, this.jsonConfig)
       .then(  (response) => {
-        toReturn = this.getOperation();
+        toReturn = response.data;
+      }, (error) => {
+        console.log(error);
+      });
+    return toReturn;
+  }
+
+  async patchOperation  (url, entityToSave) {
+    let toReturn = [{}];
+    await axios.patch(url, entityToSave, this.jsonConfig)
+      .then(  (response) => {
+        toReturn = response.data;
       }, (error) => {
         console.log(error);
       });
