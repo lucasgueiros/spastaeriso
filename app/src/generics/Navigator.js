@@ -1,5 +1,6 @@
 import './Navigator.css';
 import React from 'react';
+import axios from 'axios';
 
 class Navigator extends React.Component {
 
@@ -11,6 +12,7 @@ class Navigator extends React.Component {
     editing: false,
     creating: false,
     fetchingData: true,
+    optionsLists: {},
   };
 
   constructor (props) {
@@ -27,6 +29,10 @@ class Navigator extends React.Component {
 
     this.renderButtons = this.renderButtons.bind(this);
     this.fetchData = this.fetchData.bind(this);
+
+    this.registerOptionList = this.registerOptionList.bind(this);
+    this.fetchOptions = this.fetchOptions.bind(this);
+    this.updateOptionsLists = this.updateOptionsLists.bind(this);
   }
 
   handleInputChange(event) {
@@ -127,7 +133,7 @@ class Navigator extends React.Component {
   }
 
   renderButtons () {
-    return (
+    let buttons =
       <>
       <button onClick={this.prev} disabled={this.state.entity_index === 0}>Anterior</button>
       <button onClick={this.save}>Salvar</button>
@@ -136,8 +142,11 @@ class Navigator extends React.Component {
       <button onClick={this.create}>Novo</button>
       <button onClick={this.edit}>Editar</button>
       <button onClick={this.next} disabled={this.state.entity_index === this.state.entities.length - 1}>Próximo</button>
-      </>
-    );
+      </> ;
+    if(this.props.showUpdateOptionsListsButton || this.props.showUpdateOptionsListsButton == undefined) {
+      buttons = <> {buttons} <button onClick={() => this.updateOptionsLists()}>Atualizar opções</button> </>;
+    }
+    return buttons;
   }
 
   render () {
@@ -150,7 +159,9 @@ class Navigator extends React.Component {
           entity: this.state.entities[this.state.entity_index],
           editing: this.state.editing,
           onChange: this.handleInputChange,
-          datalist: this.props.datalist
+          datalist: this.props.datalist,
+          optionsLists: this.state.optionsLists,
+          registerOptionList: this.registerOptionList
          })}
         {this.renderButtons()}
       </div>
@@ -173,6 +184,45 @@ class Navigator extends React.Component {
     const url = this.state.entities[this.state.entity_index]._links.self.href;
     await this.props.crud.deleteOperation(url);
     this.fetchData();
+  }
+
+  async registerOptionList(name) {
+    if(!Object.keys(this.state.optionsLists).includes(name)){
+      let lists = {
+        ...this.state.optionsLists,
+        [name]: []
+      };
+      this.setState({
+        optionsLists: lists,
+      }, () => {
+        this.updateOptionsLists();
+      });
+
+    }
+  }
+
+  async updateOptionsLists() {
+    this.fetchOptions(this.state.optionsLists).then((r) => {
+      this.setState({
+        optionsLists: r,
+      });
+    });
+  }
+
+  async fetchOptions(list) {
+    let r = {};
+    for(let i =0 ;i<Object.keys(list).length;i++) {
+      let ri = [];
+      let name = Object.keys(list)[i];
+      await axios.get(Object.keys(list)[i])
+        .then((response) => {
+          ri = response.data._embedded[name];
+        }, (error) => {
+          console.log(error);
+        });
+      r[name] = ri;
+    }
+    return r;
   }
 
 }

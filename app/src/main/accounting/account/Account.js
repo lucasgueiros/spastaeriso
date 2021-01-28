@@ -4,8 +4,12 @@ import SimplerLinkSelect from '../../../generics/SimplerLinkSelect.js';
 
 class Account extends React.Component {
 
-  render () {
+  constructor(props) {
+    super(props);
+    this.props.registerOptionList("accounts");
+  }
 
+  render () {
     return (
       <div class-name="input">
         <div>
@@ -26,7 +30,7 @@ class Account extends React.Component {
             prefix={this.props.prefix + "motherAccount"}
             onChange={this.props.onChange}
             editing={this.props.editing}
-            optionsList={this.props.accountsOptionsList}/>
+            optionsList={this.props.optionsLists.accounts || []}/>
         </div>
 
       </div>
