@@ -14,8 +14,8 @@ class PurchaseCrud extends BasicCrud{
     this.nfeCrud = new NfeCrud("nFeXmls","nFeXmlProjection");
   }
 
-  async getOperation (setEntities) {
-    let purchases = await super.getOperationNoSetEntities();
+  async getOperation () {
+    let purchases = await super.getOperation();
     for(let i =0; i < purchases.length; i++) {
       let purchase = {...purchases[i]};
       purchase = await this.providerCrud.getRelationOperation("provider",purchase);
@@ -28,7 +28,7 @@ class PurchaseCrud extends BasicCrud{
       }
       purchases[i] = purchase;
     }
-    setEntities(purchases);
+    return purchases;
   }
 
   async postOperation (setEntities, entityToSave) {

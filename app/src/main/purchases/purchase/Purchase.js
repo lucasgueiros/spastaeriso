@@ -62,22 +62,6 @@ class Purchase extends React.Component {
     }, (error) => {
       console.log(error);
     });
-    axios.get("profile/transactions").then( (response) => {
-      const fields = response.data.alps.descriptor.descriptor;
-      let options = [];
-      let i;
-      for(i=0; i < fields.length;i++) {
-        if(fields[i].name === "type") {
-          options = fields[i].doc.value.split(", ");
-          break;
-        }
-      }
-      this.setState({
-        transactionModalitiesOptionsList: options,
-      });
-    }, (error) => {
-      console.log(error);
-    });
   }
 
   render () {

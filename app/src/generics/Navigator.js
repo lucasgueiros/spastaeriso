@@ -76,6 +76,9 @@ class Navigator extends React.Component {
     });
     this.props.crud.getOperation().then(
       (entities) => {
+        if(entities.length === 0) {
+          entities = [{}];
+        }
         this.setState({
           entities: entities,
           creating: false,

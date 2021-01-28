@@ -37,7 +37,5 @@ public class Provider {
 	private String comment;
 	@Column(unique=true)
 	private String cnpj;
-	@OneToOne
-	private Account account;
-
+	
 }
