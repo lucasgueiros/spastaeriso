@@ -16,61 +16,15 @@ function PurchaseItems(props) {
       entity={item}
       prefix={"items."+index+"."}
       editing={true}
-      onChange={props.onChange}
-      unitsOptionsList={props.unitsOptionsList}
-      inputOptionsList={props.inputOptionsList}
-      accountsOptionsList={props.accountsOptionsList}
-    />
+      onChange={props.onChange} />
   );
   return listItems;
 }
 
 class Purchase extends React.Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      unitsOptionsList: [],
-      inputOptionsList: []
-    }
-    this.updateOptionsLists = this.updateOptionsLists.bind(this);
-  }
-
-  componentDidMount () {
-    this.updateOptionsLists();
-  }
-
-  updateOptionsLists () {
-    axios.get("units").then( (response) => {
-      this.setState({
-        unitsOptionsList: response.data._embedded.units,
-      });
-    }, (error) => {
-      console.log(error);
-    });
-    axios.get("inputs").then( (response) => {
-      this.setState({
-        inputOptionsList: response.data._embedded.inputs,
-      });
-    }, (error) => {
-      console.log(error);
-    });
-    axios.get("accounts").then( (response) => {
-      this.setState({
-        accountsOptionsList: response.data._embedded.units,
-      });
-    }, (error) => {
-      console.log(error);
-    });
-  }
+  // options: units, inputs, accounts
 
   render () {
-    let updateOptionsListsButton = '';
-    if(this.props.editing) {
-      updateOptionsListsButton = <button onClick={() => this.updateOptionsLists()}>Atualizar opções</button>
-    }
-
-
     return (
       <div class-name="purchase">
         <Provider
@@ -105,13 +59,9 @@ class Purchase extends React.Component {
           <tbody>
             <PurchaseItems
               items={this.props.entity.items || {}}
-              onChange={this.props.onChange}
-              unitsOptionsList={this.state.unitsOptionsList}
-              inputOptionsList={this.state.inputOptionsList}
-              accountsOptionsList={this.state.accountsOptionsList}/>
+              onChange={this.props.onChange}/>
           </tbody>
         </table>
-        {updateOptionsListsButton}
       </div>
     );
   }
