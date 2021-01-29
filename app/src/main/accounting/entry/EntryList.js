@@ -12,7 +12,8 @@ function EntryList(props) {
               prefix={props.prefix+index+"."}
               onChange={props.onChange}
               editing={props.editing}
-              accountsOptionsList={props.accountsOptionsList} />
+              optionsLists={props.optionsLists}
+              registerOptionList={props.registerOptionList} />
             <td></td>
           </tr>);
       });

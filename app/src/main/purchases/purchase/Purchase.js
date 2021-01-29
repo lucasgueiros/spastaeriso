@@ -1,7 +1,7 @@
 import './Purchase.css';
 import React from 'react';
 import Provider from '../provider/Provider.js';
-import Transaction from '../../accounting/transaction/Transaction.js';
+import SimplerTransaction from '../../accounting/transaction/SimplerTransaction.js';
 import PurchaseItem from './item/PurchaseItem.js';
 import axios from 'axios';
 
@@ -27,16 +27,19 @@ class Purchase extends React.Component {
   render () {
     return (
       <div class-name="purchase">
+        <h4>Fornecedor</h4>
         <Provider
           entity={this.props.entity.provider || {}}
           prefix="provider."
           editing={this.props.editing}
           onChange={this.props.onChange}/>
-        <Transaction
+        <h4>Transação</h4>
+        <SimplerTransaction
           entity={this.props.entity.transaction || {}}
           prefix="transaction."
           editing={this.props.editing}
           onChange={this.props.onChange}/>
+        <h4>Nota fiscal</h4>
         <div>
           <label htmlFor="nfe.accessCode">NFC-e: </label>
           <input name="nfe.accessCode" type="text" value={this.props.entity.nfe ? this.props.entity.nfe.accessCode : ''} readOnly={true}></input>

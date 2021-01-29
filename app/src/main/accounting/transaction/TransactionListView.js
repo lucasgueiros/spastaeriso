@@ -9,56 +9,17 @@ class TransactionListView extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      typesOptionsList: [{}],
-      modalitiesOptionsList: [{}],
-      accountsOptionsList: [{}],
-    }
-    this.updateOptionsLists = this.updateOptionsLists.bind(this);
     this.transactionCrud = new TransactionCrud();
   }
 
-  componentDidMount () {
-    this.updateOptionsLists()
-  }
-
-  updateOptionsLists() {
-    axios.get("transactionTypes")
-      .then((response) => {
-        this.setState({
-            typesOptionsList: response.data._embedded.transactionTypes,
-        })
-      }, (error) => {
-        console.log(error);
-      });
-    axios.get("transactionModalities")
-      .then((response) => {
-        this.setState({
-            modalitiesOptionsList: response.data._embedded.transactionModalities,
-        })
-      }, (error) => {
-        console.log(error);
-      });
-    axios.get("accounts")
-      .then((response) => {
-        this.setState({
-            accountsOptionsList: response.data._embedded.accounts,
-        })
-      }, (error) => {
-        console.log(error);
-      });
-  }
-
+//transactionTypes, transactionModalities, accounts
   render() {
     return (
       <>
         <h3>Transações</h3>
         <table>
-          <ListView crud={this.transactionCrud}>
-            <SimplerTransaction
-              typesOptionsList={this.state.typesOptionsList}
-              modalitiesOptionsList={this.state.modalitiesOptionsList}
-              accountsOptionsList={this.state.accountsOptionsList}/>
+          <ListView crud={this.transactionCrud} optionsLists={['accounts','transactionTypes','transactionModalities']}>
+            <SimplerTransaction/>
           </ListView>
         </table>
       </>

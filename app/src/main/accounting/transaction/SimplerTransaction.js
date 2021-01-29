@@ -6,6 +6,10 @@ import EntryList from '../entry/EntryList.js';
 
 class SimplerTransaction extends React.Component {
 
+  constructor(props) {
+    super(props);
+  }
+
   render() {
     if(this.props.editing){
       var buttons = (
@@ -41,7 +45,7 @@ class SimplerTransaction extends React.Component {
               prefix={this.props.prefix + "type"}
               onChange={this.props.onChange}
               editing={this.props.editing}
-              optionsList={this.props.typesOptionsList}/>
+              optionsList={this.props.optionsLists.transactionTypes || []}/>
           </td>
           <td>
             <SimplerLinkSelect
@@ -49,7 +53,7 @@ class SimplerTransaction extends React.Component {
               prefix={this.props.prefix + "modality"}
               onChange={this.props.onChange}
               editing={this.props.editing}
-              optionsList={this.props.modalitiesOptionsList}/>
+              optionsList={this.props.optionsLists.transactionModalities || []}/>
           </td>
           <td colSpan="2">Entradas:</td>
           <td>
@@ -66,7 +70,8 @@ class SimplerTransaction extends React.Component {
           prefix={this.props.prefix+"entries."}
           onChange={this.props.onChange}
           editing={this.props.editing}
-          accountsOptionsList={this.props.accountsOptionsList}/>
+          optionsLists={this.props.optionsLists}
+          registerOptionList={this.props.registerOptionList}/>
         {buttons}
       </>
     );

@@ -3,6 +3,10 @@ import SimplerLinkSelect from '../../../generics/SimplerLinkSelect.js';
 
 class Entry extends React.Component {
 
+  constructor(props) {
+    super(props);
+  }
+
   render() {
     return (
       <>
@@ -12,7 +16,7 @@ class Entry extends React.Component {
             prefix={this.props.prefix+"account"}
             onChange={this.props.onChange}
             editing={this.props.editing}
-            optionsList={this.props.accountsOptionsList}/>
+            optionsList={this.props.optionsLists.accounts || []}/>
         </td>
         <td>
           <input

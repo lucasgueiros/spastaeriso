@@ -12,6 +12,9 @@ class ListView extends React.Component {
     this.handleSelectedChange = this.handleSelectedChange.bind(this);
     this.addToManyRelation = this.addToManyRelation.bind(this);
     this.modify = this.modify.bind(this);
+    this.fetchOptions = this.fetchOptions.bind(this);
+    this.updateOptionsLists = this.updateOptionsLists.bind(this);
+    this.updating = false;
   }
 
   state = {
@@ -19,7 +22,8 @@ class ListView extends React.Component {
     fetchingData: true,
     editing: [],
     creating: [],
-    selecteds: []
+    selecteds: [],
+    optionsLists: {},
   };
 
   handleSelectedChange(event, index) {
@@ -71,6 +75,7 @@ class ListView extends React.Component {
 
   componentDidMount () {
     this.fetchData();
+    this.updateOptionsLists();
   }
 
   fetchData() {
@@ -178,6 +183,30 @@ class ListView extends React.Component {
     this.setState({entities});
   }
 
+  async updateOptionsLists() {
+    this.fetchOptions(this.props.optionsLists).then((r) => {
+      this.setState({
+        optionsLists: r,
+      });
+    });
+  }
+
+  async fetchOptions(names) {
+    let r = {};
+    for(let i =0 ;i<names.length;i++) {
+      let ri = [];
+      let name = names[i];
+      await axios.get(name)
+        .then((response) => {
+          ri = response.data._embedded[name];
+        }, (error) => {
+          console.log(error);
+        });
+      r[name] = ri;
+    }
+    return r;
+  }
+
   render() {
     if(this.state.fetchingData) {
       return <h3>Carregando...</h3>
@@ -193,6 +222,7 @@ class ListView extends React.Component {
             onChange: this.handleInputChange,
             prefix: "" + index + ".",
             addToManyRelation: this.addToManyRelation,
+            optionsLists: this.state.optionsLists,
             children: (
               <td>
                 <input
@@ -209,7 +239,6 @@ class ListView extends React.Component {
       <>
         <tbody>
           {listEntities}
-
         </tbody>
         <tfoot>
           <tr>
