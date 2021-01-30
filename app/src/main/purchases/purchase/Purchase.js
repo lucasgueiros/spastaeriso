@@ -15,8 +15,9 @@ function PurchaseItems(props) {
       key={index}
       entity={item}
       prefix={"items."+index+"."}
-      editing={true}
-      onChange={props.onChange} />
+      editing={props.editing}
+      onChange={props.onChange}
+      optionsLists={props.optionsLists} />
   );
   return listItems;
 }
@@ -32,21 +33,24 @@ class Purchase extends React.Component {
           entity={this.props.entity.provider || {}}
           prefix="provider."
           editing={this.props.editing}
-          onChange={this.props.onChange}/>
+          onChange={this.props.onChange}
+          optionsLists={this.props.optionsLists}/>
         <h4>Transação</h4>
         <SimplerTransaction
           entity={this.props.entity.transaction || {}}
           prefix="transaction."
           editing={this.props.editing}
-          onChange={this.props.onChange}/>
+          onChange={this.props.onChange}
+          optionsLists={this.props.optionsLists}
+          addToManyRelation={this.props.addToManyRelation}/>
+        <div>
+          <label htmlFor="additionalValue">Valor extra: </label>
+          <input name="additionalValue" type="number" value={this.props.entity.additionalValue || 0} onChange={this.props.onChange} readOnly={!this.props.editing}></input>
+        </div>
         <h4>Nota fiscal</h4>
         <div>
           <label htmlFor="nfe.accessCode">NFC-e: </label>
           <input name="nfe.accessCode" type="text" value={this.props.entity.nfe ? this.props.entity.nfe.accessCode : ''} readOnly={true}></input>
-        </div>
-        <div>
-          <label htmlFor="additionalValue">Valor extra: </label>
-          <input name="additionalValue" type="numeric" value={this.props.entity.additionalValue || 0} onChange={this.props.onChange} readOnly={!this.props.editing}></input>
         </div>
         <table>
           <thead>
@@ -62,9 +66,12 @@ class Purchase extends React.Component {
           <tbody>
             <PurchaseItems
               items={this.props.entity.items || {}}
-              onChange={this.props.onChange}/>
+              onChange={this.props.onChange}
+              editing={this.props.editing}
+              optionsLists={this.props.optionsLists}/>
           </tbody>
         </table>
+        <button onClick={() => this.props.addToManyRelation(this.props.prefix + "items")}>Adicionar item</button>
       </div>
     );
   }

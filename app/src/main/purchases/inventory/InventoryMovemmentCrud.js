@@ -11,8 +11,8 @@ class InventoryMovemmentCrud extends BasicCrud{
 
   async getRelationOperation(relationName, entity) {
     let im = await super.getWithUrlOperation(entity._links[relationName].href);
-    im = await this.inputCrud.getRelationOperation("input",im);
-    im = await this.unitCrud.getRelationOperation("unit",im);
+    im = await this.inputCrud.getRelationOperation("input",im,true);
+    im = await this.unitCrud.getRelationOperation("unit",im,true);
     entity = {
       ...entity,
       [relationName]: im,
@@ -20,9 +20,9 @@ class InventoryMovemmentCrud extends BasicCrud{
     return entity;
   }
 
-  async postRelationOperation (relationName, entityToSave) {
+  /*async postRelationOperation (relationName, entityToSave) {
     //const unit = await axios.get("/units/search/findByNameIgnoreCase?name="+entityToSave[relationName].unit.name);
-    const input = await axios.get("/inputs/search/findByName?name="+entityToSave[relationName].input.name);
+    //const input = await axios.get("/inputs/search/findByName?name="+entityToSave[relationName].input.name);
     entityToSave = {
       ...entityToSave,
       [relationName]: {
@@ -32,13 +32,13 @@ class InventoryMovemmentCrud extends BasicCrud{
 
     };
     return await super.postRelationOperation(relationName, entityToSave);
-  }
+  }*/
 
-  async patchOperation (setEntities, url, entityToSave) {
+  /*async patchOperation (url, entityToSave) {
     entityToSave = await super.patchRelationOperation(url, "responsavelTecnico", entityToSave);
     entityToSave = await super.patchRelationOperation(url, "endereco", entityToSave);
-    super.patchOperation(setEntities, url, entityToSave);
-  }
+    super.patchOperation(url, entityToSave);
+  }*/
 }
 
 export default InventoryMovemmentCrud;

@@ -10,35 +10,35 @@ class PurchaseItem extends React.Component {
       <tr class-name="purchase-item">
         <td>
           <SimplerLinkSelect
-            entity={this.props.entity.inventoryMovement._links.input || {}}
-            prefix={this.props.prefix + "inventoryMovement._links.input."}
+            entity={this.props.entity.input || ''}
+            prefix={this.props.prefix + "input"}
             onChange={this.props.onChange}
             editing={this.props.editing}
-            optionsList={this.props.inputOptionsList}/>
+            optionsList={this.props.optionsLists.inputs}/>
         </td>
         <td>
           <div>
             <input
-              name={this.props.prefix + "inventoryMovement.quantity"}
+              name={this.props.prefix + "quantity"}
               type="number"
-              value={this.props.entity.inventoryMovement ? this.props.entity.inventoryMovement.quantity || {} : {}}
+              value={this.props.entity.quantity || {}}
               onChange={this.props.onChange}
               readOnly={!this.props.editing}></input>
           </div>
         </td>
         <td>
           <div>
-            <SimplerUnit
-              entity={this.props.entity._links.unit || {}}
-              prefix={this.props.prefix + "_links.unit"}
+            <SimplerLinkSelect
+              entity={this.props.entity.unit || ''}
+              prefix={this.props.prefix + "unit"}
               onChange={this.props.onChange}
               editing={this.props.editing}
-              unitsOptionsList={this.props.unitsOptionsList}/>
+              optionsList={this.props.optionsLists.units}/>
           </div>
         </td>
         <td>
           <div>
-            <input name={this.props.prefix + "description"} type="text" value={this.props.entity.description || ''} onChange={this.props.onChange} readOnly={!this.props.editing}></input>
+            <input name={this.props.prefix + "comment"} type="text" value={this.props.entity.comment || ''} onChange={this.props.onChange} readOnly={!this.props.editing}></input>
           </div>
         </td>
         <td>

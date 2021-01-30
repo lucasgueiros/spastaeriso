@@ -169,18 +169,7 @@ class BasicCrud {
     return toReturn;
   }
 
-  async putOperation (url, entityToSave) {
-    let toReturn = [{}];
-    await axios.put(url, entityToSave, this.jsonConfig)
-      .then(  (response) => {
-        toReturn = response.data;
-      }, (error) => {
-        console.log(error);
-      });
-    return toReturn;
-  }
-
-  async patchOperation  (url, entityToSave) {
+  async patchOperation (url, entityToSave) {
     let toReturn = [{}];
     await axios.patch(url, entityToSave, this.jsonConfig)
       .then(  (response) => {
@@ -191,17 +180,18 @@ class BasicCrud {
     return toReturn;
   }
 
-  async putRelationOperation ( relationName, entityToSave) {
+  async patchRelationOperation ( relationName, entityToSave) {
     let relationUrl = {};
-    await axios.get(this.url + "/" + relationName)
+    await axios.get(entityToSave._links.self.href + "/" + relationName)
       .then( (response) => {
         relationUrl = response.data._links.self.href;
-        axios.put(relationUrl, entityToSave[relationName], this.jsonConfig)
+        this.patchOperation(relationUrl,entityToSave[relationName]);
+        /*axios.patch(relationUrl, entityToSave[relationName], this.jsonConfig)
           .then( (response) => {
             console.log(response);
           }, (error) => {
             console.log(error);
-          });
+          });*/
       }, (error) => {
         console.log(error);
       });

@@ -25,7 +25,9 @@ class TransactionCrud extends BasicCrud{
 
   async getRelationOperation (relationName, entity) {
     let toReturn = await super.getWithUrlOperation(entity._links[relationName].href);
-    toReturn = await this.accountCrud.getRelationOperation("account",toReturn);
+    toReturn = await this.typeCrud.getRelationOperation("type",toReturn, true);
+    toReturn = await this.modalityCrud.getRelationOperation("modality",toReturn, true);
+    toReturn = await this.entryCrud.getToManyRelationOperation("entries",toReturn);
     entity = {
       ...entity,
       [relationName]: toReturn,
@@ -35,22 +37,15 @@ class TransactionCrud extends BasicCrud{
 
   async postOperation (entity) {
     entity = await this.entryCrud.postToManyRelationOperation("entries",entity);
-    super.postOperation(entity);
+    return await super.postOperation(entity);
   }
 
   async postRelationOperation(relationName, entityToSave) {
-    const account = await axios.get("/accounts/search/findByNameIgnoreCase?name="+entityToSave[relationName].account.name);
-    if(account) {
-      entityToSave = {
-        ...entityToSave,
-        [relationName]: {
-          ...entityToSave[relationName],
-          account: account.data._links.self.href
-        }
-      };
-    } else {
-      entityToSave = await this.accountCrud.postRelationOperation("account",entityToSave[relationName]);
-    }
+    let relation = await this.entryCrud.postToManyRelationOperation("entries",entityToSave[relationName]);
+    entityToSave = {
+      ...entityToSave,
+      [relationName]: relation
+    };
     return await super.postRelationOperation(relationName, entityToSave);
   }
 

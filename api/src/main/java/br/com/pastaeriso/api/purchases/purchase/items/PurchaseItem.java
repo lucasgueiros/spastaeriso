@@ -19,29 +19,19 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
 @Entity
 @Getter
 @Setter
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = true)
 @ToString
 @NoArgsConstructor
-@RequiredArgsConstructor
 @AllArgsConstructor
-@Builder
-public class PurchaseItem {
+public class PurchaseItem extends InventoryMovement {
 
-	@Id
-	@GeneratedValue
-	private Long id;
 	private String brand;
 	@NonNull
 	private BigDecimal pricePerUnit;
-	@ManyToOne
-	private Unit unit;
-	private String description;
-	@NonNull
-	@OneToOne
-	private InventoryMovement inventoryMovement;
 
 }

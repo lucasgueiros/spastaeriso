@@ -10,7 +10,7 @@ class AccountNavigator extends React.Component {
   render() {
     return (
       <div className="account-navigator">
-        <Navigator crud={new AccountCrud()}>
+        <Navigator crud={new AccountCrud()} optionsLists={['accounts']}>
           <Account prefix="" />
         </Navigator>
       </div>

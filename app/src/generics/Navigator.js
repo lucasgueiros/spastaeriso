@@ -30,9 +30,9 @@ class Navigator extends React.Component {
     this.renderButtons = this.renderButtons.bind(this);
     this.fetchData = this.fetchData.bind(this);
 
-    this.registerOptionList = this.registerOptionList.bind(this);
     this.fetchOptions = this.fetchOptions.bind(this);
     this.updateOptionsLists = this.updateOptionsLists.bind(this);
+    this.addToManyRelation = this.addToManyRelation.bind(this);
   }
 
   handleInputChange(event) {
@@ -74,6 +74,7 @@ class Navigator extends React.Component {
 
   componentDidMount () {
     this.fetchData();
+    this.updateOptionsLists();
   }
 
   fetchData() {
@@ -161,7 +162,7 @@ class Navigator extends React.Component {
           onChange: this.handleInputChange,
           datalist: this.props.datalist,
           optionsLists: this.state.optionsLists,
-          registerOptionList: this.registerOptionList
+          addToManyRelation: this.addToManyRelation
          })}
         {this.renderButtons()}
       </div>
@@ -186,35 +187,24 @@ class Navigator extends React.Component {
     this.fetchData();
   }
 
-  async registerOptionList(name) {
-    if(!Object.keys(this.state.optionsLists).includes(name)){
-      let lists = {
-        ...this.state.optionsLists,
-        [name]: []
-      };
-      this.setState({
-        optionsLists: lists,
-      }, () => {
-        this.updateOptionsLists();
-      });
-
-    }
-  }
-
   async updateOptionsLists() {
-    this.fetchOptions(this.state.optionsLists).then((r) => {
+    let optionsLists = [];
+    if(this.props.optionsLists !== undefined) {
+      optionsLists = this.props.optionsLists;
+    }
+    this.fetchOptions(optionsLists).then((r) => {
       this.setState({
         optionsLists: r,
       });
     });
   }
 
-  async fetchOptions(list) {
+  async fetchOptions(names) {
     let r = {};
-    for(let i =0 ;i<Object.keys(list).length;i++) {
+    for(let i =0 ;i<names.length;i++) {
       let ri = [];
-      let name = Object.keys(list)[i];
-      await axios.get(Object.keys(list)[i])
+      let name = names[i];
+      await axios.get(name)
         .then((response) => {
           ri = response.data._embedded[name];
         }, (error) => {
@@ -223,6 +213,47 @@ class Navigator extends React.Component {
       r[name] = ri;
     }
     return r;
+  }
+
+  addToManyRelation(name) {
+    let names = name.split(".");
+
+    //const index = names[0];
+    //names.splice(0,1);
+    let index = this.state.entity_index;
+    let entity = {...this.state.entities[index]};
+    let entityHierarchy = [entity];
+
+    let i = 0;
+    let finished = false;
+    if(names.length===0) {
+      return;
+    }
+    while(i >= 0) {
+      if(!finished && i === names.length - 1) { // então chegamos ao último
+        let relation = [];
+        if(entityHierarchy[i][names[i]] !== undefined) {
+          relation = [...entityHierarchy[i][names[i]]];
+        }
+        relation.push({});
+        entityHierarchy[i][names[i]] = relation;
+        finished = true;
+        i--;
+      } else if (!finished) {
+        if(Array.isArray(entityHierarchy[i][names[i]])) {
+          entityHierarchy[i+1] = [...entityHierarchy[i][names[i]]];
+        } else {
+          entityHierarchy[i+1] = {...entityHierarchy[i][names[i]]};
+        }
+        i++;
+      } else {
+        entityHierarchy[i][names[i]] = entityHierarchy[i+1];
+        i--;
+      }
+    }
+    let entities = [...this.state.entities];
+    entities[index] = entity;
+    this.setState({entities});
   }
 
 }

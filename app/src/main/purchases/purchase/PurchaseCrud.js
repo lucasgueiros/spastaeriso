@@ -21,18 +21,21 @@ class PurchaseCrud extends BasicCrud{
       purchase = await this.providerCrud.getRelationOperation("provider",purchase);
       purchase = await this.transactionCrud.getRelationOperation("transaction",purchase);
       purchase = await this.nfeCrud.getRelationOperation("nfe",purchase);
-      let items = await super.getWithUrlOperation(purchase._links.items.href);
-      purchase = {...purchase, items: items._embedded.purchaseItems};
-      for(let j =0; j < purchase.items.length; j++) {
-        purchase = await this.itemCrud.getRelationsWithIndexOperation(j,"items",purchase);
-      }
+      purchase = await this.itemCrud.getToManyRelationOperation("items",purchase);
+      //let items = await super.getWithUrlOperation(purchase._links.items.href);
+      //purchase = {...purchase, items: items._embedded.purchaseItems};
+      //for(let j =0; j < purchase.items.length; j++) {
+      //  purchase = await this.itemCrud.getRelationsWithIndexOperation(j,"items",purchase);
+      //}
       purchases[i] = purchase;
     }
     return purchases;
   }
 
-  async postOperation (setEntities, entityToSave) {
-    entityToSave = await this.nfeCrud.postRelationOperation("nfe",entityToSave);
+  async postOperation (entityToSave) {
+    if(entityToSave.nfe !== undefined){
+      entityToSave = await this.nfeCrud.postRelationOperation("nfe",entityToSave);
+    }
     // tente recupear por CNPJ
     await axios.get("/providers/search/findByCnpj?cnpj="+entityToSave.provider.cnpj)
       .then((response) => {
@@ -44,23 +47,24 @@ class PurchaseCrud extends BasicCrud{
         entityToSave = await this.providerCrud.postRelationOperation("provider",entityToSave);
       });
     entityToSave = await this.transactionCrud.postRelationOperation("transaction",entityToSave);
-    let item;
-    let items = [...entityToSave.items];
-    for(let i =0; i < items.length; i++) {
-      entityToSave = await this.itemCrud.postRelationOperation(i,"items",entityToSave);
-    }
-    super.postOperation(setEntities, entityToSave);
+    entityToSave = await this.itemCrud.postToManyRelationOperation("items",entityToSave);
+    /*let item;
+    if(entityToSave.items !== undefined){
+      let items = [...entityToSave.items];
+      for(let i =0; i < items.length; i++) {
+        entityToSave = await this.itemCrud.postRelationOperation(i,"items",entityToSave);
+      }
+    }*/
+
+    super.postOperation(entityToSave);
   }
 
-  async patchOperation (setEntities, url, entityToSave) {
+  async patchOperation (url, entityToSave) {
     entityToSave = await this.nfeCrud.patchRelationOperation("nfe",entityToSave);
     entityToSave = await this.providerCrud.patchRelationOperation("provider",entityToSave);
     entityToSave = await this.transactionCrud.patchRelationOperation("transaction",entityToSave);
-    entityToSave = {
-      ...entityToSave,
-      items: []
-    }
-    super.patchOperation(setEntities, url, entityToSave);
+    entityToSave = await this.itemCrud.patchToManyRelationOperation("items",entityToSave);
+    super.patchOperation(url, entityToSave);
   }
 }
 

@@ -43,7 +43,7 @@ public class Purchase {
 	private Provider provider;
 	@OneToOne
 	private NFeXml nfe;
-	private BigDecimal additionalValue;
+	private BigDecimal additionalValue = new BigDecimal(0);
 	@OneToOne
 	private Transaction transaction;
 	@OneToMany

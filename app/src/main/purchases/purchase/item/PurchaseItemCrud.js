@@ -5,39 +5,18 @@ class PurchaseItemCrud extends BasicCrud{
 
   constructor () {
     super("purchaseItems");
-    this.inventoryMovemmentCrud = new InventoryMovemmentCrud();
     this.unitCrud = new BasicCrud("units");
-    // nfe, provider, items, transaction
+    this.inputCrud = new BasicCrud("inputs");
   }
 
-  async getRelationsWithIndexOperation(index, relationName, entity) {
+  async getRelationWithIndexOperation(index, relationName, entity) {
     let item = {...entity[relationName][index]};
-    item = await this.unitCrud.getRelationOperation("unit",item);
-    item = await this.inventoryMovemmentCrud.getRelationOperation("inventoryMovement",item);
+    item = await this.unitCrud.getRelationOperation("unit",item,true);
+    item = await this.inputCrud.getRelationOperation("input",item,true);
     entity[relationName][index] = item;
     return entity;
   }
 
-  async postRelationOperation (index, relationName, entityToSave) {
-    //const unit = await axios.get("/units/search/findByNameIgnoreCase?name="+entityToSave[relationName][index].unit.name);
-    entityToSave[relationName][index].inventoryMovement.unit = entityToSave[relationName][index]._links.unit.href;
-    entityToSave[relationName][index] = await this.inventoryMovemmentCrud.postRelationOperation("inventoryMovement",entityToSave[relationName][index]);
-    const r = {
-      ...entityToSave[relationName][index],
-      unit: entityToSave[relationName][index]._links.unit.href,
-    };
-    entityToSave[relationName][index] = r;
-    const result = await super.postRelationOperation(index, entityToSave[relationName])
-    entityToSave = {
-      ...entityToSave,
-      [relationName]: result
-    }
-    return entityToSave;
-  }
-
-  async patchOperation (setEntities, url, entityToSave) {
-    super.patchOperation(setEntities, url, entityToSave);
-  }
 }
 
 export default PurchaseItemCrud;

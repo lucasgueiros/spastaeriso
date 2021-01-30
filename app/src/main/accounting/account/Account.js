@@ -6,7 +6,6 @@ class Account extends React.Component {
 
   constructor(props) {
     super(props);
-    this.props.registerOptionList("accounts");
   }
 
   render () {
