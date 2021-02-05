@@ -4,8 +4,9 @@ import java.math.BigDecimal;
 
 import org.springframework.data.rest.core.config.Projection;
 
-import br.com.pastaeriso.api.recipeBook.input.Input;
-import br.com.pastaeriso.api.recipeBook.unit.Unit;
+import br.com.pastaeriso.recipeBook.input.Input;
+import br.com.pastaeriso.recipeBook.item.Item;
+import br.com.pastaeriso.recipeBook.unit.Unit;
 
 @Projection(types = { Item.class })
 public interface ItemDetails {

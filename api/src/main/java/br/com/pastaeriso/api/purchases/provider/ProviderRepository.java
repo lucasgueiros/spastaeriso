@@ -1,5 +1,6 @@
 package br.com.pastaeriso.api.purchases.provider;
 
+import br.com.pastaeriso.purchases.provider.Provider;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.CrossOrigin;

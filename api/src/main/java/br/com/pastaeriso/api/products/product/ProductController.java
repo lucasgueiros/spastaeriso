@@ -1,5 +1,6 @@
 package br.com.pastaeriso.api.products.product;
 
+import br.com.pastaeriso.products.product.Product;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;

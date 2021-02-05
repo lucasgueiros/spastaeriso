@@ -1,5 +1,6 @@
 package br.com.pastaeriso.api.purchases.purchase.nfe;
 
+import br.com.pastaeriso.purchases.purchase.nfe.NFeXml;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;

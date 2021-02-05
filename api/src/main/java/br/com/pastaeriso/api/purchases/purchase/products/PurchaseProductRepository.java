@@ -1,5 +1,6 @@
 package br.com.pastaeriso.api.purchases.purchase.products;
 
+import br.com.pastaeriso.purchases.purchase.products.PurchaseProduct;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;

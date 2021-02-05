@@ -5,9 +5,10 @@ import java.util.List;
 
 import org.springframework.data.rest.core.config.Projection;
 
-import br.com.pastaeriso.api.recipeBook.item.Item;
-import br.com.pastaeriso.api.recipeBook.recipe.ingredient.Ingredient;
-import br.com.pastaeriso.api.recipeBook.recipe.intruction.Instruction;
+import br.com.pastaeriso.recipeBook.item.Item;
+import br.com.pastaeriso.recipeBook.recipe.ingredient.Ingredient;
+import br.com.pastaeriso.recipeBook.recipe.intruction.Instruction;
+import br.com.pastaeriso.recipeBook.recipe.Recipe;
 
 @Projection(types = { Recipe.class })
 public interface RecipeDetails {

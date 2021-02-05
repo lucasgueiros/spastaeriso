@@ -1,5 +1,6 @@
 package br.com.pastaeriso.api.accounting.card;
 
+import br.com.pastaeriso.accounting.card.Card;
 import java.util.List;
 import java.util.Optional;
 

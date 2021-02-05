@@ -1,5 +1,6 @@
 package br.com.pastaeriso.api.accounting.transaction.modality;
 
+import br.com.pastaeriso.accounting.transaction.modality.TransactionModality;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;

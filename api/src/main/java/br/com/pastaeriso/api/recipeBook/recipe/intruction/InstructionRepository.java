@@ -1,5 +1,6 @@
 package br.com.pastaeriso.api.recipeBook.recipe.intruction;
 
+import br.com.pastaeriso.recipeBook.recipe.intruction.Instruction;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.stereotype.Repository;

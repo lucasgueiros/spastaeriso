@@ -1,5 +1,6 @@
 package br.com.pastaeriso.api.accounting.account;
 
+import br.com.pastaeriso.accounting.account.Account;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;

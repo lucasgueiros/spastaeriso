@@ -1,5 +1,6 @@
 package br.com.pastaeriso.api.recipeBook.recipe.intruction;
 
+import br.com.pastaeriso.recipeBook.recipe.intruction.Instruction;
 import org.springframework.data.rest.core.config.Projection;
 
 

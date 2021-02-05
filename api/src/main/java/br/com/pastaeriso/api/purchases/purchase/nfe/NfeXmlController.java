@@ -16,19 +16,20 @@ import org.springframework.hateoas.server.EntityLinks;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import br.com.pastaeriso.api.accounting.account.Account;
+import br.com.pastaeriso.accounting.account.Account;
 import br.com.pastaeriso.api.accounting.account.AccountRepository;
-import br.com.pastaeriso.api.accounting.transaction.modality.TransactionModality;
+import br.com.pastaeriso.accounting.transaction.modality.TransactionModality;
 import br.com.pastaeriso.api.accounting.transaction.modality.TransactionModalityRepository;
 import br.com.pastaeriso.api.integrations.nfe.NfeProc;
-import br.com.pastaeriso.api.purchases.provider.Provider;
 import br.com.pastaeriso.api.purchases.provider.ProviderRepository;
-import br.com.pastaeriso.api.purchases.purchase.products.PurchaseProduct;
+import br.com.pastaeriso.purchases.purchase.products.PurchaseProduct;
 import br.com.pastaeriso.api.purchases.purchase.products.PurchaseProductRepository;
-import br.com.pastaeriso.api.recipeBook.input.Input;
+import br.com.pastaeriso.recipeBook.input.Input;
 import br.com.pastaeriso.api.recipeBook.input.InputRepository;
-import br.com.pastaeriso.api.recipeBook.unit.Unit;
+import br.com.pastaeriso.recipeBook.unit.Unit;
 import br.com.pastaeriso.api.recipeBook.unit.UnitRepository;
+import br.com.pastaeriso.purchases.provider.Provider;
+import br.com.pastaeriso.purchases.purchase.nfe.NFeXml;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -62,7 +63,7 @@ public class NfeXmlController {
 		byte [] xml = nfeXml.getBytes(); 
 		NFeXml nfe = NFeXml.builder().accessCode(accessCode).xml(xml).build();
 		
-		return new ResponseEntity<NFeXml>(repository.save(nfe), HttpStatus.CREATED);
+		return new ResponseEntity<>(repository.save(nfe), HttpStatus.CREATED);
 	}
 	
 	@GetMapping("/nFeXmls/getXml")

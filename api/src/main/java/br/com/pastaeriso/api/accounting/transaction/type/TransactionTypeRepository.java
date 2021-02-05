@@ -1,5 +1,6 @@
 package br.com.pastaeriso.api.accounting.transaction.type;
 
+import br.com.pastaeriso.accounting.transaction.type.TransactionType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
