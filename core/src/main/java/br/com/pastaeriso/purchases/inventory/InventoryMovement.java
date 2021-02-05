@@ -23,7 +23,6 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = true)
 @SuperBuilder
 @NoArgsConstructor
-@Builder
 public class InventoryMovement extends Item {
 
 	@NonNull

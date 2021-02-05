@@ -22,6 +22,7 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import lombok.Singular;
 import lombok.ToString;
 
 @Entity
@@ -47,6 +48,7 @@ public class Purchase {
 	@OneToOne
 	private Transaction transaction;
 	@OneToMany
+        @Singular
 	private List<PurchaseItem> items;
 
 }

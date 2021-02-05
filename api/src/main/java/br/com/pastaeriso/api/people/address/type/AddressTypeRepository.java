@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 @Repository
 @CrossOrigin
-public interface AdressTypeRepository extends JpaRepository<AddressType, Long>{
+public interface AddressTypeRepository extends JpaRepository<AddressType, Long>{
 
 }

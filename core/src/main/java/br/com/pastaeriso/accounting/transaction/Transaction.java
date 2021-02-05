@@ -23,6 +23,7 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import lombok.Singular;
 import lombok.ToString;
 
 @Entity
@@ -51,5 +52,6 @@ public class Transaction {
 	@Lob
 	private byte[] voucher;
 	@OneToMany
+        @Singular
 	private List<Entry> entries;
 }
