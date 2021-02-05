@@ -182,9 +182,7 @@ public class NfeXmlController {
 			} else {
 				theInput = this.inputRepository.findByName("?");
 			}
-			ObjectNode input = mapper.createObjectNode().put("href", entityLinks.linkToItemResource(Input.class, theInput.getId()).getHref());
-			ObjectNode links = mapper.createObjectNode();
-			links.set("input", input);
+			String inputLink = entityLinks.linkToItemResource(Input.class, theInput.getId()).getHref();
 			
 			
 			
@@ -192,7 +190,7 @@ public class NfeXmlController {
 			BigDecimal quantity = new BigDecimal(det.getProd().getQCom());
 			BigDecimal pricePerUnit = new BigDecimal(det.getProd().getVUnCom());
 			//date = made
-			subtotal = subtotal.add(quantity.multiply(pricePerUnit));
+			//subtotal = subtotal.add(quantity.multiply(pricePerUnit));
 			
 			// UNIT
 			String unitAsString = det.getProd().getUCom();
@@ -200,26 +198,22 @@ public class NfeXmlController {
 			if(theUnit == null) {
 				theUnit = unitRepository.findByNameIgnoreCase("UN");
 			}
-			ObjectNode unit = mapper.createObjectNode().put("href", entityLinks.linkToItemResource(Unit.class, theUnit.getId()).getHref());
-			links.set("unit", unit);
+			//ObjectNode unit = mapper.createObjectNode().put("href", );
+                        String unitLink = entityLinks.linkToItemResource(Unit.class, theUnit.getId()).getHref();
+			//links.set("unit", unit);
 			//		.put("name",theUnit.getName())
 			//		.put("quantity",theUnit.getQuantity().toString());
 			
-			ObjectNode inventoryMovement = ( (ObjectNode)mapper.createObjectNode()
-					.put("date",made.toLocalDate().toString())
-					.put("quantity",quantity)
-					.set("_links",links))
-					.set("input",input);
 			
-			items.add(
-					(
-							(ObjectNode)mapper.createObjectNode()
-							.put("brand",brand)
-							.put("description", inputAsString + " (" + unitAsString + ")")
-							.put("pricePerUnit",pricePerUnit)
-							.set("_links",links)
-					)
-					.set("inventoryMovement", inventoryMovement));
+                        ObjectNode item = ( (ObjectNode)mapper.createObjectNode()
+                            .put("date",made.toLocalDate().toString())
+                            .put("quantity",quantity)
+                            .put("unit", unitLink)
+                            .put("brand",brand)
+                            .put("comment", inputAsString + " (" + unitAsString + ")")
+                            .put("pricePerUnit",pricePerUnit)
+                            .put("input",inputLink));
+			
 		}
 
 		purchase = purchase.put("additionalValue", value.subtract(subtotal));
