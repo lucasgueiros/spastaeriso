@@ -1,11 +1,13 @@
 package br.com.pastaeriso.accounting.transaction.type;
 
+import br.com.pastaeriso.accounting.account.Account;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 import br.com.pastaeriso.accounting.transaction.modality.TransactionModality;
+import javax.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -39,5 +41,7 @@ public class TransactionType {
 	@Column(unique=true)
 	private String name;
 	private String description;
+        @OneToOne
+        private Account favoriteAccount;
 	
 }

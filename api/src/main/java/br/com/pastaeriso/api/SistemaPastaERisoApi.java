@@ -74,18 +74,25 @@ public class SistemaPastaERisoApi {
             Unit unit1 = this.unitRepository.save(new Unit("kg", Quantity.WEIGHT));
             Unit unit2 = this.unitRepository.save(new Unit("L", Quantity.VOLUME));
             Unit unit3 = this.unitRepository.save(new Unit("mL", Quantity.VOLUME));
-            Unit unit4 = this.unitRepository.save(new Unit("UNI", Quantity.NON_CONVERTIBLE));
+            Unit unit4 = this.unitRepository.save(new Unit("UN", Quantity.NON_CONVERTIBLE));
             
             Input input1 = this.inputRepository.save(new Input("Tomate"));
             Input input2 = this.inputRepository.save(new Input("Cebola"));
             Input input3 = this.inputRepository.save(new Input("Farinha de trigo"));
+            Input input4 = this.inputRepository.save(new Input("Desconhecido"));
             
             Account account1 = this.accountRepository.save(new Account("Compras"));
             Account account2 = this.accountRepository.save(new Account("Caixa"));
             Account account3 = this.accountRepository.save(new Account("Pedidos"));
+            Account account4 = this.accountRepository.save(new Account("Desconhecida"));
             
-            TransactionModality transactionModality1 = this.transactionModalityRepository.save(new TransactionModality("A vista"));
-            TransactionModality transactionModality2 = this.transactionModalityRepository.save(new TransactionModality("A prazo"));
+            TransactionModality transactionModality1 = this.transactionModalityRepository.save(new TransactionModality("Espécie"));
+            TransactionModality transactionModality2 = this.transactionModalityRepository.save(new TransactionModality("Cheque"));
+            TransactionModality transactionModality3 = this.transactionModalityRepository.save(new TransactionModality("Cartão de crédito (à vista)"));
+            TransactionModality transactionModality4 = this.transactionModalityRepository.save(new TransactionModality("Cartão de crédito (à prazo)"));
+            TransactionModality transactionModality5 = this.transactionModalityRepository.save(new TransactionModality("Cartão de débito"));
+            TransactionModality transactionModality6 = this.transactionModalityRepository.save(new TransactionModality("Crédito loja"));
+            TransactionModality transactionModality7 = this.transactionModalityRepository.save(new TransactionModality("Boleto bancário"));
             
             TransactionType transactionType1 = this.transactionTypeRepository.save(new TransactionType("Compra"));
             TransactionType transactionType2 = this.transactionTypeRepository.save(new TransactionType("Pedido"));

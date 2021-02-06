@@ -1,9 +1,11 @@
 package br.com.pastaeriso.accounting.transaction.modality;
 
+import br.com.pastaeriso.accounting.account.Account;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,7 +27,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @Builder
 /**
- * Indica a modalidade, tipo, dinheiro mesmo, ou pagamento no cartao, transferencia bancaria etc.
+ * Indica a modalidade em que foi feita a transação: dinheiro, cartão de crédito à vista, cartão de débito, cartão de crédito à prazo etc.
  * @author lucas
  *
  */
@@ -38,5 +40,6 @@ public class TransactionModality {
 	@Column(unique=true)
 	private String name;
 	private String description;
-	
+	@OneToOne
+        private Account favorite;
 }
