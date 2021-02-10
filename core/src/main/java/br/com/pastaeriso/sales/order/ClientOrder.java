@@ -13,10 +13,11 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import br.com.pastaeriso.accounting.transaction.GenericTransaction;
 import br.com.pastaeriso.accounting.transaction.modality.TransactionModality;
+import br.com.pastaeriso.accounting.transaction.voucher.TransactionVoucher;
 import br.com.pastaeriso.people.person.Person;
 import br.com.pastaeriso.sales.order.item.OrderItem;
-import br.com.pastaeriso.sales.order.item.group.OrderItemGroup;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -44,17 +45,26 @@ public class ClientOrder {
 	private Person client;
 	@NonNull
 	private LocalDateTime made = LocalDateTime.now();
+	
+	// Pedido
 	@ManyToMany
 	private List<OrderItem> items;
-	@OneToMany
-	private List<OrderItemGroup> groups;
+	
+	// Forecast payment
 	@ManyToOne
 	private TransactionModality forecastPaymentModality;
 	private BigDecimal forecastChangeTo;
+	
+	// Delivery?
 	private boolean isDelivery = true;
 	private String comments;
 	@NonNull
 	@Enumerated(EnumType.STRING)
 	private ClientOrderStatus status = ClientOrderStatus.INCOMPLETE;
+	
+	// Real payment
+	@NonNull
+	@OneToMany
+	private List<GenericTransaction> payments;
 
 }

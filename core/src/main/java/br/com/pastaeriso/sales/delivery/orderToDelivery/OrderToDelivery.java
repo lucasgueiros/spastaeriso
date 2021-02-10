@@ -13,7 +13,7 @@ import javax.persistence.OneToMany;
 
 import br.com.pastaeriso.people.address.Address;
 import br.com.pastaeriso.sales.order.ClientOrder;
-import br.com.pastaeriso.sales.order.item.OrderItem;
+import br.com.pastaeriso.sales.order.product.OrderProduct;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -40,7 +40,7 @@ public class OrderToDelivery {
 	@ManyToOne
 	private ClientOrder order;
 	@OneToMany
-	private List<OrderItem> toDelivery;
+	private List<OrderProduct> toDelivery;
 	@NonNull
 	private Integer index = 1;
 	@NonNull

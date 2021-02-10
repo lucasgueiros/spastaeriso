@@ -2,12 +2,11 @@ package br.com.pastaeriso.api;
 
 import br.com.pastaeriso.accounting.account.Account;
 import br.com.pastaeriso.accounting.entry.Entry;
-import br.com.pastaeriso.accounting.transaction.Transaction;
+import br.com.pastaeriso.accounting.transaction.GenericTransaction;
 import br.com.pastaeriso.accounting.transaction.modality.TransactionModality;
 import br.com.pastaeriso.accounting.transaction.type.TransactionType;
 import br.com.pastaeriso.api.accounting.account.AccountRepository;
 import br.com.pastaeriso.api.accounting.entry.EntryRepository;
-import br.com.pastaeriso.api.accounting.transaction.TransactionRepository;
 import br.com.pastaeriso.api.accounting.transaction.modality.TransactionModalityRepository;
 import br.com.pastaeriso.api.accounting.transaction.type.TransactionTypeRepository;
 import br.com.pastaeriso.api.people.address.type.AddressTypeRepository;
@@ -33,6 +32,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
+import br.com.pastaeriso.api.accounting.transaction.GenericTransactionRepository;
 
 @SpringBootApplication
 @EnableAutoConfiguration
@@ -58,7 +58,7 @@ public class SistemaPastaERisoApi {
         @Autowired
         private AddressTypeRepository addressTypeRepository;
         @Autowired
-        private TransactionRepository transactionRepository;
+        private GenericTransactionRepository transactionRepository;
         @Autowired
         private EntryRepository entryRepository;
         @Autowired
@@ -107,8 +107,7 @@ public class SistemaPastaERisoApi {
             Entry entry5 = this.entryRepository.save(Entry.builder().account(account3).value(new BigDecimal(30)).build());
             Entry entry6 = this.entryRepository.save(Entry.builder().account(account2).value(new BigDecimal(-30)).build());
             
-            Transaction transaction1 = this.transactionRepository.save(
-                    Transaction.builder()
+            GenericTransaction transaction1 = this.transactionRepository.save(GenericTransaction.builder()
                             .date(LocalDate.of(2020, Month.DECEMBER, 23))
                             .modality(transactionModality2)
                             .type(transactionType2)
@@ -116,23 +115,13 @@ public class SistemaPastaERisoApi {
                             .entry(entry2)
                             .description("Alguma transação")
                             .build());
-            Transaction transaction2 = this.transactionRepository.save(
-                    Transaction.builder()
+            GenericTransaction transaction2 = this.transactionRepository.save(GenericTransaction.builder()
                             .date(LocalDate.of(2020, Month.MARCH, 3))
                             .modality(transactionModality1)
                             .type(transactionType1)
                             .entry(entry3)
                             .entry(entry4)
                             .description("Outra transação")
-                            .build());
-            Transaction transaction3 = this.transactionRepository.save(
-                    Transaction.builder()
-                            .date(LocalDate.of(2021, Month.JULY, 4))
-                            .modality(transactionModality1)
-                            .type(transactionType2)
-                            .entry(entry5)
-                            .entry(entry6)
-                            .description("Ainda outra transação")
                             .build());
             PurchaseItem purchaseItem1 = this.purchaseItemRepository.save(PurchaseItem.builder()
                     .input(input1)
@@ -156,7 +145,12 @@ public class SistemaPastaERisoApi {
                            .item(purchaseItem1)
                            .item(purchaseItem2)
                            .additionalValue(BigDecimal.ZERO)
-                           .transaction(transaction3)
+                           .date(LocalDate.of(2021, Month.JULY, 4))
+                           .modality(transactionModality1)
+                           .type(transactionType2)
+                           .entry(entry5)
+                           .entry(entry6)
+                           .description("Ainda outra transação")
                            .build());
         }
 

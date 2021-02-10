@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import PurchaseFromNFe from './purchase/PurchaseFromNFe.js';
 import PurchaseNavigator from './purchase/PurchaseNavigator.js';
 import ProviderNavigator from './provider/ProviderNavigator.js';
+import PurchaseProductNavigator from './purchase/products/PurchaseProductNavigator.js';
 
 function Purchases() {
   return (
@@ -15,10 +16,14 @@ function Purchases() {
             <li><Link to="/purchases/purchase">Compras</Link></li>
             <li><Link to="/purchases/purchase/fromNFe">Enviar NFe</Link></li>
             <li><Link to="/purchases/provider">Fornecedores</Link></li>
+            <li><Link to="/purchases/purchaseProduct">Mapeamento de produtos</Link></li>
           </ul>
         </nav>
         <div>
           <Switch>
+            <Route path="/purchases/purchaseProduct">
+              <PurchaseProductNavigator/>
+            </Route>
             <Route path="/purchases/provider">
               <ProviderNavigator/>
             </Route>

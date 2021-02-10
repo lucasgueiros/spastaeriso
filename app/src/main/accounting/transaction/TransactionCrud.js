@@ -12,6 +12,13 @@ class TransactionCrud extends BasicCrud{
     this.entryCrud = new EntryCrud();
   }
 
+  async getMyRelationsOperation(transaction) {
+    transaction = await this.typeCrud.getRelationOperation("type",transaction, true);
+    transaction = await this.modalityCrud.getRelationOperation("modality",transaction, true);
+    transaction = await this.entryCrud.getToManyRelationOperation("entries",transaction);
+    return transaction;
+  }
+
   async getOperation() {
     let transactions = await super.getOperation();
     let i = 0;

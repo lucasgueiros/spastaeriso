@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 @CrossOrigin
 public interface PurchaseProductRepository extends JpaRepository<PurchaseProduct, Long>{
 
-	public List<PurchaseProduct> findByProductName(String productName);
-	public List<PurchaseProduct> findByProductNameIgnoreCase(String productName);
+	public List<PurchaseProduct> findByDeclaredInputAndDeclaredUnitIgnoreCase(String declaredInput, String declaredUnit);
 	
 }

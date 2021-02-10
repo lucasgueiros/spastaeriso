@@ -10,10 +10,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
-import br.com.pastaeriso.accounting.transaction.Transaction;
+import br.com.pastaeriso.accounting.transaction.GenericTransaction;
 import br.com.pastaeriso.purchases.provider.Provider;
 import br.com.pastaeriso.purchases.purchase.items.PurchaseItem;
-import br.com.pastaeriso.purchases.purchase.nfe.NFeXml;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -24,6 +23,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.Singular;
 import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
 @Entity
 @Getter
@@ -33,20 +33,13 @@ import lombok.ToString;
 @NoArgsConstructor
 @RequiredArgsConstructor
 @AllArgsConstructor
-@Builder
-public class Purchase {
+@SuperBuilder
+public class Purchase extends GenericTransaction{
 
-	@Id
-	@GeneratedValue
-	private Long id;
 	@NonNull
 	@ManyToOne
 	private Provider provider;
-	@OneToOne
-	private NFeXml nfe;
 	private BigDecimal additionalValue = new BigDecimal(0);
-	@OneToOne
-	private Transaction transaction;
 	@OneToMany
         @Singular
 	private List<PurchaseItem> items;

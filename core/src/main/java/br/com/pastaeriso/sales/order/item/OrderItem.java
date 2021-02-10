@@ -1,39 +1,33 @@
 package br.com.pastaeriso.sales.order.item;
 
-import java.math.BigDecimal;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import br.com.pastaeriso.products.menu.item.MenuItem;
 import br.com.pastaeriso.products.product.Product;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
 @Entity
 @Getter
 @Setter
-@EqualsAndHashCode
 @ToString
-@NoArgsConstructor
-@RequiredArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode
+@Builder
+@NoArgsConstructor
 public class OrderItem {
-
 	@Id
 	@GeneratedValue
 	private Long id;
-	@NonNull
-	@ManyToOne
-	private Product product;
-	@NonNull
-	private BigDecimal quantity = new BigDecimal(1);
-	private String comment;
+	private String comments;
 }

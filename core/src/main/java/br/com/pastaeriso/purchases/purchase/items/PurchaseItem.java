@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 
 import br.com.pastaeriso.purchases.inventory.InventoryMovement;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,4 +29,8 @@ public class PurchaseItem extends InventoryMovement {
 	@NonNull
 	private BigDecimal pricePerUnit;
 
+        private String declaredUnit;
+        private String declaredInput;
+        @Builder.Default
+        private Boolean applied = Boolean.FALSE;
 }

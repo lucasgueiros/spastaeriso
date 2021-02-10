@@ -8,18 +8,17 @@ package br.com.pastaeriso.api.purchases.purchase;
 import br.com.pastaeriso.accounting.account.Account;
 import br.com.pastaeriso.accounting.card.Card;
 import br.com.pastaeriso.accounting.entry.Entry;
-import br.com.pastaeriso.accounting.transaction.Transaction;
+import br.com.pastaeriso.accounting.transaction.GenericTransaction;
 import br.com.pastaeriso.accounting.transaction.modality.TransactionModality;
 import br.com.pastaeriso.api.accounting.account.AccountRepository;
 import br.com.pastaeriso.api.accounting.card.CardRepository;
 import br.com.pastaeriso.api.accounting.entry.EntryRepository;
-import br.com.pastaeriso.api.accounting.transaction.TransactionRepository;
 import br.com.pastaeriso.api.accounting.transaction.modality.TransactionModalityRepository;
 import br.com.pastaeriso.api.accounting.transaction.type.TransactionTypeRepository;
 import br.com.pastaeriso.api.integrations.nfe.NfeProc;
 import br.com.pastaeriso.api.purchases.provider.ProviderRepository;
 import br.com.pastaeriso.api.purchases.purchase.items.PurchaseItemRepository;
-import br.com.pastaeriso.api.purchases.purchase.nfe.NfeXmlController;
+import br.com.pastaeriso.api.purchases.purchase.nfce.NfceController;
 import br.com.pastaeriso.api.purchases.purchase.products.PurchaseProductRepository;
 import br.com.pastaeriso.api.recipeBook.input.InputRepository;
 import br.com.pastaeriso.api.recipeBook.unit.UnitRepository;
@@ -51,6 +50,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import br.com.pastaeriso.api.accounting.transaction.GenericTransactionRepository;
 
 /**
  *
@@ -72,7 +72,7 @@ public class PurchaseController {
     @Autowired
     private InputRepository inputRepository;
     @Autowired
-    private TransactionRepository transactionRepository;
+    private GenericTransactionRepository transactionRepository;
     @Autowired
     private TransactionModalityRepository transactionModalityRepository;
     @Autowired
@@ -86,7 +86,7 @@ public class PurchaseController {
     @Autowired
     private EntryRepository entryRepository;
     @Autowired
-    private NfeXmlController nfeXmlController;
+    private NfceController nfceController;
     @Autowired
     private EntityLinks entityLinks;
     
@@ -110,47 +110,7 @@ public class PurchaseController {
         // Valor total
         BigDecimal value = new BigDecimal(proc.getNfeProc().getNFe().getInfNFe().getTotal().getICMSTot().getVNF());
         
-        // PROVIDER
-        purchase.provider(parseProvider(proc.getNfeProc().getNFe().getInfNFe().getEmit()));
-
-        // Transação
-        Transaction transaction = this.parseTransaction(proc, value);
-        purchase.transaction(transaction);
-
-        // NFCE
-        purchase.nfe(nfeXmlController.save(multipartFile));
-        
-        // ITEMS
-        LocalDate made = transaction.getDate();
-        BigDecimal subtotal = new BigDecimal(0);
-        for (NfeProc.Proc.SubNfeProc.NFe.InfNFe.Det det : proc.getNfeProc().getNFe().getInfNFe().getDet()) {
-            PurchaseItem item = parseItem(det, made);
-            subtotal = subtotal.add(item.getPricePerUnit().multiply(item.getQuantity()));
-            purchase.item(item);
-        }
-        // VALOR EXTRA
-        BigDecimal additionalValue = value.subtract(subtotal);
-        purchase.additionalValue(additionalValue);
-        
-        return purchase.build();
-    }
-    
-    private Provider parseProvider(NfeProc.Proc.SubNfeProc.NFe.InfNFe.Emit emit) {
-        String cnpj = emit.getCNPJ();
-        Optional<Provider> provider = providerRepository.findByCnpj(cnpj);
-        if(provider.isPresent()) {
-            return provider.get();
-        } else {
-            Provider.ProviderBuilder providerBuilder = Provider.builder();
-            providerBuilder.cnpj(cnpj);
-            providerBuilder.name(emit.getXFant());
-            providerBuilder.comment(emit.getXNome());
-            return providerRepository.save(providerBuilder.build());
-        }
-    }
-    
-    private Transaction parseTransaction(NfeProc.Proc proc, BigDecimal value) {
-        Transaction.TransactionBuilder transaction = Transaction.builder();
+        // SUPER (TRANSACTION)
         String description = "";
         // MODALITY
         int indPag = Integer.parseInt(proc.getNfeProc().getNFe().getInfNFe().getPag().getDetPag().getIndPag());
@@ -249,50 +209,93 @@ public class PurchaseController {
                 .account(account)
                 .build();
         
-        transaction.type(transactionTypeRepository.findByName("Compra").get());
-        transaction.modality(modality);
-        transaction.entry(entryRepository.save(entry1));
-        transaction.entry(entryRepository.save(entry2));
-        transaction.description(description);
-        transaction.date(LocalDate.parse(proc.getNfeProc().getNFe().getInfNFe().getIde().getDhEmi().subSequence(0, 10)));
+        purchase.type(transactionTypeRepository.findByName("Compra").get());
+        purchase.modality(modality);
+        purchase.entry(entryRepository.save(entry1));
+        purchase.entry(entryRepository.save(entry2));
+        purchase.description(description);
         
-        return transactionRepository.save(transaction.build());
+        // Date
+        LocalDate made = LocalDate.parse(proc.getNfeProc().getNFe().getInfNFe().getIde().getDhEmi().subSequence(0, 10));
+        purchase.date(made);
+        
+        // PROVIDER
+        purchase.provider(parseProvider(proc.getNfeProc().getNFe().getInfNFe().getEmit()));
+
+        // NFCE
+        purchase.voucher(nfceController.save(multipartFile));
+        
+        // ITEMS
+        BigDecimal subtotal = new BigDecimal(0);
+        for (NfeProc.Proc.SubNfeProc.NFe.InfNFe.Det det : proc.getNfeProc().getNFe().getInfNFe().getDet()) {
+            PurchaseItem item = parseItem(det, made);
+            subtotal = subtotal.add(item.getPricePerUnit().multiply(item.getQuantity()));
+            purchase.item(item);
+        }
+        // VALOR EXTRA
+        BigDecimal additionalValue = value.subtract(subtotal);
+        purchase.additionalValue(additionalValue);
+        
+        return purchase.build();
     }
+    
+    private Provider parseProvider(NfeProc.Proc.SubNfeProc.NFe.InfNFe.Emit emit) {
+        String cnpj = emit.getCNPJ();
+        Optional<Provider> provider = providerRepository.findByCnpj(cnpj);
+        if(provider.isPresent()) {
+            return provider.get();
+        } else {
+            Provider.ProviderBuilder providerBuilder = Provider.builder();
+            providerBuilder.cnpj(cnpj);
+            providerBuilder.name(emit.getXFant() + " (" + cnpj+ ")");
+            providerBuilder.comment(emit.getXNome());
+            return providerRepository.save(providerBuilder.build());
+        }
+    }
+
     
     private PurchaseItem parseItem(NfeProc.Proc.SubNfeProc.NFe.InfNFe.Det det, LocalDate made) {
         // INPUT
+        
         String brand = null;
-        String inputAsString = det.getProd().getXProd();
-        List<PurchaseProduct> purchaseProduct = purchaseProductRepository.findByProductNameIgnoreCase(inputAsString);
-        Input theInput = null;
-        if (!purchaseProduct.isEmpty()) {
-            theInput = purchaseProduct.get(0).getInput();
-            brand = purchaseProduct.get(0).getBrand();
-        } else {
-            theInput = inputRepository.findByName("Desconhecido");
-            brand = "Desconhecida";
-        }
-
-        // quantidades e precos
         BigDecimal quantity = new BigDecimal(det.getProd().getQCom());
         BigDecimal pricePerUnit = new BigDecimal(det.getProd().getVUnCom());
-      
-        // UNIT
+        Input theInput = null;
+        Unit theUnit = null;
+        
+        
         String unitAsString = det.getProd().getUCom();
-        Unit theUnit = unitRepository.findByNameIgnoreCase(unitAsString);
-        if (theUnit == null) {
-            theUnit = unitRepository.findByNameIgnoreCase("UN");
+        String inputAsString = det.getProd().getXProd();
+        String comment = inputAsString + " (" + unitAsString + ")";
+        
+        List<PurchaseProduct> purchaseProducts = purchaseProductRepository.findByDeclaredInputAndDeclaredUnitIgnoreCase(inputAsString, unitAsString);
+        PurchaseProduct purchaseProduct = null;
+        if (purchaseProducts.isEmpty()) {
+            theUnit = unitRepository.findByNameIgnoreCase(unitAsString);
+            if(theUnit == null) {
+                theUnit = unitRepository.findByNameIgnoreCase("UN");
+            }
+            
+            purchaseProduct = PurchaseProduct.builder()
+                    .brand("Desconhecida")
+                    .declaredInput(inputAsString)
+                    .declaredUnit(unitAsString)
+                    .input(inputRepository.findByName("Desconhecido"))
+                    .unit(theUnit)
+                    .ratio(BigDecimal.ONE)
+                    .keepUnit(true)
+                    .build();
+            purchaseProduct = purchaseProductRepository.save(purchaseProduct);
+        } else {
+            purchaseProduct = purchaseProducts.get(0);
+            comment = "";
         }
         
-        PurchaseItem purchaseItem = PurchaseItem.builder()
-                .date(made)
-                .quantity(quantity)
-                .unit(theUnit)
-                .input(theInput)
-                .brand(brand)
-                .comment(inputAsString + " (" + unitAsString + ")")
-                .pricePerUnit(pricePerUnit)
-                .build();
+        theInput = purchaseProduct.getInput();
+        brand = purchaseProduct.getBrand();
+        theUnit = purchaseProduct.getUnit();
+        
+        PurchaseItem purchaseItem = purchaseProduct.toPurchaseItem(made, quantity, pricePerUnit);
         purchaseItem = purchaseItemRepository.save(purchaseItem);
         return purchaseItem;
     }

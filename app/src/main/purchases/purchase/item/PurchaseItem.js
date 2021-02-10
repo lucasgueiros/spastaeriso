@@ -51,6 +51,11 @@ class PurchaseItem extends React.Component {
             <input name={this.props.prefix + "pricePerUnit"} type="number" value={this.props.entity.pricePerUnit || ''} onChange={this.props.onChange} readOnly={!this.props.editing}></input>
           </div>
         </td>
+        <td>
+          <div>
+            <input name="subtotal" type="number" value={this.props.entity.pricePerUnit * this.props.entity.quantity} readOnly={true}></input>
+          </div>
+        </td>
       </tr>
     );
   }

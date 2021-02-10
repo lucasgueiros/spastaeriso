@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 import br.com.pastaeriso.accounting.account.Account;
-import br.com.pastaeriso.accounting.transaction.Transaction;
+import br.com.pastaeriso.accounting.transaction.GenericTransaction;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;

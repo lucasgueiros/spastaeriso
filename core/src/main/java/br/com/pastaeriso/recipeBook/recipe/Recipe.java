@@ -20,6 +20,7 @@ import br.com.pastaeriso.recipeBook.recipe.ingredient.Ingredient;
 import br.com.pastaeriso.recipeBook.recipe.intruction.Instruction;
 import br.com.pastaeriso.recipeBook.unit.Unit;
 import br.com.pastaeriso.recipeBook.unit.replacement.UnitReplacementMap;
+import javax.persistence.ManyToMany;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -50,16 +51,16 @@ public class Recipe {
 	private Integer preparationTime;
 	private Integer totalTime;
 
-	@OneToMany
-	private List<Ingredient> ingredients;
+	
 	@OneToMany
 	private List<Instruction> instructions;
-	@OneToMany
+	
+    @OneToMany
+	private List<Ingredient> ingredients;
+    @OneToMany
 	private List<Item> otherItems;
-
-	// @NonNull
-	@ManyToOne
-	private Item output;
+	@OneToMany
+	private List<Item> outputs;
 
 	@Transient
 	public boolean adjusted = false;
@@ -67,7 +68,7 @@ public class Recipe {
 	public BigDecimal getCost(@NonNull BigDecimal quantity, @NonNull Unit unit, UnitReplacementMap replacements,
 			Map<Input, Recipe> handcrafted, Map<Input, InputPrice> prices) throws NonReplaceableException {
 		// se e a mesma unidade, nao preciso proporcionar a receita toda
-		if (this.output.getUnit().equals(unit)) {
+		if (this.outputs.get(0).getUnit().equals(unit)) {
 			BigDecimal cost = new BigDecimal(0);
 			for (Ingredient ingredient : ingredients) {
 				if (handcrafted.containsKey(ingredient.getInput())) {
