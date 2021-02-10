@@ -5,6 +5,8 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -17,10 +19,12 @@ import lombok.ToString;
 @Entity
 @NoArgsConstructor
 @RequiredArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 @ToString
 @EqualsAndHashCode
+@Builder
 public class Unit {
 
 	@Id

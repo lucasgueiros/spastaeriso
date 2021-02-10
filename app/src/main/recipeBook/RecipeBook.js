@@ -2,6 +2,7 @@ import './RecipeBook.css';
 import { Link } from 'react-router-dom';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import InputNavigator from './input/InputNavigator.js';
+import UnitNavigator from './unit/UnitNavigator.js';
 
 function RecipeBook() {
   return (
@@ -11,10 +12,14 @@ function RecipeBook() {
         <nav>
           <ul>
             <li><Link to="/recipeBook/inputs">Insumos</Link></li>
+            <li><Link to="/recipeBook/units">Unidades</Link></li>
           </ul>
         </nav>
         <div>
           <Switch>
+            <Route path="/recipeBook/units">
+              <UnitNavigator/>
+            </Route>
             <Route path="/recipeBook/inputs">
               <InputNavigator/>
             </Route>

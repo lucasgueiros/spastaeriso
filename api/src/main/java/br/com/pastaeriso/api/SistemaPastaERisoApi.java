@@ -71,9 +71,9 @@ public class SistemaPastaERisoApi {
         @PostConstruct
         public void insertToDatabase() {
             // BASIC DATA
-            Unit unit1 = this.unitRepository.save(new Unit("kg", Quantity.WEIGHT));
+            Unit unit1 = this.unitRepository.save(Unit.builder().name("kg").quantity(Quantity.WEIGHT).favorite(true).build());
             Unit unit2 = this.unitRepository.save(new Unit("L", Quantity.VOLUME));
-            Unit unit3 = this.unitRepository.save(new Unit("mL", Quantity.VOLUME));
+            Unit unit3 = this.unitRepository.save(Unit.builder().name("mL").quantity(Quantity.VOLUME).favorite(true).build());
             Unit unit4 = this.unitRepository.save(new Unit("UN", Quantity.NON_CONVERTIBLE));
             
             Input input1 = this.inputRepository.save(new Input("Tomate"));

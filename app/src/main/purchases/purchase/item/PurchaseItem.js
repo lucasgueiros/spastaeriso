@@ -1,7 +1,6 @@
 import './PurchaseItem.css';
 import React from 'react';
 import SimplerLinkSelect from '../../../../generics/SimplerLinkSelect.js';
-import SimplerUnit from '../../../recipeBook/unit/SimplerUnit.js';
 
 class PurchaseItem extends React.Component {
 
