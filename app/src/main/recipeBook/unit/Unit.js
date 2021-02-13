@@ -14,7 +14,9 @@ class Unit extends React.Component {
           <select name="quantity" value={this.props.entity.quantity || ''} onChange={this.props.onChange} disabled={!this.props.editing}>
             <option value="VOLUME">Volume</option>
             <option value="WEIGHT">Peso</option>
+            <option value="TIME">Tempo</option>
             <option value="NON_CONVERTIBLE">Outros</option>
+
           </select>
         </div>
         <div>
