@@ -19,12 +19,13 @@ class BasicCrud {
     let links = [];
     for(let i =0; i < entity[relationName].length; i++) {
       let relationEntity = {...entity[relationName][i]};
+      let relationEntityUrl = relationEntity._links.self.href;
       if(relationEntity._links == undefined) {
-        relationEntity = await this.postOperation(relationEntity);
+        relationEntityUrl = await this.postOperation(relationEntity);
       } else {
-        relationEntity = await this.patchOperation(relationEntity._links.self.href, relationEntity);
+        relationEntityUrl = await this.patchOperation(relationEntity._links.self.href, relationEntity);
       }
-      links[i] = relationEntity._links.self.href;
+      links[i] = relationEntityUrl;
     }
     entity = {
       ...entity,
@@ -173,11 +174,11 @@ class BasicCrud {
     let toReturn = [{}];
     await axios.patch(url, entityToSave, this.jsonConfig)
       .then(  (response) => {
-        toReturn = response.data;
+        // DO NOTHING toReturn = response.data;
       }, (error) => {
         console.log(error);
       });
-    return toReturn;
+    return url;
   }
 
   async patchRelationOperation ( relationName, entityToSave) {

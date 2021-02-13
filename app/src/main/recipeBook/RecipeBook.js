@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import InputNavigator from './input/InputNavigator.js';
 import UnitNavigator from './unit/UnitNavigator.js';
+import RecipeNavigator from './recipe/RecipeNavigator.js';
 
 function RecipeBook() {
   return (
@@ -13,10 +14,14 @@ function RecipeBook() {
           <ul>
             <li><Link to="/recipeBook/inputs">Insumos</Link></li>
             <li><Link to="/recipeBook/units">Unidades</Link></li>
+            <li><Link to="/recipeBook/recipes">Receitas</Link></li>
           </ul>
         </nav>
         <div>
           <Switch>
+            <Route path="/recipeBook/recipes">
+              <RecipeNavigator/>
+            </Route>
             <Route path="/recipeBook/units">
               <UnitNavigator/>
             </Route>

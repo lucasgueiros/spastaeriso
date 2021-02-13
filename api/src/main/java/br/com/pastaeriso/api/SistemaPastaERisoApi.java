@@ -33,6 +33,14 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import br.com.pastaeriso.api.accounting.transaction.GenericTransactionRepository;
+import br.com.pastaeriso.api.recipeBook.item.ItemRepository;
+import br.com.pastaeriso.api.recipeBook.recipe.RecipeRepository;
+import br.com.pastaeriso.api.recipeBook.recipe.ingredient.IngredientRepository;
+import br.com.pastaeriso.api.recipeBook.recipe.intruction.InstructionRepository;
+import br.com.pastaeriso.recipeBook.item.Item;
+import br.com.pastaeriso.recipeBook.recipe.Recipe;
+import br.com.pastaeriso.recipeBook.recipe.ingredient.Ingredient;
+import br.com.pastaeriso.recipeBook.recipe.intruction.Instruction;
 
 @SpringBootApplication
 @EnableAutoConfiguration
@@ -65,6 +73,14 @@ public class SistemaPastaERisoApi {
         private PurchaseItemRepository purchaseItemRepository;
         @Autowired
         private ProviderRepository providerRepository;
+        @Autowired
+        private RecipeRepository recipeRepository;
+        @Autowired
+        private IngredientRepository ingredientRepository;
+        @Autowired
+        private InstructionRepository instructionRepository;
+        @Autowired
+        private ItemRepository itemRepository;
         
         @Autowired
         private PurchaseRepository purchaseRepository;
@@ -80,6 +96,11 @@ public class SistemaPastaERisoApi {
             Input input2 = this.inputRepository.save(new Input("Cebola"));
             Input input3 = this.inputRepository.save(new Input("Farinha de trigo"));
             Input input4 = this.inputRepository.save(new Input("Desconhecido"));
+            Input input5 = this.inputRepository.save(new Input("Ovo"));
+            Input input6 = this.inputRepository.save(new Input("Manteiga"));
+            Input input7 = this.inputRepository.save(new Input("Sal"));
+            Input input8 = this.inputRepository.save(new Input("Ovo frito"));
+            Input input9 = this.inputRepository.save(new Input("Gás de cozinha"));
             
             Account account1 = this.accountRepository.save(new Account("Compras"));
             Account account2 = this.accountRepository.save(new Account("Caixa"));
@@ -152,6 +173,46 @@ public class SistemaPastaERisoApi {
                            .entry(entry6)
                            .description("Ainda outra transação")
                            .build());
+            
+            // Ingredients
+            Ingredient ingredient1 = Ingredient.builder().index(1).input(input5).quantity(new BigDecimal(1)).unit(unit4).build();
+            Ingredient ingredient2 = Ingredient.builder().index(2).input(input6).quantity(new BigDecimal(1)).unit(unit1).build();
+            Ingredient ingredient3 = Ingredient.builder().index(3).input(input7).quantity(new BigDecimal(5)).unit(unit1).build();
+            ingredient1 = ingredientRepository.save(ingredient1);
+            ingredient2 = ingredientRepository.save(ingredient2);
+            ingredient3 = ingredientRepository.save(ingredient3);
+            
+            // Instructions
+            Instruction instruction1 = Instruction.builder().index(1).text("Coloque a manteiga na panela e ligue o fogo").build();
+            Instruction instruction2 = Instruction.builder().index(2).text("Coloque o ovo e o sal por cima").build();
+            Instruction instruction3 = Instruction.builder().index(3).text("Quando a clara estiver firme desligue o fogo e tire o ovo").build();
+            instruction1 = instructionRepository.save(instruction1);
+            instruction2 = instructionRepository.save(instruction2);
+            instruction3 = instructionRepository.save(instruction3);
+            
+            // Outuput
+            Item item1 = Item.builder().input(input8).unit(unit4).quantity(BigDecimal.ONE).build();
+            Item item2 = Item.builder().input(input9).unit(unit4).quantity(new BigDecimal(5)).build();
+            item1 = itemRepository.save(item1);
+            item2 = itemRepository.save(item2);
+            
+            // Receitas exemplares
+            Recipe recipe = Recipe.builder()
+                    .date(LocalDate.now())
+                    .preparationTime(1)
+                    .totalTime(5)
+                    .title("Ovo frito")
+                    .ingredient(ingredient1)
+                    .ingredient(ingredient2)
+                    .ingredient(ingredient3)
+                    .instruction(instruction1)
+                    .instruction(instruction2)
+                    .instruction(instruction3)
+                    .output(item1)
+                    .otherItem(item2)
+                    .build();
+            recipeRepository.save(recipe);
+            
         }
 
 }

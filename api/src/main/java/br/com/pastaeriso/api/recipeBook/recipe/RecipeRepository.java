@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 @Repository
 @CrossOrigin
-@RepositoryRestResource(excerptProjection = RecipeDetails.class)
+@RepositoryRestResource
 public interface RecipeRepository extends JpaRepository<Recipe, Long> {
 
 }
