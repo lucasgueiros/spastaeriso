@@ -8,6 +8,7 @@ package br.com.pastaeriso.people.functionary.workDay;
 import br.com.pastaeriso.accounting.transaction.GenericTransaction;
 import br.com.pastaeriso.people.functionary.contract.WorkContract;
 import br.com.pastaeriso.people.functionary.Functionary;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -24,8 +25,7 @@ public class WorkedDay extends GenericTransaction {
     @GeneratedValue
     private Long id;
     
-    private LocalDateTime start;
-    private LocalDateTime stop;
+    private Duration duration;
     
     @ManyToOne
     private Functionary functionary;

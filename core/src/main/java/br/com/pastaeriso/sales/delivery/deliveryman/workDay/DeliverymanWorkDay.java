@@ -10,6 +10,7 @@ import br.com.pastaeriso.people.functionary.Functionary;
 import br.com.pastaeriso.sales.delivery.Delivery;
 import br.com.pastaeriso.sales.delivery.deliveryman.Deliveryman;
 import br.com.pastaeriso.sales.delivery.deliveryman.contract.DeliverymanContract;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.Entity;
@@ -44,8 +45,8 @@ public class DeliverymanWorkDay {
     @GeneratedValue
     private Long id;
     
-    private LocalDateTime start;
-    private LocalDateTime stop;
+    private Duration duration;
+    
     @OneToMany
     private List<Delivery> deliveries;
     
