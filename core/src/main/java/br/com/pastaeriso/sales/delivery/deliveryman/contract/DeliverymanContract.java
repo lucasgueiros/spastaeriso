@@ -9,7 +9,7 @@ import javax.persistence.ManyToOne;
 
 import br.com.pastaeriso.people.person.Person;
 import br.com.pastaeriso.sales.delivery.deliveryman.Deliveryman;
-import br.com.pastaeriso.sales.delivery.deliveryman.contract.template.ContractTemplate;
+import java.math.BigDecimal;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,17 +25,21 @@ import lombok.ToString;
 @Setter
 @ToString
 @EqualsAndHashCode
-public class Contract {
+public class DeliverymanContract {
 	@Id
 	@GeneratedValue
 	private Long id;
+        
 	@NonNull
-	@ManyToOne
-	private ContractTemplate template;
-	@NonNull
-	private LocalDate beginDate;
-	private LocalDate endDate;
+	private LocalDate start;
+	private LocalDate end;
+        
+        private BigDecimal paymentForDelivery;
+	private BigDecimal minimumCiclePayment;
+	private Integer daysPerCycle;
+        
 	private String coment;
+        
 	@ManyToOne
 	private Deliveryman deliveryman;
 }

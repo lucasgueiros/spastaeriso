@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.Enumerated;
 
 import br.com.pastaeriso.people.person.Person;
+import br.com.pastaeriso.people.functionary.Functionary;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,11 +23,8 @@ import java.util.List;
 @ToString
 @NoArgsConstructor
 @SuperBuilder
-public class Deliveryman extends Person {
-
-	@Column
-	@Enumerated
-	@ElementCollection(targetClass = DayOfWeek.class)
-	public List<DayOfWeek> avaliableDays;
+public class Deliveryman extends Functionary {
+    
+    private boolean salaryBasedPayment;
 
 }
