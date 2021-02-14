@@ -5,6 +5,7 @@ import java.util.List;
 
 public class ShoppingList {
 
+    
     private SalesProspect prospect;
     private List<ShoppingListItem> items;
     

@@ -6,7 +6,7 @@
 package br.com.pastaeriso.people.functionary.payment;
 
 import br.com.pastaeriso.accounting.transaction.GenericTransaction;
-import br.com.pastaeriso.people.functionary.workDay.WorkedDay;
+import br.com.pastaeriso.people.functionary.workDay.FunctionaryWorkDay;
 import br.com.pastaeriso.people.functionary.Functionary;
 import java.time.LocalDate;
 import java.util.List;
@@ -40,6 +40,6 @@ public class FunctionaryPayment extends GenericTransaction {
     @ManyToOne
     private Functionary functionary;
     @OneToMany
-    private List<WorkedDay> days;
+    private List<FunctionaryWorkDay> days;
     
 }

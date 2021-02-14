@@ -1,7 +1,5 @@
 package br.com.pastaeriso.planning.prospect;
 
-import br.com.pastaeriso.products.product.Product;
-import br.com.pastaeriso.sales.order.item.OrderItem;
 import br.com.pastaeriso.sales.order.product.OrderProduct;
 import java.time.Period;
 import java.util.List;

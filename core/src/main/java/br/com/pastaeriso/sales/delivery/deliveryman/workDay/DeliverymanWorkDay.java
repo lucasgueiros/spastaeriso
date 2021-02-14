@@ -5,7 +5,7 @@
  */
 package br.com.pastaeriso.sales.delivery.deliveryman.workDay;
 
-import br.com.pastaeriso.people.functionary.contract.WorkContract;
+import br.com.pastaeriso.people.functionary.contract.FunctionaryContract;
 import br.com.pastaeriso.people.functionary.Functionary;
 import br.com.pastaeriso.sales.delivery.Delivery;
 import br.com.pastaeriso.sales.delivery.deliveryman.Deliveryman;

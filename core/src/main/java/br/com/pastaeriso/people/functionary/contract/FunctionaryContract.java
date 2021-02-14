@@ -6,11 +6,14 @@
 package br.com.pastaeriso.people.functionary.contract;
 
 import br.com.pastaeriso.people.functionary.Functionary;
+import br.com.pastaeriso.people.functionary.function.FunctionaryFunction;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -30,7 +33,7 @@ import lombok.experimental.SuperBuilder;
 @ToString
 @EqualsAndHashCode
 @SuperBuilder
-public class WorkContract {
+public class FunctionaryContract {
     
     @Id
     @GeneratedValue
@@ -44,6 +47,8 @@ public class WorkContract {
     
     @ManyToOne
     private Functionary functionary;
+    @ManyToMany
+    private List<FunctionaryFunction> functions;
     
     private String comment;
     

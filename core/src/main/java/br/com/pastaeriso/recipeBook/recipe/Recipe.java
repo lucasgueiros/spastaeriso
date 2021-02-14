@@ -1,5 +1,6 @@
 package br.com.pastaeriso.recipeBook.recipe;
 
+import br.com.pastaeriso.people.functionary.workingTime.FunctionaryWorkingTime;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
@@ -59,6 +60,9 @@ public class Recipe {
     @Singular
     private List<Instruction> instructions;
 
+    @OneToMany
+    @Singular
+    private List<FunctionaryWorkingTime> works;
     @OneToMany
     @Singular
     private List<Ingredient> ingredients;

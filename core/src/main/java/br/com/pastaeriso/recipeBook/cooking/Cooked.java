@@ -5,12 +5,15 @@
  */
 package br.com.pastaeriso.recipeBook.cooking;
 
+import br.com.pastaeriso.purchases.inventory.InventoryMovement;
 import br.com.pastaeriso.recipeBook.recipe.Recipe;
 import java.time.LocalDate;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -41,6 +44,9 @@ public class Cooked {
     
     @ManyToOne
     private Recipe recipe;
+    
+    @OneToMany
+    private List<InventoryMovement> movements;
     
     @NonNull
     @Builder.Default
