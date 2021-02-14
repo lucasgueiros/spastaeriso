@@ -99,6 +99,7 @@ public class SistemaPastaERisoApi {
             Unit unit2 = this.unitRepository.save(new Unit("L", Quantity.VOLUME));
             Unit unit3 = this.unitRepository.save(Unit.builder().name("mL").quantity(Quantity.VOLUME).favorite(true).build());
             Unit unit4 = this.unitRepository.save(new Unit("UN", Quantity.NON_CONVERTIBLE));
+            Unit unit5 = this.unitRepository.save(new Unit("min", Quantity.TIME));
             
             Input input1 = this.inputRepository.save(new Input("Tomate"));
             Input input2 = this.inputRepository.save(new Input("Cebola"));
@@ -109,6 +110,8 @@ public class SistemaPastaERisoApi {
             Input input7 = this.inputRepository.save(new Input("Sal"));
             Input input8 = this.inputRepository.save(new Input("Ovo frito"));
             Input input9 = this.inputRepository.save(new Input("Gás de cozinha"));
+            Input input10 = this.inputRepository.save(new Input("Queijo coaho"));
+            Input input11 = this.inputRepository.save(new Input("Queijo assado"));
             
             Account account1 = this.accountRepository.save(new Account("Compras"));
             Account account2 = this.accountRepository.save(new Account("Caixa"));

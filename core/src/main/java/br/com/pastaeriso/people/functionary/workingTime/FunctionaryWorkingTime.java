@@ -36,5 +36,6 @@ public class FunctionaryWorkingTime {
     @ManyToOne
     private FunctionaryFunction functionaryFunction;
     private Integer minutes;
+    private String comment;
     
 }

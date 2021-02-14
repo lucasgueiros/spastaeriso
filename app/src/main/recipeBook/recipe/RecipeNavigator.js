@@ -5,7 +5,7 @@ import RecipeCrud from './RecipeCrud.js';
 function RecipeNavigator() {
   return (
     <div className="recipe-navigator">
-      <Navigator crud={new RecipeCrud()} optionsLists={['inputs','units']}>
+      <Navigator crud={new RecipeCrud()} optionsLists={['inputs','units','functionaryFunctions']}>
         <Recipe prefix=""/>
       </Navigator>
     </div>

@@ -33,6 +33,7 @@ class Navigator extends React.Component {
     this.fetchOptions = this.fetchOptions.bind(this);
     this.updateOptionsLists = this.updateOptionsLists.bind(this);
     this.addToManyRelation = this.addToManyRelation.bind(this);
+    this.removeToManyRelation = this.removeToManyRelation.bind(this);
   }
 
   handleInputChange(event) {
@@ -162,7 +163,8 @@ class Navigator extends React.Component {
           onChange: this.handleInputChange,
           datalist: this.props.datalist,
           optionsLists: this.state.optionsLists,
-          addToManyRelation: this.addToManyRelation
+          addToManyRelation: this.addToManyRelation,
+          removeToManyRelation: this.removeToManyRelation
          })}
         {this.renderButtons()}
       </div>
@@ -236,6 +238,47 @@ class Navigator extends React.Component {
           relation = [...entityHierarchy[i][names[i]]];
         }
         relation.push({});
+        entityHierarchy[i][names[i]] = relation;
+        finished = true;
+        i--;
+      } else if (!finished) {
+        if(Array.isArray(entityHierarchy[i][names[i]])) {
+          entityHierarchy[i+1] = [...entityHierarchy[i][names[i]]];
+        } else {
+          entityHierarchy[i+1] = {...entityHierarchy[i][names[i]]};
+        }
+        i++;
+      } else {
+        entityHierarchy[i][names[i]] = entityHierarchy[i+1];
+        i--;
+      }
+    }
+    let entities = [...this.state.entities];
+    entities[index] = entity;
+    this.setState({entities});
+  }
+
+  removeToManyRelation (name) {
+    let names = name.split(".");
+
+    //const index = names[0];
+    //names.splice(0,1);
+    let index = this.state.entity_index;
+    let entity = {...this.state.entities[index]};
+    let entityHierarchy = [entity];
+
+    let i = 0;
+    let finished = false;
+    if(names.length===0) {
+      return;
+    }
+    while(i >= 0) {
+      if(!finished && i === names.length - 2) { // então chegamos ao último
+        let relation = [];
+        if(entityHierarchy[i][names[i]] !== undefined) {
+          relation = [...entityHierarchy[i][names[i]]];
+        }
+        relation.splice(names[i+1],1);
         entityHierarchy[i][names[i]] = relation;
         finished = true;
         i--;

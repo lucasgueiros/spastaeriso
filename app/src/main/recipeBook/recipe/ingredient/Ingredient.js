@@ -6,7 +6,7 @@ class Ingredient extends React.Component {
 
   render () {
     return (
-      <tr class-name="ingredient">
+      <>
         <td>
           <div>
             <input
@@ -23,7 +23,7 @@ class Ingredient extends React.Component {
           editing={this.props.editing}
           onChange={this.props.onChange}
           optionsLists={this.props.optionsLists}/>
-      </tr>
+      </>
     );
   }
 }
