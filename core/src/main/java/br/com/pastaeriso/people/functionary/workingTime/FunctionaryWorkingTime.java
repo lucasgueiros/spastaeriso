@@ -9,6 +9,7 @@ import br.com.pastaeriso.people.functionary.function.FunctionaryFunction;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,7 +33,8 @@ public class FunctionaryWorkingTime {
     @Id
     @GeneratedValue
     private Long id;
-    private FunctionaryFunction function;
+    @ManyToOne
+    private FunctionaryFunction functionaryFunction;
     private Integer minutes;
     
 }

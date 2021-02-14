@@ -33,10 +33,14 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import br.com.pastaeriso.api.accounting.transaction.GenericTransactionRepository;
+import br.com.pastaeriso.api.people.functionary.function.FunctionaryFunctionRepository;
+import br.com.pastaeriso.api.people.functionary.workingTime.FunctionaryWorkingTimeRepository;
 import br.com.pastaeriso.api.recipeBook.item.ItemRepository;
 import br.com.pastaeriso.api.recipeBook.recipe.RecipeRepository;
 import br.com.pastaeriso.api.recipeBook.recipe.ingredient.IngredientRepository;
 import br.com.pastaeriso.api.recipeBook.recipe.intruction.InstructionRepository;
+import br.com.pastaeriso.people.functionary.function.FunctionaryFunction;
+import br.com.pastaeriso.people.functionary.workingTime.FunctionaryWorkingTime;
 import br.com.pastaeriso.recipeBook.item.Item;
 import br.com.pastaeriso.recipeBook.recipe.Recipe;
 import br.com.pastaeriso.recipeBook.recipe.ingredient.Ingredient;
@@ -81,6 +85,10 @@ public class SistemaPastaERisoApi {
         private InstructionRepository instructionRepository;
         @Autowired
         private ItemRepository itemRepository;
+        @Autowired
+        private FunctionaryFunctionRepository functionaryFunctionRepository;
+        @Autowired
+        private FunctionaryWorkingTimeRepository functionaryWorkingTimeRepository;
         
         @Autowired
         private PurchaseRepository purchaseRepository;
@@ -196,11 +204,19 @@ public class SistemaPastaERisoApi {
             item1 = itemRepository.save(item1);
             item2 = itemRepository.save(item2);
             
+            // Working
+            FunctionaryFunction functionaryFunction1 = FunctionaryFunction.builder().name("Chef").build();
+            FunctionaryFunction functionaryFunction2 = FunctionaryFunction.builder().name("Auxiliar de cozinha").build();
+            functionaryFunction1 = functionaryFunctionRepository.save(functionaryFunction1);
+            functionaryFunction1 = functionaryFunctionRepository.save(functionaryFunction2);
+            
+            FunctionaryWorkingTime functionaryWorkingTime = FunctionaryWorkingTime.builder().functionaryFunction(functionaryFunction1).minutes(10).build();
+            functionaryWorkingTime = functionaryWorkingTimeRepository.save(functionaryWorkingTime);
             // Receitas exemplares
             Recipe recipe = Recipe.builder()
                     .date(LocalDate.now())
-                    .preparationTime(1)
                     .totalTime(5)
+                    .work(functionaryWorkingTime)
                     .title("Ovo frito")
                     .ingredient(ingredient1)
                     .ingredient(ingredient2)
