@@ -6,9 +6,12 @@ import br.com.pastaeriso.sales.delivery.deliveryman.workDay.DeliverymanWorkDay;
 import java.time.Period;
 import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -25,8 +28,13 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @ToString
 @EqualsAndHashCode
-public class DeliverymanPayment extends GenericTransaction {
+public class DeliverymanPayment {
 
+    @Id
+    @GeneratedValue
+    private Long id;
+    @OneToOne
+    private GenericTransaction transaction;
     @ManyToOne
     private Deliveryman deliveryman;
     @OneToMany

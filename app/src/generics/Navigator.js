@@ -13,6 +13,7 @@ class Navigator extends React.Component {
     creating: false,
     fetchingData: true,
     optionsLists: {},
+    message: ""
   };
 
   constructor (props) {
@@ -78,7 +79,7 @@ class Navigator extends React.Component {
     this.updateOptionsLists();
   }
 
-  fetchData() {
+  fetchData(toShow) {
     this.setState({
       fetchingData: true
     });
@@ -87,11 +88,20 @@ class Navigator extends React.Component {
         if(entities.length === 0) {
           entities = [{}];
         }
+        let toShowIndex = 0;
+        if(toShow) {
+          for(let i=0; i < entities.length; i++) {
+            if(entities[i]._links.self.href === toShow) {
+              toShowIndex = i;
+            }
+          }
+        }
         this.setState({
           entities: entities,
           creating: false,
           editing: false,
           fetchingData: false,
+          entity_index: toShowIndex,
         });
       }
     );
@@ -167,6 +177,7 @@ class Navigator extends React.Component {
           removeToManyRelation: this.removeToManyRelation
          })}
         {this.renderButtons()}
+        <p>{this.state.message}</p>
       </div>
     );
   }
@@ -174,19 +185,38 @@ class Navigator extends React.Component {
   async save () {
     const entityToSave = { ...this.state.entities[this.state.entity_index]};
     if(this.state.creating) {
-      await this.props.crud.postOperation(entityToSave);
-      this.fetchData();
+      let response = await this.props.crud.postOperation(entityToSave);
+      if(response.ok) {
+        this.setState({message: "Cadastrado com sucesso."});
+        this.fetchData(response._links.self.href);
+      } else {
+        this.setState({message: "Erro ao cadastrar.", entity_index: 0});
+      }
+
     } else {
       const url = this.state.entities[this.state.entity_index]._links.self.href;
-      await this.props.crud.patchOperation(url, entityToSave);
-      this.fetchData();
+      let response = await this.props.crud.patchOperation(url, entityToSave);
+      if(response.ok) {
+        this.setState({message: "Alterado com sucesso.", entity_index: 0});
+        this.fetchData(response._links.self.href);
+      } else {
+        this.setState({message: "Erro ao alterar.", entity_index: 0});
+        console.log(response.error);
+        this.fetchData();
+      }
     }
   }
 
   async remove() {
     const url = this.state.entities[this.state.entity_index]._links.self.href;
-    await this.props.crud.deleteOperation(url);
-    this.fetchData();
+    let response = await this.props.crud.deleteOperation(url);
+    if(response.ok) {
+      this.setState({message: "Removido com sucesso.", entity_index: 0});
+      this.fetchData();
+    } else {
+      this.setState({message: "Erro ao remover.", entity_index: 0});
+      this.fetchData();
+    }
   }
 
   async updateOptionsLists() {

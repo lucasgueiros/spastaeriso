@@ -5,7 +5,7 @@ import EntryCrud from '../entry/EntryCrud.js';
 class TransactionCrud extends BasicCrud{
 
   constructor () {
-    super("transactions");
+    super("genericTransactions");
     this.accountCrud = new BasicCrud("accounts");
     this.typeCrud = new BasicCrud("transactionTypes");
     this.modalityCrud = new BasicCrud("transactionModalities");

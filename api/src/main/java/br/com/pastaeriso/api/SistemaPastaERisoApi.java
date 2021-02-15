@@ -177,12 +177,7 @@ public class SistemaPastaERisoApi {
                            .item(purchaseItem1)
                            .item(purchaseItem2)
                            .additionalValue(BigDecimal.ZERO)
-                           .date(LocalDate.of(2021, Month.JULY, 4))
-                           .modality(transactionModality1)
-                           .type(transactionType2)
-                           .entry(entry5)
-                           .entry(entry6)
-                           .description("Ainda outra transação")
+                           .transaction(transaction1)
                            .build());
             
             // Ingredients
@@ -211,7 +206,7 @@ public class SistemaPastaERisoApi {
             FunctionaryFunction functionaryFunction1 = FunctionaryFunction.builder().name("Chef").build();
             FunctionaryFunction functionaryFunction2 = FunctionaryFunction.builder().name("Auxiliar de cozinha").build();
             functionaryFunction1 = functionaryFunctionRepository.save(functionaryFunction1);
-            functionaryFunction1 = functionaryFunctionRepository.save(functionaryFunction2);
+            functionaryFunction2 = functionaryFunctionRepository.save(functionaryFunction2);
             
             FunctionaryWorkingTime functionaryWorkingTime = FunctionaryWorkingTime.builder().functionaryFunction(functionaryFunction1).minutes(10).build();
             functionaryWorkingTime = functionaryWorkingTimeRepository.save(functionaryWorkingTime);

@@ -42,8 +42,8 @@ public class FunctionaryContract {
     private BigDecimal monthSalary;
     private BigDecimal hourSalary;
     
-    private LocalDate start;
-    private LocalDate end;
+    private LocalDate startDate;
+    private LocalDate endDate;
     
     @ManyToOne
     private Functionary functionary;

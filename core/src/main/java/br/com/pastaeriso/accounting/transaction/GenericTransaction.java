@@ -36,7 +36,7 @@ import lombok.experimental.SuperBuilder;
 @RequiredArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-public class GenericTransaction {
+public final class GenericTransaction {
 
 	@Id
 	@GeneratedValue

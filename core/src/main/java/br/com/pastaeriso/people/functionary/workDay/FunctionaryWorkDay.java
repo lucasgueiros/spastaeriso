@@ -32,7 +32,7 @@ import lombok.experimental.SuperBuilder;
 @ToString
 @EqualsAndHashCode
 @SuperBuilder
-public class FunctionaryWorkDay extends GenericTransaction {
+public class FunctionaryWorkDay {
     
     @Id
     @GeneratedValue

@@ -37,8 +37,8 @@ class Purchase extends React.Component {
           optionsLists={this.props.optionsLists}/>
         <h4>Transação</h4>
         <SimplerTransaction
-          entity={this.props.entity || {}}
-          prefix=""
+          entity={this.props.entity.transaction || {}}
+          prefix="transaction."
           editing={this.props.editing}
           onChange={this.props.onChange}
           optionsLists={this.props.optionsLists}

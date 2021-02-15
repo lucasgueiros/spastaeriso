@@ -1,7 +1,10 @@
 package br.com.pastaeriso.purchases.purchase.nfce;
 
 import br.com.pastaeriso.accounting.transaction.voucher.TransactionVoucher;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -28,8 +31,13 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder 
-public class Nfce extends TransactionVoucher {
+public class Nfce {
     
+    @Id
+	@GeneratedValue
+	private Long id;
+	@Column
+	private byte [] xml;
     private String accessCode;
     
 }

@@ -11,8 +11,11 @@ import br.com.pastaeriso.people.functionary.Functionary;
 import java.time.LocalDate;
 import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -35,8 +38,13 @@ import lombok.experimental.SuperBuilder;
 @ToString
 @EqualsAndHashCode
 @SuperBuilder
-public class FunctionaryPayment extends GenericTransaction {
+public class FunctionaryPayment {
     
+    @Id
+    @GeneratedValue
+    private Long id;
+    @OneToOne
+    private GenericTransaction transaction;
     @ManyToOne
     private Functionary functionary;
     @OneToMany

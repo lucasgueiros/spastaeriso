@@ -13,6 +13,7 @@ import javax.persistence.OneToOne;
 import br.com.pastaeriso.accounting.transaction.GenericTransaction;
 import br.com.pastaeriso.purchases.provider.Provider;
 import br.com.pastaeriso.purchases.purchase.items.PurchaseItem;
+import br.com.pastaeriso.purchases.purchase.nfce.Nfce;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -34,8 +35,13 @@ import lombok.experimental.SuperBuilder;
 @RequiredArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-public class Purchase extends GenericTransaction{
+public class Purchase {
 
+    @Id
+    @GeneratedValue
+    private Long id;
+    @OneToOne
+    private GenericTransaction transaction;
 	@NonNull
 	@ManyToOne
 	private Provider provider;
@@ -43,5 +49,7 @@ public class Purchase extends GenericTransaction{
 	@OneToMany
         @Singular
 	private List<PurchaseItem> items;
+        @OneToOne
+        private Nfce nfce;
 
 }

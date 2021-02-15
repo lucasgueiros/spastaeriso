@@ -31,8 +31,8 @@ public class DeliverymanContract {
 	private Long id;
         
 	@NonNull
-	private LocalDate start;
-	private LocalDate end;
+	private LocalDate startDate;
+	private LocalDate endDate;
         
         private BigDecimal paymentForDelivery;
 	private BigDecimal minimumCiclePayment;

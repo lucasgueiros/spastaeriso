@@ -19,9 +19,9 @@ class PurchaseCrud extends BasicCrud{
     for(let i =0; i < purchases.length; i++) {
       let purchase = {...purchases[i]};
       purchase = await this.providerCrud.getRelationOperation("provider",purchase);
+      purchase = await this.transactionCrud.getRelationOperation("transaction",purchase);
       //purchase = await this.nfeCrud.getRelationOperation("nfe",purchase);
       purchase = await this.itemCrud.getToManyRelationOperation("items",purchase);
-      purchase  = await this.transactionCrud.getMyRelationsOperation(purchase);
       purchases[i] = purchase;
     }
     return purchases;
@@ -43,14 +43,6 @@ class PurchaseCrud extends BasicCrud{
       });
     entityToSave = await this.transactionCrud.postRelationOperation("transaction",entityToSave);
     entityToSave = await this.itemCrud.postToManyRelationOperation("items",entityToSave);
-    /*let item;
-    if(entityToSave.items !== undefined){
-      let items = [...entityToSave.items];
-      for(let i =0; i < items.length; i++) {
-        entityToSave = await this.itemCrud.postRelationOperation(i,"items",entityToSave);
-      }
-    }*/
-
     super.postOperation(entityToSave);
   }
 

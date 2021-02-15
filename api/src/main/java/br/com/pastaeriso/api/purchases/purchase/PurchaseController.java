@@ -72,7 +72,7 @@ public class PurchaseController {
     @Autowired
     private InputRepository inputRepository;
     @Autowired
-    private GenericTransactionRepository transactionRepository;
+    private GenericTransactionRepository genericTransactionRepository;
     @Autowired
     private TransactionModalityRepository transactionModalityRepository;
     @Autowired
@@ -208,22 +208,23 @@ public class PurchaseController {
                 .value(value.negate())
                 .account(account)
                 .build();
-        
-        purchase.type(transactionTypeRepository.findByName("Compra").get());
-        purchase.modality(modality);
-        purchase.entry(entryRepository.save(entry1));
-        purchase.entry(entryRepository.save(entry2));
-        purchase.description(description);
-        
-        // Date
         LocalDate made = LocalDate.parse(proc.getNfeProc().getNFe().getInfNFe().getIde().getDhEmi().subSequence(0, 10));
-        purchase.date(made);
+        GenericTransaction transaction = GenericTransaction.builder()
+                .type(transactionTypeRepository.findByName("Compra").get())
+                .modality(modality)
+                .entry(entryRepository.save(entry1))
+                .entry(entryRepository.save(entry2))
+                .description(description)
+                .date(made)
+                .build();
+        transaction = genericTransactionRepository.save(transaction);
+        purchase.transaction(transaction);
         
         // PROVIDER
         purchase.provider(parseProvider(proc.getNfeProc().getNFe().getInfNFe().getEmit()));
 
         // NFCE
-        purchase.voucher(nfceController.save(multipartFile));
+        purchase.nfce(nfceController.save(multipartFile));
         
         // ITEMS
         BigDecimal subtotal = new BigDecimal(0);

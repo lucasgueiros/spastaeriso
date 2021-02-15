@@ -32,6 +32,8 @@ public class Card {
 	@Id
 	@GeneratedValue
 	private Long id;
+        private String description;
+        
 	@NonNull
 	@OneToOne
 	private Account account;

@@ -21,11 +21,11 @@ class BasicCrud {
       let relationEntity = {...entity[relationName][i]};
       let relationEntityUrl = relationEntity._links.self.href;
       if(relationEntity._links == undefined) {
-        relationEntityUrl = await this.postOperation(relationEntity);
+        relationEntity = await this.postOperation(relationEntity);
       } else {
-        relationEntityUrl = await this.patchOperation(relationEntity._links.self.href, relationEntity);
+        relationEntity = await this.patchOperation(relationEntity._links.self.href, relationEntity);
       }
-      links[i] = relationEntityUrl;
+      links[i] = relationEntity._links.self.href;
     }
     entity = {
       ...entity,
@@ -160,12 +160,18 @@ class BasicCrud {
   }
 
   async postOperation (entityToSave) {
-    let toReturn = {};
+    let toReturn = {
+      ok: true,
+      response: {},
+      error: {}
+    };
     await axios.post(this.url, entityToSave, this.jsonConfig)
       .then( (response) =>  {
         toReturn = response.data;
+        toReturn.ok = true;
       }, (error) => {
-        console.log(error);
+        toReturn.ok = false;
+        toReturn.error = error;
       });
     return toReturn;
   }
@@ -174,11 +180,13 @@ class BasicCrud {
     let toReturn = [{}];
     await axios.patch(url, entityToSave, this.jsonConfig)
       .then(  (response) => {
-        // DO NOTHING toReturn = response.data;
+        toReturn = response.data;
+        toReturn.ok = true;
       }, (error) => {
-        console.log(error);
+        toReturn.error = error;
+        toReturn.ok = false;
       });
-    return url;
+    return toReturn;
   }
 
   async patchRelationOperation ( relationName, entityToSave) {
@@ -187,12 +195,6 @@ class BasicCrud {
       .then( (response) => {
         relationUrl = response.data._links.self.href;
         this.patchOperation(relationUrl,entityToSave[relationName]);
-        /*axios.patch(relationUrl, entityToSave[relationName], this.jsonConfig)
-          .then( (response) => {
-            console.log(response);
-          }, (error) => {
-            console.log(error);
-          });*/
       }, (error) => {
         console.log(error);
       });
@@ -208,9 +210,10 @@ class BasicCrud {
     let toReturn = [{}];
     await axios.delete(url)
       .then( (response) => {
-        toReturn = this.getOperation();
+        toReturn.ok = true;
       }, (error) => {
-        console.log(error);
+        toReturn.error = error;
+        toReturn.ok = false;
       });
     return toReturn;
   }
