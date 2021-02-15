@@ -1,6 +1,7 @@
 import './Account.css';
 import React from 'react';
 import SimplerLinkSelect from '../../../generics/SimplerLinkSelect.js';
+import TextField from '../../../generics/TextField.js';
 
 class Account extends React.Component {
 
@@ -11,10 +12,7 @@ class Account extends React.Component {
   render () {
     return (
       <div class-name="input">
-        <div>
-          <label htmlFor="name">Nome: </label>
-          <input name="name" type="text" value={this.props.entity.name || ''} onChange={this.props.onChange} readOnly={!this.props.editing}></input>
-        </div>
+        <TextField {...this.props} property="name" label="Nome"/>
         <div>
           <label htmlFor="comment">Comentários: </label>
           <input name="comment" type="text" value={this.props.entity.comment || ''} onChange={this.props.onChange} readOnly={!this.props.editing}></input>
