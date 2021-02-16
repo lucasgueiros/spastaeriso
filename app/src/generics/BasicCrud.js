@@ -83,24 +83,6 @@ class BasicCrud {
     return toReturn;
   }
 
-  /*async getRelationWithIndexOperation(index, relationName, entity) {
-    let toReturn;
-    await axios.get(entity._links[relationName].href.replace("{?projection}",""))
-      .then( (response) => {
-        toReturn = {
-          ...entity,
-          [relationName]: response.data
-        }
-      }, (error) => {
-        console.log(error);
-        toReturn = {
-          ...entity,
-          [relationName]: {}
-        }
-      });
-    return toReturn;
-  }*/
-
   async getRelationWithIndexOperation(index, relationName, entity) {
     let toReturn;
     await axios.get(entity[relationName][index]._links.self.href.replace("{?projection}",""))

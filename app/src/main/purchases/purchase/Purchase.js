@@ -24,6 +24,7 @@ class Purchase extends React.Component {
           onChange={this.props.onChange}
           optionsLists={this.props.optionsLists}
           addToManyRelation={this.props.addToManyRelation}/>
+          
         <StandaloneNumberField {...this.props} property="additionalValue" label="Valor extra"/>
         <h4>Nota fiscal</h4>
         <div>

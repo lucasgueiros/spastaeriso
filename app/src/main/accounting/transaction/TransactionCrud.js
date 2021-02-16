@@ -6,7 +6,6 @@ class TransactionCrud extends BasicCrud{
 
   constructor () {
     super("genericTransactions");
-    this.accountCrud = new BasicCrud("accounts");
     this.modalityCrud = new BasicCrud("transactionModalities");
     this.entryCrud = new EntryCrud();
   }
