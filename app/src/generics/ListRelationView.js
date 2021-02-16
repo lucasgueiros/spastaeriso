@@ -3,7 +3,25 @@ import React from 'react';
 class ListRelationView extends React.Component {
 
   state = {
-    selecteds: []
+    selecteds: [],
+    index: ''
+  }
+
+  constructor(props) {
+    super(props);
+    this.state.index = props.index;
+    this.compare = this.compare.bind(this);
+  }
+
+  compare( a, b) {
+    let index = this.state.index;
+    if ( a[index] < b[index] ){
+      return -1;
+    }
+    if ( a[index] > b[index] ){
+      return 1;
+    }
+    return 0;
   }
 
   handleSelectedChange(event, index) {
@@ -28,6 +46,8 @@ class ListRelationView extends React.Component {
     if(this.props.editing) {
       addButton = <button onClick={() => this.props.addToManyRelation(this.props.prefix + this.props.property)}>Adicionar</button>;
       removeButton = <button onClick={() => this.removeSelecteds()}>Remover</button>;
+    } else if(this.props.index){
+      items = items.sort(this.compare);
     }
     const listItems = items.map((item,index) =>
       <tr>
