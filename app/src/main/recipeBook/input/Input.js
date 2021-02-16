@@ -1,22 +1,17 @@
 import './Input.css';
 import './InputAux.js';
 import React from 'react';
-//import InputPrice from './price/InputPrice.js';
+import StandaloneTextField from '../../../generics/StandaloneTextField.js';
+import StandaloneLinkSelect from '../../../generics/StandaloneLinkSelect.js';
+import StandaloneDateField from '../../../generics/StandaloneDateField.js';
 
 class Input extends React.Component {
 
   render () {
     return (
       <div class-name="input">
-        <div>
-          <label htmlFor="name">Nome: </label>
-          <input name="name" type="text" value={this.props.entity.name || ''} onChange={this.props.onChange} readOnly={!this.props.editing}></input>
-        </div>
-        <div>
-          <label htmlFor="comment">Comentários: </label>
-          <input name="comment" type="text" value={this.props.entity.comment || ''} onChange={this.props.onChange} readOnly={!this.props.editing}></input>
-        </div>
-
+        <StandaloneTextField {...this.props} property="name" label="Nome"/>
+        <StandaloneTextField {...this.props} property="comment" label="Comentários"/>
       </div>
     );
   }

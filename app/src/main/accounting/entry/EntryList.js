@@ -6,7 +6,6 @@ function EntryList(props) {
           <tr key={index}>
             <td></td>
             <td></td>
-            <td></td>
             <Entry
               entity={entry}
               prefix={props.prefix+index+"."}

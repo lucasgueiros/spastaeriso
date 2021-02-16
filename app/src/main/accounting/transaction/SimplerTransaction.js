@@ -16,7 +16,6 @@ class SimplerTransaction extends React.Component {
         <tr>
           <td></td>
           <td></td>
-          <td></td>
           <td>
             <button onClick={() => this.props.addToManyRelation(this.props.prefix + "entries")}>Adicionar entrada</button>
           </td>
@@ -30,7 +29,6 @@ class SimplerTransaction extends React.Component {
       <>
         <tr>
           {this.props.children}
-
           <td>
             <input
               name={this.props.prefix + "date"}
@@ -38,14 +36,6 @@ class SimplerTransaction extends React.Component {
               value={this.props.entity.date ? this.props.entity.date : '' || ''}
               onChange={this.props.onChange}
               readOnly={!this.props.editing}></input>
-          </td>
-          <td>
-            <SimplerLinkSelect
-              entity={this.props.entity.type || ""}
-              prefix={this.props.prefix + "type"}
-              onChange={this.props.onChange}
-              editing={this.props.editing}
-              optionsList={this.props.optionsLists.transactionTypes || []}/>
           </td>
           <td>
             <SimplerLinkSelect

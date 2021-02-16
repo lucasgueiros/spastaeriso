@@ -6,7 +6,7 @@ class PurchaseItem extends React.Component {
 
   render () {
     return (
-      <tr class-name="purchase-item">
+      <>
         <td>
           <SimplerLinkSelect
             entity={this.props.entity.input || ''}
@@ -55,7 +55,7 @@ class PurchaseItem extends React.Component {
             <input name="subtotal" type="number" value={this.props.entity.pricePerUnit * this.props.entity.quantity} readOnly={true}></input>
           </div>
         </td>
-      </tr>
+      </>
     );
   }
 }

@@ -14,7 +14,6 @@ import br.com.pastaeriso.api.accounting.account.AccountRepository;
 import br.com.pastaeriso.api.accounting.card.CardRepository;
 import br.com.pastaeriso.api.accounting.entry.EntryRepository;
 import br.com.pastaeriso.api.accounting.transaction.modality.TransactionModalityRepository;
-import br.com.pastaeriso.api.accounting.transaction.type.TransactionTypeRepository;
 import br.com.pastaeriso.api.integrations.nfe.NfeProc;
 import br.com.pastaeriso.api.purchases.provider.ProviderRepository;
 import br.com.pastaeriso.api.purchases.purchase.items.PurchaseItemRepository;
@@ -75,8 +74,6 @@ public class PurchaseController {
     private GenericTransactionRepository genericTransactionRepository;
     @Autowired
     private TransactionModalityRepository transactionModalityRepository;
-    @Autowired
-    private TransactionTypeRepository transactionTypeRepository;
     @Autowired
     private CardRepository cardRepository;
     @Autowired
@@ -210,7 +207,6 @@ public class PurchaseController {
                 .build();
         LocalDate made = LocalDate.parse(proc.getNfeProc().getNFe().getInfNFe().getIde().getDhEmi().subSequence(0, 10));
         GenericTransaction transaction = GenericTransaction.builder()
-                .type(transactionTypeRepository.findByName("Compra").get())
                 .modality(modality)
                 .entry(entryRepository.save(entry1))
                 .entry(entryRepository.save(entry2))

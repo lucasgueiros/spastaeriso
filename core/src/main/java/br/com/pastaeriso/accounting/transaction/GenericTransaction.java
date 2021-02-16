@@ -12,7 +12,6 @@ import javax.persistence.OneToMany;
 
 import br.com.pastaeriso.accounting.entry.Entry;
 import br.com.pastaeriso.accounting.transaction.modality.TransactionModality;
-import br.com.pastaeriso.accounting.transaction.type.TransactionType;
 import br.com.pastaeriso.accounting.transaction.voucher.TransactionVoucher;
 import javax.persistence.OneToOne;
 import lombok.AllArgsConstructor;
@@ -45,9 +44,6 @@ public final class GenericTransaction {
 	@NonNull
 	@ManyToOne
 	private TransactionModality modality;
-	@NonNull
-	@ManyToOne
-	private TransactionType type;
 	@Builder.Default
 	private LocalDate date = LocalDateTime.now().toLocalDate();
 	@ManyToOne

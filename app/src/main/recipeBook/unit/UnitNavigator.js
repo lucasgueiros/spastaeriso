@@ -6,7 +6,7 @@ function UnitNavigator() {
   return (
     <div className="unit-navigator">
       <Navigator crud={new BasicCrud("units")}>
-        <Unit/>
+        <Unit prefix=""/>
       </Navigator>
     </div>
   );

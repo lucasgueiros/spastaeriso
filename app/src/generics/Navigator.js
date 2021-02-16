@@ -288,7 +288,7 @@ class Navigator extends React.Component {
     this.setState({entities});
   }
 
-  removeToManyRelation (name) {
+  removeToManyRelation (name, selecteds) {
     let names = name.split(".");
 
     //const index = names[0];
@@ -303,12 +303,16 @@ class Navigator extends React.Component {
       return;
     }
     while(i >= 0) {
-      if(!finished && i === names.length - 2) { // então chegamos ao último
+      if(!finished && i === names.length - 1) { // então chegamos ao último
         let relation = [];
         if(entityHierarchy[i][names[i]] !== undefined) {
           relation = [...entityHierarchy[i][names[i]]];
         }
-        relation.splice(names[i+1],1);
+        for(let j = relation.length; j >= 0; j--) {
+          if(selecteds[j]) {
+            relation.splice(j,1);
+          }
+        }
         entityHierarchy[i][names[i]] = relation;
         finished = true;
         i--;
@@ -328,6 +332,9 @@ class Navigator extends React.Component {
     entities[index] = entity;
     this.setState({entities});
   }
+
+
+
 
 }
 

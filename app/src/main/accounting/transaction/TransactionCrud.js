@@ -7,13 +7,11 @@ class TransactionCrud extends BasicCrud{
   constructor () {
     super("genericTransactions");
     this.accountCrud = new BasicCrud("accounts");
-    this.typeCrud = new BasicCrud("transactionTypes");
     this.modalityCrud = new BasicCrud("transactionModalities");
     this.entryCrud = new EntryCrud();
   }
 
   async getMyRelationsOperation(transaction) {
-    transaction = await this.typeCrud.getRelationOperation("type",transaction, true);
     transaction = await this.modalityCrud.getRelationOperation("modality",transaction, true);
     transaction = await this.entryCrud.getToManyRelationOperation("entries",transaction);
     return transaction;
@@ -23,7 +21,6 @@ class TransactionCrud extends BasicCrud{
     let transactions = await super.getOperation();
     let i = 0;
     for(; i < transactions.length; i++ ){
-      transactions[i] = await this.typeCrud.getRelationOperation("type",transactions[i], true);
       transactions[i] = await this.modalityCrud.getRelationOperation("modality",transactions[i], true);
       transactions[i] = await this.entryCrud.getToManyRelationOperation("entries",transactions[i]);
     }
@@ -32,7 +29,6 @@ class TransactionCrud extends BasicCrud{
 
   async getRelationOperation (relationName, entity) {
     let toReturn = await super.getWithUrlOperation(entity._links[relationName].href);
-    toReturn = await this.typeCrud.getRelationOperation("type",toReturn, true);
     toReturn = await this.modalityCrud.getRelationOperation("modality",toReturn, true);
     toReturn = await this.entryCrud.getToManyRelationOperation("entries",toReturn);
     entity = {

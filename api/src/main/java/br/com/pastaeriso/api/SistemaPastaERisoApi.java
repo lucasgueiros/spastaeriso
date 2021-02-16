@@ -4,11 +4,9 @@ import br.com.pastaeriso.accounting.account.Account;
 import br.com.pastaeriso.accounting.entry.Entry;
 import br.com.pastaeriso.accounting.transaction.GenericTransaction;
 import br.com.pastaeriso.accounting.transaction.modality.TransactionModality;
-import br.com.pastaeriso.accounting.transaction.type.TransactionType;
 import br.com.pastaeriso.api.accounting.account.AccountRepository;
 import br.com.pastaeriso.api.accounting.entry.EntryRepository;
 import br.com.pastaeriso.api.accounting.transaction.modality.TransactionModalityRepository;
-import br.com.pastaeriso.api.accounting.transaction.type.TransactionTypeRepository;
 import br.com.pastaeriso.api.people.address.type.AddressTypeRepository;
 import br.com.pastaeriso.api.people.contact.channel.ContactChannelRepository;
 import br.com.pastaeriso.api.purchases.provider.ProviderRepository;
@@ -25,7 +23,6 @@ import br.com.pastaeriso.recipeBook.unit.Unit;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.Month;
-import java.util.LinkedList;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -63,8 +60,6 @@ public class SistemaPastaERisoApi {
         private AccountRepository accountRepository;
         @Autowired
         private TransactionModalityRepository transactionModalityRepository;
-        @Autowired
-        private TransactionTypeRepository transactionTypeRepository;
         @Autowired
         private ContactChannelRepository contactChannelRepository;
         @Autowired
@@ -126,9 +121,6 @@ public class SistemaPastaERisoApi {
             TransactionModality transactionModality6 = this.transactionModalityRepository.save(new TransactionModality("Crédito loja"));
             TransactionModality transactionModality7 = this.transactionModalityRepository.save(new TransactionModality("Boleto bancário"));
             
-            TransactionType transactionType1 = this.transactionTypeRepository.save(new TransactionType("Compra"));
-            TransactionType transactionType2 = this.transactionTypeRepository.save(new TransactionType("Pedido"));
-            
             // EXEMPLE DATA
             Entry entry1 = this.entryRepository.save(Entry.builder().account(account1).value(new BigDecimal(10)).build());
             Entry entry2 = this.entryRepository.save(Entry.builder()
@@ -142,7 +134,6 @@ public class SistemaPastaERisoApi {
             GenericTransaction transaction1 = this.transactionRepository.save(GenericTransaction.builder()
                             .date(LocalDate.of(2020, Month.DECEMBER, 23))
                             .modality(transactionModality2)
-                            .type(transactionType2)
                             .entry(entry1)
                             .entry(entry2)
                             .description("Alguma transação")
@@ -150,7 +141,6 @@ public class SistemaPastaERisoApi {
             GenericTransaction transaction2 = this.transactionRepository.save(GenericTransaction.builder()
                             .date(LocalDate.of(2020, Month.MARCH, 3))
                             .modality(transactionModality1)
-                            .type(transactionType1)
                             .entry(entry3)
                             .entry(entry4)
                             .description("Outra transação")

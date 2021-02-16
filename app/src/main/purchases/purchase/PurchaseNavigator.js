@@ -6,7 +6,7 @@ import PurchaseCrud from './PurchaseCrud.js';
 function PurchaseNavigator() {
   return (
     <div className="purchase-navigator">
-      <Navigator crud={new PurchaseCrud()} optionsLists={['accounts','transactionTypes','transactionModalities','inputs','units']}>
+      <Navigator crud={new PurchaseCrud()} optionsLists={['accounts','transactionTypes','transactionModalities','inputs','units','providers']}>
         <Purchase prefix=""/>
       </Navigator>
     </div>

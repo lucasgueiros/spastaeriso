@@ -7,7 +7,7 @@ function InputNavigator() {
   return (
     <div className="input-navigator">
       <Navigator crud={new BasicCrud("inputs")}>
-        <Input/>
+        <Input prefix=""/>
       </Navigator>
     </div>
   );
