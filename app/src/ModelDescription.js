@@ -21,7 +21,13 @@ export default {
         entity: 'purchaseItems',
         type: 'oneToMany'
       },
+      {
+        name: 'nfce',
+        entity: 'nfce',
+        type: 'oneToOne'
+      }
     ],
+  nfce: [],
   providers: [],
   genericTransactions: [
     {

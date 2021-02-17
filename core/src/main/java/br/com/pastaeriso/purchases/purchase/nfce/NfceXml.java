@@ -1,11 +1,14 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package br.com.pastaeriso.purchases.purchase.nfce;
 
-import br.com.pastaeriso.accounting.transaction.voucher.TransactionVoucher;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -14,10 +17,6 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
-/**
- *
- * @author lucas
- */
 @Entity
 @Getter
 @Setter
@@ -26,13 +25,10 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder 
-public class Nfce {
-    
-    @Id
+public class NfceXml {
+	@Id
 	@GeneratedValue
 	private Long id;
-	@OneToOne
-	private NfceXml xml;
-    private String accessCode;
-    
+	@Column
+	private byte [] xml;
 }

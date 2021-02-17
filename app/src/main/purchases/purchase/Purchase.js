@@ -1,6 +1,7 @@
 import './Purchase.css';
 import React from 'react';
 import Provider from '../provider/Provider.js';
+import Nfce from './nfe/Nfce.js';
 import SimplerTransaction from '../../accounting/transaction/SimplerTransaction.js';
 //import StandaloneNumberField from '../../../generics/StandaloneNumberField.js';
 //import StandaloneLinkSelect from '../../../generics/StandaloneLinkSelect.js';
@@ -24,10 +25,7 @@ class Purchase extends React.Component {
 
         <StandaloneNumberField {...this.props} property="additionalValue" label="Valor extra"/>
         <h4>Nota fiscal</h4>
-        <div>
-          <label htmlFor="nfe.accessCode">NFC-e: </label>
-          <input name="nfe.accessCode" type="text" value={this.props.entity.nfe ? this.props.entity.nfe.accessCode : ''} readOnly={true}></input>
-        </div>
+        <RelationView {...this.props} property="nfce" view={<Nfce/>}/>
 
         <ListRelationView {...this.props} property="items" row={<PurchaseItem/>} >
           <th>Insumo</th>

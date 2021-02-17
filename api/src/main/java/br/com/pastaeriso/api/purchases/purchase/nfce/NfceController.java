@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 
 import br.com.pastaeriso.api.integrations.nfe.NfeProc;
 import br.com.pastaeriso.purchases.purchase.nfce.Nfce;
+import br.com.pastaeriso.purchases.purchase.nfce.NfceXml;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,6 +29,8 @@ public class NfceController {
 
     @Autowired
     private NfceRepository repository;
+    @Autowired
+    private NfceXmlRepository nfceXmlRepository;
 
     @PostMapping("/nFeXmls/fromXml")
     public ResponseEntity<Nfce> postNfeFromXml(@RequestParam("nfce") final MultipartFile nfce) throws JAXBException, IOException {
@@ -42,7 +45,9 @@ public class NfceController {
 
         String accessCode = proc.getNfeProc().getProtNFe().getInfProt().getChNFe();
         byte[] xml = nfeXml.getBytes();
-        Nfce nfe = Nfce.builder().accessCode(accessCode).xml(xml).build();
+        NfceXml nfceXml = NfceXml.builder().xml(xml).build();
+        nfceXml = nfceXmlRepository.save(nfceXml);
+        Nfce nfe = Nfce.builder().accessCode(accessCode).xml(nfceXml).build();
         return repository.save(nfe);
     }
 
