@@ -1,5 +1,6 @@
 package br.com.pastaeriso.purchases.purchase.products;
 
+import br.com.pastaeriso.purchases.inventory.InventoryMovement;
 import br.com.pastaeriso.purchases.purchase.items.PurchaseItem;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -55,17 +56,21 @@ public class PurchaseProduct {
                 pricePerUnit = pricePerUnit.divide(ratio);
             }
             return PurchaseItem.builder()
+                    .inventoryMovement(InventoryMovement.builder()
+                            .input(this.input)
+                            .unit(this.unit)
+                            .adjusted(false)
+                            .comment(this.declaredInput + "(" + this.declaredUnit + ")")
+                            .date(date)
+                            .quantity(quantity)
+                    .build())
                     .applied(Boolean.FALSE)
                     .declaredInput(declaredInput)
                     .declaredUnit(declaredUnit)
                     .brand(this.brand)
-                    .input(this.input)
-                    .unit(this.unit)
-                    .adjusted(false)
-                    .comment(this.declaredInput + "(" + this.declaredUnit + ")")
                     .pricePerUnit(pricePerUnit)
-                    .date(date)
-                    .quantity(quantity).build();
+                    .build();
+            
         }
 
     public boolean appliesTo(PurchaseItem item) {
@@ -73,7 +78,7 @@ public class PurchaseProduct {
     }
 
     public PurchaseItem apply(PurchaseItem item) {
-        BigDecimal quantity = item.getQuantity();
+        BigDecimal quantity = item.getInventoryMovement().getQuantity();
         BigDecimal pricePerUnit = item.getPricePerUnit();
         if(!this.keepUnit) {
                 quantity = quantity.multiply(ratio);
@@ -82,13 +87,16 @@ public class PurchaseProduct {
             return PurchaseItem.builder()
                     .id(item.getId())
                     .brand(this.brand)
-                    .input(this.input)
-                    .unit(this.unit)
-                    .adjusted(false)
-                    .comment(declaredInput)
+                    .inventoryMovement(InventoryMovement.builder()
+                            .input(this.input)
+                            .unit(this.unit)
+                            .adjusted(false)
+                            .comment(declaredInput)
+                            .date(item.getInventoryMovement().getDate())
+                            .quantity(quantity)
+                    .build())
                     .pricePerUnit(pricePerUnit)
-                    .date(item.getDate())
-                    .quantity(quantity).build();
+                    .build();
     }
 
 }

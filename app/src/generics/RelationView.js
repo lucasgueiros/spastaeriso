@@ -4,7 +4,7 @@ export default function RelationView (props) {
     <>
       {React.cloneElement(props.view, {...props,
         entity: props.entity[props.property] || {},
-        prefix: props.prefix + props.property + ".", })}
+        prefix: props.prefix + props.property + "."})}
     </>
   );
 }

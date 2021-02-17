@@ -1,8 +1,8 @@
 import './SimplerTransaction.css';
 import React from 'react';
 import axios from 'axios';
-import {LinkSelect} from '../../../generics/all.js';
-import EntryList from '../entry/EntryList.js';
+import {LinkSelect,InListRelationView} from '../../../generics/all.js';
+import Entry from '../entry/Entry.js';
 
 class SimplerTransaction extends React.Component {
 
@@ -11,20 +11,6 @@ class SimplerTransaction extends React.Component {
   }
 
   render() {
-    if(this.props.editing){
-      var buttons = (
-        <tr>
-          <td></td>
-          <td></td>
-          <td>
-            <button onClick={() => this.props.addToManyRelation(this.props.prefix + "entries")}>Adicionar entrada</button>
-          </td>
-          <td></td>
-        </tr>
-      );
-    }
-
-
     return (
       <>
         <tr>
@@ -38,8 +24,8 @@ class SimplerTransaction extends React.Component {
               readOnly={!this.props.editing}></input>
           </td>
           <td>
-            <LinkSelect {...this.props} property="modality" options="transactionModalities"/>
-            
+          <LinkSelect {...this.props} property="modality" options="transactionModalities"/>
+
           </td>
           <td colSpan="2">Entradas:</td>
           <td>
@@ -51,14 +37,7 @@ class SimplerTransaction extends React.Component {
               readOnly={!this.props.editing}></input>
           </td>
         </tr>
-        <EntryList
-          entity={this.props.entity.entries || []}
-          prefix={this.props.prefix+"entries."}
-          onChange={this.props.onChange}
-          editing={this.props.editing}
-          optionsLists={this.props.optionsLists}
-          registerOptionList={this.props.registerOptionList}/>
-        {buttons}
+        <InListRelationView {...this.props} property="entries" before="1" after="1" view={<Entry/>}/>
       </>
     );
   }

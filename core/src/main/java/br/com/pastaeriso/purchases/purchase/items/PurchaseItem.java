@@ -5,6 +5,9 @@ import java.math.BigDecimal;
 import javax.persistence.Entity;
 
 import br.com.pastaeriso.purchases.inventory.InventoryMovement;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -18,13 +21,16 @@ import lombok.experimental.SuperBuilder;
 @Entity
 @Getter
 @Setter
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode()
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-public class PurchaseItem extends InventoryMovement {
+public class PurchaseItem  {
 
+    @Id
+	@GeneratedValue
+	private Long id;
 	private String brand;
 	@NonNull
 	private BigDecimal pricePerUnit;
@@ -33,4 +39,6 @@ public class PurchaseItem extends InventoryMovement {
         private String declaredInput;
         @Builder.Default
         private Boolean applied = Boolean.FALSE;
+        @OneToOne
+        private InventoryMovement inventoryMovement;
 }

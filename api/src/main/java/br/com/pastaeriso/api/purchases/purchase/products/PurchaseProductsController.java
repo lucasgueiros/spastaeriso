@@ -47,7 +47,7 @@ public class PurchaseProductsController {
         if(purchaseProduct == null) {
             return ResponseEntity.notFound().build();
         }
-        List<PurchaseItem> items = purchaseItemRepository.findByInput(inputRepository.findByName("Desconhecido"));
+        List<PurchaseItem> items = purchaseItemRepository.findByInventoryMovement_Input(inputRepository.findByName("Desconhecido"));
         for(PurchaseItem item : items) {
             if(purchaseProduct.appliesTo(item)) {
                 item = purchaseProduct.apply(item);

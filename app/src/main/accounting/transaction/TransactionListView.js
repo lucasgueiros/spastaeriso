@@ -18,9 +18,7 @@ class TransactionListView extends React.Component {
       <>
         <h3>Transações</h3>
         <table>
-          <ListView crud={this.transactionCrud} optionsLists={['accounts','transactionTypes','transactionModalities']}>
-            <SimplerTransaction/>
-          </ListView>
+          <ListView entity="genericTransactions" view={<SimplerTransaction/>} />
         </table>
       </>
     );

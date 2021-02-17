@@ -7,6 +7,7 @@ export {default as NumberField} from './NumberField.js' ;
 export {default as DateField} from './DateField.js' ;
 export {default as CheckboxField} from './CheckboxField.js' ;
 export {default as MultipleLinkSelect} from './MultipleLinkSelect.js' ;
+export {default as InListRelationView} from './InListRelationView.js';
 
 export {default as StandaloneTextField} from './StandaloneTextField.js' ;
 export {default as StandaloneLinkSelect} from './StandaloneLinkSelect.js' ;

@@ -11,6 +11,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 @CrossOrigin
 public interface PurchaseItemRepository extends JpaRepository<PurchaseItem, Long> {
 
-    public List<PurchaseItem> findByInput(Input input);
+    public List<PurchaseItem> findByInventoryMovement_Input(Input input);
     
 }

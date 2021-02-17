@@ -1,6 +1,7 @@
 import './ListView.css';
 import React from 'react';
 import axios from 'axios';
+import CrudFactory from './CrudFactory.js';
 
 class ListView extends React.Component {
 
@@ -15,6 +16,18 @@ class ListView extends React.Component {
     this.fetchOptions = this.fetchOptions.bind(this);
     this.updateOptionsLists = this.updateOptionsLists.bind(this);
     this.updating = false;
+
+    this.addToManyRelation = this.addToManyRelation.bind(this);
+    this.removeToManyRelation = this.removeToManyRelation.bind(this);
+    this.manyToManyChange = this.manyToManyChange.bind(this);
+    this.addOptionsList = this.addOptionsList.bind(this);
+    this.optionsListsNames = [];
+
+    if(this.props.entity) {
+      this.crud = CrudFactory.get(this.props.entity);
+    } else {
+      this.crud = this.props.crud;
+    }
   }
 
   state = {
@@ -25,6 +38,97 @@ class ListView extends React.Component {
     selecteds: [],
     optionsLists: {},
   };
+
+  // vai dar problema
+  manyToManyChange(name, value, add) {
+    const names = name.split(".");
+
+    let index = this.state.entity_index;
+    let entities = [...this.state.entities];
+    let entity = {...entities[index]};
+    let entityHierarchy = [entity];
+
+    let i = 0;
+    let finished = false;
+    while(i >= 0) {
+      if(!finished && i === names.length - 1) { // então chegamos ao último
+        let newValue = [...entityHierarchy[i][names[i]],];
+        if(add) {
+          newValue.push(value);
+        } else {
+          let j = newValue.indexOf(value);
+          newValue.splice(j,1);
+        }
+        entityHierarchy[i][names[i]] = newValue;
+        finished = true;
+        i--;
+      } else if (!finished) {
+        if(Array.isArray(entityHierarchy[i][names[i]])) {
+          entityHierarchy[i+1] = [...entityHierarchy[i][names[i]]];
+        } else {
+          entityHierarchy[i+1] = {...entityHierarchy[i][names[i]]};
+        }
+        i++;
+      } else {
+        entityHierarchy[i][names[i]] = entityHierarchy[i+1];
+        i--;
+      }
+    }
+
+    entities[index] = entity;
+    this.setState({entities});
+  }
+
+  removeToManyRelation (name, selecteds) {
+    let names = name.split(".");
+
+    //const index = names[0];
+    //names.splice(0,1);
+    let index = this.state.entity_index;
+    let entity = {...this.state.entities[index]};
+    let entityHierarchy = [entity];
+
+    let i = 0;
+    let finished = false;
+    if(names.length===0) {
+      return;
+    }
+    while(i >= 0) {
+      if(!finished && i === names.length - 1) { // então chegamos ao último
+        let relation = [];
+        if(entityHierarchy[i][names[i]] !== undefined) {
+          relation = [...entityHierarchy[i][names[i]]];
+        }
+        for(let j = relation.length; j >= 0; j--) {
+          if(selecteds[j]) {
+            relation.splice(j,1);
+          }
+        }
+        entityHierarchy[i][names[i]] = relation;
+        finished = true;
+        i--;
+      } else if (!finished) {
+        if(Array.isArray(entityHierarchy[i][names[i]])) {
+          entityHierarchy[i+1] = [...entityHierarchy[i][names[i]]];
+        } else {
+          entityHierarchy[i+1] = {...entityHierarchy[i][names[i]]};
+        }
+        i++;
+      } else {
+        entityHierarchy[i][names[i]] = entityHierarchy[i+1];
+        i--;
+      }
+    }
+    let entities = [...this.state.entities];
+    entities[index] = entity;
+    this.setState({entities});
+  }
+
+
+  addOptionsList(name) {
+    this.optionsListsNames.push(name);
+    this.updateOptionsLists()
+  }
 
   handleSelectedChange(event, index) {
     const checked = event.target.checked;
@@ -82,7 +186,7 @@ class ListView extends React.Component {
     this.setState({
       fetchingData: true,
     });
-    this.props.crud.getOperation().then(
+    this.crud.getOperation().then(
       (r) => {
         this.setState({
           entities: r,
@@ -98,7 +202,7 @@ class ListView extends React.Component {
   apagar() {
     for(let i = 0; i < this.state.selecteds.length; i++ ) {
       if(this.state.selecteds[i]) {
-        this.props.crud.deleteOperation(this.state.entities[i]._links.self.href);
+        this.crud.deleteOperation(this.state.entities[i]._links.self.href);
         this.fetchData();
       }
     }
@@ -124,9 +228,9 @@ class ListView extends React.Component {
   salvar() {
     for(let i=0;i<this.state.editing.length;i++) {
       if(this.state.creating[i] && this.state.editing[i]) {
-        this.props.crud.postOperation(this.state.entities[i]);
+        this.crud.postOperation(this.state.entities[i]);
       } else if (this.state.editing[i]) {
-        this.props.crud.patchOperation(this.state.entities[i]._links.self.href, this.state.entities[i]);
+        this.crud.patchOperation(this.state.entities[i]._links.self.href, this.state.entities[i]);
       }
     }
     this.fetchData();
@@ -184,7 +288,13 @@ class ListView extends React.Component {
   }
 
   async updateOptionsLists() {
-    this.fetchOptions(this.props.optionsLists).then((r) => {
+    let optionsLists = [];
+    if(this.props.optionsLists !== undefined) {
+      optionsLists = this.props.optionsLists;
+    } else {
+      optionsLists = this.optionsListsNames;
+    }
+    this.fetchOptions(optionsLists).then((r) => {
       this.setState({
         optionsLists: r,
       });
@@ -215,13 +325,16 @@ class ListView extends React.Component {
 
       listEntities = this.state.entities.map ((entity,index) =>
         <>
-          {React.cloneElement(this.props.children, {
+          {React.cloneElement(this.props.view, {
             key: index,
             entity: entity,
             editing: this.state.editing[index],
             onChange: this.handleInputChange,
             prefix: "" + index + ".",
             addToManyRelation: this.addToManyRelation,
+            removeToManyRelation: this.removeToManyRelation,
+            manyToManyChange: this.manyToManyChange,
+            addOptionsList: this.addOptionsList,
             optionsLists: this.state.optionsLists,
             children: (
               <td>

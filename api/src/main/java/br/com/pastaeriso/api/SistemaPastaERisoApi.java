@@ -34,6 +34,7 @@ import br.com.pastaeriso.api.people.functionary.function.FunctionaryFunctionRepo
 import br.com.pastaeriso.api.people.functionary.workingTime.FunctionaryWorkingTimeRepository;
 import br.com.pastaeriso.api.products.category.ProductCategoryRepository;
 import br.com.pastaeriso.api.products.product.ProductRepository;
+import br.com.pastaeriso.api.purchases.inventory.InventoryMovementRepository;
 import br.com.pastaeriso.api.recipeBook.item.ItemRepository;
 import br.com.pastaeriso.api.recipeBook.recipe.RecipeRepository;
 import br.com.pastaeriso.api.recipeBook.recipe.ingredient.IngredientRepository;
@@ -42,6 +43,7 @@ import br.com.pastaeriso.people.functionary.function.FunctionaryFunction;
 import br.com.pastaeriso.people.functionary.workingTime.FunctionaryWorkingTime;
 import br.com.pastaeriso.products.category.ProductCategory;
 import br.com.pastaeriso.products.product.Product;
+import br.com.pastaeriso.purchases.inventory.InventoryMovement;
 import br.com.pastaeriso.recipeBook.item.Item;
 import br.com.pastaeriso.recipeBook.recipe.Recipe;
 import br.com.pastaeriso.recipeBook.recipe.ingredient.Ingredient;
@@ -92,6 +94,8 @@ public class SistemaPastaERisoApi {
         private ProductRepository productRepository;
         @Autowired
         private ProductCategoryRepository productCategoryRepository;
+        @Autowired
+        private InventoryMovementRepository inventoryMovementRepository;
         
         @Autowired
         private PurchaseRepository purchaseRepository;
@@ -153,17 +157,26 @@ public class SistemaPastaERisoApi {
                             .entry(entry4)
                             .description("Outra transação")
                             .build());
-            PurchaseItem purchaseItem1 = this.purchaseItemRepository.save(PurchaseItem.builder()
+            InventoryMovement inventoryMovement1 = InventoryMovement.builder()
                     .input(input1)
                     .unit(unit1)
                     .quantity(new BigDecimal(10))
+                    .build();
+            inventoryMovement1 = inventoryMovementRepository.save(inventoryMovement1);
+            InventoryMovement inventoryMovement2 = InventoryMovement.builder()
+                    .input(input2)
+                    .unit(unit2)
+                    .quantity(new BigDecimal(20))
+                    .build();
+            inventoryMovement2 = inventoryMovementRepository.save(inventoryMovement2);
+            
+            PurchaseItem purchaseItem1 = this.purchaseItemRepository.save(PurchaseItem.builder()
+                    .inventoryMovement(inventoryMovement1)
                     .pricePerUnit(new BigDecimal(5))
                     .brand("Marca1")
                     .build());
             PurchaseItem purchaseItem2 = this.purchaseItemRepository.save(PurchaseItem.builder()
-                    .input(input2)
-                    .unit(unit2)
-                    .quantity(new BigDecimal(20))
+                    .inventoryMovement(inventoryMovement2)
                     .pricePerUnit(new BigDecimal(15))
                     .brand("Marca2")
                     .build());

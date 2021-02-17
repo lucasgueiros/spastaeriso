@@ -53,6 +53,13 @@ export default {
   accounts: [],
   purchaseItems: [
     {
+      name: 'inventoryMovement',
+      entity: 'inventoryMovements',
+      type: 'oneToOne'
+    }
+  ],
+  inventoryMovements: [
+    {
       name: 'unit',
       entity: 'units',
       type: 'manyToOneLink'

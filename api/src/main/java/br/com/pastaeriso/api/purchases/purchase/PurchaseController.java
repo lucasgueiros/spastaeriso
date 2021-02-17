@@ -50,6 +50,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import br.com.pastaeriso.api.accounting.transaction.GenericTransactionRepository;
+import br.com.pastaeriso.api.purchases.inventory.InventoryMovementRepository;
 
 /**
  *
@@ -86,6 +87,8 @@ public class PurchaseController {
     private NfceController nfceController;
     @Autowired
     private EntityLinks entityLinks;
+    @Autowired
+    private InventoryMovementRepository inventoryMovementRepository;
     
     @PostMapping("/purchases/nfce")
     public ResponseEntity nfce(@RequestParam("nfce") final MultipartFile nfce) throws JAXBException, IOException {
@@ -226,7 +229,7 @@ public class PurchaseController {
         BigDecimal subtotal = new BigDecimal(0);
         for (NfeProc.Proc.SubNfeProc.NFe.InfNFe.Det det : proc.getNfeProc().getNFe().getInfNFe().getDet()) {
             PurchaseItem item = parseItem(det, made);
-            subtotal = subtotal.add(item.getPricePerUnit().multiply(item.getQuantity()));
+            subtotal = subtotal.add(item.getPricePerUnit().multiply(item.getInventoryMovement().getQuantity()));
             purchase.item(item);
         }
         // VALOR EXTRA
@@ -293,6 +296,7 @@ public class PurchaseController {
         theUnit = purchaseProduct.getUnit();
         
         PurchaseItem purchaseItem = purchaseProduct.toPurchaseItem(made, quantity, pricePerUnit);
+        purchaseItem.setInventoryMovement(inventoryMovementRepository.save(purchaseItem.getInventoryMovement()));
         purchaseItem = purchaseItemRepository.save(purchaseItem);
         return purchaseItem;
     }

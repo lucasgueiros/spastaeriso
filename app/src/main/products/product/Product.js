@@ -42,6 +42,4 @@ export default function Product (props) {
 
 /*
 @Lob
-private byte[] image;
-@ManyToMany
-private List<ProductCategory> categories;*/
+private byte[] image;*/
