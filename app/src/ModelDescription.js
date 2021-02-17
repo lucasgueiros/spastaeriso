@@ -28,6 +28,7 @@ export default {
       }
     ],
   nfce: [],
+  nfceXmls: [],
   providers: [],
   genericTransactions: [
     {

@@ -1,6 +1,6 @@
 import './Nfe.css';
 import React from 'react';
-import {StandaloneTextField} from '../../../../generics/all.js';
+import {StandaloneTextField, FileField, RelationView} from '../../../../generics/all.js';
 
 class Nfce extends React.Component {
 
@@ -8,6 +8,7 @@ class Nfce extends React.Component {
     return (
       <div class-name="nfce">
         <StandaloneTextField {...this.props} property="accessCode" label="Código de acesso"/>
+        <FileField {...this.props} property="xml" fileName="nfce.xml"/>
       </div>
     );
   }

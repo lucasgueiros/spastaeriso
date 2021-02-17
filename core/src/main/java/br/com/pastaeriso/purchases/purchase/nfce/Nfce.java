@@ -29,10 +29,10 @@ import lombok.experimental.SuperBuilder;
 public class Nfce {
     
     @Id
-	@GeneratedValue
-	private Long id;
-	@OneToOne
-	private NfceXml xml;
+    @GeneratedValue
+    private Long id;
+    @OneToOne
+    private NfceXml xml;
     private String accessCode;
     
 }

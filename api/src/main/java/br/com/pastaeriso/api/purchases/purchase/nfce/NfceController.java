@@ -13,8 +13,13 @@ import org.springframework.http.ResponseEntity;
 import br.com.pastaeriso.api.integrations.nfe.NfeProc;
 import br.com.pastaeriso.purchases.purchase.nfce.Nfce;
 import br.com.pastaeriso.purchases.purchase.nfce.NfceXml;
+import java.util.Optional;
+import javax.websocket.server.PathParam;
+import org.springframework.http.MediaType;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -49,6 +54,18 @@ public class NfceController {
         nfceXml = nfceXmlRepository.save(nfceXml);
         Nfce nfe = Nfce.builder().accessCode(accessCode).xml(nfceXml).build();
         return repository.save(nfe);
+    }
+    
+    @GetMapping(value = "/nfces/{id}/xml/download",
+            produces = MediaType.TEXT_XML_VALUE,
+            headers = {"Content-Disposition=attachment","filename=\"picture.png\""})
+    public byte[] download(@PathVariable("id") Long id) {
+        Optional<Nfce> nfce = repository.findById(id);
+        if(nfce.isPresent()) {
+            return nfce.get().getXml().getXml();
+        } else {
+            return new byte[0];
+        }
     }
 
 }

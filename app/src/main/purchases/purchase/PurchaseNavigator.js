@@ -7,7 +7,7 @@ import CrudFactory from '../../../generics/CrudFactory.js';
 function PurchaseNavigator() {
   return (
     <div className="purchase-navigator">
-      <Navigator crud={CrudFactory.get("purchases")} optionsLists={['accounts','transactionTypes','transactionModalities','inputs','units','providers']}>
+      <Navigator crud={CrudFactory.get("purchases")} optionsLists={['accounts','transactionModalities','inputs','units','providers']}>
         <Purchase prefix=""/>
       </Navigator>
     </div>
