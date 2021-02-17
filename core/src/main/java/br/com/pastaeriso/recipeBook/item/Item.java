@@ -50,6 +50,8 @@ public class Item {
 	@ManyToOne
 	private Unit unit;
 	private String comment;
+        @Builder.Default
+        private BigDecimal checkedQuantity = BigDecimal.ONE.negate();
 	@Transient
 	@Builder.Default
 	private boolean adjusted = false;

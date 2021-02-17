@@ -5,8 +5,9 @@ export function InventoryMovementListView (props) {
     <ListView entity="inventoryMovements" view={<InventoryMovement/>}>
       <th>Data</th>
       <th>Insumo</th>
-      <th>Quantidade</th>
-      <th>Unidade</th>
+      <th>Qtd.</th>
+      <th>Qtd. Conf.</th>
+      <th>U.</th>
       <th>Comentários</th>
     </ListView>
   );
@@ -25,6 +26,11 @@ export default function InventoryMovement (props) {
       <td>
         <div>
           <NumberField {...props} property="quantity" />
+        </div>
+      </td>
+      <td>
+        <div>
+          <NumberField {...props} property="checkedQuantity" />
         </div>
       </td>
       <td>
