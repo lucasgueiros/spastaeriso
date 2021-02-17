@@ -8,6 +8,8 @@ import FunctionaryFunction from './functionary/FunctionaryFunction.js';
 import Neighborhood from './address/Neighborhood.js';
 import AddressType from './address/AddressType.js';
 import Address from './address/Address.js';
+import {ContactNavigator} from './contact/Contact.js';
+import {ContactChannelNavigator} from './contact/ContactChannel.js';
 
 function People() {
   return (
@@ -16,6 +18,8 @@ function People() {
         <h2>Compras</h2>
         <nav>
           <ul>
+            <li><Link to="/people/contactChannel">Canais de Contato</Link></li>
+            <li><Link to="/people/contact">Contatos</Link></li>
             <li><Link to="/people/addresses">Endereços</Link></li>
             <li><Link to="/people/addressTypes">Tipos de endereços</Link></li>
             <li><Link to="/people/neighborhood">Bairros</Link></li>
@@ -25,6 +29,12 @@ function People() {
         </nav>
         <div>
           <Switch>
+            <Route path="/people/contactChannel">
+              <ContactChannelNavigator/>
+            </Route>
+            <Route path="/people/contact">
+              <ContactNavigator/>
+            </Route>
             <Route path="/people/addresses">
               <h3>Endereços</h3>
               <Navigator entity="addresses" view={<Address/>} />

@@ -183,5 +183,13 @@ export default {
       entity: 'neighborhoods',
       type: 'manyToOneLink'
     }
-  ]
+  ],
+  contact: [
+    {
+      name: 'channel',
+      entity: 'contactChannels',
+      type: 'manyToOneLink'
+    }
+  ],
+  contactChannels: []
 };
