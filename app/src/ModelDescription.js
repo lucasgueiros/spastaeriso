@@ -117,4 +117,12 @@ export default {
     }
   ],
   instructions: [],
+  functionaryFunctions: [],
+  functionaryContractTemplates: [
+    {
+      name: 'function',
+      entity: 'functionaryFunctions',
+      type: 'manyToOneLink'
+    }
+  ]
 };

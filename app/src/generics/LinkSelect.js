@@ -1,6 +1,9 @@
 import './SimplerLinkSelect.css';
 
 export default function LinkSelect (props) {
+  if(props.optionsLists == undefined || props.optionsLists[props.options] == undefined){
+    return <p>Carregando...</p>;
+  }
     return (
         <select
           name={props.prefix + props.property}

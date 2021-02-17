@@ -1,6 +1,7 @@
 import './Navigator.css';
 import React from 'react';
 import axios from 'axios';
+import CrudFactory from './CrudFactory.js';
 
 class Navigator extends React.Component {
 
@@ -35,6 +36,7 @@ class Navigator extends React.Component {
     this.updateOptionsLists = this.updateOptionsLists.bind(this);
     this.addToManyRelation = this.addToManyRelation.bind(this);
     this.removeToManyRelation = this.removeToManyRelation.bind(this);
+
   }
 
   handleInputChange(event) {

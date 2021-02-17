@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import RecipeBook from './recipeBook/RecipeBook.js';
 import Purchases from './purchases/Purchases.js';
 import Accounting from './accounting/Accounting.js';
+import People from './people/People.js';
 
 function Main() {
   return (
@@ -18,6 +19,7 @@ function Main() {
               <li><Link to="/recipeBook">Livro de Receitas</Link></li>
               <li><Link to="/purchases">Compras</Link></li>
               <li><Link to="/accounting">Finanças</Link></li>
+              <li><Link to="/people">Pessoas</Link></li>
             </ul>
           </nav>
           <div>
@@ -30,6 +32,9 @@ function Main() {
               </Route>
               <Route path="/purchases">
                 <Purchases/>
+              </Route>
+              <Route path="/people">
+                <People/>
               </Route>
               <Route path="/">
                 <p>Essa é a Homepage</p>
