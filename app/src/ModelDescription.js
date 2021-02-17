@@ -57,5 +57,64 @@ export default {
     }
   ],
   inputs: [],
-  units: []
+  units: [],
+  recipes: [
+    {
+      name: 'works',
+      entity: 'functionaryWorkingTimes',
+      type: 'oneToMany'
+    },
+    {
+      name: 'ingredients',
+      entity: 'ingredients',
+      type: 'oneToMany'
+    },
+    {
+      name: 'otherItems',
+      entity: 'items',
+      type: 'oneToMany'
+    },
+    {
+      name: 'instructions',
+      entity: 'instructions',
+      type: 'oneToMany'
+    },
+    {
+      name: 'outputs',
+      entity: 'items',
+      type: 'oneToMany'
+    },
+  ],
+  functionaryWorkingTimes: [
+    {
+      name: 'functionaryFunction',
+      entity: 'functionaryFunctions',
+      type: 'manyToOneLink'
+    }
+  ],
+  ingredients: [
+    {
+      name: 'input',
+      entity: 'inputs',
+      type: 'manyToOneLink'
+    },
+    {
+      name: 'unit',
+      entity: 'units',
+      type: 'manyToOneLink'
+    }
+  ],
+  items: [
+    {
+      name: 'input',
+      entity: 'inputs',
+      type: 'manyToOneLink'
+    },
+    {
+      name: 'unit',
+      entity: 'units',
+      type: 'manyToOneLink'
+    }
+  ],
+  instructions: [],
 };
