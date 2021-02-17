@@ -23,7 +23,8 @@ export default class LinkSelect extends React.Component {
             name={this.props.prefix + this.props.property}
             value={this.props.entity[this.props.property] || 'none'}
             onChange={this.props.onChange}
-            disabled={!this.props.editing} >
+            disabled={!this.props.editing}
+            multiple={this.props.multiple}>
             {this.props.optionsLists[this.props.options].map((entity, key) =>
               <option key={key} value={entity._links.self.href || "none"}>{entity[this.props.nameField || 'name']}</option>
             )}

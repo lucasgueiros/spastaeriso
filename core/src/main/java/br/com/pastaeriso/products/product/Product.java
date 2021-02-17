@@ -21,13 +21,16 @@ import br.com.pastaeriso.recipeBook.input.price.InputPrice;
 import br.com.pastaeriso.recipeBook.recipe.Recipe;
 import br.com.pastaeriso.recipeBook.unit.replacement.UnitReplacementMap;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import lombok.Singular;
 import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
 @Entity
 @Getter
@@ -37,6 +40,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @RequiredArgsConstructor
 @AllArgsConstructor
+@SuperBuilder
 public class Product {
 
 	@Id
@@ -45,6 +49,7 @@ public class Product {
 	@NonNull
 	private String name;
 	@NonNull
+        @Builder.Default
 	private LocalDate created = LocalDate.now();
 	private String description;
 	private String comments;
@@ -55,6 +60,7 @@ public class Product {
 	@Lob
 	private byte[] image;
 	@ManyToMany
+        @Singular
 	private List<ProductCategory> categories;
 
 	public BigDecimal getCost(UnitReplacementMap replacements, Map<Input, Recipe> handcrafted,

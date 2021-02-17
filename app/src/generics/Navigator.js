@@ -36,6 +36,7 @@ class Navigator extends React.Component {
     this.updateOptionsLists = this.updateOptionsLists.bind(this);
     this.addToManyRelation = this.addToManyRelation.bind(this);
     this.removeToManyRelation = this.removeToManyRelation.bind(this);
+    this.manyToManyChange = this.manyToManyChange.bind(this);
 
     this.addOptionsList = this.addOptionsList.bind(this);
     this.optionsListsNames = [];
@@ -45,6 +46,45 @@ class Navigator extends React.Component {
     } else {
       this.crud = this.props.crud;
     }
+  }
+
+  manyToManyChange(name, value, add) {
+    const names = name.split(".");
+
+    let index = this.state.entity_index;
+    let entities = [...this.state.entities];
+    let entity = {...entities[index]};
+    let entityHierarchy = [entity];
+
+    let i = 0;
+    let finished = false;
+    while(i >= 0) {
+      if(!finished && i === names.length - 1) { // então chegamos ao último
+        let newValue = [...entityHierarchy[i][names[i]],];
+        if(add) {
+          newValue.push(value);
+        } else {
+          let j = newValue.indexOf(value);
+          newValue.splice(j,1);
+        }
+        entityHierarchy[i][names[i]] = newValue;
+        finished = true;
+        i--;
+      } else if (!finished) {
+        if(Array.isArray(entityHierarchy[i][names[i]])) {
+          entityHierarchy[i+1] = [...entityHierarchy[i][names[i]]];
+        } else {
+          entityHierarchy[i+1] = {...entityHierarchy[i][names[i]]};
+        }
+        i++;
+      } else {
+        entityHierarchy[i][names[i]] = entityHierarchy[i+1];
+        i--;
+      }
+    }
+
+    entities[index] = entity;
+    this.setState({entities});
   }
 
   handleInputChange(event) {
@@ -185,7 +225,9 @@ class Navigator extends React.Component {
         optionsLists: this.state.optionsLists,
         addToManyRelation: this.addToManyRelation,
         removeToManyRelation: this.removeToManyRelation,
+        manyToManyChange: this.manyToManyChange,
         addOptionsList: this.addOptionsList,
+
         prefix: this.props.prefix ? this.props.prefix : "",
       });
     } else {
@@ -198,6 +240,7 @@ class Navigator extends React.Component {
         addToManyRelation: this.addToManyRelation,
         removeToManyRelation: this.removeToManyRelation,
         addOptionsList: this.addOptionsList,
+        manyToManyChange: this.manyToManyChange,
         prefix: this.props.prefix ? this.props.prefix : "",
       });
     }

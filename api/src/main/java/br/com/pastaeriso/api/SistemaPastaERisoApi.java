@@ -32,12 +32,16 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import br.com.pastaeriso.api.accounting.transaction.GenericTransactionRepository;
 import br.com.pastaeriso.api.people.functionary.function.FunctionaryFunctionRepository;
 import br.com.pastaeriso.api.people.functionary.workingTime.FunctionaryWorkingTimeRepository;
+import br.com.pastaeriso.api.products.category.ProductCategoryRepository;
+import br.com.pastaeriso.api.products.product.ProductRepository;
 import br.com.pastaeriso.api.recipeBook.item.ItemRepository;
 import br.com.pastaeriso.api.recipeBook.recipe.RecipeRepository;
 import br.com.pastaeriso.api.recipeBook.recipe.ingredient.IngredientRepository;
 import br.com.pastaeriso.api.recipeBook.recipe.intruction.InstructionRepository;
 import br.com.pastaeriso.people.functionary.function.FunctionaryFunction;
 import br.com.pastaeriso.people.functionary.workingTime.FunctionaryWorkingTime;
+import br.com.pastaeriso.products.category.ProductCategory;
+import br.com.pastaeriso.products.product.Product;
 import br.com.pastaeriso.recipeBook.item.Item;
 import br.com.pastaeriso.recipeBook.recipe.Recipe;
 import br.com.pastaeriso.recipeBook.recipe.ingredient.Ingredient;
@@ -84,6 +88,10 @@ public class SistemaPastaERisoApi {
         private FunctionaryFunctionRepository functionaryFunctionRepository;
         @Autowired
         private FunctionaryWorkingTimeRepository functionaryWorkingTimeRepository;
+        @Autowired
+        private ProductRepository productRepository;
+        @Autowired
+        private ProductCategoryRepository productCategoryRepository;
         
         @Autowired
         private PurchaseRepository purchaseRepository;
@@ -216,6 +224,11 @@ public class SistemaPastaERisoApi {
                     .otherItem(item2)
                     .build();
             recipeRepository.save(recipe);
+            
+            ProductCategory productCategory1 = productCategoryRepository.save(new ProductCategory("pizza"));
+            ProductCategory productCategory2 = productCategoryRepository.save(new ProductCategory("massas"));
+            Product product1 = Product.builder().name("Pizza Margherita").category(productCategory1).category(productCategory2).build();
+            product1 = productRepository.save(product1);
             
         }
 

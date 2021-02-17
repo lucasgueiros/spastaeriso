@@ -25,6 +25,8 @@ export default class Crud extends BasicCrud {
           case 'oneToMany':
             entity = await CrudFactory.get(relation.entity).getToManyRelationOperation(relation.name,entity);
             break;
+          case 'manyToMany':
+            entity = await super.getManyToManyLinkRelationOperation(relation.name,entity,relation.entity);
         }
       }
       entities[i] = entity;
@@ -57,6 +59,9 @@ export default class Crud extends BasicCrud {
           break;
         case 'oneToMany':
           entity = await CrudFactory.get(relation.entity).getToManyRelationOperation(relation.name,entity);
+          break;
+        case 'manyToMany':
+          // ignore
           break;
       }
     }
@@ -93,6 +98,9 @@ export default class Crud extends BasicCrud {
         case 'oneToMany':
           entity = await CrudFactory.get(relation.entity).getToManyRelationOperation(relation.name,entity);
           break;
+        case 'manyToMany':
+          // ignore
+          break;
       }
     }
 
@@ -121,6 +129,9 @@ export default class Crud extends BasicCrud {
         case 'oneToMany':
           entity = await CrudFactory.get(relation.entity).postToManyRelationOperation(relation.name,entity);
           break;
+        case 'manyToMany':
+          // ignore
+          break;
       }
     }
     return super.postOperation(entity);
@@ -142,6 +153,9 @@ export default class Crud extends BasicCrud {
           break;
         case 'oneToMany':
           entity = await CrudFactory.get(relation.entity).postToManyRelationOperation(relation.name,entity);
+          break;
+        case 'manyToMany':
+          // ignore
           break;
       }
     }
@@ -168,6 +182,9 @@ export default class Crud extends BasicCrud {
         case 'oneToMany':
           entity = await CrudFactory.get(relation.entity).patchToManyRelationOperation(relation.name,entity);
           break;
+        case 'manyToMany':
+          // ignore
+          break;
       }
     }
     return super.patchOperation(url, entity);
@@ -189,6 +206,9 @@ export default class Crud extends BasicCrud {
           break;
         case 'oneToMany':
           entity = await CrudFactory.get(relation.entity).patchToManyRelationOperation(relation.name,entity);
+          break;
+        case 'manyToMany':
+          // ignore
           break;
       }
     }

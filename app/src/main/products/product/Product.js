@@ -1,4 +1,4 @@
-import {StandaloneTextField,StandaloneDateField,DateField,NumberField,ListRelationView} from '../../../generics/all.js';
+import {StandaloneTextField,StandaloneDateField,DateField,NumberField,ListRelationView,StandaloneLinkSelect,StandaloneMultipleLinkSelect} from '../../../generics/all.js';
 import Item from '../../recipeBook/recipe/item/Item.js';
 
 function ProductPrice (props) {
@@ -34,6 +34,8 @@ export default function Product (props) {
         <th>Unidade</th>
         <th>Comentários</th>
       </ListRelationView>
+
+      <StandaloneMultipleLinkSelect {...props} property="categories" label="Categorias" options="productCategories" />
     </>
   );
 }

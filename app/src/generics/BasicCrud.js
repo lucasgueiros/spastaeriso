@@ -234,6 +234,29 @@ class BasicCrud {
       return toReturn;
   }
 
+  async getManyToManyLinkRelationOperation(relation,owner, entity) {
+    let links = [];
+    let toReturn = {};
+    await axios.get(owner._links[relation].href)
+      .then( (response) => {
+        toReturn._ok = true;
+        let entities =  response.data._embedded[entity];
+        for(let i = 0; i < entities.length; i++) {
+          links.push(entities[i]._links.self.href);
+        }
+      }, (error) => {
+        toReturn._ok = false;
+        toReturn.error = error;
+        console.log(error);
+      });
+      owner = {
+        ...owner,
+        ...toReturn,
+        [relation]: links,
+      }
+      return owner;
+  }
+
 }
 
 export default BasicCrud;

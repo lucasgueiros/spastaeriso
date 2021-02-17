@@ -29,6 +29,6 @@ public class ProductCategory {
 	private Long id;
 	@NonNull
 	@Column(unique = true)
-	private String category;
+	private String name;
 
 }
