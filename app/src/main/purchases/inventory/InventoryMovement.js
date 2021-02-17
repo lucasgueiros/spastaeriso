@@ -1,8 +1,24 @@
-import {LinkSelect,NumberField,TextField} from '../../../generics/all.js';
+import {ListView,LinkSelect,NumberField,TextField,DateField} from '../../../generics/all.js';
+
+export function InventoryMovementListView (props) {
+  return (
+    <ListView entity="inventoryMovements" view={<InventoryMovement/>}>
+      <th>Data</th>
+      <th>Insumo</th>
+      <th>Quantidade</th>
+      <th>Unidade</th>
+      <th>Comentários</th>
+    </ListView>
+  );
+}
 
 export default function InventoryMovement (props) {
   return (
-    <>
+    <tr>
+      {props.children}
+      <td>
+        <DateField {...props} property="date"/>
+      </td>
       <td>
         <LinkSelect {...props} property="input" options="inputs"/>
       </td>
@@ -21,7 +37,7 @@ export default function InventoryMovement (props) {
           <TextField {...props} property="comment" />
         </div>
       </td>
-    </>
+    </tr>
   );
 }
 

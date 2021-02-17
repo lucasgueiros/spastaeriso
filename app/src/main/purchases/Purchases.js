@@ -5,8 +5,8 @@ import PurchaseFromNFe from './purchase/PurchaseFromNFe.js';
 import PurchaseNavigator from './purchase/PurchaseNavigator.js';
 import ProviderNavigator from './provider/ProviderNavigator.js';
 import PurchaseProductNavigator from './purchase/products/PurchaseProductNavigator.js';
-import InventoryMovement from './inventory/InventoryMovement.js';
-import {Navigator} from '../../generics/all.js';
+import {InventoryMovementListView} from './inventory/InventoryMovement.js';
+import {Navigator,ListView} from '../../generics/all.js';
 
 function Purchases() {
   return (
@@ -25,7 +25,7 @@ function Purchases() {
         <div>
           <Switch>
             <Route path="/purchases/inventory">
-              <Navigator entity="inventoryMovements" view={<InventoryMovement/>}/>
+              <InventoryMovementListView/>
             </Route>
             <Route path="/purchases/purchaseProduct">
               <PurchaseProductNavigator/>

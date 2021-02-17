@@ -349,7 +349,11 @@ class ListView extends React.Component {
            })}
         </>);
     return (
-      <>
+      <table>
+        <thead>
+          <th></th>
+          {this.props.children}
+        </thead>
         <tbody>
           {listEntities}
         </tbody>
@@ -363,7 +367,7 @@ class ListView extends React.Component {
             </td>
           </tr>
         </tfoot>
-      </>
+      </table>
     );
   }
 

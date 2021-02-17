@@ -34,6 +34,7 @@ class Purchase extends React.Component {
           <th>Desc</th>
           <th>Marca</th>
           <th>R$/u</th>
+          <th>Subtotal</th>
         </ListRelationView>
       </div>
     );

@@ -17,9 +17,7 @@ class TransactionListView extends React.Component {
     return (
       <>
         <h3>Transações</h3>
-        <table>
-          <ListView entity="genericTransactions" view={<SimplerTransaction/>} />
-        </table>
+        <ListView entity="genericTransactions" view={<SimplerTransaction/>} />
       </>
     );
   }
