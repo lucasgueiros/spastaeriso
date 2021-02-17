@@ -45,7 +45,7 @@ class ListRelationView extends React.Component {
     let removeButton = <></>, addButton = <></>;
     if(this.props.editing) {
       addButton = <button onClick={() => this.props.addToManyRelation(this.props.prefix + this.props.property)}>Adicionar</button>;
-      removeButton = <button onClick={() => this.removeSelecteds()}>Remover</button>;
+      removeButton = <><button onClick={() => this.removeSelecteds()}>Remover</button><br/></>;
     } else if(this.props.index){
       items = items.sort(this.compare);
     }

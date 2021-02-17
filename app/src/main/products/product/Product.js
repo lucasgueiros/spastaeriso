@@ -1,4 +1,5 @@
 import {StandaloneTextField,StandaloneDateField,DateField,NumberField,ListRelationView} from '../../../generics/all.js';
+import Item from '../../recipeBook/recipe/item/Item.js';
 
 function ProductPrice (props) {
   return (
@@ -26,15 +27,18 @@ export default function Product (props) {
         <th>Data</th>
         <th>Preço</th>
       </ListRelationView>
+
+      <ListRelationView {...props} property="items" row={<Item/>} >
+        <th>Insumo</th>
+        <th>Quantidade</th>
+        <th>Unidade</th>
+        <th>Comentários</th>
+      </ListRelationView>
     </>
   );
 }
 
 /*
-@OneToMany
-private List<ProductPrice> precos;
-@OneToMany
-private List<ProductItem> items;
 @Lob
 private byte[] image;
 @ManyToMany

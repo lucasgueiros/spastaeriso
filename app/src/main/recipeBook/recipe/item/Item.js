@@ -1,5 +1,6 @@
 import React from 'react';
 import SimplerLinkSelect from '../../../../generics/SimplerLinkSelect.js';
+import {LinkSelect} from '../../../../generics/all.js';
 
 class Item extends React.Component {
 
@@ -7,12 +8,7 @@ class Item extends React.Component {
     return (
       <>
         <td>
-          <SimplerLinkSelect
-            entity={this.props.entity.input || ''}
-            prefix={this.props.prefix + "input"}
-            onChange={this.props.onChange}
-            editing={this.props.editing}
-            optionsList={this.props.optionsLists.inputs || []}/>
+          <LinkSelect {...this.props} property="input" options="inputs"/>
         </td>
         <td>
           <div>
@@ -26,12 +22,7 @@ class Item extends React.Component {
         </td>
         <td>
           <div>
-            <SimplerLinkSelect
-              entity={this.props.entity.unit || ''}
-              prefix={this.props.prefix + "unit"}
-              onChange={this.props.onChange}
-              editing={this.props.editing}
-              optionsList={this.props.optionsLists.units || []}/>
+            <LinkSelect {...this.props} property="unit" options="units"/>
           </div>
         </td>
         <td>
