@@ -214,7 +214,7 @@ class Navigator extends React.Component {
     const entityToSave = { ...this.state.entities[this.state.entity_index]};
     if(this.state.creating) {
       let response = await this.crud.postOperation(entityToSave);
-      if(response.ok) {
+      if(response._ok) {
         this.setState({message: "Cadastrado com sucesso."});
         this.fetchData(response._links.self.href);
       } else {
@@ -224,7 +224,7 @@ class Navigator extends React.Component {
     } else {
       const url = this.state.entities[this.state.entity_index]._links.self.href;
       let response = await this.crud.patchOperation(url, entityToSave);
-      if(response.ok) {
+      if(response._ok) {
         this.setState({message: "Alterado com sucesso.", entity_index: 0});
         this.fetchData(response._links.self.href);
       } else {
@@ -238,7 +238,7 @@ class Navigator extends React.Component {
   async remove() {
     const url = this.state.entities[this.state.entity_index]._links.self.href;
     let response = await this.crud.deleteOperation(url);
-    if(response.ok) {
+    if(response._ok) {
       this.setState({message: "Removido com sucesso.", entity_index: 0});
       this.fetchData();
     } else {

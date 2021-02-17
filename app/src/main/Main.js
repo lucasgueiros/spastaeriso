@@ -5,6 +5,7 @@ import RecipeBook from './recipeBook/RecipeBook.js';
 import Purchases from './purchases/Purchases.js';
 import Accounting from './accounting/Accounting.js';
 import People from './people/People.js';
+import Products from './products/Products.js';
 
 function Main() {
   return (
@@ -20,10 +21,14 @@ function Main() {
               <li><Link to="/purchases">Compras</Link></li>
               <li><Link to="/accounting">Finanças</Link></li>
               <li><Link to="/people">Pessoas</Link></li>
+              <li><Link to="/products">Produtos</Link></li>
             </ul>
           </nav>
           <div>
             <Switch>
+              <Route path="/products">
+                <Products/>
+              </Route>
               <Route path="/accounting">
                 <Accounting/>
               </Route>

@@ -49,7 +49,7 @@ public class Product {
 	private String description;
 	private String comments;
 	@OneToMany
-	private List<ProductPrice> precos;
+	private List<ProductPrice> prices;
 	@OneToMany
 	private List<ProductItem> items;
 	@Lob

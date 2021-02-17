@@ -131,5 +131,36 @@ export default {
       entity: 'functionaryFunctions',
       type: 'manyToOneLink'
     }
-  ]
+  ],
+  products: [
+    {
+      name: 'prices',
+      entity: 'productPrices',
+      type: 'oneToMany',
+    },
+    {
+      name: 'items',
+      entity: 'productItems',
+      type: 'oneToMany'
+    },
+    {
+      name: 'categories',
+      entity: 'productCategories',
+      type: 'manyToMany'
+    }
+  ],
+  productPrices: [],
+  productCategories: [],
+  productItems: [
+    {
+      name: 'input',
+      entity: 'inputs',
+      type: 'manyToOneLink'
+    },
+    {
+      name: 'unit',
+      entity: 'units',
+      type: 'manyToOneLink'
+    }
+  ],
 };

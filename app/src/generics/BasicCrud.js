@@ -19,12 +19,18 @@ class BasicCrud {
     let links = [];
     for(let i =0; i < entity[relationName].length; i++) {
       let relationEntity = {...entity[relationName][i]};
-      let relationEntityUrl = relationEntity._links.self.href;
       if(relationEntity._links == undefined) {
         relationEntity = await this.postOperation(relationEntity);
+        if(!relationEntity._ok) {
+          return entity;
+        }
       } else {
         relationEntity = await this.patchOperation(relationEntity._links.self.href, relationEntity);
+        if(!relationEntity._ok) {
+          return entity;
+        }
       }
+
       links[i] = relationEntity._links.self.href;
     }
     entity = {
@@ -68,7 +74,7 @@ class BasicCrud {
       }, (error) => {
         console.log(error);
         return {
-          ok: false,
+          _ok: false,
           error: error
         };
       });
@@ -115,12 +121,15 @@ class BasicCrud {
           ...entity,
           [relationName]: uriOnly ? response.data._links.self.href : response.data
         }
+        toReturn._ok = true;
       }, (error) => {
-        console.log(error);
         toReturn = {
           ...entity,
           [relationName]: uriOnly ? "" : {},
         };
+        toReturn._ok = false;
+        toReturn.error = error;
+        console.log(error);
       });
     return toReturn;
   }
@@ -138,25 +147,27 @@ class BasicCrud {
             [relationName]: response.data._links.self.href
           };
         }
-
+        toReturn._ok = true;
       }, (error) => {
         console.log(error);
+        toReturn._ok = false;
+        toReturn.error = error;
       });
     return toReturn;
   }
 
   async postOperation (entityToSave) {
     let toReturn = {
-      ok: true,
+      _ok: true,
       response: {},
       error: {}
     };
     await axios.post(this.url, entityToSave, this.jsonConfig)
       .then( (response) =>  {
         toReturn = response.data;
-        toReturn.ok = true;
+        toReturn._ok = true;
       }, (error) => {
-        toReturn.ok = false;
+        toReturn._ok = false;
         toReturn.error = error;
       });
     return toReturn;
@@ -167,39 +178,47 @@ class BasicCrud {
     await axios.patch(url, entityToSave, this.jsonConfig)
       .then(  (response) => {
         toReturn = response.data;
-        toReturn.ok = true;
+        toReturn._ok = true;
       }, (error) => {
         toReturn.error = error;
-        toReturn.ok = false;
+        toReturn._ok = false;
       });
     return toReturn;
   }
 
   async patchRelationOperation ( relationName, entityToSave) {
     let relationUrl = {};
+    let toReturn = {};
     await axios.get(entityToSave._links.self.href + "/" + relationName)
       .then( (response) => {
         relationUrl = response.data._links.self.href;
-        this.patchOperation(relationUrl,entityToSave[relationName]);
       }, (error) => {
         console.log(error);
       });
-    let toReturn = {
+    await axios.patch(relationUrl, entityToSave[relationName], this.jsonConfig)
+      .then(  (response) => {
+        toReturn = response.data;
+        toReturn._ok = true;
+      }, (error) => {
+        toReturn.error = error;
+        toReturn._ok = false;
+      });
+    toReturn = {
       ...entityToSave,
+      ...toReturn,
       [relationName]: relationUrl
     };
     return toReturn;
   }
 
-
   async deleteOperation (url) {
     let toReturn = [{}];
     await axios.delete(url)
       .then( (response) => {
-        toReturn.ok = true;
+        toReturn._ok = true;
       }, (error) => {
         toReturn.error = error;
-        toReturn.ok = false;
+        toReturn._ok = false;
       });
     return toReturn;
   }

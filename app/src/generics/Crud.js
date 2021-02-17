@@ -108,6 +108,9 @@ export default class Crud extends BasicCrud {
   async postOperation (entity) {
     for(let j=0; j < this.description.length; j++) {
       let relation = this.description[j];
+      if(entity[relation.name] == undefined) {
+        continue;
+      }
       switch(relation.type) {
         case 'oneToOne':
           entity = await CrudFactory.get(relation.entity).postRelationOperation(relation.name,entity);
@@ -127,6 +130,9 @@ export default class Crud extends BasicCrud {
     let entity = owner[relationName];
     for(let j=0; j < this.description.length; j++) {
       let relation = this.description[j];
+      if(entity[relation.name] == undefined) {
+        continue;
+      }
       switch(relation.type) {
         case 'oneToOne':
           entity = await CrudFactory.get(relation.entity).postRelationOperation(relation.name,entity);
@@ -149,6 +155,9 @@ export default class Crud extends BasicCrud {
   async patchOperation (url, entity) {
     for(let j=0; j < this.description.length; j++) {
       let relation = this.description[j];
+      if(entity[relation.name] == undefined) {
+        continue;
+      }
       switch(relation.type) {
         case 'oneToOne':
           entity = await CrudFactory.get(relation.entity).patchRelationOperation(relation.name,entity);
@@ -162,6 +171,32 @@ export default class Crud extends BasicCrud {
       }
     }
     return super.patchOperation(url, entity);
+  }
+
+  async patchRelationOperation(relationName, owner) {
+    let entity = owner[relationName];
+    for(let j=0; j < this.description.length; j++) {
+      let relation = this.description[j];
+      if(entity[relation.name] == undefined) {
+        continue;
+      }
+      switch(relation.type) {
+        case 'oneToOne':
+          entity = await CrudFactory.get(relation.entity).patchRelationOperation(relation.name,entity);
+          break;
+        case 'manyToOneLink':
+          // ignore
+          break;
+        case 'oneToMany':
+          entity = await CrudFactory.get(relation.entity).patchToManyRelationOperation(relation.name,entity);
+          break;
+      }
+    }
+    owner = {
+      ...owner,
+      [relationName]: entity
+    };
+    return await super.patchRelationOperation(relationName, owner);
   }
 
 }
