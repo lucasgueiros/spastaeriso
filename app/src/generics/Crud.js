@@ -34,6 +34,10 @@ export default class Crud extends BasicCrud {
 
   async getRelationOperation (relation, owner, urlOnly) {
     let entity = await super.getWithUrlOperation(owner._links[relation].href);
+    if(entity == undefined || entity._links == undefined) {
+      console.log(entity);
+      return owner;
+    }
     if(urlOnly) {
       owner = {
         ...owner,

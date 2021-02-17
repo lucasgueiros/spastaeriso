@@ -1,19 +1,35 @@
 import './SimplerLinkSelect.css';
+import React from 'react';
 
-export default function LinkSelect (props) {
-  if(props.optionsLists == undefined || props.optionsLists[props.options] == undefined){
-    return <p>Carregando...</p>;
+export default class LinkSelect extends React.Component {
+
+  constructor(props) {
+    super(props);
+    if(props.addOptionsList && props.options) {
+      props.addOptionsList(props.options);
+    }
   }
-    return (
-        <select
-          name={props.prefix + props.property}
-          value={props.entity[props.property] || 'none'}
-          onChange={props.onChange}
-          disabled={!props.editing} >
-          {props.optionsLists[props.options].map((entity, key) =>
-            <option key={key} value={entity._links.self.href || "none"}>{entity[props.nameField || 'name']}</option>
-          )}
-          <option key={-1} value={"none"}>Nenhuma</option>
-        </select>
-    );
+
+  render() {
+    if(this.props.optionsLists == undefined || this.props.optionsLists[this.props.options] == undefined){
+      return <>Carregando...</>;
+    }
+    let none = <></>;
+    if(this.props.notNull) {
+      none = <option key={-1} value={"none"}>Nenhuma</option>
+    }
+      return (
+          <select
+            name={this.props.prefix + this.props.property}
+            value={this.props.entity[this.props.property] || 'none'}
+            onChange={this.props.onChange}
+            disabled={!this.props.editing} >
+            {this.props.optionsLists[this.props.options].map((entity, key) =>
+              <option key={key} value={entity._links.self.href || "none"}>{entity[this.props.nameField || 'name']}</option>
+            )}
+            {none}
+          </select>
+      );
+  }
+
 }

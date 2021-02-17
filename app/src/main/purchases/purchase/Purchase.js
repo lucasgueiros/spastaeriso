@@ -2,9 +2,12 @@ import './Purchase.css';
 import React from 'react';
 import Provider from '../provider/Provider.js';
 import SimplerTransaction from '../../accounting/transaction/SimplerTransaction.js';
-import StandaloneNumberField from '../../../generics/StandaloneNumberField.js';
-import StandaloneLinkSelect from '../../../generics/StandaloneLinkSelect.js';
-import ListRelationView from '../../../generics/ListRelationView.js';
+//import StandaloneNumberField from '../../../generics/StandaloneNumberField.js';
+//import StandaloneLinkSelect from '../../../generics/StandaloneLinkSelect.js';
+//import ListRelationView from '../../../generics/ListRelationView.js';
+
+import {ListRelationView, RelationView, StandaloneLinkSelect, StandaloneNumberField} from '../../../generics/all.js';
+
 import PurchaseItem from './item/PurchaseItem.js';
 import axios from 'axios';
 
@@ -17,14 +20,8 @@ class Purchase extends React.Component {
         <StandaloneLinkSelect {...this.props} property="provider" options="providers" label="Fornecedor"/>
 
         <h4>Transação</h4>
-        <SimplerTransaction
-          entity={this.props.entity.transaction || {}}
-          prefix="transaction."
-          editing={this.props.editing}
-          onChange={this.props.onChange}
-          optionsLists={this.props.optionsLists}
-          addToManyRelation={this.props.addToManyRelation}/>
-          
+        <RelationView {...this.props} property="transaction" view={<SimplerTransaction/>}/>
+
         <StandaloneNumberField {...this.props} property="additionalValue" label="Valor extra"/>
         <h4>Nota fiscal</h4>
         <div>

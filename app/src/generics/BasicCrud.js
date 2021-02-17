@@ -67,6 +67,10 @@ class BasicCrud {
         toReturn = response.data;
       }, (error) => {
         console.log(error);
+        return {
+          ok: false,
+          error: error
+        };
       });
     return toReturn;
   }

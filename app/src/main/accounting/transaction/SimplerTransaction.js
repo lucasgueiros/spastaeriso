@@ -1,7 +1,7 @@
 import './SimplerTransaction.css';
 import React from 'react';
 import axios from 'axios';
-import SimplerLinkSelect from '../../../generics/SimplerLinkSelect.js';
+import {LinkSelect} from '../../../generics/all.js';
 import EntryList from '../entry/EntryList.js';
 
 class SimplerTransaction extends React.Component {
@@ -38,12 +38,8 @@ class SimplerTransaction extends React.Component {
               readOnly={!this.props.editing}></input>
           </td>
           <td>
-            <SimplerLinkSelect
-              entity={this.props.entity.modality || ""}
-              prefix={this.props.prefix + "modality"}
-              onChange={this.props.onChange}
-              editing={this.props.editing}
-              optionsList={this.props.optionsLists.transactionModalities || []}/>
+            <LinkSelect {...this.props} property="modality" options="transactionModalities"/>
+            
           </td>
           <td colSpan="2">Entradas:</td>
           <td>
