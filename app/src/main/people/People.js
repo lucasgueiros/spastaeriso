@@ -20,14 +20,10 @@ function People() {
         <div>
           <Switch>
             <Route path="/people/functionaryFunction">
-              <Navigator entity="functionaryFunctions" optionsLists={[]}>
-                <FunctionaryFunction prefix=""/>
-              </Navigator>
+              <Navigator entity="functionaryFunctions" view={<FunctionaryFunction/>} />
             </Route>
             <Route path="/people/functionaryContractTemplate">
-              <Navigator entity="functionaryContractTemplates" optionsLists={['functionaryFunctions']}>
-                <FunctionaryContractTemplate prefix=""/>
-              </Navigator>
+              <Navigator entity="functionaryContractTemplates" view={<FunctionaryContractTemplate/>} />
             </Route>
             <Route path="/people/">
               <p>Selecione algo.</p>

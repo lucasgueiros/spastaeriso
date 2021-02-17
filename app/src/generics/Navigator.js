@@ -37,6 +37,9 @@ class Navigator extends React.Component {
     this.addToManyRelation = this.addToManyRelation.bind(this);
     this.removeToManyRelation = this.removeToManyRelation.bind(this);
 
+    this.addOptionsList = this.addOptionsList.bind(this);
+    this.optionsListsNames = [];
+
     if(this.props.entity) {
       this.crud = CrudFactory.get(this.props.entity);
     } else {
@@ -172,17 +175,35 @@ class Navigator extends React.Component {
     if(this.state.fetchingData) {
       return <h3>Carregando...</h3>;
     }
+    let theChild = <></>;
+    if(this.props.children) {
+      theChild = React.cloneElement(this.props.children, {
+        entity: this.state.entities[this.state.entity_index],
+        editing: this.state.editing,
+        onChange: this.handleInputChange,
+        datalist: this.props.datalist,
+        optionsLists: this.state.optionsLists,
+        addToManyRelation: this.addToManyRelation,
+        removeToManyRelation: this.removeToManyRelation,
+        addOptionsList: this.addOptionsList,
+        prefix: this.props.prefix ? this.props.prefix : "",
+      });
+    } else {
+      theChild = React.cloneElement(this.props.view, {
+        entity: this.state.entities[this.state.entity_index],
+        editing: this.state.editing,
+        onChange: this.handleInputChange,
+        datalist: this.props.datalist,
+        optionsLists: this.state.optionsLists,
+        addToManyRelation: this.addToManyRelation,
+        removeToManyRelation: this.removeToManyRelation,
+        addOptionsList: this.addOptionsList,
+        prefix: this.props.prefix ? this.props.prefix : "",
+      });
+    }
     return (
       <div className="navigator">
-        {React.cloneElement(this.props.children, {
-          entity: this.state.entities[this.state.entity_index],
-          editing: this.state.editing,
-          onChange: this.handleInputChange,
-          datalist: this.props.datalist,
-          optionsLists: this.state.optionsLists,
-          addToManyRelation: this.addToManyRelation,
-          removeToManyRelation: this.removeToManyRelation
-         })}
+        {theChild}
         {this.renderButtons()}
         <p>{this.state.message}</p>
       </div>
@@ -230,6 +251,8 @@ class Navigator extends React.Component {
     let optionsLists = [];
     if(this.props.optionsLists !== undefined) {
       optionsLists = this.props.optionsLists;
+    } else {
+      optionsLists = this.optionsListsNames;
     }
     this.fetchOptions(optionsLists).then((r) => {
       this.setState({
@@ -340,7 +363,10 @@ class Navigator extends React.Component {
     this.setState({entities});
   }
 
-
+  addOptionsList(name) {
+    this.optionsListsNames.push(name);
+    this.updateOptionsLists()
+  }
 
 
 }
