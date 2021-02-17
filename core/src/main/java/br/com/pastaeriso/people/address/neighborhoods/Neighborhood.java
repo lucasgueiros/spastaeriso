@@ -32,6 +32,5 @@ public class Neighborhood {
 	private String city = "Garanhuns";
 	@NonNull
 	private String state = "PE";
-	private String postalCode;
 	
 }

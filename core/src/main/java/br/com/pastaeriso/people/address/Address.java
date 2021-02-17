@@ -36,6 +36,7 @@ public class Address {
 	private String localName;
 	private String street;
 	private String number;
+        private String postalCode;
 	@ManyToOne
 	private Neighborhood neighborhood;
 	private String complement;

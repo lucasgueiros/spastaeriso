@@ -170,4 +170,18 @@ export default {
       type: 'manyToOneLink'
     }
   ],
+  addressTypes: [],
+  neighborhoods: [],
+  addresses: [
+    {
+      name: 'type',
+      entity: 'addressTypes',
+      type: 'manyToOneLink'
+    },
+    {
+      name: 'neighborhood',
+      entity: 'neighborhoods',
+      type: 'manyToOneLink'
+    }
+  ]
 };
