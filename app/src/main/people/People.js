@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import FunctionaryContractTemplate from './functionary/FunctionaryContractTemplate.js';
 import Navigator from '../../generics/Navigator.js';
 import CrudFactory from '../../generics/CrudFactory.js';
+
+import FunctionaryContractTemplate from './functionary/FunctionaryContractTemplate.js';
+import FunctionaryFunction from './functionary/FunctionaryFunction.js';
 
 function People() {
   return (
@@ -12,10 +14,16 @@ function People() {
         <nav>
           <ul>
             <li><Link to="/people/functionaryContractTemplate">Modelos de salário para as funções</Link></li>
+            <li><Link to="/people/functionaryFunction">Funções</Link></li>
           </ul>
         </nav>
         <div>
           <Switch>
+            <Route path="/people/functionaryFunction">
+              <Navigator crud={CrudFactory.get("functionaryFunctions")} optionsLists={[]}>
+                <FunctionaryFunction prefix=""/>
+              </Navigator>
+            </Route>
             <Route path="/people/functionaryContractTemplate">
               <Navigator crud={CrudFactory.get("functionaryContractTemplates")} optionsLists={['functionaryFunctions']}>
                 <FunctionaryContractTemplate prefix=""/>
