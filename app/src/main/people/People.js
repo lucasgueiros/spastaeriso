@@ -20,12 +20,12 @@ function People() {
         <div>
           <Switch>
             <Route path="/people/functionaryFunction">
-              <Navigator crud={CrudFactory.get("functionaryFunctions")} optionsLists={[]}>
+              <Navigator entity="functionaryFunctions" optionsLists={[]}>
                 <FunctionaryFunction prefix=""/>
               </Navigator>
             </Route>
             <Route path="/people/functionaryContractTemplate">
-              <Navigator crud={CrudFactory.get("functionaryContractTemplates")} optionsLists={['functionaryFunctions']}>
+              <Navigator entity="functionaryContractTemplates" optionsLists={['functionaryFunctions']}>
                 <FunctionaryContractTemplate prefix=""/>
               </Navigator>
             </Route>

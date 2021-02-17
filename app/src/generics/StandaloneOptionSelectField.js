@@ -1,6 +1,6 @@
 import OptionSelectField from './OptionSelectField.js';
 
-export default function StandaloneLinkSelect (props) {
+export default function StandaloneOptionSelectField (props) {
   return (
     <div>
       <label htmlFor={props.prefix + props.property}>{props.label}: </label>

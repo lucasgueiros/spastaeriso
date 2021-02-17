@@ -1,4 +1,4 @@
-import StandaloneTextField from '../../../generics/StandaloneTextField.js';
+import {StandaloneTextField} from '../../../generics/all.js';
 
 export default function FunctionaryFunction (props) {
   return (

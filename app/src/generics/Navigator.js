@@ -37,6 +37,11 @@ class Navigator extends React.Component {
     this.addToManyRelation = this.addToManyRelation.bind(this);
     this.removeToManyRelation = this.removeToManyRelation.bind(this);
 
+    if(this.props.entity) {
+      this.crud = CrudFactory.get(this.props.entity);
+    } else {
+      this.crud = this.props.crud;
+    }
   }
 
   handleInputChange(event) {
@@ -85,7 +90,7 @@ class Navigator extends React.Component {
     this.setState({
       fetchingData: true
     });
-    this.props.crud.getOperation().then(
+    this.crud.getOperation().then(
       (entities) => {
         if(entities.length === 0) {
           entities = [{}];
@@ -187,7 +192,7 @@ class Navigator extends React.Component {
   async save () {
     const entityToSave = { ...this.state.entities[this.state.entity_index]};
     if(this.state.creating) {
-      let response = await this.props.crud.postOperation(entityToSave);
+      let response = await this.crud.postOperation(entityToSave);
       if(response.ok) {
         this.setState({message: "Cadastrado com sucesso."});
         this.fetchData(response._links.self.href);
@@ -197,7 +202,7 @@ class Navigator extends React.Component {
 
     } else {
       const url = this.state.entities[this.state.entity_index]._links.self.href;
-      let response = await this.props.crud.patchOperation(url, entityToSave);
+      let response = await this.crud.patchOperation(url, entityToSave);
       if(response.ok) {
         this.setState({message: "Alterado com sucesso.", entity_index: 0});
         this.fetchData(response._links.self.href);
@@ -211,7 +216,7 @@ class Navigator extends React.Component {
 
   async remove() {
     const url = this.state.entities[this.state.entity_index]._links.self.href;
-    let response = await this.props.crud.deleteOperation(url);
+    let response = await this.crud.deleteOperation(url);
     if(response.ok) {
       this.setState({message: "Removido com sucesso.", entity_index: 0});
       this.fetchData();
