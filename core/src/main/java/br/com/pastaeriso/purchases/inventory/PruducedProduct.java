@@ -6,6 +6,7 @@
 package br.com.pastaeriso.purchases.inventory;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -43,7 +44,7 @@ public class PruducedProduct {
     private Long id;
     @NonNull
     @Builder.Default
-    private LocalDate date = LocalDate.now();
+    private LocalDateTime produced = LocalDateTime.now();
     @OneToMany
     private List<InventoryMovement> movements;
     

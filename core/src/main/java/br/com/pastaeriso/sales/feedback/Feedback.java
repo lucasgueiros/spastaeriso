@@ -1,5 +1,6 @@
 package br.com.pastaeriso.sales.feedback;
 
+import br.com.pastaeriso.people.contact.Contact;
 import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
@@ -35,4 +36,6 @@ public class Feedback {
 	private ClientOrder order;
 	@NonNull
 	private String feedback;
+        @ManyToOne
+        private Contact contact;
 }

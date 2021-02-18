@@ -17,7 +17,11 @@ import br.com.pastaeriso.accounting.transaction.GenericTransaction;
 import br.com.pastaeriso.accounting.transaction.modality.TransactionModality;
 import br.com.pastaeriso.accounting.transaction.voucher.TransactionVoucher;
 import br.com.pastaeriso.people.person.Person;
+import br.com.pastaeriso.purchases.inventory.PruducedProduct;
 import br.com.pastaeriso.sales.order.item.OrderItem;
+import javax.persistence.Column;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -41,13 +45,25 @@ public class ClientOrder {
 	@GeneratedValue
 	private Long id;
 	@ManyToOne
-	@NonNull
 	private Person client;
-	@NonNull
-	private LocalDateTime made = LocalDateTime.now();
+        
+        // Times or Status
+        @NonNull
+	private LocalDateTime started = LocalDateTime.now();
+        @Column(nullable = true)
+        private LocalDateTime completed = null;
+        @Column(nullable = true)
+        private LocalDateTime approved = null;
+        @Column(nullable = true)
+        private LocalDateTime startedPreparing = null;
+        @Column(nullable = true)
+        private LocalDateTime cancelled = null;
+        
+        @ManyToMany
+        private List<PruducedProduct> producedProducts;
 	
 	// Pedido
-	@ManyToMany
+	@OneToMany
 	private List<OrderItem> items;
 	
 	// Forecast payment
@@ -55,12 +71,10 @@ public class ClientOrder {
 	private TransactionModality forecastPaymentModality;
 	private BigDecimal forecastChangeTo;
 	
-	// Delivery?
-	private boolean isDelivery = true;
+        @OneToMany(mappedBy = "order")
+	private List<DeliveryOrder> deliveries;
+        
 	private String comments;
-	@NonNull
-	@Enumerated(EnumType.STRING)
-	private ClientOrderStatus status = ClientOrderStatus.INCOMPLETE;
 	
 	// Real payment
 	@NonNull

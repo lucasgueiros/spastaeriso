@@ -5,13 +5,10 @@
  */
 package br.com.pastaeriso.sales.delivery.deliveryman.workDay;
 
-import br.com.pastaeriso.people.functionary.contract.FunctionaryContract;
-import br.com.pastaeriso.people.functionary.Functionary;
 import br.com.pastaeriso.sales.delivery.Delivery;
 import br.com.pastaeriso.sales.delivery.deliveryman.Deliveryman;
 import br.com.pastaeriso.sales.delivery.deliveryman.contract.DeliverymanContract;
 import java.time.Duration;
-import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,7 +20,6 @@ import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 

@@ -9,6 +9,9 @@ import javax.persistence.ManyToOne;
 
 import br.com.pastaeriso.sales.order.item.OrderItem;
 import br.com.pastaeriso.products.product.Product;
+import br.com.pastaeriso.purchases.inventory.InventoryMovement;
+import java.util.List;
+import javax.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -33,5 +36,6 @@ public class OrderProduct extends OrderItem {
 	private Product product;
 	@NonNull
 	private BigDecimal quantity = new BigDecimal(1);
-
+        @OneToMany
+        private List<InventoryMovement> movements;
 }

@@ -7,6 +7,11 @@ import javax.persistence.ManyToOne;
 
 import br.com.pastaeriso.products.menu.item.MenuItem;
 import br.com.pastaeriso.products.product.Product;
+import br.com.pastaeriso.purchases.inventory.InventoryMovement;
+import java.time.LocalDateTime;
+import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -29,5 +34,11 @@ public class OrderItem {
 	@Id
 	@GeneratedValue
 	private Long id;
+        
+        @Column(nullable = true)
+        private LocalDateTime ready = null;
+        @Column(nullable = true)
+        private LocalDateTime cancelled = null;
+        
 	private String comments;
 }

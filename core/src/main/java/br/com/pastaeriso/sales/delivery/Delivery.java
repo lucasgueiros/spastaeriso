@@ -10,13 +10,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import br.com.pastaeriso.sales.delivery.deliveryman.Deliveryman;
-import br.com.pastaeriso.sales.delivery.orderToDelivery.OrderToDelivery;
+import br.com.pastaeriso.sales.order.DeliveryOrder;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -26,20 +24,22 @@ import lombok.ToString;
 @EqualsAndHashCode
 @ToString
 @NoArgsConstructor
-@RequiredArgsConstructor
 @AllArgsConstructor
 public class Delivery {
 
 	@Id
 	@GeneratedValue
 	private Long id;
-	@NonNull
 	@ManyToOne
 	private Deliveryman deliveryman;
+        
+        private LocalDateTime called;
 	private LocalDateTime exited;
 	private LocalDateTime cameBack;
-	private LocalDateTime called;
+	
 	@OneToMany
-	private List<OrderToDelivery> orders;
+	private List<DeliveryOrder> orders;
+        
+        private String comment;
 
 }
