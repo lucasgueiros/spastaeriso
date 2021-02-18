@@ -10,6 +10,7 @@ import AddressType from './address/AddressType.js';
 import Address from './address/Address.js';
 import {ContactNavigator} from './contact/Contact.js';
 import {ContactChannelNavigator} from './contact/ContactChannel.js';
+import {PersonNavigator} from './Person.js';
 
 function People() {
   return (
@@ -18,6 +19,7 @@ function People() {
         <h2>Compras</h2>
         <nav>
           <ul>
+            <li><Link to="/people/people">Pessoas</Link></li>
             <li><Link to="/people/contactChannel">Canais de Contato</Link></li>
             <li><Link to="/people/contact">Contatos</Link></li>
             <li><Link to="/people/addresses">Endereços</Link></li>
@@ -29,6 +31,9 @@ function People() {
         </nav>
         <div>
           <Switch>
+            <Route path="/people/people">
+              <PersonNavigator/>
+            </Route>
             <Route path="/people/contactChannel">
               <ContactChannelNavigator/>
             </Route>

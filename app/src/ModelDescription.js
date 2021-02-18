@@ -184,12 +184,35 @@ export default {
       type: 'manyToOneLink'
     }
   ],
-  contact: [
+  contacts: [
     {
       name: 'channel',
       entity: 'contactChannels',
       type: 'manyToOneLink'
     }
   ],
-  contactChannels: []
+  contactChannels: [],
+  people: [
+    {
+      name: 'contacts',
+      entity: 'contacts',
+      type: 'oneToMany'
+    },
+    {
+      name: 'addresses',
+      entity: 'addresses',
+      type: 'oneToMany'
+    },
+    {
+      name: 'primaryAddress',
+      entity: 'addresses',
+      type: 'oneToOneLink'
+    },
+    {
+      name: 'primaryContact',
+      entity: 'contacts',
+      type: 'oneToOneLink'
+    },
+
+  ]
 };

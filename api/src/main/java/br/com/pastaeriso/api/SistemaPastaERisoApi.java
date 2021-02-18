@@ -30,6 +30,7 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import br.com.pastaeriso.api.accounting.transaction.GenericTransactionRepository;
+import br.com.pastaeriso.api.people.address.neighborhoods.NeighborhoodRepository;
 import br.com.pastaeriso.api.people.functionary.function.FunctionaryFunctionRepository;
 import br.com.pastaeriso.api.people.functionary.workingTime.FunctionaryWorkingTimeRepository;
 import br.com.pastaeriso.api.products.category.ProductCategoryRepository;
@@ -39,6 +40,9 @@ import br.com.pastaeriso.api.recipeBook.item.ItemRepository;
 import br.com.pastaeriso.api.recipeBook.recipe.RecipeRepository;
 import br.com.pastaeriso.api.recipeBook.recipe.ingredient.IngredientRepository;
 import br.com.pastaeriso.api.recipeBook.recipe.intruction.InstructionRepository;
+import br.com.pastaeriso.people.address.neighborhoods.Neighborhood;
+import br.com.pastaeriso.people.address.type.AddressType;
+import br.com.pastaeriso.people.contact.channel.ContactChannel;
 import br.com.pastaeriso.people.functionary.function.FunctionaryFunction;
 import br.com.pastaeriso.people.functionary.workingTime.FunctionaryWorkingTime;
 import br.com.pastaeriso.products.category.ProductCategory;
@@ -96,6 +100,8 @@ public class SistemaPastaERisoApi {
         private ProductCategoryRepository productCategoryRepository;
         @Autowired
         private InventoryMovementRepository inventoryMovementRepository;
+        @Autowired
+        private NeighborhoodRepository neighborhoodRepository;
         
         @Autowired
         private PurchaseRepository purchaseRepository;
@@ -132,6 +138,21 @@ public class SistemaPastaERisoApi {
             TransactionModality transactionModality5 = this.transactionModalityRepository.save(new TransactionModality("Cartão de débito"));
             TransactionModality transactionModality6 = this.transactionModalityRepository.save(new TransactionModality("Crédito loja"));
             TransactionModality transactionModality7 = this.transactionModalityRepository.save(new TransactionModality("Boleto bancário"));
+            
+            ProductCategory productCategory1 = productCategoryRepository.save(new ProductCategory("pizza"));
+            ProductCategory productCategory2 = productCategoryRepository.save(new ProductCategory("massas"));
+            
+            AddressType addressType1 = addressTypeRepository.save(new AddressType("Casa"));
+            AddressType addressType2 = addressTypeRepository.save(new AddressType("Apartamento"));
+            
+            ContactChannel contactChannel1 = contactChannelRepository.save(new ContactChannel("WhatsApp"));
+            ContactChannel contactChannel2 = contactChannelRepository.save(new ContactChannel("Instagram"));
+            
+            Neighborhood neighborhood1 = neighborhoodRepository.save(new Neighborhood("Heliópolis"));
+            Neighborhood neighborhood2 = neighborhoodRepository.save(new Neighborhood("Severiano Moraes Filho"));
+            Neighborhood neighborhood3 = neighborhoodRepository.save(new Neighborhood("COHAB 1"));
+            Neighborhood neighborhood4 = neighborhoodRepository.save(new Neighborhood("COHAB 2"));
+            Neighborhood neighborhood5 = neighborhoodRepository.save(new Neighborhood("Parque Fênix"));
             
             // EXEMPLE DATA
             Entry entry1 = this.entryRepository.save(Entry.builder().account(account1).value(new BigDecimal(10)).build());
@@ -238,8 +259,6 @@ public class SistemaPastaERisoApi {
                     .build();
             recipeRepository.save(recipe);
             
-            ProductCategory productCategory1 = productCategoryRepository.save(new ProductCategory("pizza"));
-            ProductCategory productCategory2 = productCategoryRepository.save(new ProductCategory("massas"));
             Product product1 = Product.builder().name("Pizza Margherita").category(productCategory1).category(productCategory2).build();
             product1 = productRepository.save(product1);
             

@@ -7,6 +7,7 @@ package br.com.pastaeriso.recipeBook.cooking;
 
 import br.com.pastaeriso.purchases.inventory.InventoryMovement;
 import br.com.pastaeriso.recipeBook.recipe.Recipe;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import javax.persistence.Entity;
@@ -41,7 +42,8 @@ public class Cooked {
     @Id
     @GeneratedValue
     private Long id;
-    
+
+    private BigDecimal times;
     @ManyToOne
     private Recipe recipe;
     
