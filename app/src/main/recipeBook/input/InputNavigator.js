@@ -6,9 +6,7 @@ import BasicCrud from '../../../generics/BasicCrud.js';
 function InputNavigator() {
   return (
     <div className="input-navigator">
-      <Navigator crud={new BasicCrud("inputs")}>
-        <Input prefix=""/>
-      </Navigator>
+      <Navigator entity="inputs" view={<Input/>}/>
     </div>
   );
 }

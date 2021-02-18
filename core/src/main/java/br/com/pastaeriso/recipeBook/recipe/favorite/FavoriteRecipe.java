@@ -34,7 +34,7 @@ public class FavoriteRecipe {
 	@OneToOne
 	@NonNull
 	// @Unique
-	private Input input;
+	private Input output;
 	@NonNull
 	@ManyToOne
 	private Recipe recipe;

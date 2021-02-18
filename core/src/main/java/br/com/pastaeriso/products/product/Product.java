@@ -57,6 +57,8 @@ public class Product {
 	private List<ProductPrice> prices;
 	@OneToMany
 	private List<ProductItem> items;
+        @OneToMany
+        private List<ProductRecipe> recipes;
 	@Lob
 	private byte[] image;
 	@ManyToMany

@@ -39,9 +39,6 @@ public class InputPrice {
 	@GeneratedValue
 	private Long id;
 	@NonNull
-	@ManyToOne
-	private Input input;
-	@NonNull
 	private BigDecimal priceByUnit;
 	@NonNull
 	private LocalDate date;

@@ -70,7 +70,20 @@ export default {
       type: 'manyToOneLink'
     }
   ],
-  inputs: [],
+  inputs: [
+    {
+      name: 'prices',
+      entity: 'inputPrices',
+      type: 'oneToMany'
+    }
+  ],
+  inputPrices: [
+    {
+      name: 'unit',
+      entity: 'units',
+      type: 'manyToOneLink'
+    },
+  ],
   units: [],
   recipes: [
     {
@@ -154,6 +167,23 @@ export default {
       name: 'categories',
       entity: 'productCategories',
       type: 'manyToMany'
+    },
+    {
+      name: 'recipes',
+      entity: 'productRecipes',
+      type: 'oneToMany'
+    }
+  ],
+  productRecipes: [
+    {
+      name: 'output',
+      entity: 'inputs',
+      type: 'manyToOneLink'
+    },
+    {
+      name: 'recipe',
+      entity: 'recipes',
+      type: 'manyToOneLink'
     }
   ],
   productPrices: [],

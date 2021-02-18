@@ -59,6 +59,9 @@ class BasicCrud {
 
   async getToManyRelationOperation(relationName, entity) {
     let relatives = await this.getWithUrlOperation(entity._links[relationName].href);
+    if(relatives == undefined) {
+      return entity;
+    }
     entity = {...entity, [relationName]: relatives._embedded[this.url]};
     for(let j =0; j < entity[relationName].length; j++) {
       entity = await this.getRelationWithIndexOperation(j,relationName,entity);

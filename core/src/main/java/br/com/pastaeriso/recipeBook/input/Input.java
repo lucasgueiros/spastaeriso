@@ -1,9 +1,12 @@
 package br.com.pastaeriso.recipeBook.input;
 
+import br.com.pastaeriso.recipeBook.input.price.InputPrice;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -31,5 +34,7 @@ public class Input {
 	@Column(unique = true)
 	private String name;
 	private String comment;
+        @OneToMany
+        private List<InputPrice> prices;
 	
 }
