@@ -13,7 +13,7 @@ export function InventoryMovementListView (props) {
   );
 }
 
-export default function InventoryMovement (props) {
+export function InventoryMovement (props) {
   return (
     <tr>
       {props.children}
@@ -46,18 +46,3 @@ export default function InventoryMovement (props) {
     </tr>
   );
 }
-
-/*
-<SimplerLinkSelect
-  entity={this.props.entity.input || ''}
-  prefix={this.props.prefix + "input"}
-  onChange={this.props.onChange}
-  editing={this.props.editing}
-  optionsList={this.props.optionsLists.inputs}/>
-  <SimplerLinkSelect
-    entity={this.props.entity.unit || ''}
-    prefix={this.props.prefix + "unit"}
-    onChange={this.props.onChange}
-    editing={this.props.editing}
-    optionsList={this.props.optionsLists.units}/>
-  */

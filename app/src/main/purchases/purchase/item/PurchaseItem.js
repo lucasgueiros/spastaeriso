@@ -6,6 +6,7 @@ import InventoryMovement from '../../inventory/InventoryMovement.js';
 function SimplerInventoryMovement (props) {
   return (
     <>
+      {props.children}
       <td>
         <LinkSelect {...props} property="input" options="inputs"/>
       </td>

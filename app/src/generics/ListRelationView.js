@@ -50,17 +50,23 @@ class ListRelationView extends React.Component {
       items = items.sort(this.compare);
     }
     const listItems = items.map((item,index) =>
-      <tr>
-        <td>
-          <input
-            type="checkbox"
-            name={index + "._selected"}
-            checked={this.state.selecteds[index]}
-            onChange={(event) => this.handleSelectedChange(event,index)}>
-          </input>
-        </td>
-        {React.cloneElement(this.props.row, {...this.props, entity: item, prefix: this.props.prefix + this.props.property + "." + index + "."})}
-      </tr>
+      <>
+
+        {React.cloneElement(this.props.row, {...this.props,
+          entity: item,
+          prefix: this.props.prefix + this.props.property + "." + index + ".",
+          children: (
+            <td>
+              <input
+                type="checkbox"
+                name={index + "._selected"}
+                checked={this.state.selecteds[index]}
+                onChange={(event) => this.handleSelectedChange(event,index)}>
+              </input>
+            </td>
+          )
+        })}
+      </>
     );
     return (
       <>

@@ -3,17 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.pastaeriso.recipeBook.cooking;
+package br.com.pastaeriso.purchases.inventory;
 
-import br.com.pastaeriso.purchases.inventory.InventoryMovement;
-import br.com.pastaeriso.recipeBook.recipe.Recipe;
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.Inheritance;
 import javax.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,6 +21,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
 /**
  *
@@ -35,23 +33,20 @@ import lombok.ToString;
 @EqualsAndHashCode
 @ToString
 @NoArgsConstructor
+@RequiredArgsConstructor
 @AllArgsConstructor
-@Builder
-public class Cooked {
+@SuperBuilder
+public class PruducedProduct {
     
     @Id
     @GeneratedValue
     private Long id;
-
-    private BigDecimal times;
-    @ManyToOne
-    private Recipe recipe;
-    
-    @OneToMany
-    private List<InventoryMovement> movements;
-    
     @NonNull
     @Builder.Default
     private LocalDate date = LocalDate.now();
+    @OneToMany
+    private List<InventoryMovement> movements;
+    
+    private String comment;
     
 }

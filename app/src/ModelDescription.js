@@ -213,6 +213,12 @@ export default {
       entity: 'contacts',
       type: 'oneToOneLink'
     },
-
+  ],
+  pruducedProducts: [
+    {
+      name: 'movements',
+      entity: 'inventoryMovements',
+      type: 'oneToMany'
+    }
   ]
 };
