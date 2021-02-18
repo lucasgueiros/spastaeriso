@@ -29,16 +29,16 @@ import lombok.experimental.SuperBuilder;
 public class PurchaseItem  {
 
     @Id
-	@GeneratedValue
-	private Long id;
-	private String brand;
-	@NonNull
-	private BigDecimal pricePerUnit;
+    @GeneratedValue
+    private Long id;
+    private String brand;
+    @NonNull
+    private BigDecimal pricePerUnit;
 
-        private String declaredUnit;
-        private String declaredInput;
-        @Builder.Default
-        private Boolean applied = Boolean.FALSE;
-        @OneToOne
-        private InventoryMovement inventoryMovement;
+    private String declaredUnit;
+    private String declaredInput;
+    @Builder.Default
+    private Boolean applied = Boolean.FALSE;
+    @OneToOne
+    private InventoryMovement inventoryMovement;
 }

@@ -50,17 +50,29 @@ public class Item {
 	@ManyToOne
 	private Unit unit;
 	private String comment;
-        @Builder.Default
-        private BigDecimal checkedQuantity = BigDecimal.ONE.negate();
 	@Transient
 	@Builder.Default
 	private boolean adjusted = false;
 
+        public Item adjust(BigDecimal times) {
+            return Item.builder()
+                    .input(this.getInput())
+                    .unit(this.getUnit())
+                    .comment(this.getComment())
+                    .quantity(this.getQuantity().multiply(times))
+                    .adjusted(true)
+                    .build();
+        }
+        
 	public BigDecimal getCost(UnitReplacementMap replacements, Map<Input, InputPrice> prices)
 			throws NonReplaceableException {
 		BigDecimal quantity = replacements.toFavorite(this.quantity, this.unit);
 		BigDecimal priceByUnit = prices.get(input).getPriceByUnit();
 		return priceByUnit.multiply(quantity);
 	}
+
+    public Item sum(Item item2) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
 }

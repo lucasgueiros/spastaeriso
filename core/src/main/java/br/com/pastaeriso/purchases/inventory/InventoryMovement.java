@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import javax.persistence.Entity;
 
 import br.com.pastaeriso.recipeBook.item.Item;
+import java.math.BigDecimal;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -28,5 +29,7 @@ public class InventoryMovement extends Item {
 	@NonNull
 	@Builder.Default
 	private LocalDate date = LocalDate.now();
+        @Builder.Default
+        private BigDecimal checkedQuantity = BigDecimal.ONE.negate();
 
 }
