@@ -15,8 +15,8 @@ export default class LinkSelect extends React.Component {
       return <>Carregando...</>;
     }
     let none = <></>;
-    if(this.props.notNull) {
-      none = <option key={-1} value={"none"}>Nenhuma</option>
+    if(!this.props.notNull) {
+      none = <option key={this.props.optionsLists[this.props.options].length} value={"none"}>Nenhuma</option>
     }
       return (
           <select

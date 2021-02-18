@@ -2,6 +2,8 @@ import { Link } from 'react-router-dom';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Navigator from '../../generics/Navigator.js';
 import Product from './product/Product.js';
+import ProductCosts from './product/ProductCosts.js';
+
 export default function Products() {
   return (
     <Router>
@@ -10,10 +12,14 @@ export default function Products() {
         <nav>
           <ul>
             <li><Link to="/products/product">Produtos</Link></li>
+            <li><Link to="/products/costs">Tabela de custos</Link></li>
           </ul>
         </nav>
         <div>
           <Switch>
+            <Route path="/products/costs">
+              <ProductCosts/>
+            </Route>
             <Route path="/products/product">
               <Navigator entity="products" view={<Product/>} />
             </Route>

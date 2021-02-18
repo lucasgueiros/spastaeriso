@@ -20,6 +20,8 @@ import br.com.pastaeriso.recipeBook.input.Input;
 import br.com.pastaeriso.recipeBook.input.price.InputPrice;
 import br.com.pastaeriso.recipeBook.recipe.Recipe;
 import br.com.pastaeriso.recipeBook.unit.replacement.UnitReplacementMap;
+import java.math.BigInteger;
+import javax.persistence.FetchType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -53,7 +55,7 @@ public class Product {
 	private LocalDate created = LocalDate.now();
 	private String description;
 	private String comments;
-	@OneToMany
+	@OneToMany(fetch = FetchType.EAGER)
 	private List<ProductPrice> prices;
 	@OneToMany
 	private List<ProductItem> items;
@@ -65,13 +67,30 @@ public class Product {
         @Singular
 	private List<ProductCategory> categories;
 
-	public BigDecimal getCost(UnitReplacementMap replacements, Map<Input, Recipe> handcrafted,
-			Map<Input, InputPrice> prices) throws NonReplaceableException {
+        public BigDecimal getPrice() {
+            return this.getPrice(LocalDate.now());
+        }
+        public BigDecimal getPrice(LocalDate date) {
+            if(this.getPrices().isEmpty()) {
+                return BigDecimal.ONE;
+            }
+            ProductPrice max = prices.get(0);
+            for(ProductPrice price : this.prices) {
+                if(price.getDate().isAfter(max.getDate())
+                        && (price.getDate().isBefore(date) || price.getDate().equals(date) )) {
+                    max = price;
+                }
+            }
+            return max.getPrice();
+        }
+	public BigDecimal getCost(UnitReplacementMap replacements) throws NonReplaceableException {
 		BigDecimal cost = new BigDecimal(0);
 		for (ProductItem item : items) {
-			cost = cost.add(item.getCost(replacements, handcrafted, prices));
+			//cost = cost.add(item.getCost(replacements, this.recipes, prices));
 		}
 		return cost;
 	}
+
+    
 
 }

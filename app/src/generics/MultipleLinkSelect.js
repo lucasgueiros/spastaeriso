@@ -25,6 +25,9 @@ export default class MultipleLinkSelect extends React.Component {
     }
 
     let value = this.props.entity[this.props.property];
+    if(value == undefined) {
+      value = [];
+    }
 
     return (
       <>

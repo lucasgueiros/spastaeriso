@@ -60,7 +60,13 @@ class Navigator extends React.Component {
     let finished = false;
     while(i >= 0) {
       if(!finished && i === names.length - 1) { // então chegamos ao último
-        let newValue = [...entityHierarchy[i][names[i]],];
+        let originalValue = entityHierarchy[i][names[i]];
+        let newValue;
+        if (originalValue == null || typeof originalValue[Symbol.iterator] !== 'function') {
+          newValue = [];
+        } else {
+          newValue = [...entityHierarchy[i][names[i]],];
+        }
         if(add) {
           newValue.push(value);
         } else {

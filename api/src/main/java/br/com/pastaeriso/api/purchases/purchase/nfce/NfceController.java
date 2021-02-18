@@ -37,8 +37,8 @@ public class NfceController {
     @Autowired
     private NfceXmlRepository nfceXmlRepository;
 
-    @PostMapping("/nFeXmls/fromXml")
-    public ResponseEntity<Nfce> postNfeFromXml(@RequestParam("nfce") final MultipartFile nfce) throws JAXBException, IOException {
+    @PostMapping("/nfces/xml")
+    public ResponseEntity<Nfce> postNfceFromXml(@RequestParam("nfce") final MultipartFile nfce) throws JAXBException, IOException {
         return new ResponseEntity<>(save(nfce), HttpStatus.CREATED);
     }
     
