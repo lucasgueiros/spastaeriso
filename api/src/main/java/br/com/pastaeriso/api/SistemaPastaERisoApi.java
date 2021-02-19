@@ -35,6 +35,7 @@ import br.com.pastaeriso.api.people.functionary.function.FunctionaryFunctionRepo
 import br.com.pastaeriso.api.people.functionary.workingTime.FunctionaryWorkingTimeRepository;
 import br.com.pastaeriso.api.products.category.ProductCategoryRepository;
 import br.com.pastaeriso.api.products.product.ProductRepository;
+import br.com.pastaeriso.api.purchases.inventory.InventoryMovementEventHandler;
 import br.com.pastaeriso.api.purchases.inventory.InventoryMovementRepository;
 import br.com.pastaeriso.api.recipeBook.item.ItemRepository;
 import br.com.pastaeriso.api.recipeBook.recipe.RecipeRepository;
@@ -102,6 +103,9 @@ public class SistemaPastaERisoApi {
         private ProductCategoryRepository productCategoryRepository;
         @Autowired
         private InventoryMovementRepository inventoryMovementRepository;
+        @Autowired
+    private InventoryMovementEventHandler inventoryMovementEventHandler;
+    
         @Autowired
         private NeighborhoodRepository neighborhoodRepository;
         
@@ -185,12 +189,14 @@ public class SistemaPastaERisoApi {
                     .unit(unit1)
                     .quantity(new BigDecimal(10))
                     .build();
+            inventoryMovementEventHandler.handleBeforeCreate(inventoryMovement1);
             inventoryMovement1 = inventoryMovementRepository.save(inventoryMovement1);
             InventoryMovement inventoryMovement2 = InventoryMovement.builder()
                     .input(input2)
                     .unit(unit2)
                     .quantity(new BigDecimal(20))
                     .build();
+            inventoryMovementEventHandler.handleBeforeCreate(inventoryMovement2);
             inventoryMovement2 = inventoryMovementRepository.save(inventoryMovement2);
             
             PurchaseItem purchaseItem1 = this.purchaseItemRepository.save(PurchaseItem.builder()

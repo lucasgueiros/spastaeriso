@@ -5,6 +5,7 @@
  */
 package br.com.pastaeriso.api.purchases.purchase.products;
 
+import br.com.pastaeriso.api.purchases.inventory.InventoryMovementEventHandler;
 import br.com.pastaeriso.api.purchases.inventory.InventoryMovementRepository;
 import br.com.pastaeriso.api.purchases.purchase.items.PurchaseItemRepository;
 import br.com.pastaeriso.api.recipeBook.input.InputRepository;
@@ -45,7 +46,10 @@ public class PurchaseProductsController {
     @Autowired
     private InventoryMovementRepository inventoryMovementRepository;
     
-    @RequestMapping(value = "/purchaseProducts/{id}/apply", method = RequestMethod.GET)
+    @Autowired
+    private InventoryMovementEventHandler inventoryMovementEventHandler;
+    
+    @GetMapping("/purchaseProducts/{id}/apply")
     public ResponseEntity<String> apply(@PathVariable Long id) {
         
         PurchaseProduct purchaseProduct = purchaseProductRepository.findById(id).get();
@@ -56,6 +60,9 @@ public class PurchaseProductsController {
         for(PurchaseItem item : items) {
             if(purchaseProduct.appliesTo(item)) {
                 item = purchaseProduct.apply(item);
+                InventoryMovement im = item.getInventoryMovement();
+                inventoryMovementEventHandler.handleBeforeCreate(im);
+                inventoryMovementRepository.save(im);
                 inventoryMovementRepository.save(item.getInventoryMovement());
                 purchaseItemRepository.save(item);
             }

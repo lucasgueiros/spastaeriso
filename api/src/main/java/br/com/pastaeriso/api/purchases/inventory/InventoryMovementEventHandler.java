@@ -10,28 +10,34 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.rest.core.annotation.HandleBeforeCreate;
 import org.springframework.data.rest.core.annotation.HandleBeforeSave;
 import org.springframework.data.rest.core.annotation.RepositoryEventHandler;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author lucas
  */
-@RepositoryEventHandler
+@Component
+@RepositoryEventHandler(InventoryMovement.class)
 public class InventoryMovementEventHandler {
     
     @Autowired
     private InventoryMovementRepository inventoryMovementRepository;
     
-    /*@HandleBeforeCreate
-    @HandleBeforeSave
-    public void handleInventoryMovementBeforeSaveOrUpdate(InventoryMovement im) {
-        List<InventoryMovement> imsAfter = inventoryMovementRepository.findByInputAndDateGreaterThenEqual(im.getInput(), im.getDate());
-        Optional<InventoryMovement> imBeforeOptional = inventoryMovementRepository.findLastByInputWithDateBeforeOrderByDateAsc(im.getInput(), im.getDate());
-        BigDecimal balance = BigDecimal.ZERO;
+    Logger logger = LoggerFactory.getLogger(InventoryMovementEventHandler.class);
+
+    
+    @HandleBeforeCreate(InventoryMovement.class)
+    public void handleBeforeCreate(InventoryMovement im) {
+        /*BigDecimal balance = BigDecimal.ZERO;
+        List<InventoryMovement> imsAfter = inventoryMovementRepository.findByInputAndDateGreaterThanEqual(im.getInput(), im.getDate());
+        Optional<InventoryMovement> imBeforeOptional = inventoryMovementRepository.findLastByInputAndDateLessThanOrderByDateAsc(im.getInput(), im.getDate());
         if(imBeforeOptional.isPresent()) {
             InventoryMovement imBefore = imBeforeOptional.get();
             if(imBefore.getCheckedBalance() != null) {
@@ -43,7 +49,7 @@ public class InventoryMovementEventHandler {
             }
         }
         balance = balance.add(im.getQuantity());
-        im.setCalculatedBalance(balance);
-    }*/
+        im.setCalculatedBalance(balance);*/
+    }
     
 }

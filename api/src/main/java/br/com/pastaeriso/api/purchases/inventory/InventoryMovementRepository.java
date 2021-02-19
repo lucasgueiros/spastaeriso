@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 @CrossOrigin
 public interface InventoryMovementRepository extends JpaRepository<InventoryMovement, Long> {
 
-    //public List<InventoryMovement> findByInputAndDateGreaterThenEqual (Input input, LocalDate date);
-    //public Optional<InventoryMovement> findLastByInputWithDateBeforeOrderByDateAsc (Input input, LocalDate date);
+    public List<InventoryMovement> findByInputAndDateGreaterThanEqual (Input input, LocalDate date);
+    public Optional<InventoryMovement> findLastByInputAndDateLessThanOrderByDateAsc (Input input, LocalDate date);
     
 }
