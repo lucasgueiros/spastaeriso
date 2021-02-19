@@ -3,7 +3,6 @@ package br.com.pastaeriso.products.product;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,15 +11,9 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
-import br.com.pastaeriso.recipeBook.replacements.NonReplaceableException;
 import br.com.pastaeriso.products.category.ProductCategory;
 import br.com.pastaeriso.products.product.items.ProductItem;
 import br.com.pastaeriso.products.product.price.ProductPrice;
-import br.com.pastaeriso.recipeBook.input.Input;
-import br.com.pastaeriso.recipeBook.input.price.InputPrice;
-import br.com.pastaeriso.recipeBook.recipe.Recipe;
-import br.com.pastaeriso.recipeBook.unit.replacement.UnitReplacementMap;
-import java.math.BigInteger;
 import javax.persistence.FetchType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -83,13 +76,6 @@ public class Product {
             }
             return max.getPrice();
         }
-	public BigDecimal getCost(UnitReplacementMap replacements) throws NonReplaceableException {
-		BigDecimal cost = new BigDecimal(0);
-		for (ProductItem item : items) {
-			//cost = cost.add(item.getCost(replacements, this.recipes, prices));
-		}
-		return cost;
-	}
 
     
 

@@ -13,14 +13,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
-import br.com.pastaeriso.recipeBook.replacements.NonReplaceableException;
 import br.com.pastaeriso.recipeBook.input.Input;
 import br.com.pastaeriso.recipeBook.input.price.InputPrice;
 import br.com.pastaeriso.recipeBook.item.Item;
 import br.com.pastaeriso.recipeBook.recipe.ingredient.Ingredient;
 import br.com.pastaeriso.recipeBook.recipe.intruction.Instruction;
 import br.com.pastaeriso.recipeBook.unit.Unit;
-import br.com.pastaeriso.recipeBook.unit.replacement.UnitReplacementMap;
 import javax.persistence.ManyToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -75,27 +73,5 @@ public class Recipe {
 
     @Transient
     public boolean adjusted = false;
-
-    public BigDecimal getCost(@NonNull BigDecimal quantity, @NonNull Unit unit, UnitReplacementMap replacements,
-            Map<Input, Recipe> handcrafted, Map<Input, InputPrice> prices) throws NonReplaceableException {
-        // se e a mesma unidade, nao preciso proporcionar a receita toda
-        if (this.outputs.get(0).getUnit().equals(unit)) {
-            BigDecimal cost = new BigDecimal(0);
-            for (Ingredient ingredient : ingredients) {
-                if (handcrafted.containsKey(ingredient.getInput())) {
-                    cost = cost.add(handcrafted.get(ingredient.getInput()).getCost(ingredient.getQuantity(),
-                            ingredient.getUnit(), replacements, handcrafted, prices));
-                } else {
-                    cost = cost.add(ingredient.getCost(replacements, prices));
-                }
-            }
-            for (Item item : otherItems) {
-                cost = cost.add(item.getCost(replacements, prices));
-            }
-            return cost;
-        } else {
-            return new BigDecimal(0);
-        }
-    }
 
 }

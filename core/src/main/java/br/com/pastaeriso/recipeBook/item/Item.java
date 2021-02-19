@@ -1,7 +1,6 @@
 package br.com.pastaeriso.recipeBook.item;
 
 import java.math.BigDecimal;
-import java.util.Map;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,11 +9,8 @@ import javax.persistence.Inheritance;
 import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 
-import br.com.pastaeriso.recipeBook.replacements.NonReplaceableException;
 import br.com.pastaeriso.recipeBook.input.Input;
-import br.com.pastaeriso.recipeBook.input.price.InputPrice;
 import br.com.pastaeriso.recipeBook.unit.Unit;
-import br.com.pastaeriso.recipeBook.unit.replacement.UnitReplacementMap;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -63,16 +59,13 @@ public class Item {
                     .adjusted(true)
                     .build();
         }
-        
-	public BigDecimal getCost(UnitReplacementMap replacements, Map<Input, InputPrice> prices)
-			throws NonReplaceableException {
-		BigDecimal quantity = replacements.toFavorite(this.quantity, this.unit);
-		BigDecimal priceByUnit = prices.get(input).getPriceByUnit();
-		return priceByUnit.multiply(quantity);
-	}
-
+       
     public Item sum(Item item2) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return Item.builder()
+                .input(this.getInput())
+                .quantity(this.getQuantity().add(item2.getQuantity()))
+                .unit(this.getUnit())
+                .build();
     }
 
 }
