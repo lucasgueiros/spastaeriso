@@ -11,6 +11,7 @@ import javax.persistence.ManyToOne;
 import br.com.pastaeriso.recipeBook.input.Input;
 import br.com.pastaeriso.recipeBook.unit.Unit;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -82,7 +83,7 @@ public class PurchaseProduct {
         BigDecimal pricePerUnit = item.getPricePerUnit();
         if(!this.keepUnit) {
                 quantity = quantity.multiply(ratio);
-                pricePerUnit = pricePerUnit.divide(ratio);
+                pricePerUnit = pricePerUnit.divide(ratio, 4, RoundingMode.HALF_UP);
             }
             return PurchaseItem.builder()
                     .id(item.getId())

@@ -14,6 +14,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.rest.core.annotation.HandleAfterCreate;
+import org.springframework.data.rest.core.annotation.HandleAfterDelete;
+import org.springframework.data.rest.core.annotation.HandleAfterSave;
 import org.springframework.data.rest.core.annotation.HandleBeforeCreate;
 import org.springframework.data.rest.core.annotation.HandleBeforeSave;
 import org.springframework.data.rest.core.annotation.RepositoryEventHandler;
@@ -28,28 +31,16 @@ import org.springframework.stereotype.Component;
 public class InventoryMovementEventHandler {
     
     @Autowired
-    private InventoryMovementRepository inventoryMovementRepository;
+    private InventoryMovementController controller;
     
     Logger logger = LoggerFactory.getLogger(InventoryMovementEventHandler.class);
 
     
-    @HandleBeforeCreate(InventoryMovement.class)
+    @HandleAfterCreate
+    @HandleAfterSave
+    @HandleAfterDelete
     public void handleBeforeCreate(InventoryMovement im) {
-        /*BigDecimal balance = BigDecimal.ZERO;
-        List<InventoryMovement> imsAfter = inventoryMovementRepository.findByInputAndDateGreaterThanEqual(im.getInput(), im.getDate());
-        Optional<InventoryMovement> imBeforeOptional = inventoryMovementRepository.findLastByInputAndDateLessThanOrderByDateAsc(im.getInput(), im.getDate());
-        if(imBeforeOptional.isPresent()) {
-            InventoryMovement imBefore = imBeforeOptional.get();
-            if(imBefore.getCheckedBalance() != null) {
-                balance = imBefore.getCheckedBalance();
-            } else if(imBefore.getCalculatedBalance() != null){
-                balance = imBefore.getCalculatedBalance();
-            } else {
-                // PRECISA RECALCULAR TUDO!
-            }
-        }
-        balance = balance.add(im.getQuantity());
-        im.setCalculatedBalance(balance);*/
+        controller.updateBalance();
     }
     
 }

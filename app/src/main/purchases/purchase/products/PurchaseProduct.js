@@ -1,6 +1,6 @@
 import './PurchaseProduct.css';
 import React from 'react';
-import SimplerLinkSelect from '../../../../generics/SimplerLinkSelect.js';
+import {SimplerLinkSelect, StandaloneNumberField} from '../../../../generics/all.js';
 import axios from 'axios';
 
 class PurchaseProduct extends React.Component {
@@ -40,10 +40,7 @@ class PurchaseProduct extends React.Component {
           <input name="keepUnit" type="checkbox" checked={this.props.entity.keepUnit || ''} onChange={this.props.onChange} readOnly={!this.props.editing}></input>
         </div>
 
-        <div>
-          <label htmlFor="ratio">Razão: </label>
-          <input name="ratio" type="number" value={this.props.entity.ratio || 0} onChange={this.props.onChange} readOnly={!this.props.editing}></input>
-        </div>
+        <StandaloneNumberField {...this.props} property="ratio" label="Razão"/>
 
         <div>
           <label htmlFor="brand">Marca: </label>

@@ -23,3 +23,4 @@ export {default as CrudFactory} from './CrudFactory.js' ;
 export {default as RelationView} from './RelationView.js';
 export {default as LinkSelect} from './LinkSelect.js';
 export {default as FileField} from './FileField.js';
+export {default as SimplerLinkSelect} from './SimplerLinkSelect.js';

@@ -46,7 +46,7 @@ public class Purchase {
 	@ManyToOne
 	private Provider provider;
 	private BigDecimal additionalValue = new BigDecimal(0);
-	@OneToMany
+	@OneToMany(orphanRemoval = true)
         @Singular
 	private List<PurchaseItem> items;
         @OneToOne

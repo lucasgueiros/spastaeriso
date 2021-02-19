@@ -39,6 +39,6 @@ public class PurchaseItem  {
     private String declaredInput;
     @Builder.Default
     private Boolean applied = Boolean.FALSE;
-    @OneToOne
+    @OneToOne(orphanRemoval = true)
     private InventoryMovement inventoryMovement;
 }
