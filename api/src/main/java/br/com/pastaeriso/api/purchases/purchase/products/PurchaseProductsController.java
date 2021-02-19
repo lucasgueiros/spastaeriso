@@ -5,8 +5,10 @@
  */
 package br.com.pastaeriso.api.purchases.purchase.products;
 
+import br.com.pastaeriso.api.purchases.inventory.InventoryMovementRepository;
 import br.com.pastaeriso.api.purchases.purchase.items.PurchaseItemRepository;
 import br.com.pastaeriso.api.recipeBook.input.InputRepository;
+import br.com.pastaeriso.purchases.inventory.InventoryMovement;
 import br.com.pastaeriso.purchases.purchase.items.PurchaseItem;
 import br.com.pastaeriso.purchases.purchase.products.PurchaseProduct;
 import java.util.List;
@@ -40,6 +42,9 @@ public class PurchaseProductsController {
     @Autowired
     private InputRepository inputRepository;
     
+    @Autowired
+    private InventoryMovementRepository inventoryMovementRepository;
+    
     @RequestMapping(value = "/purchaseProducts/{id}/apply", method = RequestMethod.GET)
     public ResponseEntity<String> apply(@PathVariable Long id) {
         
@@ -51,6 +56,7 @@ public class PurchaseProductsController {
         for(PurchaseItem item : items) {
             if(purchaseProduct.appliesTo(item)) {
                 item = purchaseProduct.apply(item);
+                inventoryMovementRepository.save(item.getInventoryMovement());
                 purchaseItemRepository.save(item);
             }
         }
