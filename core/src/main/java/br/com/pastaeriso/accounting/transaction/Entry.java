@@ -46,5 +46,6 @@ public class Entry {
 	@NonNull
 	private BigDecimal value;
 	private String comment;
+        private BigDecimal balance;
         
 }

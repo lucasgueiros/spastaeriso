@@ -5,6 +5,7 @@ import AccountNavigator from './account/AccountNavigator.js';
 import TransactionListView from './transaction/TransactionListView.js';
 import CardNavigator from './card/CardNavigator.js';
 import {TransactionModalityNavigator} from './transaction/TransactionModality.js';
+import AccountingBalance from './entry/AccountingBalance.js';
 
 function Accounting() {
   return (
@@ -17,10 +18,14 @@ function Accounting() {
             <li><Link to="/accounting/transaction">Transações</Link></li>
             <li><Link to="/accounting/cards">Cartões</Link></li>
             <li><Link to="/accounting/modalities">Modalidades</Link></li>
+            <li><Link to="/accounting/balance">Relatório financeiro</Link></li>
           </ul>
         </nav>
         <div>
           <Switch>
+            <Route path="/accounting/balance">
+              <AccountingBalance/>
+            </Route>
             <Route path="/accounting/modalities">
               <TransactionModalityNavigator/>
             </Route>

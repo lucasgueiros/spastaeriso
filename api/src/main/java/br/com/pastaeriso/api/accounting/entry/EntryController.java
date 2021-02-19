@@ -9,6 +9,7 @@ import br.com.pastaeriso.accounting.account.Account;
 import br.com.pastaeriso.accounting.transaction.Entry;
 import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,17 +28,52 @@ public class EntryController {
     @Autowired
     private EntryRepository repository;
     
+    private class Result {
+        public String account;
+        public BigDecimal balance;
+    }
+    
     @GetMapping("/entries/balance")
-    public Map<String,BigDecimal> balance() {
-        return null;
+    public List<Result> balance() {
+        Map<Account,BigDecimal> balances = updateBalance();
+        List<Result> results = new LinkedList<>();
+        BigDecimal balance = BigDecimal.ZERO;
+        for(Account a : balances.keySet()) {
+            balance = balance.add(balances.get(a));
+            
+            Result r = new Result();
+            r.account = a.getName();
+            r.balance = balances.get(a);
+            
+            results.add(r);
+        }
+        
+        Result r = new Result();
+        r.account = "Balance";
+        r.balance = balance;
+        results.add(r);
+        return results;
     }
     
     public Map<Account,BigDecimal> updateBalance() {
-        Map<Account,BigDecimal> balance = new HashMap<>();
+        Map<Account,BigDecimal> balances = new HashMap<>();
         
-        //List<Entry> entries = repository.findAllByOrderByDate();
+        List<Entry> entries = repository.findAllByOrderByDate();
+        for(Entry entry : entries) {
+            if(balances.containsKey(entry.getAccount())) {
+                BigDecimal balance = balances.get(entry.getAccount());
+                balance = balance.add(entry.getValue());
+                entry.setBalance(balance);
+                repository.save(entry);
+                balances.put(entry.getAccount(), balance);
+            } else {
+                balances.put(entry.getAccount(), entry.getValue());
+                entry.setBalance(entry.getValue());
+                repository.save(entry);
+            }
+        }
         
-        return null;
+        return balances;
     }
     
 }
