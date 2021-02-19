@@ -1,5 +1,5 @@
 import React from 'react';
-import {LinkSelect,NumberField} from '../../../generics/all.js';
+import {LinkSelect,NumberField,DateField} from '../../../generics/all.js';
 
 class Entry extends React.Component {
 
@@ -10,6 +10,9 @@ class Entry extends React.Component {
   render() {
     return (
       <>
+        <td>
+          <DateField {...this.props} property="date" />
+        </td>
         <td>
           <LinkSelect {...this.props} property="account" options="accounts"/>
         </td>

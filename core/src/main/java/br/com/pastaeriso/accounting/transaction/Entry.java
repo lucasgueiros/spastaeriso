@@ -1,4 +1,4 @@
-package br.com.pastaeriso.accounting.entry;
+package br.com.pastaeriso.accounting.transaction;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -11,6 +11,9 @@ import javax.persistence.ManyToOne;
 
 import br.com.pastaeriso.accounting.account.Account;
 import br.com.pastaeriso.accounting.transaction.GenericTransaction;
+import br.com.pastaeriso.accounting.transaction.modality.TransactionModality;
+import java.time.LocalDateTime;
+import javax.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -38,8 +41,10 @@ public class Entry {
 	@NonNull
 	@ManyToOne
 	private Account account;
+        @Builder.Default
+	private LocalDate date = LocalDateTime.now().toLocalDate();
 	@NonNull
 	private BigDecimal value;
 	private String comment;
-	
+        
 }

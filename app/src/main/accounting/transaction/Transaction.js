@@ -22,10 +22,6 @@ class Transaction extends React.Component {
           <input name={this.props.prefix + 'value'} type="number" value={this.props.entity.value || ''} onChange={this.props.onChange} readOnly={!this.props.editing}></input>
         </div>
         <div>
-          <label htmlFor={this.props.prefix + 'date'}>Data: </label>
-          <input name={this.props.prefix + 'date'} type="date" value={this.props.entity.date || ''} onChange={this.props.onChange} readOnly={!this.props.editing}></input>
-        </div>
-        <div>
           <label htmlFor={this.props.prefix + 'modality'}>Modalidade: </label>
           <input name={this.props.prefix + 'modality'} type="text" value={this.props.entity.modality || ''} onChange={this.props.onChange} readOnly={!this.props.editing}></input>
         </div>

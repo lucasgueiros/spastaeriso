@@ -14,6 +14,4 @@ import org.springframework.web.bind.annotation.RequestParam;
 @CrossOrigin
 public interface GenericTransactionRepository extends JpaRepository<GenericTransaction, Long> {
 
-    public List<GenericTransaction> findByDateBetweenOrderByDateAsc(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate first, @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate last);
-    
 }

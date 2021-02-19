@@ -10,10 +10,11 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import br.com.pastaeriso.accounting.entry.Entry;
 import br.com.pastaeriso.accounting.transaction.modality.TransactionModality;
 import br.com.pastaeriso.accounting.transaction.voucher.TransactionVoucher;
+import javax.persistence.CascadeType;
 import javax.persistence.OneToOne;
+import javax.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -35,7 +36,7 @@ import lombok.experimental.SuperBuilder;
 @RequiredArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
-public final class GenericTransaction {
+public class GenericTransaction {
 
 	@Id
 	@GeneratedValue
@@ -44,11 +45,10 @@ public final class GenericTransaction {
 	@NonNull
 	@ManyToOne
 	private TransactionModality modality;
-	@Builder.Default
-	private LocalDate date = LocalDateTime.now().toLocalDate();
 	@ManyToOne
 	private TransactionVoucher voucher;
 	@OneToMany
         @Singular
 	private List<Entry> entries;
+        
 }

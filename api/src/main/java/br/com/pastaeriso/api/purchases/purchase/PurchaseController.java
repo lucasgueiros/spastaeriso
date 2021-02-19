@@ -7,7 +7,7 @@ package br.com.pastaeriso.api.purchases.purchase;
 
 import br.com.pastaeriso.accounting.account.Account;
 import br.com.pastaeriso.accounting.card.Card;
-import br.com.pastaeriso.accounting.entry.Entry;
+import br.com.pastaeriso.accounting.transaction.Entry;
 import br.com.pastaeriso.accounting.transaction.GenericTransaction;
 import br.com.pastaeriso.accounting.transaction.modality.TransactionModality;
 import br.com.pastaeriso.api.accounting.account.AccountRepository;
@@ -200,21 +200,22 @@ public class PurchaseController {
         }
         
         // Cria por padrão duas entries
+        LocalDate made = LocalDate.parse(proc.getNfeProc().getNFe().getInfNFe().getIde().getDhEmi().subSequence(0, 10));
         Entry entry1 = Entry.builder()
                 .value(value)
+                .date(made)
                 .account(accountRepository.findByNameIgnoreCase("Compras").get())
                 .build();
         Entry entry2 = Entry.builder()
                 .value(value.negate())
                 .account(account)
+                .date(made)
                 .build();
-        LocalDate made = LocalDate.parse(proc.getNfeProc().getNFe().getInfNFe().getIde().getDhEmi().subSequence(0, 10));
         GenericTransaction transaction = GenericTransaction.builder()
                 .modality(modality)
                 .entry(entryRepository.save(entry1))
                 .entry(entryRepository.save(entry2))
                 .description(description)
-                .date(made)
                 .build();
         transaction = genericTransactionRepository.save(transaction);
         purchase.transaction(transaction);

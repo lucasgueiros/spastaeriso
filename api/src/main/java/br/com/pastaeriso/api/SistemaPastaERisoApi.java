@@ -1,7 +1,7 @@
 package br.com.pastaeriso.api;
 
 import br.com.pastaeriso.accounting.account.Account;
-import br.com.pastaeriso.accounting.entry.Entry;
+import br.com.pastaeriso.accounting.transaction.Entry;
 import br.com.pastaeriso.accounting.transaction.GenericTransaction;
 import br.com.pastaeriso.accounting.transaction.modality.TransactionModality;
 import br.com.pastaeriso.api.accounting.account.AccountRepository;
@@ -164,24 +164,29 @@ public class SistemaPastaERisoApi {
             Neighborhood neighborhood5 = neighborhoodRepository.save(new Neighborhood("Parque Fênix"));
             
             // EXEMPLE DATA
-            Entry entry1 = this.entryRepository.save(Entry.builder().account(account1).value(new BigDecimal(10)).build());
+            Entry entry1 = this.entryRepository.save(Entry.builder()
+                    .date(LocalDate.of(2020, Month.DECEMBER, 23))
+                    .account(account1).value(new BigDecimal(10)).build());
             Entry entry2 = this.entryRepository.save(Entry.builder()
+                    .date(LocalDate.of(2020, Month.DECEMBER, 23))
                     .account(account2)
                     .value(new BigDecimal(-10)).build());
-            Entry entry3 = this.entryRepository.save(Entry.builder().account(account3).value(new BigDecimal(20)).build());
-            Entry entry4 = this.entryRepository.save(Entry.builder().account(account1).value(new BigDecimal(-20)).build());
+            Entry entry3 = this.entryRepository.save(Entry.builder()
+                    .date(LocalDate.of(2020, Month.MARCH, 3))
+                    .account(account3).value(new BigDecimal(20)).build());
+            Entry entry4 = this.entryRepository.save(Entry.builder()
+                    .date(LocalDate.of(2020, Month.MARCH, 3))
+                    .account(account1).value(new BigDecimal(-20)).build());
             Entry entry5 = this.entryRepository.save(Entry.builder().account(account3).value(new BigDecimal(30)).build());
             Entry entry6 = this.entryRepository.save(Entry.builder().account(account2).value(new BigDecimal(-30)).build());
             
             GenericTransaction transaction1 = this.transactionRepository.save(GenericTransaction.builder()
-                            .date(LocalDate.of(2020, Month.DECEMBER, 23))
                             .modality(transactionModality2)
                             .entry(entry1)
                             .entry(entry2)
                             .description("Alguma transação")
                             .build());
             GenericTransaction transaction2 = this.transactionRepository.save(GenericTransaction.builder()
-                            .date(LocalDate.of(2020, Month.MARCH, 3))
                             .modality(transactionModality1)
                             .entry(entry3)
                             .entry(entry4)
