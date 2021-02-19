@@ -6,7 +6,8 @@ class Item extends React.Component {
 
   render () {
     return (
-      <>
+      <tr>
+        {this.props.children}
         <td>
           <LinkSelect {...this.props} property="input" options="inputs"/>
         </td>
@@ -30,7 +31,7 @@ class Item extends React.Component {
             <input name={this.props.prefix + "comment"} type="text" value={this.props.entity.comment || ''} onChange={this.props.onChange} readOnly={!this.props.editing}></input>
           </div>
         </td>
-      </>
+      </tr>
     );
   }
 }

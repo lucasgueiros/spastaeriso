@@ -5,7 +5,8 @@ class Instruction extends React.Component {
 
   render () {
     return (
-      <>
+      <tr>
+        {this.props.children}
         <td>
           <div>
             <input
@@ -26,7 +27,7 @@ class Instruction extends React.Component {
               readOnly={!this.props.editing}></input>
           </div>
         </td>
-      </>
+      </tr>
     );
   }
 }

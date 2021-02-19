@@ -29,7 +29,7 @@ public class InventoryMovement extends Item {
 	@NonNull
 	@Builder.Default
 	private LocalDate date = LocalDate.now();
-        @Builder.Default
-        private BigDecimal checkedQuantity = BigDecimal.ONE.negate();
+        private BigDecimal checkedBalance;
+        private BigDecimal calculatedBalance;
 
 }

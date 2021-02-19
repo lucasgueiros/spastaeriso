@@ -33,7 +33,7 @@ class PurchaseItem extends React.Component {
 
   render () {
     return (
-      <>
+      <tr>
         <RelationView {...this.props} property="inventoryMovement" view={<SimplerInventoryMovement/>}/>
         <td>
           <div>
@@ -50,7 +50,7 @@ class PurchaseItem extends React.Component {
             <input name="subtotal" type="number" value={this.props.entity.pricePerUnit * this.props.entity.quantity} readOnly={true}></input>
           </div>
         </td>
-      </>
+      </tr>
     );
   }
 }

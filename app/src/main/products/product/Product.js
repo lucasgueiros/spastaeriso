@@ -3,7 +3,7 @@ import Item from '../../recipeBook/recipe/item/Item.js';
 
 function ProductPrice (props) {
   return (
-    <>
+    <tr>
       {props.children}
       <td>
         <DateField {...props} property="date"/>
@@ -11,13 +11,13 @@ function ProductPrice (props) {
       <td>
         <NumberField {...props} property="price"/>
       </td>
-    </>
+    </tr>
   );
 }
 
 function ProductRecipe (props) {
   return (
-    <>
+    <tr>
       {props.children}
       <td>
         <LinkSelect {...props} property="input" options="inputs"/>
@@ -25,7 +25,7 @@ function ProductRecipe (props) {
       <td>
         <LinkSelect {...props} property="recipe" options="recipes" nameField="title"/>
       </td>
-    </>
+    </tr>
   );
 }
 

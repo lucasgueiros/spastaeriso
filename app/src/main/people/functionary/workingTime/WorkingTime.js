@@ -5,7 +5,8 @@ class WorkingTime extends React.Component {
 
   render () {
     return (
-      <>
+      <tr>
+        {this.props.children}
         <td>
           <SimplerLinkSelect
             entity={this.props.entity.functionaryFunction || ''}
@@ -29,7 +30,7 @@ class WorkingTime extends React.Component {
             <input name={this.props.prefix + "comment"} type="text" value={this.props.entity.comment || ''} onChange={this.props.onChange} readOnly={!this.props.editing}></input>
           </div>
         </td>
-      </>
+      </tr>
     );
   }
 }

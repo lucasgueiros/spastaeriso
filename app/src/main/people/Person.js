@@ -11,7 +11,8 @@ export function PersonNavigator(props) {
 
 function Contact (props){
   return (
-    <>
+    <tr>
+      {props.children}
       <td>
         <TextField {...props} property="name" label="Marcador" />
       </td>
@@ -21,13 +22,14 @@ function Contact (props){
       <td>
         <LinkSelect {...props} property="channel" options="contactChannels" label="Canal"/>
       </td>
-    </>
+    </tr>
   );
 }
 
 function Address (props) {
   return (
-    <>
+    <tr>
+      {props.children}
       <td>
         <TextField {...props} property="name" label="Marcador" />
       </td>
@@ -58,7 +60,7 @@ function Address (props) {
       <td>
         <TextField {...props} property="comments" label="Comentários" />
       </td>
-    </>);
+    </tr>);
 }
 
 export function Person (props){

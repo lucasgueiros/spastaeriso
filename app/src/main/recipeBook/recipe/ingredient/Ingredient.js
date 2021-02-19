@@ -1,31 +1,54 @@
 import React from 'react';
-import SimplerLinkSelect from '../../../../generics/SimplerLinkSelect.js';
-import Item from '../item/Item.js';
+import {SimplerLinkSelect,LinkSelect} from '../../../../generics/all.js';
+function Item (props) {
+  return (<>
+  <td>
+    <LinkSelect {...props} property="input" options="inputs"/>
+  </td>
+  <td>
+    <div>
+      <input
+        name={props.prefix + "quantity"}
+        type="number"
+        value={props.entity.quantity || {}}
+        onChange={props.onChange}
+        readOnly={!props.editing}></input>
+    </div>
+  </td>
+  <td>
+    <div>
+      <LinkSelect {...props} property="unit" options="units"/>
+    </div>
+  </td>
+  <td>
+    <div>
+      <input name={props.prefix + "comment"} type="text" value={props.entity.comment || ''} onChange={props.onChange} readOnly={!props.editing}></input>
+    </div>
+  </td>
+  </>);
+}
 
-class Ingredient extends React.Component {
+export default function Ingredient (props) {
 
-  render () {
     return (
-      <>
+      <tr>
+      {props.children}
         <td>
           <div>
             <input
-              name={this.props.prefix + "index"}
+              name={props.prefix + "index"}
               type="number"
-              value={this.props.entity.index || {}}
-              onChange={this.props.onChange}
-              readOnly={!this.props.editing}></input>
+              value={props.entity.index || {}}
+              onChange={props.onChange}
+              readOnly={!props.editing}></input>
           </div>
         </td>
         <Item
-          entity={this.props.entity}
-          prefix={this.props.prefix}
-          editing={this.props.editing}
-          onChange={this.props.onChange}
-          optionsLists={this.props.optionsLists}/>
-      </>
+          entity={props.entity}
+          prefix={props.prefix}
+          editing={props.editing}
+          onChange={props.onChange}
+          optionsLists={props.optionsLists}/>
+      </tr>
     );
-  }
 }
-
-export default Ingredient;
