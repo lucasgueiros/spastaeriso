@@ -51,6 +51,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import br.com.pastaeriso.api.accounting.transaction.GenericTransactionRepository;
 import br.com.pastaeriso.api.purchases.inventory.InventoryMovementRepository;
+import java.time.LocalDateTime;
 
 /**
  *
@@ -200,7 +201,7 @@ public class PurchaseController {
         }
         
         // Cria por padrão duas entries
-        LocalDate made = LocalDate.parse(proc.getNfeProc().getNFe().getInfNFe().getIde().getDhEmi().subSequence(0, 10));
+        LocalDateTime made = LocalDateTime.parse(proc.getNfeProc().getNFe().getInfNFe().getIde().getDhEmi().subSequence(0, 19));
         Entry entry1 = Entry.builder()
                 .value(value)
                 .date(made)
@@ -255,7 +256,7 @@ public class PurchaseController {
     }
 
     
-    private PurchaseItem parseItem(NfeProc.Proc.SubNfeProc.NFe.InfNFe.Det det, LocalDate made) {
+    private PurchaseItem parseItem(NfeProc.Proc.SubNfeProc.NFe.InfNFe.Det det, LocalDateTime made) {
         // INPUT
         
         String brand = null;

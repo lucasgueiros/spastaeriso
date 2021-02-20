@@ -11,6 +11,7 @@ import javax.persistence.Transient;
 
 import br.com.pastaeriso.recipeBook.input.Input;
 import br.com.pastaeriso.recipeBook.unit.Unit;
+import javax.persistence.JoinColumn;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -41,6 +42,7 @@ public class Item {
 	private BigDecimal quantity;
 	@NonNull
 	@ManyToOne
+        @JoinColumn(name="input_id")
 	private Input input;
 	@NonNull
 	@ManyToOne

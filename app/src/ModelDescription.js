@@ -1,9 +1,3 @@
-import PurchaseCrud from './main/purchases/purchase/PurchaseCrud.js';
-import PurchaseItemCrud from './main/purchases/purchase/item/PurchaseItemCrud.js';
-import NfeCrud from './main/purchases/purchase/nfe/NfeCrud.js';
-import TransactionCrud from './main/accounting/transaction/TransactionCrud.js';
-import BasicCrud from './generics/BasicCrud.js';
-
 export default {
   purchases: [
       {

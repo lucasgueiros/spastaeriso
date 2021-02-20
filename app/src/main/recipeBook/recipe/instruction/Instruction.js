@@ -1,5 +1,4 @@
 import React from 'react';
-import SimplerLinkSelect from '../../../../generics/SimplerLinkSelect.js';
 
 class Instruction extends React.Component {
 

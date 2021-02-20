@@ -46,6 +46,7 @@ class Navigator extends React.Component {
     } else {
       this.crud = this.props.crud;
     }
+
   }
 
   manyToManyChange(name, value, add) {
@@ -131,7 +132,12 @@ class Navigator extends React.Component {
   }
 
   componentDidMount () {
-    this.fetchData();
+    if(this.state.isToShow) {
+      this.fetchData(this.props.toShow);
+      this.setState({isToShow: false});
+    } else  {
+      this.fetchData();
+    }
     this.updateOptionsLists();
   }
 

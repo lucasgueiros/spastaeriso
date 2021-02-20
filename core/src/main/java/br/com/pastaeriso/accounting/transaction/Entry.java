@@ -13,7 +13,10 @@ import br.com.pastaeriso.accounting.account.Account;
 import br.com.pastaeriso.accounting.transaction.GenericTransaction;
 import br.com.pastaeriso.accounting.transaction.modality.TransactionModality;
 import java.time.LocalDateTime;
+import javax.persistence.JoinColumn;
+import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.persistence.UniqueConstraint;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -33,6 +36,7 @@ import lombok.ToString;
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Builder
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"account_id","date"})})
 public class Entry {
 
 	@Id
@@ -40,9 +44,10 @@ public class Entry {
 	private Long id;
 	@NonNull
 	@ManyToOne
+        @JoinColumn(name = "account_id")
 	private Account account;
         @Builder.Default
-	private LocalDate date = LocalDateTime.now().toLocalDate();
+	private LocalDateTime date = LocalDateTime.now();
 	@NonNull
 	private BigDecimal value;
 	private String comment;

@@ -1,33 +1,27 @@
-import './Purchase.css';
-import React from 'react';
-import Provider from '../provider/Provider.js';
-import Nfce from './nfe/Nfce.js';
-import SimplerTransaction from '../../accounting/transaction/SimplerTransaction.js';
-//import StandaloneNumberField from '../../../generics/StandaloneNumberField.js';
-//import StandaloneLinkSelect from '../../../generics/StandaloneLinkSelect.js';
-//import ListRelationView from '../../../generics/ListRelationView.js';
+import {ListRelationView, RelationView, StandaloneLinkSelect, StandaloneNumberField,Navigator,FileField,LinkSelect,NumberField,TextField, StandaloneTextField} from '../../../generics/all.js';
 
-import {ListRelationView, RelationView, StandaloneLinkSelect, StandaloneNumberField} from '../../../generics/all.js';
+import {Transaction} from '../../accounting/Transaction.js';
 
-import PurchaseItem from './item/PurchaseItem.js';
-import axios from 'axios';
+export function PurchaseNavigator (props) {
+  return (
+    <Navigator entity="purchases" view={<Purchase/>}/>
+  );
+}
 
-class Purchase extends React.Component {
-
-  render () {
+export function Purchase (props) {
     return (
       <div class-name="purchase">
 
-        <StandaloneLinkSelect {...this.props} property="provider" options="providers" label="Fornecedor"/>
+        <StandaloneLinkSelect {...props} property="provider" options="providers" label="Fornecedor"/>
 
         <h4>Transação</h4>
-        <RelationView {...this.props} property="transaction" view={<SimplerTransaction/>}/>
+        <RelationView {...props} property="transaction" view={<Transaction/>}/>
 
-        <StandaloneNumberField {...this.props} property="additionalValue" label="Valor extra"/>
+        <StandaloneNumberField {...props} property="additionalValue" label="Valor extra"/>
         <h4>Nota fiscal</h4>
-        <RelationView {...this.props} property="nfce" view={<Nfce/>}/>
+        <RelationView {...props} property="nfce" view={<Nfce/>}/>
 
-        <ListRelationView {...this.props} property="items" row={<PurchaseItem/>} >
+        <ListRelationView {...props} property="items" row={<PurchaseItem/>} >
           <th>Insumo</th>
           <th>Qtd</th>
           <th>Uni</th>
@@ -38,7 +32,58 @@ class Purchase extends React.Component {
         </ListRelationView>
       </div>
     );
-  }
 }
 
-export default Purchase;
+function Nfce (props) {
+    return (
+      <div class-name="nfce">
+        <StandaloneTextField {...props} property="accessCode" label="Código de acesso"/>
+        <FileField {...props} property="xml" fileName="nfce.xml"/>
+      </div>
+    );
+}
+
+function SimplerInventoryMovement (props) {
+  return (
+    <>
+      {props.children}
+      <td>
+        <LinkSelect {...props} property="input" options="inputs"/>
+      </td>
+      <td>
+        <div>
+          <NumberField {...props} property="quantity" />
+        </div>
+      </td>
+      <td>
+        <div>
+          <LinkSelect {...props} property="unit" options="units"/>
+        </div>
+      </td>
+      <td>
+        <div>
+          <TextField {...props} property="comment" />
+        </div>
+      </td>
+    </>
+  );
+}
+
+export function PurchaseItem (props) {
+  return (
+      <tr>
+        <RelationView {...props} property="inventoryMovement" view={<SimplerInventoryMovement/>}/>
+        <td>
+          <TextField {...props} property="brand" />
+        </td>
+        <td>
+          <NumberField {...props} property="pricePerUnit" />
+        </td>
+        <td>
+          <div>
+            <input name="subtotal" type="number" value={props.entity.pricePerUnit * props.entity.inventoryMovement.quantity} readOnly={true}></input>
+          </div>
+        </td>
+      </tr>
+    );
+}

@@ -1,16 +1,16 @@
-import './PurchaseFromNFe.css';
 import React from 'react';
 import axios from 'axios';
-import Purchase from './Purchase.js';
-import PurchaseCrud from './PurchaseCrud.js';
+import { Redirect } from "react-router";
 
-class PurchaseFromNFe extends React.Component {
+export class PurchaseFromNFe extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
       nfe: undefined,
-      message: ""
+      message: "",
+      redirect: false,
+      url: "",
     }
     this.upload = this.upload.bind(this);
     this.onChange = this.onChange.bind(this);
@@ -34,7 +34,7 @@ class PurchaseFromNFe extends React.Component {
       },
     }).then(
       (response) => {
-        this.setState({message: "Sucesso!"});
+        this.setState({redirect: true, url: response.location});
         console.log(response.data);
       }, (error) => {
         console.log(error);
@@ -44,12 +44,19 @@ class PurchaseFromNFe extends React.Component {
   }
 
   render () {
-
+    if(this.state.redirect) {
+      return (
+        <Redirect to={{
+          pathname: "/purchases/purchase",
+          state: { show: this.state.url }
+        }}/>
+      );
+    }
     return (
       <div class-name="create-purchase-from-nfe">
         <div>
-          <label htmlFor="nfe">Nota Fiscal Eletrônica em XML: </label>
-          <input name="nfe" type="file" onChange={this.onChange}></input>
+          <label htmlFor="nfce">Nota Fiscal Eletrônica em XML: </label>
+          <input name="nfce" type="file" onChange={this.onChange}></input>
         </div>
         <button onClick={this.upload}>Upload</button>
         {this.state.message}
@@ -58,5 +65,3 @@ class PurchaseFromNFe extends React.Component {
   }
 
 }
-
-export default PurchaseFromNFe;

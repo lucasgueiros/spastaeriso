@@ -53,6 +53,7 @@ import br.com.pastaeriso.recipeBook.item.Item;
 import br.com.pastaeriso.recipeBook.recipe.Recipe;
 import br.com.pastaeriso.recipeBook.recipe.ingredient.Ingredient;
 import br.com.pastaeriso.recipeBook.recipe.intruction.Instruction;
+import java.time.LocalDateTime;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @SpringBootApplication
@@ -165,17 +166,17 @@ public class SistemaPastaERisoApi {
             
             // EXEMPLE DATA
             Entry entry1 = this.entryRepository.save(Entry.builder()
-                    .date(LocalDate.of(2020, Month.DECEMBER, 23))
+                    .date(LocalDateTime.of(2020, Month.DECEMBER, 23, 0, 0))
                     .account(account1).value(new BigDecimal(10)).build());
             Entry entry2 = this.entryRepository.save(Entry.builder()
-                    .date(LocalDate.of(2020, Month.DECEMBER, 23))
+                    .date(LocalDateTime.of(2020, Month.DECEMBER, 23, 0, 0))
                     .account(account2)
                     .value(new BigDecimal(-10)).build());
             Entry entry3 = this.entryRepository.save(Entry.builder()
-                    .date(LocalDate.of(2020, Month.MARCH, 3))
+                    .date(LocalDateTime.of(2020, Month.MARCH, 3, 0, 0))
                     .account(account3).value(new BigDecimal(20)).build());
             Entry entry4 = this.entryRepository.save(Entry.builder()
-                    .date(LocalDate.of(2020, Month.MARCH, 3))
+                    .date(LocalDateTime.of(2020, Month.MARCH, 3, 0, 0))
                     .account(account1).value(new BigDecimal(-20)).build());
             Entry entry5 = this.entryRepository.save(Entry.builder().account(account3).value(new BigDecimal(30)).build());
             Entry entry6 = this.entryRepository.save(Entry.builder().account(account2).value(new BigDecimal(-30)).build());

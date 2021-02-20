@@ -1,4 +1,4 @@
-import {ListView,LinkSelect,NumberField,TextField,DateField} from '../../../generics/all.js';
+import {ListView,LinkSelect,NumberField,TextField,DateTimeField} from '../../../generics/all.js';
 
 export function InventoryMovementListView (props) {
   return (
@@ -18,7 +18,7 @@ export function InventoryMovement (props) {
     <tr>
       {props.children}
       <td>
-        <DateField {...props} property="date"/>
+        <DateTimeField {...props} property="date"/>
       </td>
       <td>
         <LinkSelect {...props} property="input" options="inputs"/>

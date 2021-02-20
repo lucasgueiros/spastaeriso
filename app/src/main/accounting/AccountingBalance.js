@@ -1,8 +1,8 @@
-import {StandaloneTextField,StandaloneDateField,DateField,LinkSelect,NumberField,ListRelationView,StandaloneLinkSelect,StandaloneMultipleLinkSelect} from '../../../generics/all.js';
+import {StandaloneTextField,StandaloneDateField,DateField,LinkSelect,NumberField,ListRelationView,StandaloneLinkSelect,StandaloneMultipleLinkSelect} from '../../generics/all.js';
 import axios from 'axios';
 import React from 'react';
 
-export default class AccountingBalance extends React.Component {
+export class AccountingBalance extends React.Component {
   state = {
     data: [],
     loading: true,

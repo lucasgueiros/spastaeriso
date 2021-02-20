@@ -1,5 +1,5 @@
 import React from 'react';
-import SimplerLinkSelect from '../../../../generics/SimplerLinkSelect.js';
+import {LinkSelect,NumberField,TextField} from '../../../../generics/all.js';
 
 class WorkingTime extends React.Component {
 
@@ -8,27 +8,13 @@ class WorkingTime extends React.Component {
       <tr>
         {this.props.children}
         <td>
-          <SimplerLinkSelect
-            entity={this.props.entity.functionaryFunction || ''}
-            prefix={this.props.prefix + "functionaryFunction"}
-            onChange={this.props.onChange}
-            editing={this.props.editing}
-            optionsList={this.props.optionsLists.functionaryFunctions || []}/>
+          <LinkSelect {...this.props} property="functionaryFunction" options="functionaryFunctions"/>
         </td>
         <td>
-          <div>
-            <input
-              name={this.props.prefix + "minutes"}
-              type="number"
-              value={this.props.entity.minutes || {}}
-              onChange={this.props.onChange}
-              readOnly={!this.props.editing}></input>
-          </div>
+          <NumberField {...this.props} property="minutes"/>
         </td>
         <td>
-          <div>
-            <input name={this.props.prefix + "comment"} type="text" value={this.props.entity.comment || ''} onChange={this.props.onChange} readOnly={!this.props.editing}></input>
-          </div>
+          <TextField {...this.props} property="comment"/>
         </td>
       </tr>
     );

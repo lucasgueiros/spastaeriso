@@ -13,6 +13,7 @@ import br.com.pastaeriso.recipeBook.unit.Unit;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -51,7 +52,7 @@ public class PurchaseProduct {
         @Builder.Default
         private Boolean applied = Boolean.FALSE;
         
-        public PurchaseItem toPurchaseItem (LocalDate date, BigDecimal quantity, BigDecimal pricePerUnit) {
+        public PurchaseItem toPurchaseItem (LocalDateTime date, BigDecimal quantity, BigDecimal pricePerUnit) {
             if(!this.keepUnit) {
                 quantity = quantity.multiply(ratio);
                 pricePerUnit = pricePerUnit.divide(ratio);

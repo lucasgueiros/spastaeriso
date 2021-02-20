@@ -53,6 +53,7 @@ class ListRelationView extends React.Component {
       <>
 
         {React.cloneElement(this.props.row, {...this.props,
+          key: index,
           entity: item,
           prefix: this.props.prefix + this.props.property + "." + index + ".",
           children: (

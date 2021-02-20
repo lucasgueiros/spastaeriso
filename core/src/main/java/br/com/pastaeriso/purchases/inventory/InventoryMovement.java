@@ -6,6 +6,9 @@ import javax.persistence.Entity;
 
 import br.com.pastaeriso.recipeBook.item.Item;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -24,11 +27,12 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = true)
 @SuperBuilder
 @NoArgsConstructor
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"input_id","date"})})
 public class InventoryMovement extends Item {
 
 	@NonNull
 	@Builder.Default
-	private LocalDate date = LocalDate.now();
+	private LocalDateTime date = LocalDateTime.now();
         private BigDecimal checkedBalance;
         private BigDecimal calculatedBalance;
 

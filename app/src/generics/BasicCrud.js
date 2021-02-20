@@ -48,7 +48,10 @@ class BasicCrud {
     for(let i =0; i < entity[relationName].length; i++) {
       let relationEntity = {...entity[relationName][i]};
       relationEntity = await this.postOperation(relationEntity);
-      links[i] = relationEntity._links.self.href;
+      if(relationEntity._ok) {
+        links[i] = relationEntity._links.self.href;
+      }
+      
     }
     entity = {
       ...entity,

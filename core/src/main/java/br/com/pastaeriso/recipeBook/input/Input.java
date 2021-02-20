@@ -1,11 +1,13 @@
 package br.com.pastaeriso.recipeBook.input;
 
 import br.com.pastaeriso.recipeBook.input.price.InputPrice;
+import br.com.pastaeriso.recipeBook.unit.Unit;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import lombok.AllArgsConstructor;
@@ -34,6 +36,10 @@ public class Input {
 	@Column(unique = true)
 	private String name;
 	private String comment;
+        @ManyToOne
+        private Unit favorite;
+        @OneToMany
+        private List<InputUnitConverter> converters;
         @OneToMany
         private List<InputPrice> prices;
 	

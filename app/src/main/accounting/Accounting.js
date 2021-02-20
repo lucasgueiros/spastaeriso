@@ -1,11 +1,11 @@
-import './Accounting.css';
 import { Link } from 'react-router-dom';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import AccountNavigator from './account/AccountNavigator.js';
-import TransactionListView from './transaction/TransactionListView.js';
-import CardNavigator from './card/CardNavigator.js';
-import {TransactionModalityNavigator} from './transaction/TransactionModality.js';
-import AccountingBalance from './entry/AccountingBalance.js';
+
+import {AccountNavigator} from './Account.js';
+import {TransactionListView} from './Transaction.js';
+import {CardNavigator} from './Card.js';
+import {TransactionModalityNavigator} from './TransactionModality.js';
+import {AccountingBalance} from './AccountingBalance.js';
 
 function Accounting() {
   return (
