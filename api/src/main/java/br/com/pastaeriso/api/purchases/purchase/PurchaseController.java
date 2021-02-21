@@ -204,16 +204,15 @@ public class PurchaseController {
         LocalDateTime made = LocalDateTime.parse(proc.getNfeProc().getNFe().getInfNFe().getIde().getDhEmi().subSequence(0, 19));
         Entry entry1 = Entry.builder()
                 .value(value)
-                .date(made)
                 .account(accountRepository.findByNameIgnoreCase("Compras").get())
                 .build();
         Entry entry2 = Entry.builder()
                 .value(value.negate())
                 .account(account)
-                .date(made)
                 .build();
         GenericTransaction transaction = GenericTransaction.builder()
                 .modality(modality)
+                .date(made)
                 .entry(entryRepository.save(entry1))
                 .entry(entryRepository.save(entry2))
                 .description(description)

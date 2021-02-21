@@ -105,7 +105,7 @@ public class SistemaPastaERisoApi {
         @Autowired
         private InventoryMovementRepository inventoryMovementRepository;
         @Autowired
-    private InventoryMovementEventHandler inventoryMovementEventHandler;
+        private InventoryMovementEventHandler inventoryMovementEventHandler;
     
         @Autowired
         private NeighborhoodRepository neighborhoodRepository;
@@ -165,34 +165,53 @@ public class SistemaPastaERisoApi {
             Neighborhood neighborhood5 = neighborhoodRepository.save(new Neighborhood("Parque Fênix"));
             
             // EXEMPLE DATA
-            Entry entry1 = this.entryRepository.save(Entry.builder()
-                    .date(LocalDateTime.of(2020, Month.DECEMBER, 23, 0, 0))
-                    .account(account1).value(new BigDecimal(10)).build());
-            Entry entry2 = this.entryRepository.save(Entry.builder()
-                    .date(LocalDateTime.of(2020, Month.DECEMBER, 23, 0, 0))
+            Entry entry1 = Entry.builder()
+                    .account(account1).value(new BigDecimal(10)).build();
+            Entry entry2 = Entry.builder()
                     .account(account2)
-                    .value(new BigDecimal(-10)).build());
-            Entry entry3 = this.entryRepository.save(Entry.builder()
-                    .date(LocalDateTime.of(2020, Month.MARCH, 3, 0, 0))
-                    .account(account3).value(new BigDecimal(20)).build());
-            Entry entry4 = this.entryRepository.save(Entry.builder()
-                    .date(LocalDateTime.of(2020, Month.MARCH, 3, 0, 0))
-                    .account(account1).value(new BigDecimal(-20)).build());
-            Entry entry5 = this.entryRepository.save(Entry.builder().account(account3).value(new BigDecimal(30)).build());
-            Entry entry6 = this.entryRepository.save(Entry.builder().account(account2).value(new BigDecimal(-30)).build());
+                    .value(new BigDecimal(-10)).build();
+            Entry entry3 = Entry.builder()
+                    .account(account3).value(new BigDecimal(20)).build();
+            Entry entry4 = Entry.builder()
+                    .account(account1).value(new BigDecimal(-20)).build();
+            Entry entry5 = Entry.builder().account(account3).value(new BigDecimal(30)).build();
+            Entry entry6 = Entry.builder().account(account2).value(new BigDecimal(-30)).build();
             
-            GenericTransaction transaction1 = this.transactionRepository.save(GenericTransaction.builder()
+            
+            
+            GenericTransaction transaction1 = GenericTransaction.builder()
                             .modality(transactionModality2)
+                            .date(LocalDateTime.of(2020, Month.DECEMBER, 23, 0, 0))
                             .entry(entry1)
                             .entry(entry2)
                             .description("Alguma transação")
-                            .build());
-            GenericTransaction transaction2 = this.transactionRepository.save(GenericTransaction.builder()
+                            .build();
+            GenericTransaction transaction2 = GenericTransaction.builder()
                             .modality(transactionModality1)
                             .entry(entry3)
                             .entry(entry4)
+                            .date(LocalDateTime.of(2020, Month.MARCH, 3, 0, 0))
                             .description("Outra transação")
-                            .build());
+                            .build();
+            GenericTransaction transaction3 = GenericTransaction.builder()
+                            .modality(transactionModality1)
+                            .entry(entry5)
+                            .entry(entry6)
+                            .date(LocalDateTime.of(2021, Month.MARCH, 3, 0, 0))
+                            .description("Transação aí")
+                            .build();
+            
+            entry1 = this.entryRepository.save(entry1);
+            entry2 = this.entryRepository.save(entry2);
+            entry3 = this.entryRepository.save(entry3);
+            entry4 = this.entryRepository.save(entry4);
+            entry5 = this.entryRepository.save(entry5);
+            entry6 = this.entryRepository.save(entry6);
+            
+            transaction1 = this.transactionRepository.save(transaction1);
+            transaction2 = this.transactionRepository.save(transaction2);
+            transaction3 = this.transactionRepository.save(transaction3);
+            
             InventoryMovement inventoryMovement1 = InventoryMovement.builder()
                     .input(input1)
                     .unit(unit1)

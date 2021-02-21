@@ -13,6 +13,7 @@ import javax.persistence.OneToMany;
 import br.com.pastaeriso.accounting.transaction.modality.TransactionModality;
 import br.com.pastaeriso.accounting.transaction.voucher.TransactionVoucher;
 import javax.persistence.CascadeType;
+import javax.persistence.FetchType;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 import lombok.AllArgsConstructor;
@@ -47,8 +48,10 @@ public class GenericTransaction {
 	private TransactionModality modality;
 	@ManyToOne
 	private TransactionVoucher voucher;
-	@OneToMany
+	@OneToMany(fetch = FetchType.EAGER)
         @Singular
 	private List<Entry> entries;
+        @Builder.Default
+	private LocalDateTime date = LocalDateTime.now();
         
 }

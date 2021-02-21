@@ -13,6 +13,8 @@ import br.com.pastaeriso.accounting.account.Account;
 import br.com.pastaeriso.accounting.transaction.GenericTransaction;
 import br.com.pastaeriso.accounting.transaction.modality.TransactionModality;
 import java.time.LocalDateTime;
+import javax.persistence.CascadeType;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -36,7 +38,6 @@ import lombok.ToString;
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"account_id","date"})})
 public class Entry {
 
 	@Id
@@ -46,8 +47,6 @@ public class Entry {
 	@ManyToOne
         @JoinColumn(name = "account_id")
 	private Account account;
-        @Builder.Default
-	private LocalDateTime date = LocalDateTime.now();
 	@NonNull
 	private BigDecimal value;
 	private String comment;

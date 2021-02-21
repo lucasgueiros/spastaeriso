@@ -11,6 +11,4 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 @CrossOrigin
 public interface EntryRepository extends JpaRepository<Entry, Long>{
 
-    public List<Entry> findAllByOrderByDate();
-    
 }

@@ -16,6 +16,9 @@ export function Transaction (props) {
         <tr>
           {props.children}
           <td>
+            <DateTimeField {...props} property="date" />
+          </td>
+          <td>
             <LinkSelect {...props} property="modality" options="transactionModalities"/>
           </td>
           <td colSpan="2">Entradas:</td>
@@ -31,9 +34,6 @@ export function Transaction (props) {
 function Entry (props) {
   return (
     <>
-      <td>
-        <DateTimeField {...props} property="date" />
-      </td>
       <td>
         <LinkSelect {...props} property="account" options="accounts"/>
       </td>
