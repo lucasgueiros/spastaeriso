@@ -53,6 +53,9 @@ public class InventoryMovementController {
             rq.quantity = qs.get(i).quantity;
             items.add(rq);
         }
+        items.sort((i1,i2) -> {
+            return i1.input.compareTo(i2.input);
+        });
         return items;
     }
     
@@ -67,11 +70,21 @@ public class InventoryMovementController {
            if(quantities.containsKey(im.getInput())) {
                q = quantities.get(im.getInput());
                if(q.unit.equals(im.getUnit())){
-                   q.quantity = q.quantity.add(im.getQuantity());
+                   if(im.getCheckedBalance() != null) {
+                       q.quantity = im.getCheckedBalance();
+                   } else {
+                       q.quantity = q.quantity.add(im.getQuantity());
+                   }
+               } else {
+                   // converter unidade
                }
            } else {
                q = new Quantity();
-               q.quantity = im.getQuantity();
+               if(im.getCheckedBalance() != null) {
+                   q.quantity = im.getCheckedBalance();
+               } else {
+                   q.quantity = im.getQuantity();
+               }
                q.unit = im.getUnit();
                quantities.put(im.getInput(), q);
            }

@@ -30,7 +30,7 @@ export function InventoryMovement (props) {
       </td>
       <td>
         <div>
-          <NumberField {...props} property="checkedQuantity" />
+          <NumberField {...props} property="checkedBalance" />
         </div>
       </td>
       <td>
