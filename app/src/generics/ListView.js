@@ -78,56 +78,12 @@ class ListView extends React.Component {
     entities[index] = entity;
     this.setState({entities});
   }
-
-  removeToManyRelation (name, selecteds) {
-    let names = name.split(".");
-
-    //const index = names[0];
-    //names.splice(0,1);
-    let index = this.state.entity_index;
-    let entity = {...this.state.entities[index]};
-    let entityHierarchy = [entity];
-
-    let i = 0;
-    let finished = false;
-    if(names.length===0) {
-      return;
-    }
-    while(i >= 0) {
-      if(!finished && i === names.length - 1) { // então chegamos ao último
-        let relation = [];
-        if(entityHierarchy[i][names[i]] !== undefined) {
-          relation = [...entityHierarchy[i][names[i]]];
-        }
-        for(let j = relation.length; j >= 0; j--) {
-          if(selecteds[j]) {
-            relation.splice(j,1);
-          }
-        }
-        entityHierarchy[i][names[i]] = relation;
-        finished = true;
-        i--;
-      } else if (!finished) {
-        if(Array.isArray(entityHierarchy[i][names[i]])) {
-          entityHierarchy[i+1] = [...entityHierarchy[i][names[i]]];
-        } else {
-          entityHierarchy[i+1] = {...entityHierarchy[i][names[i]]};
-        }
-        i++;
-      } else {
-        entityHierarchy[i][names[i]] = entityHierarchy[i+1];
-        i--;
-      }
-    }
-    let entities = [...this.state.entities];
-    entities[index] = entity;
-    this.setState({entities});
-  }
-
-
+  
   addOptionsList(name) {
-    this.optionsListsNames.push(name);
-    this.updateOptionsLists()
+    if(!this.optionsListsNames.includes(name)) {
+      this.optionsListsNames.push(name);
+      this.updateOptionsLists()
+    }
   }
 
   handleSelectedChange(event, index) {
@@ -267,6 +223,50 @@ class ListView extends React.Component {
           relation = [...entityHierarchy[i][names[i]]];
         }
         relation.push({});
+        entityHierarchy[i][names[i]] = relation;
+        finished = true;
+        i--;
+      } else if (!finished) {
+        if(Array.isArray(entityHierarchy[i][names[i]])) {
+          entityHierarchy[i+1] = [...entityHierarchy[i][names[i]]];
+        } else {
+          entityHierarchy[i+1] = {...entityHierarchy[i][names[i]]};
+        }
+        i++;
+      } else {
+        entityHierarchy[i][names[i]] = entityHierarchy[i+1];
+        i--;
+      }
+    }
+    let entities = [...this.state.entities];
+    entities[index] = entity;
+    this.setState({entities});
+  }
+
+  removeToManyRelation (name, selecteds) {
+    let names = name.split(".");
+
+    const index = names[0];
+    names.splice(0,1);
+    let entity = {...this.state.entities[index]};
+    let entityHierarchy = [entity];
+
+    let i = 0;
+    let finished = false;
+    if(names.length===0) {
+      return;
+    }
+    while(i >= 0) {
+      if(!finished && i === names.length - 1) { // então chegamos ao último
+        let relation = [];
+        if(entityHierarchy[i][names[i]] !== undefined) {
+          relation = [...entityHierarchy[i][names[i]]];
+        }
+        for(let j = relation.length; j >= 0; j--) {
+          if(selecteds[j]) {
+            relation.splice(j,1);
+          }
+        }
         entityHierarchy[i][names[i]] = relation;
         finished = true;
         i--;

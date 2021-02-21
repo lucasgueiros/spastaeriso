@@ -10,7 +10,7 @@ export default {
     if(!this.cruds.hasOwnProperty(name)){
       if(ModelDescription[name] == undefined || ModelDescription[name] == null) {
         this.cruds[name] = new Crud(name, []);
-      } else if(ModelDescription[name] instanceof Array ) {
+      } else if(ModelDescription[name].relations instanceof Array ) {
         this.cruds[name] = new Crud(name, ModelDescription[name]);
       } else {
         this.cruds[name] = ModelDescription[name];

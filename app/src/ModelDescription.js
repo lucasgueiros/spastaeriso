@@ -1,5 +1,5 @@
 export default {
-  purchases: [
+  purchases: { relations: [
       {
         name: 'provider',
         entity: 'providers',
@@ -20,66 +20,72 @@ export default {
         entity: 'nfce',
         type: 'oneToOne'
       }
-    ],
-  nfce: [],
-  nfceXmls: [],
-  providers: [],
-  genericTransactions: [
-    {
-      name: 'modality',
-      entity: 'transactionModalities',
-      type: 'manyToOneLink'
-    },
-    {
-      name: 'entries',
-      entity: 'entries',
-      type: 'oneToMany'
-    }
-  ],
-  transactionModalities: [],
-  entries: [
+    ]},
+  nfce: { relations: []},
+  nfceXmls: { relations: []},
+  providers: { relations: []},
+  genericTransactions: {
+    findAll: 'findAllByOrderByDateAsc',
+    relations: [
+      {
+        name: 'modality',
+        entity: 'transactionModalities',
+        type: 'manyToOneLink'
+      },
+      {
+        name: 'entries',
+        entity: 'entries',
+        type: 'oneToMany'
+      }
+    ]
+  },
+  transactionModalities: { relations: []},
+  entries: { relations: [
     {
       name: 'account',
       entity: 'accounts',
       type: 'manyToOneLink'
     }
-  ],
-  accounts: [],
-  purchaseItems: [
+  ]},
+  accounts: { relations: []},
+  purchaseItems: { relations: [
     {
       name: 'inventoryMovement',
       entity: 'inventoryMovements',
       type: 'oneToOne'
     }
-  ],
-  inventoryMovements: [
-    {
-      name: 'unit',
-      entity: 'units',
-      type: 'manyToOneLink'
-    },
-    {
-      name: 'input',
-      entity: 'inputs',
-      type: 'manyToOneLink'
-    }
-  ],
-  inputs: [
+  ]},
+  inventoryMovements: {
+    findAll: "findAllByOrderByDateAsc",
+    relations: [
+      {
+        name: 'unit',
+        entity: 'units',
+        type: 'manyToOneLink'
+      },
+      {
+        name: 'input',
+        entity: 'inputs',
+        type: 'manyToOneLink'
+      }
+    ]
+  },
+  inputs: { relations: [
     {
       name: 'prices',
       entity: 'inputPrices',
       type: 'oneToMany'
     }
-  ],
-  inputPrices: [
+  ]},
+  inputPrices: { relations: [
     {
       name: 'unit',
       entity: 'units',
       type: 'manyToOneLink'
     },
-  ],
-  units: [],
-  recipes: [
+  ]},
+  units: { relations: []},
+  recipes: { relations: [
     {
       name: 'works',
       entity: 'functionaryWorkingTimes',
@@ -105,15 +111,15 @@ export default {
       entity: 'items',
       type: 'oneToMany'
     },
-  ],
-  functionaryWorkingTimes: [
+  ]},
+  functionaryWorkingTimes: { relations: [
     {
       name: 'functionaryFunction',
       entity: 'functionaryFunctions',
       type: 'manyToOneLink'
     }
-  ],
-  ingredients: [
+  ]},
+  ingredients: { relations: [
     {
       name: 'input',
       entity: 'inputs',
@@ -124,8 +130,8 @@ export default {
       entity: 'units',
       type: 'manyToOneLink'
     }
-  ],
-  items: [
+  ]},
+  items: { relations: [
     {
       name: 'input',
       entity: 'inputs',
@@ -136,17 +142,17 @@ export default {
       entity: 'units',
       type: 'manyToOneLink'
     }
-  ],
-  instructions: [],
-  functionaryFunctions: [],
-  functionaryContractTemplates: [
+  ]},
+  instructions: { relations: []},
+  functionaryFunctions: { relations: []},
+  functionaryContractTemplates: { relations: [
     {
       name: 'function',
       entity: 'functionaryFunctions',
       type: 'manyToOneLink'
     }
-  ],
-  products: [
+  ]},
+  products: { relations: [
     {
       name: 'prices',
       entity: 'productPrices',
@@ -167,8 +173,8 @@ export default {
       entity: 'productRecipes',
       type: 'oneToMany'
     }
-  ],
-  productRecipes: [
+  ]},
+  productRecipes: { relations: [
     {
       name: 'output',
       entity: 'inputs',
@@ -179,10 +185,10 @@ export default {
       entity: 'recipes',
       type: 'manyToOneLink'
     }
-  ],
-  productPrices: [],
-  productCategories: [],
-  productItems: [
+  ]},
+  productPrices: { relations: []},
+  productCategories: { relations: []},
+  productItems: { relations: [
     {
       name: 'input',
       entity: 'inputs',
@@ -193,10 +199,10 @@ export default {
       entity: 'units',
       type: 'manyToOneLink'
     }
-  ],
-  addressTypes: [],
-  neighborhoods: [],
-  addresses: [
+  ]},
+  addressTypes: { relations: []},
+  neighborhoods: { relations: []},
+  addresses: { relations: [
     {
       name: 'type',
       entity: 'addressTypes',
@@ -207,16 +213,16 @@ export default {
       entity: 'neighborhoods',
       type: 'manyToOneLink'
     }
-  ],
-  contacts: [
+  ]},
+  contacts: { relations: [
     {
       name: 'channel',
       entity: 'contactChannels',
       type: 'manyToOneLink'
     }
-  ],
-  contactChannels: [],
-  people: [
+  ]},
+  contactChannels: { relations: []},
+  people: { relations: [
     {
       name: 'contacts',
       entity: 'contacts',
@@ -237,12 +243,12 @@ export default {
       entity: 'contacts',
       type: 'oneToOneLink'
     },
-  ],
-  pruducedProducts: [
+  ]},
+  pruducedProducts: { relations: [
     {
       name: 'movements',
       entity: 'inventoryMovements',
       type: 'oneToMany'
     }
-  ]
+  ]}
 };

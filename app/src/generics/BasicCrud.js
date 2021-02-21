@@ -51,7 +51,7 @@ class BasicCrud {
       if(relationEntity._ok) {
         links[i] = relationEntity._links.self.href;
       }
-      
+
     }
     entity = {
       ...entity,
@@ -87,9 +87,15 @@ class BasicCrud {
     return toReturn;
   }
 
-  async getOperation () {
+  async getOperation (findAll) {
     let toReturn = [];
-    await axios.get("/" + this.url + "/" + (this.projection ? this.projection : ""))
+    let url = "/" + this.url + "/";
+    if (findAll != null) {
+      url = url + "search/" + findAll;
+    }
+    url = url + this.projection;
+
+    await axios.get(url)
       .then( (response) => {
         toReturn = [...response.data._embedded[this.url]];
       }, (error) => {

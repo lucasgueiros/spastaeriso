@@ -10,11 +10,16 @@ export default class Crud extends BasicCrud {
   }
 
   async getOperation () {
-    let entities = await super.getOperation();
+    let entities;
+    if(this.description.findAll) {
+      entities = await super.getOperation(this.description.findAll);
+    } else {
+      entities = await super.getOperation();
+    }
     for(let i =0; i < entities.length; i++) {
       let entity = {...entities[i]};
-      for(let j=0; j < this.description.length; j++) {
-        let relation = this.description[j];
+      for(let j=0; j < this.description.relations.length; j++) {
+        let relation = this.description.relations[j];
         switch(relation.type) {
           case 'oneToOne':
             entity = await CrudFactory.get(relation.entity).getRelationOperation(relation.name,entity);
@@ -48,8 +53,8 @@ export default class Crud extends BasicCrud {
       return owner;
     }
 
-    for(let j=0; j < this.description.length; j++) {
-      let relation = this.description[j];
+    for(let j=0; j < this.description.relations.length; j++) {
+      let relation = this.description.relations[j];
       switch(relation.type) {
         case 'oneToOne':
           entity = await CrudFactory.get(relation.entity).getRelationOperation(relation.name,entity);
@@ -86,8 +91,8 @@ export default class Crud extends BasicCrud {
       });
     // recuperando os elementos proprios da entity
 
-    for(let j=0; j < this.description.length; j++) {
-      let relation = this.description[j];
+    for(let j=0; j < this.description.relations.length; j++) {
+      let relation = this.description.relations[j];
       switch(relation.type) {
         case 'oneToOne':
           entity = await CrudFactory.get(relation.entity).getRelationOperation(relation.name,entity);
@@ -114,8 +119,8 @@ export default class Crud extends BasicCrud {
   }
 
   async postOperation (entity) {
-    for(let j=0; j < this.description.length; j++) {
-      let relation = this.description[j];
+    for(let j=0; j < this.description.relations.length; j++) {
+      let relation = this.description.relations[j];
       if(entity[relation.name] == undefined) {
         continue;
       }
@@ -139,8 +144,8 @@ export default class Crud extends BasicCrud {
 
   async postRelationOperation(relationName, owner) {
     let entity = owner[relationName];
-    for(let j=0; j < this.description.length; j++) {
-      let relation = this.description[j];
+    for(let j=0; j < this.description.relations.length; j++) {
+      let relation = this.description.relations[j];
       if(entity[relation.name] == undefined) {
         continue;
       }
@@ -167,8 +172,8 @@ export default class Crud extends BasicCrud {
   }
 
   async patchOperation (url, entity) {
-    for(let j=0; j < this.description.length; j++) {
-      let relation = this.description[j];
+    for(let j=0; j < this.description.relations.length; j++) {
+      let relation = this.description.relations[j];
       if(entity[relation.name] == undefined) {
         continue;
       }
@@ -192,8 +197,8 @@ export default class Crud extends BasicCrud {
 
   async patchRelationOperation(relationName, owner) {
     let entity = owner[relationName];
-    for(let j=0; j < this.description.length; j++) {
-      let relation = this.description[j];
+    for(let j=0; j < this.description.relations.length; j++) {
+      let relation = this.description.relations[j];
       if(entity[relation.name] == undefined) {
         continue;
       }
