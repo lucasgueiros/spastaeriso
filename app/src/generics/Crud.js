@@ -7,15 +7,14 @@ export default class Crud extends BasicCrud {
   constructor(name, description) {
     super(name);
     this.description = description;
+    if(this.description.sufix == null || this.description.sufix == undefined) {
+      this.description.sufix = "";
+    }
   }
 
   async getOperation () {
     let entities;
-    if(this.description.findAll) {
-      entities = await super.getOperation(this.description.findAll);
-    } else {
-      entities = await super.getOperation();
-    }
+    entities = await super.getOperation(this.description.sufix);
     for(let i =0; i < entities.length; i++) {
       let entity = {...entities[i]};
       for(let j=0; j < this.description.relations.length; j++) {

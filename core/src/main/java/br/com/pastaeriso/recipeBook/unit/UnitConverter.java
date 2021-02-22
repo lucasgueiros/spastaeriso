@@ -7,6 +7,7 @@ package br.com.pastaeriso.recipeBook.unit;
 
 import br.com.pastaeriso.recipeBook.input.Input;
 import java.math.BigDecimal;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -36,6 +37,7 @@ public class UnitConverter {
     @GeneratedValue
     private Long id;
     
+    @Column(precision = 25, scale=10)
     private BigDecimal ratio;
     
     @ManyToOne(optional = false)

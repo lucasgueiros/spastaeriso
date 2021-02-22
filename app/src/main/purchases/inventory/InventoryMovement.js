@@ -43,6 +43,11 @@ export function InventoryMovement (props) {
           <TextField {...props} property="comment" />
         </div>
       </td>
+      <td>
+        <div>
+          <NumberField {...props} property="calculatedBalance" />
+        </div>
+      </td>
     </tr>
   );
 }

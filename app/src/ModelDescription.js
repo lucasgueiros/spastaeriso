@@ -25,7 +25,7 @@ export default {
   nfceXmls: { relations: []},
   providers: { relations: []},
   genericTransactions: {
-    findAll: 'findAllByOrderByDateAsc',
+    sufix: '?sort=date,asc',
     relations: [
       {
         name: 'modality',
@@ -56,7 +56,7 @@ export default {
     }
   ]},
   inventoryMovements: {
-    findAll: "findAllByOrderByDateAsc",
+    sufix: "?sort=date,asc",
     relations: [
       {
         name: 'unit',
@@ -70,13 +70,16 @@ export default {
       }
     ]
   },
-  inputs: { relations: [
-    {
-      name: 'prices',
-      entity: 'inputPrices',
-      type: 'oneToMany'
-    }
-  ]},
+  inputs: {
+    sufix: '?sort=name,asc',
+    relations: [
+      {
+        name: 'prices',
+        entity: 'inputPrices',
+        type: 'oneToMany'
+      }
+    ]
+  },
   inputPrices: { relations: [
     {
       name: 'unit',
@@ -250,5 +253,20 @@ export default {
       entity: 'inventoryMovements',
       type: 'oneToMany'
     }
-  ]}
+  ]},
+  purchaseProducts: {
+    sufix: '?sort=declaredInput,asc',
+    relations: [
+      {
+        name: 'input',
+        entity: 'inputs',
+        type: 'manyToOneLink'
+      },
+      {
+        name: 'unit',
+        entity: 'units',
+        type: 'manyToOneLink'
+      },
+    ]
+  }
 };

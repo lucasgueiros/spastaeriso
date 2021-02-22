@@ -6,7 +6,7 @@ export default class LinkSelect extends React.Component {
   constructor(props) {
     super(props);
     if(props.addOptionsList && props.options) {
-      props.addOptionsList(props.options);
+      props.addOptionsList(props.options, this.props.nameField);
     }
   }
 

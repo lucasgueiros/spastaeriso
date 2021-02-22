@@ -135,6 +135,10 @@ public class SistemaPastaERisoApi {
             Input input11 = this.inputRepository.save(new Input("Queijo assado"));
             Input input12 = this.inputRepository.save(new Input("Manjericão"));
             Input input13 = this.inputRepository.save(new Input("Presunto de Parma"));
+            Input input14 = this.inputRepository.save(new Input("Queijo Gorgonzola"));
+            Input input15 = this.inputRepository.save(new Input("Queijo Parmesão"));
+            Input input16 = this.inputRepository.save(new Input("Queijo Provole"));
+            Input input17 = this.inputRepository.save(new Input("Azeite de Oliva"));
             
             Account account1 = this.accountRepository.save(new Account("Compras"));
             Account account2 = this.accountRepository.save(new Account("Caixa"));

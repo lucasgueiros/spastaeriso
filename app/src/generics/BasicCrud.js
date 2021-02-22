@@ -2,9 +2,8 @@ import axios from 'axios';
 
 class BasicCrud {
 
-  constructor (url, projection) {
+  constructor (url) {
     this.url = url;
-    this.projection = projection ? "?projection=" + projection : "";
     this.jsonConfig = {
       headers: {
         'Content-Type': 'application/json',
@@ -87,13 +86,12 @@ class BasicCrud {
     return toReturn;
   }
 
-  async getOperation (findAll) {
+  async getOperation (sufix) {
     let toReturn = [];
-    let url = "/" + this.url + "/";
-    if (findAll != null) {
-      url = url + "search/" + findAll;
+    let url = "/" + this.url;
+    if (sufix != null) {
+      url = url + sufix;
     }
-    url = url + this.projection;
 
     await axios.get(url)
       .then( (response) => {

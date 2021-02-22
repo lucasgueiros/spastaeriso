@@ -11,6 +11,8 @@ import javax.persistence.Transient;
 
 import br.com.pastaeriso.recipeBook.input.Input;
 import br.com.pastaeriso.recipeBook.unit.Unit;
+import java.util.Objects;
+import javax.persistence.Column;
 import javax.persistence.JoinColumn;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -39,6 +41,7 @@ public class Item {
 	@GeneratedValue
 	private Long id;
 	@NonNull
+        @Column(precision = 25, scale=10)
 	private BigDecimal quantity;
 	@NonNull
 	@ManyToOne

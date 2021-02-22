@@ -41,6 +41,7 @@ public class PurchaseProduct {
         @Builder.Default
         private boolean keepUnit = true;
         @Builder.Default
+        @Column(precision = 25, scale=10)
         private BigDecimal ratio = BigDecimal.ONE;
 	@NonNull
 	@ManyToOne
@@ -82,21 +83,23 @@ public class PurchaseProduct {
     public PurchaseItem apply(PurchaseItem item) {
         BigDecimal quantity = item.getInventoryMovement().getQuantity();
         BigDecimal pricePerUnit = item.getPricePerUnit();
+        Unit unit = item.getInventoryMovement().getUnit();
         if(!this.keepUnit) {
                 quantity = quantity.multiply(ratio);
-                pricePerUnit = pricePerUnit.divide(ratio, 4, RoundingMode.HALF_UP);
+                pricePerUnit = pricePerUnit.divide(ratio, 10, RoundingMode.HALF_UP);
+                unit = this.unit;
             }
             return PurchaseItem.builder()
                     .id(item.getId())
                     .brand(this.brand)
                     .inventoryMovement(InventoryMovement.builder()
                             .input(this.input)
-                            .unit(this.unit)
+                            .unit(unit)
                             .adjusted(false)
                             .comment(declaredInput)
                             .date(item.getInventoryMovement().getDate())
                             .quantity(quantity)
-                    .build())
+                            .build())
                     .pricePerUnit(pricePerUnit)
                     .build();
     }

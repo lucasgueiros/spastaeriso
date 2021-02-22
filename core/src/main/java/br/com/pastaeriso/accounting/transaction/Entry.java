@@ -48,8 +48,10 @@ public class Entry {
         @JoinColumn(name = "account_id")
 	private Account account;
 	@NonNull
+        @Column(precision = 25, scale=10)
 	private BigDecimal value;
 	private String comment;
+        @Column(precision = 25, scale=10)
         private BigDecimal balance;
         
 }

@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import javax.persistence.Entity;
 
 import br.com.pastaeriso.purchases.inventory.InventoryMovement;
+import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
@@ -33,6 +34,7 @@ public class PurchaseItem  {
     private Long id;
     private String brand;
     @NonNull
+    @Column(precision = 25, scale=10)
     private BigDecimal pricePerUnit;
 
     private String declaredUnit;
@@ -41,4 +43,6 @@ public class PurchaseItem  {
     private Boolean applied = Boolean.FALSE;
     @OneToOne(orphanRemoval = true)
     private InventoryMovement inventoryMovement;
+    @Column(precision = 25, scale=10)
+    private BigDecimal avgPrice;
 }

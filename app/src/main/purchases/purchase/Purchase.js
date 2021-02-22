@@ -1,5 +1,5 @@
-import {ListRelationView, RelationView, StandaloneLinkSelect, StandaloneNumberField,Navigator,FileField,LinkSelect,NumberField,TextField, StandaloneTextField} from '../../../generics/all.js';
-
+import {DateTimeField, ListRelationView, RelationView, StandaloneLinkSelect, StandaloneNumberField,Navigator,FileField,LinkSelect,NumberField,TextField, StandaloneTextField} from '../../../generics/all.js';
+import React from 'react';
 import {Transaction} from '../../accounting/Transaction.js';
 
 export function PurchaseNavigator (props) {
@@ -22,6 +22,7 @@ export function Purchase (props) {
         <RelationView {...props} property="nfce" view={<Nfce/>}/>
 
         <ListRelationView {...props} property="items" row={<PurchaseItem/>} >
+          <th>Data</th>
           <th>Insumo</th>
           <th>Qtd</th>
           <th>Uni</th>
@@ -29,6 +30,7 @@ export function Purchase (props) {
           <th>Marca</th>
           <th>R$/u</th>
           <th>Subtotal</th>
+          <th>Preço médio</th>
         </ListRelationView>
       </div>
     );
@@ -43,10 +45,13 @@ function Nfce (props) {
     );
 }
 
-function SimplerInventoryMovement (props) {
+export function SimplerInventoryMovement (props) {
   return (
     <>
       {props.children}
+      <td>
+        <DateTimeField {...props} property="date"/>
+      </td>
       <td>
         <LinkSelect {...props} property="input" options="inputs"/>
       </td>
@@ -81,8 +86,11 @@ export function PurchaseItem (props) {
         </td>
         <td>
           <div>
-            <input name="subtotal" type="number" value={props.entity.pricePerUnit * props.entity.inventoryMovement.quantity} readOnly={true}></input>
+            <input name="subtotal" type="number" value={props.entity.pricePerUnit * (props.entity.inventoryMovement ? props.entity.inventoryMovement.quantity : 0)} readOnly={true}></input>
           </div>
+        </td>
+        <td>
+          <NumberField {...props} property="avgPrice"/>
         </td>
       </tr>
     );

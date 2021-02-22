@@ -8,6 +8,7 @@ package br.com.pastaeriso.recipeBook.recipe.ingredient;
 import br.com.pastaeriso.recipeBook.input.Input;
 import br.com.pastaeriso.recipeBook.unit.Unit;
 import java.math.BigDecimal;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -36,6 +37,7 @@ public class IngredientReplacement {
     @GeneratedValue
     private Long id;
     
+    @Column(precision = 25, scale=10)
     private BigDecimal ratio;
     
     @ManyToOne(optional = false)

@@ -8,6 +8,7 @@ package br.com.pastaeriso.people.functionary.contract;
 import br.com.pastaeriso.people.functionary.function.FunctionaryFunction;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -36,7 +37,9 @@ public class FunctionaryContractTemplate {
     @GeneratedValue
     private Long id;
     
+    @Column(precision = 25, scale=10)
     private BigDecimal monthSalary;
+    @Column(precision = 25, scale=10)
     private BigDecimal hourSalary;
     
     private LocalDate date;
