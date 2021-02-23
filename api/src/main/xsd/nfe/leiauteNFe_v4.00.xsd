@@ -1,17 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- edited with XMLSpy v2008 (http://www.altova.com) by sas-softwares@procergs.rs.gov.br (PROCERGS) -->
-<!-- PL_009  alterações de esquema decorrentes da - NT2016.002 v1.20 - 31/05/2017 13:14hs-->
-<!-- PL_008g  alterações de esquema decorrentes da - NT2015.002  - 15/07/2015 -->
-<!-- PL_008h  alterações de esquema decorrentes da - NT2015.003 - 17/09/2015 -->
-<!-- PL_008i -->
-<!-- PL_009-v4  alterações de esquema decorrentes da - NT2016.002 - 10/2017 -->
-<!-- PL_009-v4a  alterações de esquema decorrentes da - NT2017.001 - 10/2017 -->
-<!-- PL_009-v4a  alterações de esquema decorrentes da - NT2016.002 v1.60 - 06/2018 -->
-<!-- PL_009-v4a.1  correções de esquema decorrentes da - NT2016.002 v1.60 - 06/2018 -->
-<!-- PL_009-v4a.2  adequação do campo placa para novo padrão do Mercosul - 06/2018 -->
-<!-- PL_009-v4a.3  adequação da lista TCListServ - 10/2018 -->
-<!-- PL_009-v4a.4  implementado alterações da NT 2018.005 -->
-<!-- PL_009-v4b  implementado alterações da NT 2020.006 -->
+<!--
+The MIT License
+
+Copyright 2021 Lucas Dantas Gueiros.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+-->
+
 <xs:schema xmlns="http://www.portalfiscal.inf.br/nfe" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:editix="http://www.portalfiscal.inf.br/nfe" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.portalfiscal.inf.br/nfe" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema_v1.01.xsd"/>
 	<xs:include schemaLocation="tiposBasico_v4.00.xsd"/>
