@@ -1,4 +1,5 @@
 # spastaeriso
 
-Novo sistema pasta e riso, agora com spring e vue
+Novo Sistema Pasta e Riso, agora com Spring e React.
+
 Sistema que estou fazendo para o Bistrô e Pizzaria Pasta e Riso.
