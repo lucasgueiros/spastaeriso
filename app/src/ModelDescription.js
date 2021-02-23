@@ -48,13 +48,15 @@ export default {
     }
   ]},
   accounts: { relations: []},
-  purchaseItems: { relations: [
-    {
-      name: 'inventoryMovement',
-      entity: 'inventoryMovements',
-      type: 'oneToOne'
-    }
-  ]},
+  purchaseItems: {
+    relations: [
+      {
+        name: 'inventoryMovement',
+        entity: 'inventoryMovements',
+        type: 'oneToOne'
+      }
+    ]
+  },
   inventoryMovements: {
     sufix: "?sort=date,asc",
     relations: [
@@ -100,11 +102,6 @@ export default {
       type: 'oneToMany'
     },
     {
-      name: 'otherItems',
-      entity: 'items',
-      type: 'oneToMany'
-    },
-    {
       name: 'instructions',
       entity: 'instructions',
       type: 'oneToMany'
@@ -131,6 +128,11 @@ export default {
     {
       name: 'unit',
       entity: 'units',
+      type: 'manyToOneLink'
+    },
+    {
+      name: 'recipe',
+      entity: 'recipes',
       type: 'manyToOneLink'
     }
   ]},
@@ -170,28 +172,12 @@ export default {
       name: 'categories',
       entity: 'productCategories',
       type: 'manyToMany'
-    },
-    {
-      name: 'recipes',
-      entity: 'productRecipes',
-      type: 'oneToMany'
-    }
-  ]},
-  productRecipes: { relations: [
-    {
-      name: 'output',
-      entity: 'inputs',
-      type: 'manyToOneLink'
-    },
-    {
-      name: 'recipe',
-      entity: 'recipes',
-      type: 'manyToOneLink'
     }
   ]},
   productPrices: { relations: []},
   productCategories: { relations: []},
-  productItems: { relations: [
+  productItems: {
+    relations: [
     {
       name: 'input',
       entity: 'inputs',
@@ -200,6 +186,11 @@ export default {
     {
       name: 'unit',
       entity: 'units',
+      type: 'manyToOneLink'
+    },
+    {
+      name: 'recipe',
+      entity: 'recipes',
       type: 'manyToOneLink'
     }
   ]},

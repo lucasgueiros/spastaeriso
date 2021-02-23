@@ -10,6 +10,19 @@ export default class Crud extends BasicCrud {
     if(this.description.sufix == null || this.description.sufix == undefined) {
       this.description.sufix = "";
     }
+    this.getCrud = this.getCrud.bind(this);
+    this.cruds = [];
+  }
+
+  getCrud(relation) {
+    if(relation.description == null || relation.description == undefined) {
+      return CrudFactory.get(relation.entity);
+    } else if(this.cruds[relation.name] != null){
+      return this.cruds[relation.name];
+    } else {
+      this.cruds[relation.name] = new Crud(relation.entity, relation.description);
+      return this.cruds[relation.name];
+    }
   }
 
   async getOperation () {
@@ -21,13 +34,16 @@ export default class Crud extends BasicCrud {
         let relation = this.description.relations[j];
         switch(relation.type) {
           case 'oneToOne':
-            entity = await CrudFactory.get(relation.entity).getRelationOperation(relation.name,entity);
+            entity = await this.getCrud(relation).getRelationOperation(relation.name,entity);
+            break;
+          case 'manyToOne':
+            entity = await this.getCrud(relation).getRelationOperation(relation.name,entity);
             break;
           case 'manyToOneLink':
-            entity = await CrudFactory.get(relation.entity).getRelationOperation(relation.name,entity, true);
+            entity = await this.getCrud(relation).getRelationOperation(relation.name,entity, true);
             break;
           case 'oneToMany':
-            entity = await CrudFactory.get(relation.entity).getToManyRelationOperation(relation.name,entity);
+            entity = await this.getCrud(relation).getToManyRelationOperation(relation.name,entity);
             break;
           case 'manyToMany':
             entity = await super.getManyToManyLinkRelationOperation(relation.name,entity,relation.entity);
@@ -56,13 +72,13 @@ export default class Crud extends BasicCrud {
       let relation = this.description.relations[j];
       switch(relation.type) {
         case 'oneToOne':
-          entity = await CrudFactory.get(relation.entity).getRelationOperation(relation.name,entity);
+          entity = await this.getCrud(relation).getRelationOperation(relation.name,entity);
           break;
         case 'manyToOneLink':
-          entity = await CrudFactory.get(relation.entity).getRelationOperation(relation.name,entity, true);
+          entity = await this.getCrud(relation).getRelationOperation(relation.name,entity, true);
           break;
         case 'oneToMany':
-          entity = await CrudFactory.get(relation.entity).getToManyRelationOperation(relation.name,entity);
+          entity = await this.getCrud(relation).getToManyRelationOperation(relation.name,entity);
           break;
         case 'manyToMany':
           // ignore
@@ -94,13 +110,13 @@ export default class Crud extends BasicCrud {
       let relation = this.description.relations[j];
       switch(relation.type) {
         case 'oneToOne':
-          entity = await CrudFactory.get(relation.entity).getRelationOperation(relation.name,entity);
+          entity = await this.getCrud(relation).getRelationOperation(relation.name,entity);
           break;
         case 'manyToOneLink':
-          entity = await CrudFactory.get(relation.entity).getRelationOperation(relation.name,entity, true);
+          entity = await this.getCrud(relation).getRelationOperation(relation.name,entity, true);
           break;
         case 'oneToMany':
-          entity = await CrudFactory.get(relation.entity).getToManyRelationOperation(relation.name,entity);
+          entity = await this.getCrud(relation).getToManyRelationOperation(relation.name,entity);
           break;
         case 'manyToMany':
           // ignore
@@ -125,13 +141,13 @@ export default class Crud extends BasicCrud {
       }
       switch(relation.type) {
         case 'oneToOne':
-          entity = await CrudFactory.get(relation.entity).postRelationOperation(relation.name,entity);
+          entity = await this.getCrud(relation).postRelationOperation(relation.name,entity);
           break;
         case 'manyToOneLink':
           // ignore
           break;
         case 'oneToMany':
-          entity = await CrudFactory.get(relation.entity).postToManyRelationOperation(relation.name,entity);
+          entity = await this.getCrud(relation).postToManyRelationOperation(relation.name,entity);
           break;
         case 'manyToMany':
           // ignore
@@ -150,13 +166,13 @@ export default class Crud extends BasicCrud {
       }
       switch(relation.type) {
         case 'oneToOne':
-          entity = await CrudFactory.get(relation.entity).postRelationOperation(relation.name,entity);
+          entity = await this.getCrud(relation).postRelationOperation(relation.name,entity);
           break;
         case 'manyToOneLink':
           // ignore
           break;
         case 'oneToMany':
-          entity = await CrudFactory.get(relation.entity).postToManyRelationOperation(relation.name,entity);
+          entity = await this.getCrud(relation).postToManyRelationOperation(relation.name,entity);
           break;
         case 'manyToMany':
           // ignore
@@ -178,13 +194,13 @@ export default class Crud extends BasicCrud {
       }
       switch(relation.type) {
         case 'oneToOne':
-          entity = await CrudFactory.get(relation.entity).patchRelationOperation(relation.name,entity);
+          entity = await this.getCrud(relation).patchRelationOperation(relation.name,entity);
           break;
         case 'manyToOneLink':
           // ignore
           break;
         case 'oneToMany':
-          entity = await CrudFactory.get(relation.entity).patchToManyRelationOperation(relation.name,entity);
+          entity = await this.getCrud(relation).patchToManyRelationOperation(relation.name,entity);
           break;
         case 'manyToMany':
           // ignore
@@ -203,13 +219,13 @@ export default class Crud extends BasicCrud {
       }
       switch(relation.type) {
         case 'oneToOne':
-          entity = await CrudFactory.get(relation.entity).patchRelationOperation(relation.name,entity);
+          entity = await this.getCrud(relation).patchRelationOperation(relation.name,entity);
           break;
         case 'manyToOneLink':
           // ignore
           break;
         case 'oneToMany':
-          entity = await CrudFactory.get(relation.entity).patchToManyRelationOperation(relation.name,entity);
+          entity = await this.getCrud(relation).patchToManyRelationOperation(relation.name,entity);
           break;
         case 'manyToMany':
           // ignore

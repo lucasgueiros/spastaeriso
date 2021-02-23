@@ -39,7 +39,7 @@ public class InputPrice {
 	@GeneratedValue
 	private Long id;
 	@NonNull
-	private BigDecimal priceByUnit;
+	private BigDecimal pricePerUnit;
 	@NonNull
 	private LocalDate date;
 	@NonNull

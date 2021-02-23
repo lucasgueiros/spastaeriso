@@ -1,10 +1,12 @@
 package br.com.pastaeriso.api.products.product;
 
+import br.com.pastaeriso.api.purchases.purchase.items.PurchaseItemController;
 import br.com.pastaeriso.api.purchases.purchase.items.PurchaseItemRepository;
 import br.com.pastaeriso.products.product.Product;
 import br.com.pastaeriso.products.product.ProductRecipe;
 import br.com.pastaeriso.purchases.purchase.items.PurchaseItem;
 import br.com.pastaeriso.recipeBook.input.Input;
+import br.com.pastaeriso.recipeBook.input.price.InputPrice;
 import br.com.pastaeriso.recipeBook.item.Item;
 import br.com.pastaeriso.recipeBook.recipe.Recipe;
 import java.math.BigDecimal;
@@ -17,6 +19,7 @@ import java.util.ListIterator;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,21 +34,20 @@ public class ProductController {
     private ProductRepository repository;
     
     @Autowired
-    private PurchaseItemRepository purchaseItemRepository;
+    private PurchaseItemController purchaseItemController;
     
+    @Transactional
     private BigDecimal calculateCost(Product product) {
         
         List<Item> items = new LinkedList<>(product.getItems());
-        
-        // Gere o Mapa de receitas
-        Map<Input,Recipe> recipes = new HashMap<>();
-        for(ProductRecipe productRecipe : product.getRecipes()) {
-            recipes.put(productRecipe.getOutput(), productRecipe.getRecipe());
+        if(items.isEmpty()) {
+            return BigDecimal.ZERO;
         }
+        
         
         // gere a lista completa de itens
         ListIterator<Item> iterator = items.listIterator(items.size()-1);
-        while(iterator.hasPrevious()) {
+        /*while(iterator.hasPrevious()) {
             Item item = iterator.previous();
             
             Recipe recipe = recipes.get(item.getInput());
@@ -66,7 +68,7 @@ public class ProductController {
                 }
             }
             
-        }
+        }*/
         
         // Agora some os repetidos
         iterator = items.listIterator();
@@ -86,32 +88,30 @@ public class ProductController {
         }
         
         // calcules os preços
-        Map<Item,BigDecimal> prices = new HashMap<>();
-        iterator = items.listIterator();
-        while(iterator.hasNext()) {
-            Item item = iterator.next();
-            
-            List<PurchaseItem> purchaseItems = purchaseItemRepository.findByInventoryMovement_Input(item.getInput());
-            purchaseItems.sort((pi1,pi2) -> pi1.getInventoryMovement().getDate().compareTo(pi2.getInventoryMovement().getDate()));
-            ListIterator<PurchaseItem> purchaseItemIterator  = purchaseItems.listIterator();
-            
-            BigDecimal priceTotal = BigDecimal.ZERO;
-            int divisor = 0;
-            
-            while(purchaseItemIterator.hasNext()) {
-                PurchaseItem purchaseItem = purchaseItemIterator.next();
-                if(purchaseItem.getInventoryMovement().getUnit().equals(item.getUnit())) {
-                    
-                }
-            }
-            
-        }
+        Map<Input,PurchaseItemController.SimplerQuantity> prices = purchaseItemController.updateBalance();
         
         // some os preços
         BigDecimal total = BigDecimal.ZERO;
         
         for(Item item : items) {
-            total = total.add(prices.get(item));
+            if(prices.containsKey(item.getInput())) {
+                PurchaseItemController.SimplerQuantity q = prices.get(item.getInput());
+                if(item.getUnit().equals(q.unit)){
+                    total = total.add(item.getQuantity().multiply(q.avgPrice));
+                } else {
+                    // CONVERTER UNIDADE
+                }
+            } else if(item.getInput().hasPrices()) {
+                InputPrice price = item.getInput().getLastPrice();
+                if(price == null) {
+                    // IGNORE
+                }
+                if(price.getUnit().equals(item.getUnit())){
+                    total = total.add(item.getQuantity().multiply(price.getPricePerUnit()));
+                } else {
+                    // CONVERTER UNIDADE
+                }
+            }
         }
         
         return total;
@@ -134,6 +134,7 @@ public class ProductController {
     }
 
     @GetMapping("/products/costs")
+    @Transactional
     public List<TableRow> calculateCosts() {
             List<TableRow> result = new LinkedList<>();
 

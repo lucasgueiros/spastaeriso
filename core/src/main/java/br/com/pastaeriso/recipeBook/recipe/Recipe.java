@@ -1,25 +1,19 @@
 package br.com.pastaeriso.recipeBook.recipe;
 
 import br.com.pastaeriso.people.functionary.workingTime.FunctionaryWorkingTime;
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
-import br.com.pastaeriso.recipeBook.input.Input;
-import br.com.pastaeriso.recipeBook.input.price.InputPrice;
 import br.com.pastaeriso.recipeBook.item.Item;
 import br.com.pastaeriso.recipeBook.recipe.ingredient.Ingredient;
 import br.com.pastaeriso.recipeBook.recipe.intruction.Instruction;
-import br.com.pastaeriso.recipeBook.unit.Unit;
-import javax.persistence.ManyToMany;
+import java.time.format.DateTimeFormatter;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -47,8 +41,13 @@ public class Recipe {
     private Long id;
     @NonNull
     private String title;
+    
     @NonNull
-    private LocalDate date = LocalDate.now();
+    @Builder.Default
+    private LocalDate version = LocalDate.now();
+    @Builder.Default
+    private String modality = "Padrão";
+    
     private String comment;
 
     private Integer preparationTime;
@@ -66,11 +65,12 @@ public class Recipe {
     private List<Ingredient> ingredients;
     @OneToMany
     @Singular
-    private List<Item> otherItems;
-    @OneToMany
-    @Singular
     private List<Item> outputs;
 
+    public String getUniqueTitle() {
+        return title + " " + modality + " (" + version.format(DateTimeFormatter.ISO_DATE) + ")";
+    }
+    
     @Transient
     public boolean adjusted = false;
 

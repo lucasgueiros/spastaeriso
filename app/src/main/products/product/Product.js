@@ -1,4 +1,4 @@
-import {StandaloneTextField,StandaloneDateField,DateField,LinkSelect,NumberField,ListRelationView,StandaloneLinkSelect,StandaloneMultipleLinkSelect} from '../../../generics/all.js';
+import {TextField,StandaloneTextField,StandaloneDateField,DateField,LinkSelect,NumberField,ListRelationView,StandaloneLinkSelect,StandaloneMultipleLinkSelect} from '../../../generics/all.js';
 import Item from '../../recipeBook/recipe/item/Item.js';
 
 function ProductPrice (props) {
@@ -15,12 +15,21 @@ function ProductPrice (props) {
   );
 }
 
-function ProductRecipe (props) {
+function ProductItem (props) {
   return (
     <tr>
       {props.children}
       <td>
         <LinkSelect {...props} property="input" options="inputs"/>
+      </td>
+      <td>
+        <NumberField {...props} property="quantity"/>
+      </td>
+      <td>
+        <LinkSelect {...props} property="unit" options="units"/>
+      </td>
+      <td>
+        <TextField {...props} property="comment" />
       </td>
       <td>
         <LinkSelect {...props} property="recipe" options="recipes" nameField="title"/>
@@ -43,15 +52,11 @@ export default function Product (props) {
         <th>Preço</th>
       </ListRelationView>
 
-      <ListRelationView {...props} property="items" row={<Item/>} >
+      <ListRelationView {...props} property="items" row={<ProductItem/>} >
         <th>Insumo</th>
         <th>Quantidade</th>
         <th>Unidade</th>
         <th>Comentários</th>
-      </ListRelationView>
-
-      <ListRelationView {...props} property="recipes" row={<ProductRecipe/>} >
-        <th>Insumo</th>
         <th>Receita</th>
       </ListRelationView>
 

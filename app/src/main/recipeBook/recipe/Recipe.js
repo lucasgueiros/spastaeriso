@@ -33,14 +33,7 @@ class Recipe extends React.Component {
           <th>Quantidade</th>
           <th>Unidade</th>
           <th>Comentários</th>
-        </ListRelationView>
-
-        <h4>Outros itens</h4>
-        <ListRelationView {...this.props} property="otherItems" row={<Item/>} >
-          <th>Insumo</th>
-          <th>Quantidade</th>
-          <th>Unidade</th>
-          <th>Comentários</th>
+          <th>Receita</th>
         </ListRelationView>
 
         <h4>Instruções</h4>

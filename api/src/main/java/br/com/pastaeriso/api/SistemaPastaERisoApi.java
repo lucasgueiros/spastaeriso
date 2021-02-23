@@ -256,9 +256,12 @@ public class SistemaPastaERisoApi {
             Ingredient ingredient1 = Ingredient.builder().index(1).input(input5).quantity(new BigDecimal(1)).unit(unit4).build();
             Ingredient ingredient2 = Ingredient.builder().index(2).input(input6).quantity(new BigDecimal(1)).unit(unit1).build();
             Ingredient ingredient3 = Ingredient.builder().index(3).input(input7).quantity(new BigDecimal(5)).unit(unit1).build();
+            Ingredient ingredient4 = Ingredient.builder().index(4).input(input9).unit(unit4).quantity(new BigDecimal(5)).build();
+            
             ingredient1 = ingredientRepository.save(ingredient1);
             ingredient2 = ingredientRepository.save(ingredient2);
             ingredient3 = ingredientRepository.save(ingredient3);
+            ingredient4 = ingredientRepository.save(ingredient4);
             
             // Instructions
             Instruction instruction1 = Instruction.builder().index(1).text("Coloque a manteiga na panela e ligue o fogo").build();
@@ -270,9 +273,8 @@ public class SistemaPastaERisoApi {
             
             // Outuput
             Item item1 = Item.builder().input(input8).unit(unit4).quantity(BigDecimal.ONE).build();
-            Item item2 = Item.builder().input(input9).unit(unit4).quantity(new BigDecimal(5)).build();
             item1 = itemRepository.save(item1);
-            item2 = itemRepository.save(item2);
+            
             
             // Working
             FunctionaryFunction functionaryFunction1 = FunctionaryFunction.builder().name("Chef").build();
@@ -284,18 +286,18 @@ public class SistemaPastaERisoApi {
             functionaryWorkingTime = functionaryWorkingTimeRepository.save(functionaryWorkingTime);
             // Receitas exemplares
             Recipe recipe = Recipe.builder()
-                    .date(LocalDate.now())
+                    .version(LocalDate.now())
                     .totalTime(5)
                     .work(functionaryWorkingTime)
                     .title("Ovo frito")
                     .ingredient(ingredient1)
                     .ingredient(ingredient2)
                     .ingredient(ingredient3)
+                    .ingredient(ingredient4)
                     .instruction(instruction1)
                     .instruction(instruction2)
                     .instruction(instruction3)
                     .output(item1)
-                    .otherItem(item2)
                     .build();
             recipeRepository.save(recipe);
             

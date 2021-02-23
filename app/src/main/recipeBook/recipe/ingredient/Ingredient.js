@@ -1,5 +1,6 @@
 import React from 'react';
 import {SimplerLinkSelect,LinkSelect} from '../../../../generics/all.js';
+
 function Item (props) {
   return (<>
   <td>
@@ -49,6 +50,9 @@ export default function Ingredient (props) {
           editing={props.editing}
           onChange={props.onChange}
           optionsLists={props.optionsLists}/>
+        <td>
+          <LinkSelect {...props} property="recipe" options="recipes"/>
+        </td>
       </tr>
     );
 }

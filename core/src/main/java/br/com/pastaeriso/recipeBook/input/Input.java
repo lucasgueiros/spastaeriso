@@ -2,6 +2,7 @@ package br.com.pastaeriso.recipeBook.input;
 
 import br.com.pastaeriso.recipeBook.input.price.InputPrice;
 import br.com.pastaeriso.recipeBook.unit.Unit;
+import java.math.BigDecimal;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -42,5 +43,19 @@ public class Input {
         private List<InputUnitConverter> converters;
         @OneToMany
         private List<InputPrice> prices;
+
+    public boolean hasPrices() {
+        return ! prices.isEmpty();
+    }
+
+    public InputPrice getLastPrice() {
+        prices.sort((p1,p2) -> {
+           return p1.getDate().compareTo(p2.getDate()); 
+        });
+        if(prices.isEmpty()) return null;
+        return prices.get(prices.size()-1);
+    }
+
+
 	
 }

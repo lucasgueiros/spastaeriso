@@ -37,7 +37,7 @@ public class PurchaseItemController {
         public String input;
     }
 
-    private class SimplerQuantity {
+    public class SimplerQuantity {
 
         public BigDecimal avgPrice;
         public Unit unit;

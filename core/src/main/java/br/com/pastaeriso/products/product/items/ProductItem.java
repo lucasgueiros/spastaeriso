@@ -4,6 +4,8 @@ package br.com.pastaeriso.products.product.items;
 import javax.persistence.Entity;
 
 import br.com.pastaeriso.recipeBook.item.Item;
+import br.com.pastaeriso.recipeBook.recipe.Recipe;
+import javax.persistence.ManyToOne;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,6 +22,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 public class ProductItem extends Item {
 
-	
-
+	@ManyToOne(optional = true)
+        private Recipe recipe;
+        
 }

@@ -14,9 +14,10 @@ import javax.persistence.OneToMany;
 import br.com.pastaeriso.products.category.ProductCategory;
 import br.com.pastaeriso.products.product.items.ProductItem;
 import br.com.pastaeriso.products.product.price.ProductPrice;
-import javax.persistence.FetchType;
+import java.util.Iterator;
+import java.util.Set;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
+import lombok.Builder.Default;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -44,18 +45,15 @@ public class Product {
 	@NonNull
 	private String name;
 	@NonNull
-        @Builder.Default
-	private LocalDate created = LocalDate.now();
-	private String description;
+        @Default
+	private LocalDate version = LocalDate.now();
 	private String comments;
-	@OneToMany(fetch = FetchType.EAGER)
-	private List<ProductPrice> prices;
+        
 	@OneToMany
-	private List<ProductItem> items;
-        @OneToMany
-        private List<ProductRecipe> recipes;
-	@Lob
-	private byte[] image;
+	private Set<ProductPrice> prices;
+	@OneToMany
+	private Set<ProductItem> items;
+        
 	@ManyToMany
         @Singular
 	private List<ProductCategory> categories;
@@ -67,14 +65,21 @@ public class Product {
             if(this.getPrices().isEmpty()) {
                 return BigDecimal.ONE;
             }
-            ProductPrice max = prices.get(0);
-            for(ProductPrice price : this.prices) {
+            
+            Iterator<ProductPrice> iterator = prices.iterator();
+            ProductPrice max = null;
+            while(iterator.hasNext()){
+                ProductPrice price = iterator.next();
+                if(max == null ){
+                    max = price;
+                    continue;
+                }
                 if(price.getDate().isAfter(max.getDate())
                         && (price.getDate().isBefore(date) || price.getDate().equals(date) )) {
                     max = price;
                 }
             }
-            return max.getPrice();
+            return max == null ? null : max.getPrice();
         }
 
     
