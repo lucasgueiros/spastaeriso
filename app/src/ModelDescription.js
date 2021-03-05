@@ -259,5 +259,48 @@ export default {
         type: 'manyToOneLink'
       },
     ]
+  },
+  clientOrders: {
+    relations: [
+      {
+        name: 'client',
+        entity: 'people',
+        type: 'manyToOneLink'
+      },
+      {
+        name: 'forecastPaymentModality',
+        entity: 'transactionModalities',
+        type: 'manyToOneLink'
+      },
+      {
+        name: 'payments',
+        entity: 'genericTransactions',
+        type: 'oneToMany'
+      },
+      {
+        name: 'items',
+        entity: 'orderItems',
+        type: 'oneToMany'
+      },
+      {
+        name: 'events',
+        entity: 'orderEvents',
+        type: 'oneToMany'
+      }
+    ]
+  },
+  orderItems: {
+    relations: [
+      {
+        name: 'product',
+        entity: 'products',
+        type: 'manyToOneLink'
+      },
+      {
+        name: 'subItems',
+        entity: 'orderItems',
+        type: 'oneToMany'
+      }
+    ],
   }
 };

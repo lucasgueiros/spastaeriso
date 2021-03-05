@@ -6,6 +6,7 @@ import Purchases from './purchases/Purchases.js';
 import Accounting from './accounting/Accounting.js';
 import People from './people/People.js';
 import Products from './products/Products.js';
+import {ClientOrderNavigator} from './sales/ClientOrder.js';
 
 function Main() {
   return (
@@ -22,10 +23,14 @@ function Main() {
               <li><Link to="/accounting">Finanças</Link></li>
               <li><Link to="/people">Pessoas</Link></li>
               <li><Link to="/products">Produtos</Link></li>
+              <li><Link to="/orders">Pedidos</Link></li>
             </ul>
           </nav>
           <div>
             <Switch>
+              <Route path="/orders">
+                <ClientOrderNavigator/>
+              </Route>
               <Route path="/products">
                 <Products/>
               </Route>

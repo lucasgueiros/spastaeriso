@@ -52,7 +52,7 @@ import lombok.experimental.SuperBuilder;
 //@EqualsAndHashCode(callSuper = true)
 @SuperBuilder
 @NoArgsConstructor
-@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"input_id","date"})})
+//@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"input_id","date"})})
 public class InventoryMovement extends Item {
 
 	@NonNull
@@ -71,7 +71,7 @@ public class InventoryMovement extends Item {
         hash = 79 * hash + Objects.hashCode(super.getInput());
         hash = 79 * hash + Objects.hashCode(super.getUnit());
         hash = 79 * hash + Objects.hashCode(super.getComment());
-        hash = 79 * hash + (super.isAdjusted() ? 1 : 0);
+        hash = 79 * hash + Objects.hashCode(super.getRatio());
         hash = 47 * hash + Objects.hashCode(this.date);
         hash = 47 * hash + Objects.hashCode(this.checkedBalance);
         hash = 47 * hash + Objects.hashCode(this.calculatedBalance);

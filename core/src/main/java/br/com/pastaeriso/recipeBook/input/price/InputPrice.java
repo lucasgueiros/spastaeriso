@@ -33,6 +33,7 @@ import javax.persistence.ManyToOne;
 
 import br.com.pastaeriso.recipeBook.input.Input;
 import br.com.pastaeriso.recipeBook.unit.Unit;
+import javax.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -62,6 +63,7 @@ public class InputPrice {
 	@GeneratedValue
 	private Long id;
 	@NonNull
+        @Column(precision = 25, scale=10)
 	private BigDecimal pricePerUnit;
 	@NonNull
 	private LocalDate date;

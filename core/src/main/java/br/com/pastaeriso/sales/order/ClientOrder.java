@@ -23,6 +23,7 @@
  */
 package br.com.pastaeriso.sales.order;
 
+import br.com.pastaeriso.sales.delivery.DeliveryOrder;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -41,18 +42,20 @@ import br.com.pastaeriso.accounting.transaction.modality.TransactionModality;
 import br.com.pastaeriso.accounting.transaction.voucher.TransactionVoucher;
 import br.com.pastaeriso.people.person.Person;
 import br.com.pastaeriso.purchases.inventory.PruducedProduct;
-import br.com.pastaeriso.sales.order.item.OrderItem;
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToOne;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import lombok.Singular;
 import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
 @Entity
 @Getter
@@ -60,8 +63,8 @@ import lombok.ToString;
 @EqualsAndHashCode
 @ToString
 @NoArgsConstructor
-@RequiredArgsConstructor
 @AllArgsConstructor
+@Builder
 public class ClientOrder {
 
 	@Id
@@ -69,24 +72,16 @@ public class ClientOrder {
 	private Long id;
 	@ManyToOne
 	private Person client;
+        @ManyToOne
+        private Person clerk;
         
-        // Times or Status
-        @NonNull
-	private LocalDateTime started = LocalDateTime.now();
-        @Column(nullable = true)
-        private LocalDateTime completed = null;
-        @Column(nullable = true)
-        private LocalDateTime approved = null;
-        @Column(nullable = true)
-        private LocalDateTime startedPreparing = null;
-        @Column(nullable = true)
-        private LocalDateTime cancelled = null;
+        @OneToMany
+        @Singular
+        private List<OrderEvent> events;
         
-        @ManyToMany
-        private List<PruducedProduct> producedProducts;
-	
-	// Pedido
+        // Pedido
 	@OneToMany
+        @Singular
 	private List<OrderItem> items;
 	
 	// Forecast payment
@@ -94,14 +89,11 @@ public class ClientOrder {
 	private TransactionModality forecastPaymentModality;
 	private BigDecimal forecastChangeTo;
 	
-        @OneToMany(mappedBy = "order")
-	private List<DeliveryOrder> deliveries;
-        
 	private String comments;
 	
 	// Real payment
-	@NonNull
 	@OneToMany
+        @Singular
 	private List<GenericTransaction> payments;
 
 }

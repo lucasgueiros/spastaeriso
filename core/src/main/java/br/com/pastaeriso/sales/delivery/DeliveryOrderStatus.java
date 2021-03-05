@@ -1,7 +1,7 @@
-/* 
+/*
  * The MIT License
  *
- * Copyright 2021 Lucas Dantas Gueiros.
+ * Copyright 2021 lucas.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,38 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package br.com.pastaeriso.sales.order.group;
+package br.com.pastaeriso.sales.delivery;
 
-import java.util.List;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-
-import br.com.pastaeriso.sales.order.item.OrderItem;
-import br.com.pastaeriso.sales.order.product.OrderProduct;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-import lombok.experimental.SuperBuilder;
-
-@Entity
-@Getter
-@Setter
-@EqualsAndHashCode(callSuper = true)
-@ToString
-@NoArgsConstructor
-@RequiredArgsConstructor
-public class OrderItemGroup extends OrderItem {
-
-	@NonNull
-	@OneToMany
-	private List<OrderItem> items;
-
+/**
+ *
+ * @author lucas
+ */
+public enum DeliveryOrderStatus {
+    REQUESTED, APPROVED, COMMUNICATED, ACCEPTED, CONFIRMED, CREATED, READY, ARRIVIED;
 }

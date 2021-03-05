@@ -1,7 +1,7 @@
-/* 
+/*
  * The MIT License
  *
- * Copyright 2021 Lucas Dantas Gueiros.
+ * Copyright 2021 lucas.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,42 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package br.com.pastaeriso.products.product.price;
+package br.com.pastaeriso.sales.delivery;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-
-@Entity
-@Getter
-@Setter
-@EqualsAndHashCode
-@ToString
-@NoArgsConstructor
-@RequiredArgsConstructor
-@AllArgsConstructor
-@Builder
-public class ProductPrice {
-
-	@Id
-	@GeneratedValue
-	private Long id;
-	@NonNull
-	private BigDecimal price;
-	@NonNull
-	private LocalDate date;
-
+/**
+ *
+ * @author lucas
+ */
+public enum DeliveryStatus {
+    CALLED, EXITED, CAME_BACK;
 }

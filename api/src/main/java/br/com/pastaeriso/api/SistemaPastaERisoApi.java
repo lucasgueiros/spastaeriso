@@ -56,28 +56,38 @@ import br.com.pastaeriso.api.accounting.transaction.GenericTransactionRepository
 import br.com.pastaeriso.api.people.address.neighborhoods.NeighborhoodRepository;
 import br.com.pastaeriso.api.people.functionary.function.FunctionaryFunctionRepository;
 import br.com.pastaeriso.api.people.functionary.workingTime.FunctionaryWorkingTimeRepository;
+import br.com.pastaeriso.api.people.person.PersonRepository;
 import br.com.pastaeriso.api.products.category.ProductCategoryRepository;
 import br.com.pastaeriso.api.products.product.ProductRepository;
+import br.com.pastaeriso.api.products.product.items.ProductItemRepository;
+import br.com.pastaeriso.api.products.product.price.ProductPriceRepository;
 import br.com.pastaeriso.api.purchases.inventory.InventoryMovementEventHandler;
 import br.com.pastaeriso.api.purchases.inventory.InventoryMovementRepository;
 import br.com.pastaeriso.api.recipeBook.item.ItemRepository;
 import br.com.pastaeriso.api.recipeBook.recipe.RecipeRepository;
 import br.com.pastaeriso.api.recipeBook.recipe.ingredient.IngredientRepository;
 import br.com.pastaeriso.api.recipeBook.recipe.intruction.InstructionRepository;
+import br.com.pastaeriso.api.sales.order.ClientOrderRepository;
 import br.com.pastaeriso.people.address.neighborhoods.Neighborhood;
 import br.com.pastaeriso.people.address.type.AddressType;
 import br.com.pastaeriso.people.contact.channel.ContactChannel;
 import br.com.pastaeriso.people.functionary.function.FunctionaryFunction;
 import br.com.pastaeriso.people.functionary.workingTime.FunctionaryWorkingTime;
+import br.com.pastaeriso.people.person.Person;
 import br.com.pastaeriso.products.category.ProductCategory;
 import br.com.pastaeriso.products.product.Product;
+import br.com.pastaeriso.products.product.items.ProductItem;
+import br.com.pastaeriso.products.product.price.ProductPrice;
 import br.com.pastaeriso.purchases.inventory.InventoryMovement;
 import br.com.pastaeriso.recipeBook.item.Item;
 import br.com.pastaeriso.recipeBook.recipe.Recipe;
 import br.com.pastaeriso.recipeBook.recipe.ingredient.Ingredient;
 import br.com.pastaeriso.recipeBook.recipe.intruction.Instruction;
+import br.com.pastaeriso.sales.order.ClientOrder;
+import br.com.pastaeriso.sales.order.OrderItem;
 import java.time.LocalDateTime;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import br.com.pastaeriso.api.sales.order.OrderItemRepository;
 
 @SpringBootApplication
 @EnableAutoConfiguration
@@ -129,9 +139,18 @@ public class SistemaPastaERisoApi {
         private InventoryMovementRepository inventoryMovementRepository;
         @Autowired
         private InventoryMovementEventHandler inventoryMovementEventHandler;
-    
         @Autowired
         private NeighborhoodRepository neighborhoodRepository;
+        @Autowired
+        private ProductPriceRepository productPriceRepository;
+        @Autowired
+        private ProductItemRepository productItemRepository;
+        @Autowired
+        private PersonRepository personRepository;
+        @Autowired
+        private OrderItemRepository orderProductRepository;
+        @Autowired
+        private ClientOrderRepository clientOrderRepository;
         
         @Autowired
         private PurchaseRepository purchaseRepository;
@@ -309,7 +328,7 @@ public class SistemaPastaERisoApi {
             functionaryWorkingTime = functionaryWorkingTimeRepository.save(functionaryWorkingTime);
             // Receitas exemplares
             Recipe recipe = Recipe.builder()
-                    .version(LocalDate.now())
+                    .revision(LocalDate.now())
                     .totalTime(5)
                     .work(functionaryWorkingTime)
                     .title("Ovo frito")
@@ -324,8 +343,50 @@ public class SistemaPastaERisoApi {
                     .build();
             recipeRepository.save(recipe);
             
-            Product product1 = Product.builder().name("Pizza Margherita").category(productCategory1).category(productCategory2).build();
+            ProductPrice price1 = ProductPrice.builder()
+                    .date(LocalDate.of(2020, Month.MARCH, 10))
+                    .price(new BigDecimal(15))
+                    .build();
+            ProductPrice price2 = ProductPrice.builder()
+                    .date(LocalDate.of(2021, Month.JANUARY, 10))
+                    .price(new BigDecimal(20))
+                    .build();
+            
+            price1 = productPriceRepository.save(price1);
+            price2 = productPriceRepository.save(price2);
+            
+            ProductItem productItem1 = ProductItem.builder()
+                    .input(input9)
+                    .unit(unit6)
+                    .quantity(BigDecimal.ONE)
+                    .recipe(recipe)
+                    .comment("--")
+                    .build();
+            productItem1 = productItemRepository.save(productItem1);
+            Product product1 = Product.builder()
+                    .name("Pizza Margherita")
+                    .category(productCategory1)
+                    .category(productCategory2)
+                    .price(price1)
+                    .price(price2)
+                    .item(productItem1)
+                    .build();
             product1 = productRepository.save(product1);
+            
+            Person person1 = Person.builder()
+                    .name("Viviane")
+                    .build();
+            person1 = personRepository.save(person1);
+            OrderItem orderProduct1 = OrderItem.builder()
+                    .product(product1)
+                    .quantity(BigDecimal.ONE)
+                    .build();
+            orderProduct1 = orderProductRepository.save(orderProduct1);
+            ClientOrder order = ClientOrder.builder()
+                    .client(person1)
+                    .item(orderProduct1)
+                    .build();
+            order = clientOrderRepository.save(order);
             
         }
 

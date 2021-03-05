@@ -1,7 +1,7 @@
-/* 
+/*
  * The MIT License
  *
- * Copyright 2021 Lucas Dantas Gueiros.
+ * Copyright 2021 lucas.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,15 +21,44 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package br.com.pastaeriso.api.sales.order.product;
+package br.com.pastaeriso.sales.order;
 
-import br.com.pastaeriso.sales.order.product.OrderProduct;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import java.time.LocalDateTime;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.Setter;
+import lombok.ToString;
 
-@Repository
-@CrossOrigin
-public interface OrderProductRepository extends JpaRepository<OrderProduct, Long>{
-
+/**
+ *
+ * @author lucas
+ */
+@Entity
+@Getter
+@Setter
+@EqualsAndHashCode
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class OrderEvent {
+    
+    @Id
+    @GeneratedValue
+    private Long id;
+    @NonNull
+    private LocalDateTime datetime;
+    @Enumerated(EnumType.STRING)
+    private OrderStatus status;
+    private String comments;
+    
 }

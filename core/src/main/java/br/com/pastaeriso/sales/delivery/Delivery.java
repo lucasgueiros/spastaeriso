@@ -33,7 +33,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import br.com.pastaeriso.sales.delivery.deliveryman.Deliveryman;
-import br.com.pastaeriso.sales.order.DeliveryOrder;
+import br.com.pastaeriso.sales.order.OrderItem;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -56,9 +56,8 @@ public class Delivery {
 	@ManyToOne
 	private Deliveryman deliveryman;
         
-        private LocalDateTime called;
-	private LocalDateTime exited;
-	private LocalDateTime cameBack;
+        @OneToMany
+        private List<DeliveryEvent> events;
 	
 	@OneToMany
 	private List<DeliveryOrder> orders;

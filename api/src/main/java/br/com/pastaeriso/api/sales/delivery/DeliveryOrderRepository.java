@@ -21,44 +21,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package br.com.pastaeriso.sales.order.product;
+package br.com.pastaeriso.api.sales.delivery;
 
-import java.math.BigDecimal;
+import br.com.pastaeriso.sales.delivery.DeliveryOrder;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+@Repository
+@CrossOrigin
+public interface DeliveryOrderRepository extends JpaRepository<DeliveryOrder, Long> {
 
-import br.com.pastaeriso.sales.order.item.OrderItem;
-import br.com.pastaeriso.products.product.Product;
-import br.com.pastaeriso.purchases.inventory.InventoryMovement;
-import java.util.List;
-import javax.persistence.OneToMany;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-
-@Entity
-@Getter
-@Setter
-@EqualsAndHashCode(callSuper = true)
-@ToString(callSuper = true)
-@NoArgsConstructor
-@RequiredArgsConstructor
-@AllArgsConstructor
-public class OrderProduct extends OrderItem {
-
-	@NonNull
-	@ManyToOne
-	private Product product;
-	@NonNull
-	private BigDecimal quantity = new BigDecimal(1);
-        @OneToMany
-        private List<InventoryMovement> movements;
 }

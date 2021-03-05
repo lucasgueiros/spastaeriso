@@ -21,47 +21,76 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package br.com.pastaeriso.sales.order.item;
+package br.com.pastaeriso.sales.delivery;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-
-import br.com.pastaeriso.products.menu.item.MenuItem;
-import br.com.pastaeriso.products.product.Product;
-import br.com.pastaeriso.purchases.inventory.InventoryMovement;
-import java.time.LocalDateTime;
-import java.util.List;
-import javax.persistence.Column;
 import javax.persistence.OneToMany;
+
+import br.com.pastaeriso.people.address.Address;
+import br.com.pastaeriso.people.person.Person;
+import br.com.pastaeriso.sales.delivery.Delivery;
+import br.com.pastaeriso.sales.order.ClientOrder;
+import br.com.pastaeriso.sales.order.ClientOrder;
+import br.com.pastaeriso.sales.order.OrderItem;
+import java.math.BigDecimal;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import lombok.Singular;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 @Entity
 @Getter
 @Setter
-@ToString
-@AllArgsConstructor
 @EqualsAndHashCode
-@Builder
+@ToString
 @NoArgsConstructor
-public class OrderItem {
+@AllArgsConstructor
+@Builder
+public class DeliveryOrder {
+
 	@Id
 	@GeneratedValue
 	private Long id;
         
-        @Column(nullable = true)
-        private LocalDateTime ready = null;
-        @Column(nullable = true)
-        private LocalDateTime cancelled = null;
+	@NonNull
+        @Builder.Default
+	private Integer index = 1;
         
-	private String comments;
+        @ManyToOne
+        private ClientOrder order;
+        
+        @OneToMany
+        @Singular
+        private List<OrderItem> items;
+        
+	@NonNull
+	@ManyToOne
+	private Address deliveryAddress;
+        private BigDecimal deliveryPrice;
+        
+        // Booking Delivery Time
+        private LocalDateTime calculatedDeliveryTime;
+	private LocalDateTime forecastedDeliveryTime;
+	private LocalDateTime requestedDeliveryTime;
+        
+        @OneToMany
+        private List<DeliveryOrderEvent> events;
 }
+        

@@ -36,7 +36,9 @@ import javax.persistence.Transient;
 import br.com.pastaeriso.recipeBook.item.Item;
 import br.com.pastaeriso.recipeBook.recipe.ingredient.Ingredient;
 import br.com.pastaeriso.recipeBook.recipe.intruction.Instruction;
+import java.math.BigDecimal;
 import java.time.format.DateTimeFormatter;
+import java.util.LinkedList;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -67,13 +69,12 @@ public class Recipe {
     
     @NonNull
     @Builder.Default
-    private LocalDate version = LocalDate.now();
+    private LocalDate revision = LocalDate.now();
     @Builder.Default
-    private String modality = "Padrão";
+    private String version = "Padrão";
     
     private String comment;
 
-    private Integer preparationTime;
     private Integer totalTime;
 
     @OneToMany
@@ -91,10 +92,42 @@ public class Recipe {
     private List<Item> outputs;
 
     public String getUniqueTitle() {
-        return title + " " + modality + " (" + version.format(DateTimeFormatter.ISO_DATE) + ")";
+        return title + " " + version + " (" + revision.format(DateTimeFormatter.ISO_DATE) + ")";
     }
     
     @Transient
-    public boolean adjusted = false;
-
+    @Builder.Default
+    public BigDecimal ratio = BigDecimal.ONE;
+    
+    public Recipe adjust(BigDecimal ratio) {
+        
+        List<FunctionaryWorkingTime> works = new LinkedList<>();
+        for(FunctionaryWorkingTime fwt : this.works) {
+            works.add(fwt.adjust(ratio));
+        }
+        
+        List<Ingredient> ingredients = new LinkedList<>();
+        for(Ingredient ingredient : this.ingredients) {
+            ingredients.add(ingredient.adjust(ratio));
+        }
+        
+        List<Item> outputs = new LinkedList<>();
+        for(Item item : this.outputs) {
+            outputs.add(item.adjust(ratio));
+        }
+        
+        return Recipe.builder()
+                .title(this.title)
+                .revision(this.revision)
+                .version(version)
+                .comment(comment)
+                .totalTime(totalTime)
+                .instructions(instructions)
+                .ratio(ratio)
+                .works(works)
+                .ingredients(ingredients)
+                .outputs(outputs)
+                .build();
+    }
+    
 }

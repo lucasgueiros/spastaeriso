@@ -25,3 +25,5 @@ export {default as LinkSelect} from './LinkSelect.js';
 export {default as FileField} from './FileField.js';
 export {default as DateTimeField} from './DateTimeField.js';
 export {default as StandaloneDateTimeField} from './StandaloneDateTimeField.js';
+export {default as DateTimeFieldWithNowButton} from './DateTimeFieldWithNowButton.js';
+export {default as StandaloneDateTimeFieldWithNowButton} from './StandaloneDateTimeFieldWithNowButton.js';

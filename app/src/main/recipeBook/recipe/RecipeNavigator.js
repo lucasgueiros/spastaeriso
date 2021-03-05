@@ -6,7 +6,7 @@ import CrudFactory from '../../../generics/CrudFactory.js';
 function RecipeNavigator() {
   return (
     <div className="recipe-navigator">
-      <Navigator crud={CrudFactory.get("recipes")} optionsLists={['inputs','units','functionaryFunctions']}>
+      <Navigator crud={CrudFactory.get("recipes")}>
         <Recipe prefix=""/>
       </Navigator>
     </div>

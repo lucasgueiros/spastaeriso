@@ -1,7 +1,7 @@
-/* 
+/*
  * The MIT License
  *
- * Copyright 2021 Lucas Dantas Gueiros.
+ * Copyright 2021 lucas.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,65 +21,45 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package br.com.pastaeriso.people.functionary.workingTime;
+package br.com.pastaeriso.sales.delivery;
 
-import br.com.pastaeriso.people.functionary.function.FunctionaryFunction;
-import br.com.pastaeriso.recipeBook.item.Item;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
+import br.com.pastaeriso.sales.order.OrderStatus;
+import java.time.LocalDateTime;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Transient;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.Setter;
 import lombok.ToString;
-import lombok.experimental.SuperBuilder;
 
 /**
  *
  * @author lucas
  */
 @Entity
-@NoArgsConstructor
 @Getter
 @Setter
-@ToString
 @EqualsAndHashCode
-@SuperBuilder
-public class FunctionaryWorkingTime {
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class DeliveryOrderEvent {
     
     @Id
     @GeneratedValue
     private Long id;
-    @ManyToOne
-    private FunctionaryFunction functionaryFunction;
-    private Integer minutes;
-    private String comment;
+    @NonNull
+    private LocalDateTime datetime;
+    @Enumerated(EnumType.STRING)
+    private DeliveryOrderStatus status;
+    private String comments;
     
-    @Transient
-    @Builder.Default
-    private BigDecimal ratio = BigDecimal.ONE;
-
-    public FunctionaryWorkingTime adjust(BigDecimal ratio) {
-        BigDecimal times = ratio.divide(this.ratio, 10, RoundingMode.CEILING);
-            return FunctionaryWorkingTime.builder()
-                    .minutes(new BigDecimal(minutes).multiply(times).intValueExact())
-                    .comment(this.comment)
-                    .functionaryFunction(this.functionaryFunction)
-                    .build();
-        }
-
-    public FunctionaryWorkingTime sum(FunctionaryWorkingTime work) {
-        return FunctionaryWorkingTime.builder()
-                    .minutes(this.minutes + work.minutes)
-                    .comment(this.comment)
-                    .functionaryFunction(this.functionaryFunction)
-                    .build();
-    }
-   
 }

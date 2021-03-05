@@ -27,6 +27,8 @@ import javax.persistence.Entity;
 
 import br.com.pastaeriso.recipeBook.item.Item;
 import br.com.pastaeriso.recipeBook.recipe.Recipe;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -60,4 +62,19 @@ public class Ingredient extends Item {
         @Builder.Default
         private Boolean showWithIngredients = true;
 
+        public Ingredient adjust(BigDecimal ratio) {
+            BigDecimal times = ratio.divide(super.getRatio(), 10, RoundingMode.CEILING);
+            return Ingredient.builder()
+                    .index(index)
+                    .replacements(replacements)
+                    .recipe(recipe)
+                    .showWithIngredients(showWithIngredients)
+                    .input(this.getInput())
+                    .unit(this.getUnit())
+                    .comment(this.getComment())
+                    .quantity(this.getQuantity().multiply(times))
+                    .ratio(ratio)
+                    .build();
+        }
+        
 }

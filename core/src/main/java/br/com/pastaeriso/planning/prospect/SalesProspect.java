@@ -23,7 +23,7 @@
  */
 package br.com.pastaeriso.planning.prospect;
 
-import br.com.pastaeriso.sales.order.product.OrderProduct;
+import br.com.pastaeriso.sales.order.OrderItem;
 import java.time.Period;
 import java.util.List;
 import javax.persistence.Entity;
@@ -55,5 +55,5 @@ public class SalesProspect {
     private Period period;
     
     @ManyToMany
-    private List<OrderProduct> prospected;
+    private List<OrderItem> prospected;
 }

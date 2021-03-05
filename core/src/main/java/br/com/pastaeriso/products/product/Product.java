@@ -73,8 +73,10 @@ public class Product {
 	private String comments;
         
 	@OneToMany
+        @Singular
 	private Set<ProductPrice> prices;
 	@OneToMany
+        @Singular
 	private Set<ProductItem> items;
         
 	@ManyToMany

@@ -34,6 +34,7 @@ import javax.persistence.Transient;
 
 import br.com.pastaeriso.recipeBook.input.Input;
 import br.com.pastaeriso.recipeBook.unit.Unit;
+import java.math.RoundingMode;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.JoinColumn;
@@ -76,15 +77,16 @@ public class Item {
 	private String comment;
 	@Transient
 	@Builder.Default
-	private boolean adjusted = false;
+	private BigDecimal ratio = BigDecimal.ONE;
 
-        public Item adjust(BigDecimal times) {
+        public Item adjust(BigDecimal ratio) {
+            BigDecimal times = ratio.divide(this.ratio, 10, RoundingMode.CEILING);
             return Item.builder()
                     .input(this.getInput())
                     .unit(this.getUnit())
                     .comment(this.getComment())
                     .quantity(this.getQuantity().multiply(times))
-                    .adjusted(true)
+                    .ratio(ratio)
                     .build();
         }
        

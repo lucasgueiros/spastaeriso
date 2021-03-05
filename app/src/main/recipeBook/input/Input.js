@@ -3,7 +3,7 @@ import './InputAux.js';
 import React from 'react';
 import {StandaloneTextField, StandaloneLinkSelect, StandaloneDateField, DateField, NumberField, LinkSelect, ListRelationView} from '../../../generics/all.js';
 
-function ProductPrice (props) {
+function InputPrice (props) {
   return (
     <tr>
       {props.children}
@@ -11,7 +11,7 @@ function ProductPrice (props) {
         <DateField {...props} property="date"/>
       </td>
       <td>
-        <NumberField {...props} property="priceByUnit"/>
+        <NumberField {...props} property="pricePerUnit"/>
       </td>
       <td>
         <LinkSelect {...props} property="unit" options="units"/>
@@ -27,7 +27,7 @@ class Input extends React.Component {
       <div class-name="input">
         <StandaloneTextField {...this.props} property="name" label="Nome"/>
         <StandaloneTextField {...this.props} property="comment" label="Comentários"/>
-        <ListRelationView {...this.props} property="prices" row={<ProductPrice/>} >
+        <ListRelationView {...this.props} property="prices" row={<InputPrice/>} >
           <th>Data</th>
           <th>R$/Uni.</th>
           <th>Unidade</th>
