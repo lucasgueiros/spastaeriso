@@ -1,14 +1,11 @@
 import Recipe from './Recipe.js';
 import Navigator from '../../../generics/Navigator.js';
 import RecipeCrud from './RecipeCrud.js';
-import CrudFactory from '../../../generics/CrudFactory.js';
 
-function RecipeNavigator() {
+function RecipeNavigator(props) {
   return (
     <div className="recipe-navigator">
-      <Navigator crud={CrudFactory.get("recipes")}>
-        <Recipe prefix=""/>
-      </Navigator>
+      <Navigator {...props}  entity="recipes" view={<Recipe/>}/>
     </div>
   );
 }

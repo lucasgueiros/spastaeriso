@@ -1,10 +1,9 @@
 import React from 'react';
 import {StandaloneLinkSelect, StandaloneNumberField,StandaloneTextField,StandaloneCheckboxField,Navigator} from '../../../generics/all.js';
-import axios from 'axios';
 
 export function PurchaseProductNavigator (props) {
   return (
-    <Navigator entity="purchaseProducts" view={<PurchaseProduct/>}/>
+    <Navigator {...props}  entity="purchaseProducts" view={<PurchaseProduct/>}/>
   );
 }
 
@@ -18,7 +17,7 @@ export class PurchaseProduct extends React.Component {
     }
 
     apply (link) {
-      axios.get(link + "/apply").then((response) => {
+      this.props.http.get(link + "/apply").then((response) => {
         this.setState({message: "Sucesso!"});
       }, (error) => {
         this.setState({message: "Erro!"});

@@ -13,7 +13,7 @@ import {PurchaseItemStatement} from './purchase/PurchaseItemStatement.js';
 import {InputsAvgPrice} from './purchase/InputsAvgPrice.js';
 import InventoryBalance from './inventory/InventoryBalance.js'
 
-function Purchases() {
+function Purchases(props) {
   return (
     <Router>
       <div>
@@ -34,31 +34,31 @@ function Purchases() {
         <div>
           <Switch>
             <Route path="/purchases/purchaseItem/avgPrice">
-              <InputsAvgPrice/>
+              <InputsAvgPrice {...props}/>
             </Route>
             <Route path="/purchases/purchaseItemStatement">
-              <PurchaseItemStatement/>
+              <PurchaseItemStatement {...props}/>
             </Route>
             <Route path="/purchases/produceds">
-              <ProducedProductNavigator/>
+              <ProducedProductNavigator {...props}/>
             </Route>
             <Route path="/purchases/inventory/balance">
-              <InventoryBalance/>
+              <InventoryBalance {...props}/>
             </Route>
             <Route path="/purchases/inventory">
-              <InventoryMovementListView/>
+              <InventoryMovementListView {...props}/>
             </Route>
             <Route path="/purchases/purchaseProduct">
-              <PurchaseProductNavigator/>
+              <PurchaseProductNavigator {...props}/>
             </Route>
             <Route path="/purchases/provider">
-              <ProviderNavigator/>
+              <ProviderNavigator {...props}/>
             </Route>
             <Route path="/purchases/fromNFe">
-              <PurchaseFromNFe/>
+              <PurchaseFromNFe {...props}/>
             </Route>
             <Route path="/purchases/purchase">
-              <PurchaseNavigator/>
+              <PurchaseNavigator {...props}/>
             </Route>
             <Route path="/purchases/">
               <p>Selecione algo.</p>

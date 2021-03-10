@@ -4,7 +4,7 @@ import Navigator from '../../generics/Navigator.js';
 import Product from './product/Product.js';
 import ProductCosts from './product/ProductCosts.js';
 
-export default function Products() {
+export default function Products(props) {
   return (
     <Router>
       <div>
@@ -18,10 +18,10 @@ export default function Products() {
         <div>
           <Switch>
             <Route path="/products/costs">
-              <ProductCosts/>
+              <ProductCosts {...props}/>
             </Route>
             <Route path="/products/product">
-              <Navigator entity="products" view={<Product/>} />
+              <Navigator {...props}  entity="products" view={<Product/>} />
             </Route>
             <Route path="/products/">
               <p>Selecione algo.</p>

@@ -1,11 +1,10 @@
 import BasicCrud from './BasicCrud.js';
-import CrudFactory from './CrudFactory.js';
-import axios from 'axios';
 
 export default class Crud extends BasicCrud {
 
-  constructor(name, description) {
-    super(name);
+  constructor(name, description, http, crudFactory) {
+    super(name, http);
+    this.crudFactory = crudFactory;
     this.description = description;
     if(this.description.sufix == null || this.description.sufix == undefined) {
       this.description.sufix = "";
@@ -16,7 +15,7 @@ export default class Crud extends BasicCrud {
 
   getCrud(relation) {
     if(relation.description == null || relation.description == undefined) {
-      return CrudFactory.get(relation.entity);
+      return this.crudFactory.get(relation.entity);
     } else if(this.cruds[relation.name] != null){
       return this.cruds[relation.name];
     } else {
@@ -94,7 +93,7 @@ export default class Crud extends BasicCrud {
 
   async getRelationWithIndexOperation(index, relation, owner) {
     let entity;
-    await axios.get(owner[relation][index]._links.self.href.replace("{?projection}",""))
+    await this.http.get(owner[relation][index]._links.self.href.replace("{?projection}",""))
       .then( (response) => {
         entity = response.data;
       }, (error) => {

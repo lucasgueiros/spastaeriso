@@ -4,7 +4,7 @@ export function PersonNavigator(props) {
   return (
     <>
       <h3>Pessoas</h3>
-      <Navigator entity="people" view={<Person/>} />
+      <Navigator {...props}  entity="people" view={<Person/>} />
     </>
   );
 }

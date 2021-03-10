@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios';
 import { Redirect } from "react-router";
 
 export class PurchaseFromNFe extends React.Component {
@@ -28,8 +27,9 @@ export class PurchaseFromNFe extends React.Component {
 
     formData.append("nfce", this.state.nfe);
 
-    axios.post("/purchases/nfce", formData, {
+    this.props.http.post("/purchases/nfce", formData, {
       headers: {
+        ...this.props.http.defaults.headers,
         "Content-Type": "multipart/form-data",
       },
     }).then(

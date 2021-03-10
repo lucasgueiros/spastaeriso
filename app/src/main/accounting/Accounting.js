@@ -7,7 +7,7 @@ import {CardNavigator} from './Card.js';
 import {TransactionModalityNavigator} from './TransactionModality.js';
 import {AccountingBalance} from './AccountingBalance.js';
 
-function Accounting() {
+function Accounting(props) {
   return (
     <Router>
       <div>
@@ -24,19 +24,19 @@ function Accounting() {
         <div>
           <Switch>
             <Route path="/accounting/balance">
-              <AccountingBalance/>
+              <AccountingBalance {...props}/>
             </Route>
             <Route path="/accounting/modalities">
-              <TransactionModalityNavigator/>
+              <TransactionModalityNavigator {...props}/>
             </Route>
             <Route path="/accounting/cards">
-              <CardNavigator/>
+              <CardNavigator {...props}/>
             </Route>
             <Route path="/accounting/transaction">
-              <TransactionListView/>
+              <TransactionListView {...props}/>
             </Route>
             <Route path="/accounting/account">
-              <AccountNavigator/>
+              <AccountNavigator {...props}/>
             </Route>
             <Route path="/accounting/">
               <p>Selecione algo.</p>

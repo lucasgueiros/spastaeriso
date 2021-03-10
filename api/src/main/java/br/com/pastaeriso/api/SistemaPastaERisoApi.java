@@ -88,6 +88,9 @@ import br.com.pastaeriso.sales.order.OrderItem;
 import java.time.LocalDateTime;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import br.com.pastaeriso.api.sales.order.OrderItemRepository;
+import org.springframework.context.annotation.Bean;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @SpringBootApplication
 @EnableAutoConfiguration
@@ -97,6 +100,19 @@ public class SistemaPastaERisoApi {
 
 	public static void main(String[] args) {
 		SpringApplication.run(SistemaPastaERisoApi.class, args);
+	}
+        
+        @Bean
+	public WebMvcConfigurer corsConfigurer() {
+		return new WebMvcConfigurer() {
+			@Override
+			public void addCorsMappings(CorsRegistry registry) {
+				registry
+                                        .addMapping("/**")
+                                        .allowedOrigins("http://localhost:3000")
+                                        .allowedMethods("OPTIONS","HEAD","GET","POST","PUT","PATCH","DELETE");
+			}
+		};
 	}
         
         @Autowired

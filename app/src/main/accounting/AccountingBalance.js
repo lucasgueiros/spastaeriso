@@ -1,5 +1,4 @@
 import {StandaloneTextField,StandaloneDateField,DateField,LinkSelect,NumberField,ListRelationView,StandaloneLinkSelect,StandaloneMultipleLinkSelect} from '../../generics/all.js';
-import axios from 'axios';
 import React from 'react';
 
 export class AccountingBalance extends React.Component {
@@ -13,7 +12,7 @@ export class AccountingBalance extends React.Component {
   }
 
   componentDidMount() {
-    axios.get('entries/balance').then((response) => {
+    this.props.http.get('entries/balance').then((response) => {
       this.setState({
         data: response.data,
         loading: false

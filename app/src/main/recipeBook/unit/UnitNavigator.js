@@ -2,12 +2,11 @@ import Unit from './Unit.js';
 import Navigator from '../../../generics/Navigator.js';
 import BasicCrud from '../../../generics/BasicCrud.js';
 
-function UnitNavigator() {
+function UnitNavigator(props) {
   return (
     <div className="unit-navigator">
-      <Navigator crud={new BasicCrud("units")}>
-        <Unit prefix=""/>
-      </Navigator>
+
+      <Navigator {...props} entity="units" view={<Unit/>} />
     </div>
   );
 }

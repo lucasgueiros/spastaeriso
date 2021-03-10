@@ -302,5 +302,8 @@ export default {
         type: 'oneToMany'
       }
     ],
+  },
+  cards: {
+    relations: []
   }
 };

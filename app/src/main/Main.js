@@ -7,8 +7,9 @@ import Accounting from './accounting/Accounting.js';
 import People from './people/People.js';
 import Products from './products/Products.js';
 import {ClientOrderNavigator} from './sales/ClientOrder.js';
+import { useKeycloak } from '@react-keycloak/web'
 
-function Main() {
+export function Main(props) {
   return (
     <div class-name="main">
 
@@ -29,22 +30,22 @@ function Main() {
           <div>
             <Switch>
               <Route path="/orders">
-                <ClientOrderNavigator/>
+                <ClientOrderNavigator {...props}/>
               </Route>
               <Route path="/products">
-                <Products/>
+                <Products {...props}/>
               </Route>
               <Route path="/accounting">
-                <Accounting/>
+                <Accounting {...props}/>
               </Route>
               <Route path="/recipeBook">
-                <RecipeBook/>
+                <RecipeBook {...props}/>
               </Route>
               <Route path="/purchases">
-                <Purchases/>
+                <Purchases {...props}/>
               </Route>
               <Route path="/people">
-                <People/>
+                <People {...props}/>
               </Route>
               <Route path="/">
                 <p>Essa é a Homepage</p>
@@ -56,5 +57,3 @@ function Main() {
     </div>
   );
 }
-
-export default Main;

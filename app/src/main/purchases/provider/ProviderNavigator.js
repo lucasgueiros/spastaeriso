@@ -7,9 +7,7 @@ class ProviderNavigator extends React.Component {
   render() {
     return (
       <div className="provider-navigator">
-        <Navigator crud={new BasicCrud("providers")}>
-          <Provider prefix="" />
-        </Navigator>
+        <Navigator {...this.props} entity="providers" view={<Provider/>}/>
       </div>
     );
   }

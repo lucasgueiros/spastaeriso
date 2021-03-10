@@ -3,7 +3,7 @@ import {InventoryMovement} from './InventoryMovement.js';
 
 export function ProducedProductNavigator (props) {
   return (
-    <Navigator entity="pruducedProducts" view={<ProducedProduct/>} />
+    <Navigator {...props}  entity="pruducedProducts" view={<ProducedProduct/>} />
   );
 }
 

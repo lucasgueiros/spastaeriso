@@ -4,7 +4,7 @@ import {Transaction} from '../../accounting/Transaction.js';
 
 export function PurchaseNavigator (props) {
   return (
-    <Navigator entity="purchases" view={<Purchase/>}/>
+    <Navigator {...props}  entity="purchases" view={<Purchase/>}/>
   );
 }
 

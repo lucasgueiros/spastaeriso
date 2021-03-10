@@ -68,10 +68,13 @@ public class Input {
         private List<InputPrice> prices;
 
     public boolean hasPrices() {
-        return ! prices.isEmpty();
+        return prices != null  && ! prices.isEmpty();
     }
 
     public InputPrice getLastPrice() {
+        if(prices == null) {
+            return null;
+        }
         prices.sort((p1,p2) -> {
            return p1.getDate().compareTo(p2.getDate()); 
         });

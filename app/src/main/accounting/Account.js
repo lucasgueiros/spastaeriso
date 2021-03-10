@@ -3,7 +3,7 @@ import {StandaloneTextField,StandaloneLinkSelect,StandaloneDateField,Navigator} 
 
 export function AccountNavigator(props) {
   return (
-    <Navigator entity="accounts" view={<Account/>}/>
+    <Navigator {...props}  {...props} entity="accounts" view={<Account/>}/>
   );
 }
 

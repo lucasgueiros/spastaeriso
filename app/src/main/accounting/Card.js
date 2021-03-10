@@ -13,6 +13,6 @@ export function Card (props) {
 
 export function CardNavigator (props) {
   return (
-    <Navigator entity="cards" view={<Card/>}/>
+    <Navigator {...props}  entity="cards" view={<Card/>}/>
   );
 }

@@ -2,7 +2,7 @@ import {ListView,LinkSelect,NumberField,TextField,DateTimeField} from '../../../
 
 export function InventoryMovementListView (props) {
   return (
-    <ListView entity="inventoryMovements" view={<InventoryMovement/>}>
+    <ListView {...props} entity="inventoryMovements" view={<InventoryMovement/>}>
       <th>Data</th>
       <th>Insumo</th>
       <th>Qtd.</th>

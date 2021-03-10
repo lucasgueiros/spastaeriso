@@ -1,14 +1,8 @@
-import axios from 'axios';
-
 class BasicCrud {
 
-  constructor (url) {
+  constructor (url, http) {
     this.url = url;
-    this.jsonConfig = {
-      headers: {
-        'Content-Type': 'application/json',
-      }
-    }
+    this.http = http;
   }
 
   async patchToManyRelationOperation (relationName, entity) {
@@ -73,7 +67,7 @@ class BasicCrud {
 
   async getWithUrlOperation(url) {
     let toReturn = {};
-    await axios.get(url.replace("{?projection}",""))
+    await this.http.get(url.replace("{?projection}",""))
       .then( (response) => {
         toReturn = response.data;
       }, (error) => {
@@ -93,7 +87,7 @@ class BasicCrud {
       url = url + sufix;
     }
 
-    await axios.get(url)
+    await this.http.get(url)
       .then( (response) => {
         toReturn = [...response.data._embedded[this.url]];
       }, (error) => {
@@ -105,7 +99,7 @@ class BasicCrud {
 
   async getRelationWithIndexOperation(index, relationName, entity) {
     let toReturn;
-    await axios.get(entity[relationName][index]._links.self.href.replace("{?projection}",""))
+    await this.http.get(entity[relationName][index]._links.self.href.replace("{?projection}",""))
       .then( (response) => {
         let arrayCopy = [...entity[relationName]];
         arrayCopy[index] = response.data;
@@ -125,7 +119,7 @@ class BasicCrud {
 
   async getRelationOperation(relationName, entity, uriOnly = false) {
     let toReturn;
-    await axios.get(entity._links[relationName].href.replace("{?projection}",""))
+    await this.http.get(entity._links[relationName].href.replace("{?projection}",""))
       .then( (response) => {
         toReturn = {
           ...entity,
@@ -146,7 +140,7 @@ class BasicCrud {
 
   async postRelationOperation (relationName, entityToSave) {
     let toReturn;
-    await axios.post("/"+this.url+"/", entityToSave[relationName])
+    await this.http.post("/"+this.url+"/", entityToSave[relationName])
       .then( (response) => {
         if(Array.isArray(entityToSave)) {
           toReturn = [...entityToSave];
@@ -172,7 +166,7 @@ class BasicCrud {
       response: {},
       error: {}
     };
-    await axios.post(this.url, entityToSave, this.jsonConfig)
+    await this.http.post(this.url, entityToSave)
       .then( (response) =>  {
         toReturn = response.data;
         toReturn._ok = true;
@@ -185,7 +179,7 @@ class BasicCrud {
 
   async patchOperation (url, entityToSave) {
     let toReturn = [{}];
-    await axios.patch(url, entityToSave, this.jsonConfig)
+    await this.http.patch(url, entityToSave)
       .then(  (response) => {
         toReturn = response.data;
         toReturn._ok = true;
@@ -199,13 +193,13 @@ class BasicCrud {
   async patchRelationOperation ( relationName, entityToSave) {
     let relationUrl = {};
     let toReturn = {};
-    await axios.get(entityToSave._links.self.href + "/" + relationName)
+    await this.http.get(entityToSave._links.self.href + "/" + relationName)
       .then( (response) => {
         relationUrl = response.data._links.self.href;
       }, (error) => {
         console.log(error);
       });
-    await axios.patch(relationUrl, entityToSave[relationName], this.jsonConfig)
+    await this.http.patch(relationUrl, entityToSave[relationName])
       .then(  (response) => {
         toReturn = response.data;
         toReturn._ok = true;
@@ -223,7 +217,7 @@ class BasicCrud {
 
   async deleteOperation (url) {
     let toReturn = [{}];
-    await axios.delete(url)
+    await this.http.delete(url)
       .then( (response) => {
         toReturn._ok = true;
       }, (error) => {
@@ -235,7 +229,7 @@ class BasicCrud {
 
   async getSelfHrefOperation(relationUrl) {
     let toReturn;
-    await axios.get(relationUrl)
+    await this.http.get(relationUrl)
       .then( (response) => {
         toReturn = response.data._links.self.href;
       }, (error) => {
@@ -247,7 +241,7 @@ class BasicCrud {
   async getManyToManyLinkRelationOperation(relation,owner, entity) {
     let links = [];
     let toReturn = {};
-    await axios.get(owner._links[relation].href)
+    await this.http.get(owner._links[relation].href)
       .then( (response) => {
         toReturn._ok = true;
         let entities =  response.data._embedded[entity];

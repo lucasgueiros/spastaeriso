@@ -12,7 +12,7 @@ import {ContactNavigator} from './contact/Contact.js';
 import {ContactChannelNavigator} from './contact/ContactChannel.js';
 import {PersonNavigator} from './Person.js';
 
-function People() {
+function People(props) {
   return (
     <Router>
       <div>
@@ -32,30 +32,30 @@ function People() {
         <div>
           <Switch>
             <Route path="/people/people">
-              <PersonNavigator/>
+              <PersonNavigator {...props}/>
             </Route>
             <Route path="/people/contactChannel">
-              <ContactChannelNavigator/>
+              <ContactChannelNavigator {...props}/>
             </Route>
             <Route path="/people/contact">
-              <ContactNavigator/>
+              <ContactNavigator {...props}/>
             </Route>
             <Route path="/people/addresses">
               <h3>Endereços</h3>
-              <Navigator entity="addresses" view={<Address/>} />
+              <Navigator {...props}  entity="addresses" view={<Address/>} />
             </Route>
             <Route path="/people/addressTypes">
               <h3>Tipos de endereços</h3>
-              <Navigator entity="addressTypes" view={<AddressType/>} />
+              <Navigator {...props}  entity="addressTypes" view={<AddressType/>} />
             </Route>
             <Route path="/people/neighborhood">
-              <Navigator entity="neighborhoods" view={<Neighborhood/>} />
+              <Navigator {...props}  entity="neighborhoods" view={<Neighborhood/>} />
             </Route>
             <Route path="/people/functionaryFunction">
-              <Navigator entity="functionaryFunctions" view={<FunctionaryFunction/>} />
+              <Navigator {...props}  entity="functionaryFunctions" view={<FunctionaryFunction/>} />
             </Route>
             <Route path="/people/functionaryContractTemplate">
-              <Navigator entity="functionaryContractTemplates" view={<FunctionaryContractTemplate/>} />
+              <Navigator {...props}  entity="functionaryContractTemplates" view={<FunctionaryContractTemplate/>} />
             </Route>
             <Route path="/people/">
               <p>Selecione algo.</p>

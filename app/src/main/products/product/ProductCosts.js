@@ -1,7 +1,5 @@
 import {StandaloneTextField,StandaloneDateField,DateField,LinkSelect,NumberField,ListRelationView,StandaloneLinkSelect,StandaloneMultipleLinkSelect} from '../../../generics/all.js';
 import Item from '../../recipeBook/recipe/item/Item.js';
-//import http from '../../../http.js';
-import axios from 'axios';
 import React from 'react';
 
 export default class ProductCosts extends React.Component {
@@ -15,7 +13,7 @@ export default class ProductCosts extends React.Component {
   }
 
   componentDidMount() {
-    axios.get('products/costs').then((response) => {
+    this.props.http.get('products/costs').then((response) => {
       this.setState({
         data: response.data,
         loading: false

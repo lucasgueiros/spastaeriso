@@ -1,5 +1,4 @@
 import {StandaloneTextField,StandaloneDateField,DateField,LinkSelect,NumberField,ListRelationView,StandaloneLinkSelect,StandaloneMultipleLinkSelect} from '../../../generics/all.js';
-import axios from 'axios';
 import React from 'react';
 
 export default class InventoryBalance extends React.Component {
@@ -10,10 +9,11 @@ export default class InventoryBalance extends React.Component {
 
   constructor(props) {
     super(props);
+    this.componentDidMount = this.componentDidMount.bind(this);
   }
 
   componentDidMount() {
-    axios.get('inventoryMovements/balance').then((response) => {
+    this.props.http.get('inventoryMovements/balance').then((response) => {
       this.setState({
         data: response.data,
         loading: false

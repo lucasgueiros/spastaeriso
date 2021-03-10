@@ -5,7 +5,7 @@ import InputNavigator from './input/InputNavigator.js';
 import UnitNavigator from './unit/UnitNavigator.js';
 import RecipeNavigator from './recipe/RecipeNavigator.js';
 
-function RecipeBook() {
+function RecipeBook(props) {
   return (
     <Router>
       <div>
@@ -20,13 +20,13 @@ function RecipeBook() {
         <div>
           <Switch>
             <Route path="/recipeBook/recipes">
-              <RecipeNavigator/>
+              <RecipeNavigator {...props}/>
             </Route>
             <Route path="/recipeBook/units">
-              <UnitNavigator/>
+              <UnitNavigator {...props}/>
             </Route>
             <Route path="/recipeBook/inputs">
-              <InputNavigator/>
+              <InputNavigator {...props}/>
             </Route>
             <Route path="/recipeBook/">
               <p>Selecione algo.</p>

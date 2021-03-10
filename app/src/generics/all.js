@@ -18,7 +18,6 @@ export {default as StandaloneCheckboxField} from './StandaloneCheckboxField.js' 
 export {default as StandaloneMultipleLinkSelect} from './StandaloneMultipleLinkSelect.js' ;
 
 export {default as ListRelationView} from './ListRelationView.js' ;
-export {default as CrudFactory} from './CrudFactory.js' ;
 
 export {default as RelationView} from './RelationView.js';
 export {default as LinkSelect} from './LinkSelect.js';

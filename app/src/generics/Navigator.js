@@ -1,7 +1,5 @@
 import './Navigator.css';
 import React from 'react';
-import axios from 'axios';
-import CrudFactory from './CrudFactory.js';
 
 class Navigator extends React.Component {
 
@@ -42,7 +40,7 @@ class Navigator extends React.Component {
     this.optionsListsNames = [];
 
     if(this.props.entity) {
-      this.crud = CrudFactory.get(this.props.entity);
+      this.crud = this.props.crudFactory.get(this.props.entity);
     } else {
       this.crud = this.props.crud;
     }
@@ -321,7 +319,7 @@ class Navigator extends React.Component {
     for(let i =0 ;i<names.length;i++) {
       let ri = [];
       let name = names[i];
-      await axios.get(name)
+      await this.props.http.get(name)
         .then((response) => {
           ri = response.data._embedded[name];
         }, (error) => {

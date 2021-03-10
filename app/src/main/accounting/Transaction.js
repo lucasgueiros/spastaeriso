@@ -4,7 +4,7 @@ export function TransactionListView (props) {
     return (
       <>
         <h3>Transações</h3>
-        <ListView entity="genericTransactions" view={<Transaction/>} />
+        <ListView {...props} entity="genericTransactions" view={<Transaction/>} />
       </>
     );
 

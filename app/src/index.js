@@ -4,12 +4,14 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import axios from 'axios';
-
-axios.defaults.baseURL = 'http://localhost:8090/v1';
+import { ReactKeycloakProvider } from '@react-keycloak/web';
+import {keycloak} from './keycloak.js';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <ReactKeycloakProvider authClient={keycloak} LoadingComponent={<h1>Loading</h1>}>
+      <App />
+    </ReactKeycloakProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

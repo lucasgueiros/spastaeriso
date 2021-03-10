@@ -4,7 +4,7 @@ export function ContactChannelNavigator(props) {
   return (
     <>
       <h3>Canais de Contato</h3>
-      <Navigator entity="contactChannels" view={<ContactChannel/>} />
+      <Navigator {...props}  entity="contactChannels" view={<ContactChannel/>} />
     </>
   );
 }

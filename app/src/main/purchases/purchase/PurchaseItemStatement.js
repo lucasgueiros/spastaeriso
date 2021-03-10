@@ -3,7 +3,7 @@ import {ListView,NumberField} from '../../../generics/all.js';
 
 export function PurchaseItemStatement (props) {
   return (
-    <ListView entity="purchaseItems" view={<PurchaseItem/>}>
+    <ListView {...props} entity="purchaseItems" view={<PurchaseItem/>}>
       <th>Data</th>
       <th>Insumo</th>
       <th>Qtd</th>
