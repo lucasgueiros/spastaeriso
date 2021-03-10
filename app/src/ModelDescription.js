@@ -305,5 +305,8 @@ export default {
   },
   cards: {
     relations: []
+  },
+  orderEvents: {
+    relations: [],
   }
 };

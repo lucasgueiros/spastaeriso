@@ -10,7 +10,7 @@ export class CrudFactory {
   get(name) {
     if(!this.cruds.hasOwnProperty(name)){
       if(this.modelDescription[name] == undefined || this.modelDescription[name] == null) {
-        this.cruds[name] = new Crud(name, [], this.http, this);
+        this.cruds[name] = new Crud(name, {relations:[]}, this.http, this);
       } else if(this.modelDescription[name].relations instanceof Array ) {
         this.cruds[name] = new Crud(name, this.modelDescription[name], this.http, this);
       } else {
