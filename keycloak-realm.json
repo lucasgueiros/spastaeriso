@@ -1,6 +1,7 @@
 {
   "id": "spastaeriso",
-  "realm": "spastaeriso",
+  "realm": "spastaerisoSi",
+  "displayName": "Sistema Pasta e Riso",
   "notBefore": 0,
   "revokeRefreshToken": false,
   "refreshTokenMaxReuse": 0,
@@ -43,8 +44,8 @@
   "roles": {
     "realm": [
       {
-        "id": "efd6b6d0-549e-42dd-a91d-c1ea3ecdc837",
-        "name": "admin",
+        "id": "358c7297-8e66-4174-8b42-d742e174248f",
+        "name": "ROLE_DELIVERYMAN",
         "composite": false,
         "clientRole": false,
         "containerId": "spastaeriso",
@@ -60,32 +61,48 @@
         "attributes": {}
       },
       {
-        "id": "f198a321-7b31-4df9-b3e2-bc5f2a93b91b",
-        "name": "deliveryman",
+        "id": "4aad677d-3113-4009-b689-340afa9d314b",
+        "name": "ROLE_USER",
         "composite": false,
         "clientRole": false,
         "containerId": "spastaeriso",
         "attributes": {}
       },
       {
-        "id": "dc37dd5a-9230-4172-af2d-b1ef023af67e",
-        "name": "owner",
+        "id": "a74c3d4c-591a-4eec-b64d-32f8f68fb2d8",
+        "name": "ROLE_COOKER",
         "composite": false,
         "clientRole": false,
         "containerId": "spastaeriso",
         "attributes": {}
       },
       {
-        "id": "deee2ad1-45e3-423a-8dcb-3010818b91ac",
-        "name": "client",
+        "id": "fee2044c-6152-446a-a4c3-477148814198",
+        "name": "ROLE_CLIENT",
         "composite": false,
         "clientRole": false,
         "containerId": "spastaeriso",
         "attributes": {}
       },
       {
-        "id": "5c074a33-511f-47b9-8a9e-d6f05f555061",
-        "name": "cooker",
+        "id": "c821e162-316c-422d-a603-5a012ab1c0bf",
+        "name": "ROLE_ADMIN",
+        "composite": false,
+        "clientRole": false,
+        "containerId": "spastaeriso",
+        "attributes": {}
+      },
+      {
+        "id": "420e96c9-4a04-40d1-955d-22b9e2cdb34d",
+        "name": "ROLE_CLERK",
+        "composite": false,
+        "clientRole": false,
+        "containerId": "spastaeriso",
+        "attributes": {}
+      },
+      {
+        "id": "95f198a2-349d-4af6-89a7-04dff3481b0f",
+        "name": "ROLE_OWNER",
         "composite": false,
         "clientRole": false,
         "containerId": "spastaeriso",
@@ -477,7 +494,7 @@
       "clientId": "account",
       "name": "${client_account}",
       "rootUrl": "${authBaseUrl}",
-      "baseUrl": "/realms/spastaeriso/account/",
+      "baseUrl": "/realms/spastaerisoSi/account/",
       "surrogateAuthRequired": false,
       "enabled": true,
       "alwaysDisplayInConsole": false,
@@ -488,7 +505,7 @@
         "manage-account"
       ],
       "redirectUris": [
-        "/realms/spastaeriso/account/*"
+        "/realms/spastaerisoSi/account/*"
       ],
       "webOrigins": [],
       "notBefore": 0,
@@ -743,14 +760,14 @@
       "clientId": "security-admin-console",
       "name": "${client_security-admin-console}",
       "rootUrl": "${authAdminUrl}",
-      "baseUrl": "/admin/spastaeriso/console/",
+      "baseUrl": "/admin/spastaerisoSi/console/",
       "surrogateAuthRequired": false,
       "enabled": true,
       "alwaysDisplayInConsole": false,
       "clientAuthenticatorType": "client-secret",
       "secret": "**********",
       "redirectUris": [
-        "/admin/spastaeriso/console/*"
+        "/admin/spastaerisoSi/console/*"
       ],
       "webOrigins": [
         "+"

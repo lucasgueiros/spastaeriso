@@ -70,6 +70,7 @@ import org.springframework.web.multipart.MultipartFile;
 import br.com.pastaeriso.api.accounting.transaction.GenericTransactionRepository;
 import br.com.pastaeriso.api.purchases.inventory.InventoryMovementRepository;
 import java.time.LocalDateTime;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
@@ -110,6 +111,7 @@ public class PurchaseController {
     @Autowired
     private InventoryMovementRepository inventoryMovementRepository;
     
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/purchases/nfce")
     public ResponseEntity nfce(@RequestParam("nfce") final MultipartFile nfce) throws JAXBException, IOException {
         Purchase purchase = parseNfce(nfce);

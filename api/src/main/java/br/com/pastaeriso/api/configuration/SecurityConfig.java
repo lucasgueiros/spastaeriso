@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -28,19 +29,22 @@ import org.springframework.security.web.authentication.session.SessionAuthentica
  */
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true,
+                            securedEnabled = true,
+                            jsr250Enabled = true)
 @ComponentScan(basePackageClasses = KeycloakSecurityComponents.class)
 class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
 
     @Autowired
     public void configureGlobal(
       AuthenticationManagerBuilder auth) throws Exception {
- 
-        KeycloakAuthenticationProvider keycloakAuthenticationProvider
-          = keycloakAuthenticationProvider();
-        keycloakAuthenticationProvider.setGrantedAuthoritiesMapper(
-          new SimpleAuthorityMapper());
-        auth.authenticationProvider(keycloakAuthenticationProvider);
+        KeycloakAuthenticationProvider keycloakAuthenticationProvider = keycloakAuthenticationProvider();
+
+    SimpleAuthorityMapper grantedAuthoritiesMapper = new SimpleAuthorityMapper();
+    grantedAuthoritiesMapper.setPrefix("");
+    keycloakAuthenticationProvider.setGrantedAuthoritiesMapper(grantedAuthoritiesMapper);
+    auth.authenticationProvider(keycloakAuthenticationProvider);
+
     }
 
     @Bean
@@ -61,10 +65,9 @@ class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
         http
                 .cors().and()
                 .csrf().disable()
-          .authorizeRequests()
-          .antMatchers("/people*")
-          .hasRole("admin")
-          .anyRequest()
-          .permitAll();
+                .authorizeRequests()
+                .antMatchers(HttpMethod.GET, "/people").hasRole("ADMIN")
+                .anyRequest()
+                .authenticated();
     }
 }
