@@ -9,6 +9,7 @@ import Products from './products/Products.js';
 import {ClientOrderNavigator} from './sales/ClientOrder.js';
 import { useKeycloak } from '@react-keycloak/web';
 import {Deliveryman} from './sales/Deliveryman.js';
+import {Delivery} from './sales/Delivery.js';
 import {Navigator} from '../generics/all.js';
 
 export function Main(props) {
@@ -30,12 +31,16 @@ export function Main(props) {
                 <Link to="/orders">Pedidos</Link>
                 <ul>
                   <li><Link to="/orders/deliveryman">Entregadores</Link></li>
+                  <li><Link to="/orders/deliveries">Entregas</Link></li>
                 </ul>
               </li>
             </ul>
           </nav>
           <div>
             <Switch>
+              <Route path="/orders/deliveries">
+                <Navigator {...props} entity="deliveries" view={<Delivery/>}/>
+              </Route>
               <Route path="/orders/deliveryman">
                 <Navigator {...props} entity="deliverymen" view={<Deliveryman/>}/>
               </Route>

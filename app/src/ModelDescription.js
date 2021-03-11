@@ -319,6 +319,7 @@ export default {
     ],
   },
   deliveryOrders: {
+    sufix: '?projection=withId',
     relations: [
       {
         name: 'items',
@@ -393,5 +394,23 @@ export default {
         type: 'oneToMany'
       }
     ]
-  }
+  },
+  deliveries: {
+    relations: [
+      {
+        name: 'deliveryman',
+        entity: 'deliverymen',
+        type: 'manyToOneLink'
+      },{
+        name: 'events',
+        entity: 'deliveryEvents',
+        type: 'oneToMany'
+      },{
+        name: 'orders',
+        entity: 'deliveryOrders',
+        type: 'manyToMany'
+      }
+    ]
+  },
+  deliveryEvents: {relations: []}
 };

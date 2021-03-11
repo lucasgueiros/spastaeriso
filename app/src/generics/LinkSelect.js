@@ -8,15 +8,18 @@ export default class LinkSelect extends React.Component {
     if(props.addOptionsList && props.options) {
       props.addOptionsList(props.options, this.props.nameField);
     }
+    this.state = {
+      options: props.restricted ? (props.options + '_' + props.restricted) : props.options,
+    };
   }
 
   render() {
-    if(this.props.optionsLists == undefined || this.props.optionsLists[this.props.options] == undefined){
+    if(this.props.optionsLists == undefined || this.props.optionsLists[this.state.options] == undefined){
       return <>Carregando...</>;
     }
     let none = <></>;
     if(!this.props.notNull) {
-      none = <option key={this.props.optionsLists[this.props.options].length} value={"none"}>Nenhuma</option>
+      none = <option key={this.props.optionsLists[this.state.options].length} value={"none"}>Nenhuma</option>
     }
       return (
           <select
@@ -25,8 +28,10 @@ export default class LinkSelect extends React.Component {
             onChange={this.props.onChange}
             disabled={!this.props.editing}
             multiple={this.props.multiple}>
-            {this.props.optionsLists[this.props.options].map((entity, key) =>
-              <option key={key} value={entity._links.self.href || "none"}>{entity[this.props.nameField || 'name']}</option>
+            {this.props.optionsLists[this.state.options].map((entity, key) =>
+              <option key={key} value={entity._links.self.href || "none"}>
+                {this.props.nameGen ? this.props.nameGen(entity) : entity[this.props.nameField || 'name']}
+              </option>
             )}
             {none}
           </select>

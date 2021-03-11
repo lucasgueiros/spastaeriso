@@ -5,6 +5,8 @@
  */
 package br.com.pastaeriso.api.configuration;
 
+import br.com.pastaeriso.api.sales.delivery.DeliveryOrderWithId;
+import br.com.pastaeriso.api.sales.delivery.deliveryman.DeliverymanWithPersonOnly;
 import br.com.pastaeriso.api.sales.order.OrderItemWithId;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
@@ -21,6 +23,8 @@ public class RestConfig implements RepositoryRestConfigurer {
     public void configureRepositoryRestConfiguration(
             RepositoryRestConfiguration repositoryRestConfiguration) {
         repositoryRestConfiguration.getProjectionConfiguration()
-          .addProjection(OrderItemWithId.class);
+          .addProjection(OrderItemWithId.class)
+          .addProjection(DeliverymanWithPersonOnly.class)
+          .addProjection(DeliveryOrderWithId.class);
     }
 }

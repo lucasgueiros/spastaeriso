@@ -162,6 +162,7 @@ export function OrderItemEvent(props) {return (
 
 export function DeliveryOrder (props) {return (
   <div>
+    Identificador: #{props.entity.id}
     <StandaloneNumberField {...props} property="index" label="Posição"/>
 
     Endereço de entrega:
