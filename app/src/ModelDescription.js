@@ -320,6 +320,11 @@ export default {
   deliveryOrders: {
     relations: [
       {
+        name: 'items',
+        entity: 'orderItems',
+        type: 'manyToMany'
+      },
+      {
         name: 'events',
         entity: 'deliveryOrderEvents',
         type: 'oneToMany'
@@ -330,12 +335,8 @@ export default {
       }
     ]
   },
-  deliveryOrderEvents: {relations: [
-
-  ]},
-  cards: {
-    relations: []
-  },
+  deliveryOrderEvents: {relations: []},
+  cards: {relations: []},
   orderEvents: {
     relations: [],
   },

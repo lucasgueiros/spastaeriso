@@ -80,7 +80,7 @@ export default class Crud extends BasicCrud {
           entity = await this.getCrud(relation).getToManyRelationOperation(relation.name,entity);
           break;
         case 'manyToMany':
-          // ignore
+          entity = await super.getManyToManyLinkRelationOperation(relation.name,entity,relation.entity);
           break;
       }
     }
@@ -118,7 +118,7 @@ export default class Crud extends BasicCrud {
           entity = await this.getCrud(relation).getToManyRelationOperation(relation.name,entity);
           break;
         case 'manyToMany':
-          // ignore
+          entity = await super.getManyToManyLinkRelationOperation(relation.name,entity,relation.entity);
           break;
       }
     }

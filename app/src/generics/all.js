@@ -21,6 +21,7 @@ export {default as StandaloneMultipleOptionSelectField} from './StandaloneMultip
 export {default as RadioComponentSelect} from './RadioComponentSelect.js';
 export {default as ListRelationView} from './ListRelationView.js' ;
 
+export {default as RestrictOptionsList} from './RestrictOptionsList.js';
 export {default as RelationView} from './RelationView.js';
 export {default as LinkSelect} from './LinkSelect.js';
 export {default as FileField} from './FileField.js';
@@ -28,4 +29,6 @@ export {default as DateTimeField} from './DateTimeField.js';
 export {default as StandaloneDateTimeField} from './StandaloneDateTimeField.js';
 export {default as DateTimeFieldWithNowButton} from './DateTimeFieldWithNowButton.js';
 export {default as StandaloneDateTimeFieldWithNowButton} from './StandaloneDateTimeFieldWithNowButton.js';
+export {default as MultipleComponentSelect} from './MultipleComponentSelect.js';
+
 export {NavigatorRelationView} from './NavigatorRelationView.js';

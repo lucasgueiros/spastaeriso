@@ -232,7 +232,7 @@ class Navigator extends React.Component {
     }
     let theChild = <></>;
     if(this.props.children) {
-      theChild = React.cloneElement(this.props.children, {
+      theChild = React.cloneElement(this.props.children, { ...this.props,
         entity: this.state.entities[this.state.entity_index],
         editing: this.state.editing,
         onChange: this.handleInputChange,
@@ -246,7 +246,7 @@ class Navigator extends React.Component {
         prefix: this.props.prefix ? this.props.prefix : "",
       });
     } else {
-      theChild = React.cloneElement(this.props.view, {
+      theChild = React.cloneElement(this.props.view, { ...this.props,
         entity: this.state.entities[this.state.entity_index],
         editing: this.state.editing,
         onChange: this.handleInputChange,

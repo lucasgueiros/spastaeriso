@@ -1,18 +1,28 @@
 import React from 'react';
 
-export default class RadioComponentSelect extends React.Component {
+export default class MultipleComponentSelect extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
       options: this.props.options
     }
+    this.onChange = this.onChange.bind(this);
     if(props.restricted) {
       this.state.options = props.options + "_" + props.restricted;
     }
     if(props.addOptionsList && this.state.options && this.props.optionsLists[this.state.options] == undefined) {
       props.addOptionsList(props.options, this.props.nameField);
     }
+  }
+
+  onChange(event) {
+    const target = event.target;
+    const value = target.value;
+    const name = target.name;
+    const checked = target.checked;
+
+    this.props.manyToManyChange(this.props.prefix + this.props.property, value, checked);
   }
 
   render() {
@@ -28,66 +38,24 @@ export default class RadioComponentSelect extends React.Component {
       selecteds[options.length] = true;
     } else {
       for(let i = 0; i < options.length ; i++) {
-        if(options[i]._links.self.href === this.props.entity[this.props.property]){
+        if(this.props.entity[this.props.property].includes(options[i]._links.self.href)){
           selecteds[i] = true;
         }
       }
     }
 
-    if(!this.props.editing) {
-      if(this.props.entity[this.props.property] == null) {
-        return <>Nenhum{this.props.separator}</>;
-      } else {
-
-        let entity = null;
-        for(let i = 0; i < options.length; i++ ){
-          if(selecteds[i]) {
-            entity = options[i];
-          }
-        }
-        return (
-          <>
-          {
-            React.cloneElement(this.props.view, {...this.props,
-            entity: entity || {},
-            prefix: this.props.prefix + this.props.property + ".",})
-          }
-          {this.props.separator}
-          </>
-        );
-      }
-    }
-
-    let none = <></>;
-    if(!this.props.notNull) {
-      none =<> <input
-                type="radio"
-                name={this.props.prefix + this.props.property}
-                checked={selecteds[options.length]}
-                key={options.length}
-                value={"none"}
-                onChange={this.props.onChange}
-                />
-                Nenhum
-                {this.props.separator}
-                </>
-    }
-
-
-
     return (
       <>
-      {none}
       {options.map((entity, index) =>
         React.cloneElement(this.props.view, {...this.props,
         entity: entity || {},
         children: (
             <input
-              type="radio"
+              type="checkbox"
               name={this.props.prefix + this.props.property}
               checked={selecteds[index]}
               value={options[index]._links.self.href}
-              onChange={this.props.onChange}/>
+              onChange={this.onChange}/>
         ),
         prefix: this.props.prefix + this.props.property + "."})
       )}

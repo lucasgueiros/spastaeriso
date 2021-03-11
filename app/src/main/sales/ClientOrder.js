@@ -1,5 +1,5 @@
-import {InListRelationView,RadioComponentSelect,OptionSelectField,DateTimeFieldWithNowButton,StandaloneDateTimeFieldWithNowButton,TextField,NumberField,LinkSelect,StandaloneTextField,ListRelationView,StandaloneLinkSelect,StandaloneNumberField,Navigator,NavigatorRelationView} from '../../generics/all.js';
-
+import {MultipleComponentSelect,RestrictOptionsList,InListRelationView,RadioComponentSelect,OptionSelectField,DateTimeFieldWithNowButton,StandaloneDateTimeFieldWithNowButton,TextField,NumberField,LinkSelect,StandaloneTextField,ListRelationView,StandaloneLinkSelect,StandaloneNumberField,Navigator,NavigatorRelationView} from '../../generics/all.js';
+import React from 'react';
 import {Transaction} from '../accounting/Transaction.js';
 
 export function ClientOrderNavigator(props) {return (
@@ -43,7 +43,11 @@ export function ClientOrder(props) {
       </ListRelationView>
 
       <h3>Entregas</h3>
-      <NavigatorRelationView {...props} property="deliveries" view={<DeliveryOrder/>}/>
+      <RestrictOptionsList {...props} key={props.entity.client} relation="client" property="addresses" options="addresses" identifier="of_client">
+        <RestrictOptionsList {...props} key={props.entity} property="items" options="orderItems" identifier="of_order">
+          <NavigatorRelationView {...props} property="deliveries" view={<DeliveryOrder/>}/>
+        </RestrictOptionsList>
+      </RestrictOptionsList>
 
       <StandaloneTextField {...props} property="comments" label="Comentários"/>
 
@@ -155,7 +159,8 @@ export function DeliveryOrder (props) {return (
     <StandaloneNumberField {...props} property="index" label="Posição"/>
 
     Endereço de entrega:
-    <RadioComponentSelect {...props} property="deliveryAddress" view={<SimplerAddress/>} options="addresses" separator={<br/>}/>
+
+    <RadioComponentSelect {...props} property="deliveryAddress" view={<SimplerAddress/>} options="addresses" restricted="of_client" separator={<br/>}/>
 
     <StandaloneNumberField {...props} property="deliveryPrice" label="Valor da entrega"/>
 
@@ -169,8 +174,38 @@ export function DeliveryOrder (props) {return (
       <th>Comentários</th>
     </ListRelationView>
 
+    <MultipleComponentSelect {...props} property="items" view={<SimplestOrderItem/>} options="orderItems" restricted="of_order" separator={<br/>}/>
+
   </div>
 );}
+
+export class SimplestOrderItem extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      product: "?"
+    };
+  }
+
+  componentDidMount() {
+    this.props.http(this.props.entity._links.product.href).then((response)=> {
+      this.setState({
+        product: response.data.name
+      });
+    }, (error) => {
+      console.log(error);
+    });
+  }
+
+  render() {
+    return (
+      <>
+        {this.props.children} {this.props.entity.quantity}x {this.state.product}
+        <br/>
+      </>
+    );
+  }
+}
 
 export function SimplerAddress (props) {
   return (
