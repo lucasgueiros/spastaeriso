@@ -40,7 +40,7 @@ export class NavigatorRelationView extends React.Component {
         {addButton}
         {removeButton}
         <button
-            disabled={this.state.index == this.props.entity[this.props.property].length - 1}
+            disabled={this.state.index == this.props.entity[this.props.property].length - 1 || this.props.entity[this.props.property].length == 0}
             onClick={() => this.setState({index: this.state.index+1})}>
           Próximo
         </button>

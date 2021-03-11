@@ -323,6 +323,10 @@ export default {
         name: 'events',
         entity: 'deliveryOrderEvents',
         type: 'oneToMany'
+      },{
+        name: 'deliveryAddress',
+        entity: 'addresses',
+        type: 'manyToOneLink'
       }
     ]
   },

@@ -77,7 +77,7 @@ public class DeliveryOrder {
         @Singular
         private List<OrderItem> items;
         
-	@NonNull
+	//@NonNull
 	@ManyToOne
 	private Address deliveryAddress;
         private BigDecimal deliveryPrice;

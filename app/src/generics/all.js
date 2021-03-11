@@ -18,7 +18,7 @@ export {default as StandaloneCheckboxField} from './StandaloneCheckboxField.js' 
 export {default as StandaloneMultipleLinkSelect} from './StandaloneMultipleLinkSelect.js' ;
 export {default as MultipleOptionSelectField} from './MultipleOptionSelectField.js';
 export {default as StandaloneMultipleOptionSelectField} from './StandaloneMultipleOptionSelectField.js';
-
+export {default as RadioComponentSelect} from './RadioComponentSelect.js';
 export {default as ListRelationView} from './ListRelationView.js' ;
 
 export {default as RelationView} from './RelationView.js';

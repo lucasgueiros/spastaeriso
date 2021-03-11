@@ -1,4 +1,4 @@
-import {InListRelationView,OptionSelectField,DateTimeFieldWithNowButton,StandaloneDateTimeFieldWithNowButton,TextField,NumberField,LinkSelect,StandaloneTextField,ListRelationView,StandaloneLinkSelect,StandaloneNumberField,Navigator,NavigatorRelationView} from '../../generics/all.js';
+import {InListRelationView,RadioComponentSelect,OptionSelectField,DateTimeFieldWithNowButton,StandaloneDateTimeFieldWithNowButton,TextField,NumberField,LinkSelect,StandaloneTextField,ListRelationView,StandaloneLinkSelect,StandaloneNumberField,Navigator,NavigatorRelationView} from '../../generics/all.js';
 
 import {Transaction} from '../accounting/Transaction.js';
 
@@ -154,7 +154,9 @@ export function DeliveryOrder (props) {return (
   <div>
     <StandaloneNumberField {...props} property="index" label="Posição"/>
 
-    <StandaloneLinkSelect {...props} property="deliveryAddress" options="addresses" nameField="street"/>
+    Endereço de entrega:
+    <RadioComponentSelect {...props} property="deliveryAddress" view={<SimplerAddress/>} options="addresses" separator={<br/>}/>
+
     <StandaloneNumberField {...props} property="deliveryPrice" label="Valor da entrega"/>
 
     <StandaloneDateTimeFieldWithNowButton {...props} property="calculatedDeliveryTime" label="Tempo de entrega calculado"/>
@@ -169,6 +171,12 @@ export function DeliveryOrder (props) {return (
 
   </div>
 );}
+
+export function SimplerAddress (props) {
+  return (
+    <><br/>{props.children}{props.entity.street}, {props.entity.number}, {props.entity.neighborhood}</>
+  );
+}
 
 export function DeliveryOrderEvent (props){return (
   <tr>

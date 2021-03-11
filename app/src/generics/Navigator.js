@@ -109,7 +109,12 @@ class Navigator extends React.Component {
     let finished = false;
     while(i >= 0) {
       if(!finished && i === names.length - 1) { // então chegamos ao último
-        entityHierarchy[i][names[i]] = value;
+        if(value === "none") {
+          entityHierarchy[i][names[i]] = "";
+        } else {
+          entityHierarchy[i][names[i]] = value;
+        }
+
         finished = true;
         i--;
       } else if (!finished) {
