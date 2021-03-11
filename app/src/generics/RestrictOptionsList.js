@@ -18,7 +18,10 @@ export default class RestrictOptionsList extends React.Component {
       if(this.props.relation) {
         url = this.props.entity[this.props.relation] + "/" + this.props.property;
       } else {
-        url = this.props.entity._links[this.props.property].href;
+        url = this.props.entity._links[this.props.property].href.replace("{?projection}","");
+      }
+      if(this.props.projection) {
+        url = url + "?projection="+this.props.projection;
       }
       this.props.http.get(url).then((response) => {
         this.setState({list: response.data._embedded[this.props.options]});

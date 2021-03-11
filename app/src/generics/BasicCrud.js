@@ -53,8 +53,11 @@ class BasicCrud {
     return entity;
   }
 
-  async getToManyRelationOperation(relationName, entity) {
-    let relatives = await this.getWithUrlOperation(entity._links[relationName].href);
+  async getToManyRelationOperation(relationName, entity, sufix) {
+    if(sufix === null || sufix === undefined) {
+      sufix = "";
+    }
+    let relatives = await this.getWithUrlOperation(entity._links[relationName].href.replace("{?projection}","") + sufix);
     if(relatives == undefined) {
       return entity;
     }
@@ -67,7 +70,7 @@ class BasicCrud {
 
   async getWithUrlOperation(url) {
     let toReturn = {};
-    await this.http.get(url.replace("{?projection}",""))
+    await this.http.get(url)
       .then( (response) => {
         toReturn = response.data;
       }, (error) => {
@@ -97,9 +100,9 @@ class BasicCrud {
     return toReturn;
   }
 
-  async getRelationWithIndexOperation(index, relationName, entity) {
+  async getRelationWithIndexOperation(index, relationName, entity, sufix) {
     let toReturn;
-    await this.http.get(entity[relationName][index]._links.self.href.replace("{?projection}",""))
+    await this.http.get(entity[relationName][index]._links.self.href.replace("{?projection}","") + sufix)
       .then( (response) => {
         let arrayCopy = [...entity[relationName]];
         arrayCopy[index] = response.data;
@@ -117,9 +120,9 @@ class BasicCrud {
     return toReturn;
   }
 
-  async getRelationOperation(relationName, entity, uriOnly = false) {
+  async getRelationOperation(relationName, entity, uriOnly = false, sufix) {
     let toReturn;
-    await this.http.get(entity._links[relationName].href.replace("{?projection}",""))
+    await this.http.get(entity._links[relationName].href.replace("{?projection}","") + sufix)
       .then( (response) => {
         toReturn = {
           ...entity,
@@ -241,7 +244,7 @@ class BasicCrud {
   async getManyToManyLinkRelationOperation(relation,owner, entity) {
     let links = [];
     let toReturn = {};
-    await this.http.get(owner._links[relation].href)
+    await this.http.get(owner._links[relation].href.replace("{?projection}","") + this.description.sufix)
       .then( (response) => {
         toReturn._ok = true;
         let entities =  response.data._embedded[entity];

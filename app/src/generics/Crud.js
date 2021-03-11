@@ -33,10 +33,10 @@ export default class Crud extends BasicCrud {
         let relation = this.description.relations[j];
         switch(relation.type) {
           case 'oneToOne':
-            entity = await this.getCrud(relation).getRelationOperation(relation.name,entity);
+            entity = await this.getCrud(relation).getRelationOperation(relation.name,entity, false);
             break;
           case 'manyToOne':
-            entity = await this.getCrud(relation).getRelationOperation(relation.name,entity);
+            entity = await this.getCrud(relation).getRelationOperation(relation.name,entity, false);
             break;
           case 'manyToOneLink':
             entity = await this.getCrud(relation).getRelationOperation(relation.name,entity, true);
@@ -54,7 +54,7 @@ export default class Crud extends BasicCrud {
   }
 
   async getRelationOperation (relation, owner, urlOnly) {
-    let entity = await super.getWithUrlOperation(owner._links[relation].href);
+    let entity = await super.getWithUrlOperation(owner._links[relation].href + this.description.sufix);
     if(entity == undefined || entity._links == undefined) {
       console.log(entity);
       return owner;
@@ -71,7 +71,7 @@ export default class Crud extends BasicCrud {
       let relation = this.description.relations[j];
       switch(relation.type) {
         case 'oneToOne':
-          entity = await this.getCrud(relation).getRelationOperation(relation.name,entity);
+          entity = await this.getCrud(relation).getRelationOperation(relation.name,entity, false);
           break;
         case 'manyToOneLink':
           entity = await this.getCrud(relation).getRelationOperation(relation.name,entity, true);
@@ -80,7 +80,7 @@ export default class Crud extends BasicCrud {
           entity = await this.getCrud(relation).getToManyRelationOperation(relation.name,entity);
           break;
         case 'manyToMany':
-          entity = await super.getManyToManyLinkRelationOperation(relation.name,entity,relation.entity);
+          entity = await this.getCrud(relation).getManyToManyLinkRelationOperation(relation.name,entity,relation.entity);
           break;
       }
     }
@@ -91,9 +91,13 @@ export default class Crud extends BasicCrud {
     return owner;
   }
 
+  async getManyToManyLinkRelationOperation(relation,owner, entity) {
+    return await super.getManyToManyLinkRelationOperation(relation,owner, entity, this.description.sufix)
+  }
+
   async getRelationWithIndexOperation(index, relation, owner) {
     let entity;
-    await this.http.get(owner[relation][index]._links.self.href.replace("{?projection}",""))
+    await this.http.get(owner[relation][index]._links.self.href.replace("{?projection}","") + this.description.sufix)
       .then( (response) => {
         entity = response.data;
       }, (error) => {
@@ -109,7 +113,7 @@ export default class Crud extends BasicCrud {
       let relation = this.description.relations[j];
       switch(relation.type) {
         case 'oneToOne':
-          entity = await this.getCrud(relation).getRelationOperation(relation.name,entity);
+          entity = await this.getCrud(relation).getRelationOperation(relation.name,entity, false);
           break;
         case 'manyToOneLink':
           entity = await this.getCrud(relation).getRelationOperation(relation.name,entity, true);
@@ -118,7 +122,7 @@ export default class Crud extends BasicCrud {
           entity = await this.getCrud(relation).getToManyRelationOperation(relation.name,entity);
           break;
         case 'manyToMany':
-          entity = await super.getManyToManyLinkRelationOperation(relation.name,entity,relation.entity);
+          entity = await this.getCrud(relation) .getManyToManyLinkRelationOperation(relation.name,entity,relation.entity);
           break;
       }
     }

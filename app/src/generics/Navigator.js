@@ -242,7 +242,6 @@ class Navigator extends React.Component {
         removeToManyRelation: this.removeToManyRelation,
         manyToManyChange: this.manyToManyChange,
         addOptionsList: this.addOptionsList,
-
         prefix: this.props.prefix ? this.props.prefix : "",
       });
     } else {

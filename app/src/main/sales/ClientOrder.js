@@ -37,15 +37,16 @@ export function ClientOrder(props) {
 
       <h3>Itens</h3>
       <ListRelationView {...props} property="items" row={<OrderItem/>}>
+        <th>#</th>
         <th>Produto</th>
         <th>Quantidade</th>
         <th>Comentários</th>
       </ListRelationView>
 
       <h3>Entregas</h3>
-      <RestrictOptionsList {...props} key={props.entity.client} relation="client" property="addresses" options="addresses" identifier="of_client">
-        <RestrictOptionsList {...props} key={props.entity} property="items" options="orderItems" identifier="of_order">
-          <NavigatorRelationView {...props} property="deliveries" view={<DeliveryOrder/>}/>
+      <RestrictOptionsList {...props} key={props.entity.client} key2={props.entity} relation="client" property="addresses" options="addresses" identifier="of_client">
+        <RestrictOptionsList {...props} key={props.entity._links ? props.entity._links.self.href : ""} property="items" options="orderItems" identifier="of_order" projection="withId">
+          <NavigatorRelationView {...props}  property="deliveries" view={<DeliveryOrder/>}/>
         </RestrictOptionsList>
       </RestrictOptionsList>
 
@@ -77,6 +78,9 @@ export function OrderItem (props) {
     <tr>
       {props.children}
       <td>
+        {props.entity.id}
+      </td>
+      <td>
         <LinkSelect {...props} property="product" options="products"/>
       </td>
       <td>
@@ -90,6 +94,7 @@ export function OrderItem (props) {
       <th></th>
       <th></th>
       <th></th>
+      <th></th>
       <th>Subitens</th>
       <th>Produto</th>
       <th>Quantidade</th>
@@ -97,6 +102,7 @@ export function OrderItem (props) {
     </tr>
     <InListRelationView {...props} property="subItems" before="3" after="3" view={<SimplerOrderItem/>}/>
     <tr>
+      <th></th>
       <th></th>
       <th></th>
       <th></th>
@@ -174,7 +180,14 @@ export function DeliveryOrder (props) {return (
       <th>Comentários</th>
     </ListRelationView>
 
-    <MultipleComponentSelect {...props} property="items" view={<SimplestOrderItem/>} options="orderItems" restricted="of_order" separator={<br/>}/>
+    <MultipleComponentSelect {...props}
+      key={props.entity}
+      property="items"
+      view={<SimplestOrderItem/>}
+      options="orderItems"
+      restricted="of_order"
+      separator={<br/>}
+      />
 
   </div>
 );}
@@ -200,7 +213,7 @@ export class SimplestOrderItem extends React.Component {
   render() {
     return (
       <>
-        {this.props.children} {this.props.entity.quantity}x {this.state.product}
+        {this.props.children} {this.props.entity.quantity}x {this.state.product} #{this.props.entity.id}
         <br/>
       </>
     );

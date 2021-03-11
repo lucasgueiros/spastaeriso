@@ -299,6 +299,7 @@ export default {
     ]
   },
   orderItems: {
+    sufix: '?projection=withId',
     relations: [
       {
         name: 'product',

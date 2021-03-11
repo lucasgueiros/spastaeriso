@@ -99,7 +99,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class SistemaPastaERisoApi {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SistemaPastaERisoApi.class, args);
+            SpringApplication.run(SistemaPastaERisoApi.class, args);
 	}
         
         @Bean
