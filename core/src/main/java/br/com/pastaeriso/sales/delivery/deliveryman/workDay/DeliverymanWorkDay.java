@@ -65,8 +65,6 @@ public class DeliverymanWorkDay {
     private List<Delivery> deliveries;
     
     @ManyToOne
-    private Deliveryman deliveryman;
-    @ManyToOne
     private DeliverymanContract contract;
     
     private String comment;

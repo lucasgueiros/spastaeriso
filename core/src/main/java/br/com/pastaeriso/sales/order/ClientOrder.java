@@ -72,6 +72,7 @@ public class ClientOrder {
 	private Long id;
 	@ManyToOne
 	private Person client;
+        
         @ManyToOne
         private Person clerk;
         
@@ -95,5 +96,9 @@ public class ClientOrder {
 	@OneToMany
         @Singular
 	private List<GenericTransaction> payments;
+        
+        // Delivery?
+        @OneToMany
+        private List<DeliveryOrder> deliveries;
 
 }

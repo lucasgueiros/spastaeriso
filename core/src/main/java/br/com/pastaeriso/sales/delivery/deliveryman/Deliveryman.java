@@ -30,6 +30,9 @@ import javax.persistence.Enumerated;
 
 import br.com.pastaeriso.people.person.Person;
 import br.com.pastaeriso.people.functionary.Functionary;
+import br.com.pastaeriso.sales.delivery.deliveryman.contract.DeliverymanContract;
+import br.com.pastaeriso.sales.delivery.deliveryman.payment.DeliverymanPayment;
+import br.com.pastaeriso.sales.delivery.deliveryman.workDay.DeliverymanWorkDay;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -38,15 +41,36 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import java.time.DayOfWeek;
 import java.util.List;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 @Getter
 @Setter
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode
 @ToString
 @NoArgsConstructor
 @SuperBuilder
-public class Deliveryman extends Functionary {
+public class Deliveryman {
+    
+    @Id
+    @GeneratedValue
+    private Long id;
+    @OneToOne
+    private Person person;
+    @Column
+    @Enumerated
+    @ElementCollection(targetClass = DayOfWeek.class)
+    private List<DayOfWeek> avaliableDays;
+    
+    @OneToMany
+    private List<DeliverymanContract> contracts;
+    @OneToMany
+    private List<DeliverymanPayment> payments;
+    @OneToMany
+    private List<DeliverymanWorkDay> workDays;
     
     private boolean salaryBasedPayment;
 

@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package br.com.pastaeriso.api.sales.delivery.deliveryman.contract;
+package br.com.pastaeriso.api.sales.delivery.deliveryman;
 
 import br.com.pastaeriso.sales.delivery.deliveryman.contract.DeliverymanContract;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -30,6 +30,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 @Repository
 @CrossOrigin
-public interface ContractRepository extends JpaRepository<DeliverymanContract, Long> {
+public interface DeliverymanContractRepository extends JpaRepository<DeliverymanContract, Long> {
 
 }

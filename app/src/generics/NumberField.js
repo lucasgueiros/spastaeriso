@@ -3,7 +3,7 @@ export default function NumberField (props) {
     <>
       <input name={props.prefix + props.property}
       step="any"
-      type="number" value={props.entity[props.property] || ''} onChange={props.onChange} readOnly={!props.editing}></input>
+      type="number" value={props.entity[props.property] == null ? '' : props.entity[props.property]} onChange={props.onChange} readOnly={!props.editing}></input>
     </>
   );
 }

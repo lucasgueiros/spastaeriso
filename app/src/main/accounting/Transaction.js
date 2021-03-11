@@ -34,6 +34,7 @@ export function Transaction (props) {
 function Entry (props) {
   return (
     <>
+      {props.children}
       <td>
         <LinkSelect {...props} property="account" options="accounts"/>
       </td>

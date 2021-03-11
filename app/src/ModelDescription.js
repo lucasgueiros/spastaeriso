@@ -268,6 +268,11 @@ export default {
         type: 'manyToOneLink'
       },
       {
+        name: 'clerk',
+        entity: 'people',
+        type: 'manyToOneLink'
+      },
+      {
         name: 'forecastPaymentModality',
         entity: 'transactionModalities',
         type: 'manyToOneLink'
@@ -286,6 +291,10 @@ export default {
         name: 'events',
         entity: 'orderEvents',
         type: 'oneToMany'
+      },{
+        name: 'deliveries',
+        entity: 'deliveryOrders',
+        type: 'oneToMany'
       }
     ]
   },
@@ -300,13 +309,83 @@ export default {
         name: 'subItems',
         entity: 'orderItems',
         type: 'oneToMany'
+      },
+      {
+        name: 'events',
+        entity: 'orderItemEvents',
+        type: 'oneToMany'
       }
     ],
   },
+  deliveryOrders: {
+    relations: [
+      {
+        name: 'events',
+        entity: 'deliveryOrderEvents',
+        type: 'oneToMany'
+      }
+    ]
+  },
+  deliveryOrderEvents: {relations: [
+
+  ]},
   cards: {
     relations: []
   },
   orderEvents: {
     relations: [],
+  },
+  deliverymen: {
+    relations: [
+      {
+        name: 'person',
+        entity: 'people',
+        type: 'oneToOne'
+      },
+      {
+        name: 'contracts',
+        entity: 'deliverymanContracts',
+        type: 'oneToMany'
+      },
+      {
+        name: 'payments',
+        entity: 'deliverymanPayments',
+        type: 'oneToMany'
+      },
+      {
+        name: 'workDays',
+        entity: 'deliverymanWorkDays',
+        type: 'oneToMany'
+      }
+    ]
+  },
+  deliverymanContracts: {relations: []},
+  deliverymanPayments: {
+    relations: [
+      {
+        name: 'transaction',
+        entity: 'genericTransactions',
+        type: 'oneToOne'
+      },
+      {
+        name: 'workDays',
+        entity: 'deliverymanWorkDays',
+        type: 'oneToMany'
+      }
+    ]
+  },
+  deliverymanWorkDays: {
+    relations: [
+      {
+        name: 'contract',
+        entity: 'deliverymanContracts',
+        type: 'oneToOne'
+      },
+      {
+        name: 'deliveries',
+        entity: 'deliveries',
+        type: 'oneToMany'
+      }
+    ]
   }
 };

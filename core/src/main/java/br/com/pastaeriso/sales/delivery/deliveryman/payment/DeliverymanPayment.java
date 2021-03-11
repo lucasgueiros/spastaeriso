@@ -58,8 +58,7 @@ public class DeliverymanPayment {
     private Long id;
     @OneToOne
     private GenericTransaction transaction;
-    @ManyToOne
-    private Deliveryman deliveryman;
+    
     @OneToMany
     private List<DeliverymanWorkDay> workDays;
     

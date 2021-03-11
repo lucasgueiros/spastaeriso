@@ -7,7 +7,9 @@ import Accounting from './accounting/Accounting.js';
 import People from './people/People.js';
 import Products from './products/Products.js';
 import {ClientOrderNavigator} from './sales/ClientOrder.js';
-import { useKeycloak } from '@react-keycloak/web'
+import { useKeycloak } from '@react-keycloak/web';
+import {Deliveryman} from './sales/Deliveryman.js';
+import {Navigator} from '../generics/all.js';
 
 export function Main(props) {
   return (
@@ -24,11 +26,19 @@ export function Main(props) {
               <li><Link to="/accounting">Finanças</Link></li>
               <li><Link to="/people">Pessoas</Link></li>
               <li><Link to="/products">Produtos</Link></li>
-              <li><Link to="/orders">Pedidos</Link></li>
+              <li>
+                <Link to="/orders">Pedidos</Link>
+                <ul>
+                  <li><Link to="/orders/deliveryman">Entregadores</Link></li>
+                </ul>
+              </li>
             </ul>
           </nav>
           <div>
             <Switch>
+              <Route path="/orders/deliveryman">
+                <Navigator {...props} entity="deliverymen" view={<Deliveryman/>}/>
+              </Route>
               <Route path="/orders">
                 <ClientOrderNavigator {...props}/>
               </Route>

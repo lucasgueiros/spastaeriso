@@ -16,6 +16,8 @@ export {default as StandaloneNumberField} from './StandaloneNumberField.js' ;
 export {default as StandaloneDateField} from './StandaloneDateField.js' ;
 export {default as StandaloneCheckboxField} from './StandaloneCheckboxField.js' ;
 export {default as StandaloneMultipleLinkSelect} from './StandaloneMultipleLinkSelect.js' ;
+export {default as MultipleOptionSelectField} from './MultipleOptionSelectField.js';
+export {default as StandaloneMultipleOptionSelectField} from './StandaloneMultipleOptionSelectField.js';
 
 export {default as ListRelationView} from './ListRelationView.js' ;
 
@@ -26,3 +28,4 @@ export {default as DateTimeField} from './DateTimeField.js';
 export {default as StandaloneDateTimeField} from './StandaloneDateTimeField.js';
 export {default as DateTimeFieldWithNowButton} from './DateTimeFieldWithNowButton.js';
 export {default as StandaloneDateTimeFieldWithNowButton} from './StandaloneDateTimeFieldWithNowButton.js';
+export {NavigatorRelationView} from './NavigatorRelationView.js';

@@ -73,9 +73,6 @@ public class DeliveryOrder {
         @Builder.Default
 	private Integer index = 1;
         
-        @ManyToOne
-        private ClientOrder order;
-        
         @OneToMany
         @Singular
         private List<OrderItem> items;

@@ -71,16 +71,18 @@ export default class InListRelationView extends React.Component {
 
             <tr key={index}>
               {before}
-              <td>
-                <input
-                  type="checkbox"
-                  name={index + "._selected"}
-                  checked={this.state.selecteds[index]}
-                  onChange={(event) => this.handleSelectedChange(event,index)}>
-                </input>
-              </td>
               {React.cloneElement(this.props.view, {...this.props,
                 entity: entity || {},
+                children: (
+                  <td>
+                    <input
+                      type="checkbox"
+                      name={index + "._selected"}
+                      checked={this.state.selecteds[index]}
+                      onChange={(event) => this.handleSelectedChange(event,index)}>
+                    </input>
+                  </td>
+                ),
                 prefix: this.props.prefix + this.props.property + "." + index + "."})}
               {after}
             </tr>);

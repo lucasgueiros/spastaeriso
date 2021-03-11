@@ -59,10 +59,9 @@ public class DeliverymanContract {
         
         private BigDecimal paymentForDelivery;
 	private BigDecimal minimumCiclePayment;
+        private BigDecimal fixedPaymentForCycle;
 	private Integer daysPerCycle;
         
-	private String coment;
+	private String comments;
         
-	@ManyToOne
-	private Deliveryman deliveryman;
 }
