@@ -19,7 +19,7 @@ Funcionando:
 Em desenvolvimento:
  - Calcular custo dos produtos
  - Replacements (Units e Inputs)
- - Revisão da classe Card 
+ - Revisão da classe Card
  - Melhorar a parte de enderço e contato (para os clientes!)
  - Salvar comprovantes de transações e compras
  - Toda a parte de pedidos (veja abaixo)
@@ -29,7 +29,6 @@ Em desenvolvimento:
 
 Planejadas:
  - Functionary e tudo o que vem junto
- - Security (cadastro, login etc.)
  - App para os entregadores
  - Pedidos no salão? Pick-up?
  - Products: harmonization, menu, melhorar description - quais produtos são vendidos?

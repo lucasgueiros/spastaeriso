@@ -1,4 +1,5 @@
-import {StandaloneTextField,StandaloneLinkSelect,Navigator,TextField,LinkSelect,ListRelationView} from '../../generics/all.js';
+import {RestrictOptionsList,NavigatorRelationView,StandaloneTextField,StandaloneLinkSelect,Navigator,TextField,LinkSelect,ListRelationView} from '../../generics/all.js';
+import Address from './address/Address.js';
 
 export function PersonNavigator(props) {
   return (
@@ -26,7 +27,7 @@ function Contact (props){
   );
 }
 
-function Address (props) {
+/*function Address (props) {
   return (
     <tr>
       {props.children}
@@ -61,7 +62,7 @@ function Address (props) {
         <TextField {...props} property="comments" label="Comentários" />
       </td>
     </tr>);
-}
+}*/
 
 export function Person (props){
   return (
@@ -75,21 +76,24 @@ export function Person (props){
         <th>Canal</th>
       </ListRelationView>
 
-      <ListRelationView {...props} property="addresses" row={<Address/>} >
-        <th>Marcador</th>
-        <th>Nome do local</th>
-        <th>Tipo</th>
-        <th>Bairro</th>
-        <th>Rua</th>
-        <th>Número</th>
-        <th>CEP</th>
-        <th>Complemento</th>
-        <th>Ponto de referência</th>
-        <th>Comentários</th>
-      </ListRelationView>
+      <h4>Endereços</h4>
+      <NavigatorRelationView {...props} property="addresses" view={<Address/>} />
 
-      <StandaloneLinkSelect {...props} property="primaryAddress" options="contacts" label="Endereço principal"/>
-      <StandaloneLinkSelect {...props} property="primaryContact" options="addresses" label="Contato principal"/>
+      <RestrictOptionsList {...props} key={props.entity._links ? props.entity._links.self.href + "/primaryAddress" : ""} property="addresses" options="addresses" identifier="of_person">
+        <StandaloneLinkSelect {...props}
+          property="primaryAddress"
+          options="addresses"
+          label="Endereço principal"
+          restricted="of_person"/>
+      </RestrictOptionsList>
+
+      <RestrictOptionsList {...props} key={props.entity._links ? props.entity._links.self.href + "/primaryContact" : ""}  property="contacts" options="contacts" identifier="of_person">
+        <StandaloneLinkSelect {...props}
+          property="primaryContact"
+          options="contacts"
+          label="Contato principal"
+          restricted="of_person"/>
+      </RestrictOptionsList>
 
     </>
   );

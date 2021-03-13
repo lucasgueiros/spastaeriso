@@ -230,12 +230,12 @@ export default {
     {
       name: 'primaryAddress',
       entity: 'addresses',
-      type: 'oneToOneLink'
+      type: 'manyToOneLink'
     },
     {
       name: 'primaryContact',
       entity: 'contacts',
-      type: 'oneToOneLink'
+      type: 'manyToOneLink'
     },
   ]},
   pruducedProducts: { relations: [
