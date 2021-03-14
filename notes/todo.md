@@ -1,14 +1,21 @@
- - Como lidar com pedidos cancelados?
-	- CancelRequest: data, pedido, canal, justificativa
-  Em ordem:
+Em ordem:
 
 Para o sistema básico
- 1 - Subtotal e total nos pedidos
  2 - Replacements (Units e Inputs)
- 3 - Exportar pedido (para WhatsApp)
- 4 - Melhorar a parte de enderço e contato (para os clientes!)
- 5 - Transaction Voucher e Pruchase NFCE
- 6 - Pedido -> Gastos de insumos
+ 5 - Pruchase NFCE -> Transformar em Transaction Voucher, mas manter alguma forma inteligente de deixar a NFe
+
+Para terminar o básico de pedidos
+
+ 3 - Exportar pedido para WhatsApp
+ 1 - Subtotal e total nos pedidos
+ 6 - Pedido -> registrar automaticamente o gasto de insumos
+ 7 - Preço por deliveryman e por bairro
+ 8 - Status de Pedido -> Cancelamento aceito, cancelado pelo usuário, cancelado pela pizzaria etc.
+
+Pedidos espeicias:
+ - Integração Aiquefome
+ - Emitir nota fiscal eletrônica
+ - Recupear automaticamente as notas fiscais por CNPJ
 
 Para o sistema avançado
  9 - Melhorar as listas (reordenar mais fácil, colocar automaticamente o index etc.)
@@ -18,9 +25,6 @@ Para o sistema avançado
  4 - Pedidos no salão? Pick-up?
  5 - Products: harmonization, menu, melhorar description - quais produtos são vendidos?
  6 - Head-less CMS!!
- 7 - Integrações (banco, ifood, nfe, telegram etc.)
- 8 - Website completo
+ 7 - Integrações (maquininha e conta associada, telegram etc.)
+ 8 - Website de divulgação
  9 - Fazer pedidos via web
-
-Outras coisas:
- - Preço por deliveryman e por bairro
