@@ -93,7 +93,17 @@ class ListView extends React.Component {
 
   handleInputChange(event) {
     const target = event.target;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
+    let value = "";
+    switch (target.type) {
+      case 'checkbox':
+        value = target.checked;
+        break;
+      case 'file':
+        value = target.files[0];
+        break;
+      default:
+        value = target.value;
+    }
     const name = target.name;
 
     // dividindo o nome para encontrar subobjetos

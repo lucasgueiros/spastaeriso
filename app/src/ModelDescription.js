@@ -36,8 +36,16 @@ export default {
         name: 'entries',
         entity: 'entries',
         type: 'oneToMany'
+      },{
+        name: 'voucher',
+        entity: 'transactionVouchers',
+        type: 'oneToOneFileUpload',
+        property: 'voucher',
       }
     ]
+  },
+  transactionVouchers: {
+    relations: [],
   },
   transactionModalities: { relations: []},
   entries: { relations: [

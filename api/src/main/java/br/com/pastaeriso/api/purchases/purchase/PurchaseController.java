@@ -31,7 +31,7 @@ import br.com.pastaeriso.accounting.transaction.modality.TransactionModality;
 import br.com.pastaeriso.api.accounting.account.AccountRepository;
 import br.com.pastaeriso.api.accounting.card.CardRepository;
 import br.com.pastaeriso.api.accounting.entry.EntryRepository;
-import br.com.pastaeriso.api.accounting.transaction.modality.TransactionModalityRepository;
+import br.com.pastaeriso.api.accounting.transaction.TransactionModalityRepository;
 import br.com.pastaeriso.api.integrations.nfe.NfeProc;
 import br.com.pastaeriso.api.purchases.provider.ProviderRepository;
 import br.com.pastaeriso.api.purchases.purchase.items.PurchaseItemRepository;

@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package br.com.pastaeriso.api.accounting.transaction.voucher;
+package br.com.pastaeriso.api.accounting.transaction;
 
 import br.com.pastaeriso.accounting.transaction.voucher.TransactionVoucher;
 import org.springframework.data.jpa.repository.JpaRepository;

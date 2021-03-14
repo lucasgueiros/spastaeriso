@@ -5,10 +5,10 @@ export default function FileField (props) {
         <input name={props.prefix + props.property} type="file" onChange={props.onChange}></input>
       </>
     );
-  } else if(props.entity && props.entity._links){
+  } else if(props.entity){
     return (
       <>
-        <a href={props.entity._links[props.property].href + "/download"} download>Download</a>
+        <a href={props.entity[props.property] + "/download"} download={true}>Download</a>
       </>
     );
   } else {

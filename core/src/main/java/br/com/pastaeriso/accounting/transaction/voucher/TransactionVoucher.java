@@ -49,6 +49,9 @@ public class TransactionVoucher {
 	@Id
 	@GeneratedValue
 	private Long id;
+        private String contentType;
+        private String fileExtension;
+        
 	@Column
-	private byte [] xml;
+	private byte [] voucher;
 }

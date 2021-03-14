@@ -46,6 +46,11 @@ export default class Crud extends BasicCrud {
             break;
           case 'manyToMany':
             entity = await super.getManyToManyLinkRelationOperation(relation.name,entity,relation.entity);
+          case 'oneToOneFileUpload':
+            entity = {
+              ...entity,
+              [relation.name]: entity._links[relation.name].href,
+            }
         }
       }
       entities[i] = entity;
@@ -150,14 +155,37 @@ export default class Crud extends BasicCrud {
           // ignore
           break;
         case 'oneToMany':
-          entity = await this.getCrud(relation).postToManyRelationOperation(relation.name,entity);
+          entity = await this.getCrud(relation).postToManyRelationOperation(relation.name, entity);
           break;
         case 'manyToMany':
           // ignore
           break;
+        case 'oneToOneFileUpload':
+          entity = await this.fileUpload(relation.name, relation.property, relation.entity, entity);
+          break;
       }
     }
     return super.postOperation(entity);
+  }
+
+  async fileUpload (relation, property, entity, owner) {
+    let file = owner[relation][property];
+
+    let formData = new FormData();
+
+    formData.append("voucher", file);
+
+    let response = await this.http.post("/"+entity+"/upload", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    let toReturn = {
+      ...owner,
+      [relation]: response.data
+    };
+    return toReturn;
   }
 
   async postRelationOperation(relationName, owner) {
@@ -179,6 +207,9 @@ export default class Crud extends BasicCrud {
           break;
         case 'manyToMany':
           // ignore
+          break;
+        case 'oneToOneFileUpload':
+          entity = await this.fileUpload(relation.name, relation.property, relation.entity, entity);
           break;
       }
     }

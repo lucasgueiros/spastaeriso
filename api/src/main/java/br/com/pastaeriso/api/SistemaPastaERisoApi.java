@@ -29,7 +29,7 @@ import br.com.pastaeriso.accounting.transaction.GenericTransaction;
 import br.com.pastaeriso.accounting.transaction.modality.TransactionModality;
 import br.com.pastaeriso.api.accounting.account.AccountRepository;
 import br.com.pastaeriso.api.accounting.entry.EntryRepository;
-import br.com.pastaeriso.api.accounting.transaction.modality.TransactionModalityRepository;
+import br.com.pastaeriso.api.accounting.transaction.TransactionModalityRepository;
 import br.com.pastaeriso.api.people.address.type.AddressTypeRepository;
 import br.com.pastaeriso.api.people.contact.channel.ContactChannelRepository;
 import br.com.pastaeriso.api.purchases.provider.ProviderRepository;
