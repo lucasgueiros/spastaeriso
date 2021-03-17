@@ -14,7 +14,7 @@ function InputPrice (props) {
         <NumberField {...props} property="pricePerUnit"/>
       </td>
       <td>
-        <LinkSelect {...props} property="unit" options="units"/>
+        <LinkSelect {...props} property="unit" options="units" nameField="symbol"/>
       </td>
     </tr>
   );

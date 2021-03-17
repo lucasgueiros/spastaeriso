@@ -26,7 +26,7 @@ function ProductItem (props) {
         <NumberField {...props} property="quantity"/>
       </td>
       <td>
-        <LinkSelect {...props} property="unit" options="units"/>
+        <LinkSelect {...props} property="unit" options="units" nameField="symbol"/>
       </td>
       <td>
         <TextField {...props} property="comment" />

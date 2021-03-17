@@ -97,7 +97,24 @@ export default {
       type: 'manyToOneLink'
     },
   ]},
-  units: { relations: []},
+  units: {
+    relations: [
+      {
+        name: 'quantity',
+        entity: 'unitQuantities',
+        type: 'manyToOneLink'
+      }
+    ]
+  },
+  unitQuantities: {
+    relations: [
+      {
+        name: 'favorite',
+        entity: 'units',
+        type: 'manyToOneLink'
+      }
+    ]
+  },
   recipes: { relations: [
     {
       name: 'works',

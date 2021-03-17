@@ -62,7 +62,7 @@ export function SimplerInventoryMovement (props) {
       </td>
       <td>
         <div>
-          <LinkSelect {...props} property="unit" options="units"/>
+          <LinkSelect {...props} property="unit" options="units" nameField="symbol"/>
         </div>
       </td>
       <td>

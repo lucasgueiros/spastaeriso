@@ -22,7 +22,7 @@ class Item extends React.Component {
         </td>
         <td>
           <div>
-            <LinkSelect {...this.props} property="unit" options="units"/>
+            <LinkSelect {...this.props} property="unit" options="units" nameField="symbol"/>
           </div>
         </td>
         <td>

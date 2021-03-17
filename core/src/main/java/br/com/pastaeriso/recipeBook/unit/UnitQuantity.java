@@ -23,44 +23,64 @@
  */
 package br.com.pastaeriso.recipeBook.unit;
 
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-
-import lombok.EqualsAndHashCode;
+import javax.persistence.OneToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
 @Entity
 @NoArgsConstructor
-@RequiredArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
-@ToString
-@EqualsAndHashCode
-@Builder
-public class Unit {
+@SuperBuilder
+public class UnitQuantity {
+    //VOLUME, WEIGHT, NON_CONVERTIBLE, TIME;
+    @Id
+    @GeneratedValue
+    private Long id;
+    @Column(unique = true, nullable = false)
+    private String name;
+    @OneToOne
+    private Unit favorite;
 
-	@Id
-	@GeneratedValue
-	private Long id;
-	private String name;
-        private String pluralizedName;
-        @Column(unique = true, nullable = false)
-        private String symbol;
-	@NonNull
-        @ManyToOne
-	private UnitQuantity quantity;
-	
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 17 * hash + Objects.hashCode(this.id);
+        hash = 17 * hash + Objects.hashCode(this.name);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final UnitQuantity other = (UnitQuantity) obj;
+        if (!Objects.equals(this.name, other.name)) {
+            return false;
+        }
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "UnitQuantity{" + "id=" + id + ", name=" + name + '}';
+    }
+    
 }

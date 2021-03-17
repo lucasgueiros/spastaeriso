@@ -11,6 +11,7 @@ import { useKeycloak } from '@react-keycloak/web';
 import {Deliveryman} from './sales/Deliveryman.js';
 import {Delivery} from './sales/Delivery.js';
 import {Navigator} from '../generics/all.js';
+import {UnitQuantity} from './recipeBook/unit/UnitQuantity.js';
 
 export function Main(props) {
   return (
@@ -22,7 +23,12 @@ export function Main(props) {
           <nav>
             <ul>
               <li><Link to="/">Home</Link></li>
-              <li><Link to="/recipeBook">Livro de Receitas</Link></li>
+              <li>
+                <Link to="/recipeBook">Livro de Receitas</Link>
+                <ul>
+                  <li><Link to="/recipeBook/unitQuantities">Grandezas</Link></li>
+                </ul>
+              </li>
               <li><Link to="/purchases">Compras</Link></li>
               <li><Link to="/accounting">Finanças</Link></li>
               <li><Link to="/people">Pessoas</Link></li>
@@ -52,6 +58,9 @@ export function Main(props) {
               </Route>
               <Route path="/accounting">
                 <Accounting {...props}/>
+              </Route>
+              <Route path="/recipeBook/unitQuantities">
+                <Navigator {...props} entity="unitQuantities" view={<UnitQuantity/>}/>
               </Route>
               <Route path="/recipeBook">
                 <RecipeBook {...props}/>

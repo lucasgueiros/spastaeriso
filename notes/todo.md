@@ -3,6 +3,10 @@ Em ordem:
 Para o sistema básico
  2 - Replacements (Units e Inputs)
  5 - Pruchase NFCE -> Transformar em Transaction Voucher, mas manter alguma forma inteligente de deixar a NFe
+   - Download quando não tem nada para baixar! TransactionVoucher
+baixar arquivo com o detalhamento de todos os custos usados, e outro arquivo com o histórico de preços de cada insumo
+relatório financeiro. O que precisa?
+filtros e paginação
 
 Para terminar o básico de pedidos
 

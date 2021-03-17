@@ -37,16 +37,21 @@ import br.com.pastaeriso.recipeBook.recipe.Recipe;
 import br.com.pastaeriso.recipeBook.recipe.ingredient.Ingredient;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
+import java.util.Optional;
+import org.keycloak.adapters.spi.HttpFacade;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -66,11 +71,24 @@ public class ProductController {
     
     @Transactional
     private BigDecimal calculateCost(Product product) {
+        ProductCostReport report = generateProductCostReport(product);
+        return report.cost;
+    }
+    
+    @Transactional
+    private ProductCostReport generateProductCostReport(Product product) {
+        ProductCostReport report = new ProductCostReport();
+        report.started = LocalDateTime.now();
+        report.product = product.getName();
         
         List<Item> items = new LinkedList<>(product.getItems());
         if(items.isEmpty()) {
-            return BigDecimal.ZERO;
+            report.explanation = "A lista de itens está vazia";
+            report.generatedAt = LocalDateTime.now();
+            report.cost = BigDecimal.ZERO;
+            return report;
         }
+        report.itemsOriginalSize = items.size();
         
         
         // gere a lista completa de itens
@@ -172,9 +190,15 @@ public class ProductController {
         
         // pegue o salário hora e calcule o salário minuto
         Map<FunctionaryFunction,BigDecimal> salarioMinuto = new HashMap<>();
+        report.salaryValues = new HashMap<>();
         List<FunctionaryContractTemplate> templates = functionaryContractTemplateRepository.findAll();
         for(FunctionaryContractTemplate template : templates) {
-            salarioMinuto.put(template.getFunction(), template.getHourSalary().divide(new BigDecimal(60), 10, RoundingMode.CEILING));
+            FunctionaryFunction ff = template.getFunction();
+            BigDecimal sm = template.getHourSalary().divide(new BigDecimal(60), 10, RoundingMode.CEILING);
+            salarioMinuto.put(ff, sm);
+            ProductCostReport.SalaryValue sv = new ProductCostReport.SalaryValue();
+            sv.salarioMinuto = sm;
+            report.salaryValues.put(ff.getName(), sv);
         }
         
         // agora calcule o custo de trabalho
@@ -183,9 +207,18 @@ public class ProductController {
         while(workIterator.hasNext()) {
             FunctionaryWorkingTime work = workIterator.next();
             if(salarioMinuto.containsKey(work.getFunctionaryFunction())) {
-                total = total.add(salarioMinuto.get(work.getFunctionaryFunction()).multiply(new BigDecimal(work.getMinutes())));
+                BigDecimal timeWorked = new BigDecimal(work.getMinutes());
+                BigDecimal subtotal = salarioMinuto.get(work.getFunctionaryFunction()).multiply(timeWorked);
+                total = total.add(subtotal);
+                String function = work.getFunctionaryFunction().getName();
+                ProductCostReport.SalaryValue sv = report.salaryValues.get(function);
+                sv.tempoTrabalhado = timeWorked;
+                sv.subtotal = subtotal;
+                sv.totalAfter = total;
+                report.salaryValues.put(function, sv);
             }
         }
+        
         
         // calcules os preços
         Map<Input,PurchaseItemController.SimplerQuantity> prices = purchaseItemController.updateBalance();
@@ -212,7 +245,9 @@ public class ProductController {
             }
         }
         
-        return total;
+        report.generatedAt = LocalDateTime.now();
+        report.cost = total;
+        return report;
     }
 
     public class TableRow {
@@ -229,6 +264,19 @@ public class ProductController {
 
 
 
+    }
+    
+    @GetMapping("/products/{id}/costReport")
+    @Transactional
+    public ResponseEntity<ProductCostReport> costReport(@PathVariable("id") Long id) {
+        Optional<Product> optional = repository.findById(id);
+        if(optional.isPresent()) {
+            Product product = optional.get();
+            ProductCostReport report = generateProductCostReport(product);
+            return ResponseEntity.ok().body(report);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @GetMapping("/products/costs")

@@ -41,7 +41,7 @@ import br.com.pastaeriso.purchases.provider.Provider;
 import br.com.pastaeriso.purchases.purchase.Purchase;
 import br.com.pastaeriso.purchases.purchase.items.PurchaseItem;
 import br.com.pastaeriso.recipeBook.input.Input;
-import br.com.pastaeriso.recipeBook.unit.Quantity;
+import br.com.pastaeriso.recipeBook.unit.UnitQuantity;
 import br.com.pastaeriso.recipeBook.unit.Unit;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -67,6 +67,7 @@ import br.com.pastaeriso.api.recipeBook.item.ItemRepository;
 import br.com.pastaeriso.api.recipeBook.recipe.RecipeRepository;
 import br.com.pastaeriso.api.recipeBook.recipe.ingredient.IngredientRepository;
 import br.com.pastaeriso.api.recipeBook.recipe.intruction.InstructionRepository;
+import br.com.pastaeriso.api.recipeBook.unit.UnitQuantityRepository;
 import br.com.pastaeriso.api.sales.order.ClientOrderRepository;
 import br.com.pastaeriso.people.address.neighborhoods.Neighborhood;
 import br.com.pastaeriso.people.address.type.AddressType;
@@ -167,18 +168,42 @@ public class SistemaPastaERisoApi {
         private OrderItemRepository orderProductRepository;
         @Autowired
         private ClientOrderRepository clientOrderRepository;
+        @Autowired
+        private UnitQuantityRepository unitQuantityRepository;
         
         @Autowired
         private PurchaseRepository purchaseRepository;
         @PostConstruct
         public void insertToDatabase() {
             // BASIC DATA
-            Unit unit1 = this.unitRepository.save(Unit.builder().name("kg").quantity(Quantity.WEIGHT).favorite(true).build());
-            Unit unit2 = this.unitRepository.save(new Unit("L", Quantity.VOLUME));
-            Unit unit3 = this.unitRepository.save(Unit.builder().name("mL").quantity(Quantity.VOLUME).favorite(true).build());
-            Unit unit4 = this.unitRepository.save(new Unit("UN", Quantity.NON_CONVERTIBLE));
-            Unit unit5 = this.unitRepository.save(new Unit("min", Quantity.TIME));
-            Unit unit6 = this.unitRepository.save(new Unit("g", Quantity.WEIGHT));
+            
+            UnitQuantity quantityVolume = UnitQuantity.builder().name("volume").build();
+            UnitQuantity quantityPeso = UnitQuantity.builder().name("peso").build();
+            UnitQuantity quantityTempo = UnitQuantity.builder().name("tempo").build();
+            UnitQuantity quantityOutros = UnitQuantity.builder().name("outros").build();
+            
+            quantityVolume = this.unitQuantityRepository.save(quantityVolume);
+            quantityPeso = this.unitQuantityRepository.save(quantityPeso);
+            quantityTempo = this.unitQuantityRepository.save(quantityTempo);
+            quantityOutros = this.unitQuantityRepository.save(quantityOutros);
+            
+            
+            Unit unitkg = this.unitRepository.save(Unit.builder().pluralizedName("quilogramas").name("quilograma").symbol("kg").quantity(quantityPeso).build());
+            Unit unitL = this.unitRepository.save(Unit.builder().name("litro").pluralizedName("litros").symbol("L").quantity(quantityVolume).build());
+            Unit unitmL = this.unitRepository.save(Unit.builder().name("mililitro").pluralizedName("mililitros").symbol("mL").quantity(quantityVolume).build());
+            Unit unitUN = this.unitRepository.save(Unit.builder().name("unidade").pluralizedName("unidades").symbol("UN").quantity(quantityPeso).build());
+            Unit unitmin = this.unitRepository.save(Unit.builder().name("minuto").pluralizedName("minutos").symbol("min").quantity(quantityTempo).build());
+            Unit unitg = this.unitRepository.save(Unit.builder().name("grama").pluralizedName("gramas").symbol("g").quantity(quantityPeso).build());
+            
+            quantityPeso.setFavorite(unitg);
+            quantityOutros.setFavorite(unitUN);
+            quantityTempo.setFavorite(unitmin);
+            quantityVolume.setFavorite(unitmL);
+            
+            quantityVolume = this.unitQuantityRepository.save(quantityVolume);
+            quantityPeso = this.unitQuantityRepository.save(quantityPeso);
+            quantityTempo = this.unitQuantityRepository.save(quantityTempo);
+            quantityOutros = this.unitQuantityRepository.save(quantityOutros);
             
             Input input1 = this.inputRepository.save(new Input("Tomate"));
             Input input2 = this.inputRepository.save(new Input("Cebola"));
@@ -276,14 +301,14 @@ public class SistemaPastaERisoApi {
             
             InventoryMovement inventoryMovement1 = InventoryMovement.builder()
                     .input(input1)
-                    .unit(unit1)
+                    .unit(unitkg)
                     .quantity(new BigDecimal(10))
                     .build();
             inventoryMovementEventHandler.handleBeforeCreate(inventoryMovement1);
             inventoryMovement1 = inventoryMovementRepository.save(inventoryMovement1);
             InventoryMovement inventoryMovement2 = InventoryMovement.builder()
                     .input(input2)
-                    .unit(unit2)
+                    .unit(unitL)
                     .quantity(new BigDecimal(20))
                     .build();
             inventoryMovementEventHandler.handleBeforeCreate(inventoryMovement2);
@@ -311,10 +336,10 @@ public class SistemaPastaERisoApi {
                            .build());
             
             // Ingredients
-            Ingredient ingredient1 = Ingredient.builder().index(1).input(input5).quantity(new BigDecimal(1)).unit(unit4).build();
-            Ingredient ingredient2 = Ingredient.builder().index(2).input(input6).quantity(new BigDecimal(1)).unit(unit1).build();
-            Ingredient ingredient3 = Ingredient.builder().index(3).input(input7).quantity(new BigDecimal(5)).unit(unit1).build();
-            Ingredient ingredient4 = Ingredient.builder().index(4).input(input9).unit(unit4).quantity(new BigDecimal(5)).build();
+            Ingredient ingredient1 = Ingredient.builder().index(1).input(input5).quantity(new BigDecimal(1)).unit(unitUN).build();
+            Ingredient ingredient2 = Ingredient.builder().index(2).input(input6).quantity(new BigDecimal(1)).unit(unitkg).build();
+            Ingredient ingredient3 = Ingredient.builder().index(3).input(input7).quantity(new BigDecimal(5)).unit(unitkg).build();
+            Ingredient ingredient4 = Ingredient.builder().index(4).input(input9).unit(unitUN).quantity(new BigDecimal(5)).build();
             
             ingredient1 = ingredientRepository.save(ingredient1);
             ingredient2 = ingredientRepository.save(ingredient2);
@@ -330,7 +355,7 @@ public class SistemaPastaERisoApi {
             instruction3 = instructionRepository.save(instruction3);
             
             // Outuput
-            Item item1 = Item.builder().input(input8).unit(unit4).quantity(BigDecimal.ONE).build();
+            Item item1 = Item.builder().input(input8).unit(unitUN).quantity(BigDecimal.ONE).build();
             item1 = itemRepository.save(item1);
             
             
@@ -373,7 +398,7 @@ public class SistemaPastaERisoApi {
             
             ProductItem productItem1 = ProductItem.builder()
                     .input(input9)
-                    .unit(unit6)
+                    .unit(unitg)
                     .quantity(BigDecimal.ONE)
                     .recipe(recipe)
                     .comment("--")
