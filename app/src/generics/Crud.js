@@ -46,6 +46,7 @@ export default class Crud extends BasicCrud {
             break;
           case 'manyToMany':
             entity = await super.getManyToManyLinkRelationOperation(relation.name,entity,relation.entity);
+            break;
           case 'oneToOneFileUpload':
             entity = {
               ...entity,
@@ -239,6 +240,9 @@ export default class Crud extends BasicCrud {
         case 'manyToMany':
           // ignore
           break;
+        case 'oneToOneFileUpload':
+          entity = await this.fileUpload(relation.name, relation.property, relation.entity, entity);
+          break;
       }
     }
     return super.patchOperation(url, entity);
@@ -263,6 +267,9 @@ export default class Crud extends BasicCrud {
           break;
         case 'manyToMany':
           // ignore
+          break;
+        case 'oneToOneFileUpload':
+          entity = await this.fileUpload(relation.name, relation.property, relation.entity, entity);
           break;
       }
     }

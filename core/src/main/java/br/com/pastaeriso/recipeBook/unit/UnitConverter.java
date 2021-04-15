@@ -55,6 +55,9 @@ public class UnitConverter {
     @GeneratedValue
     private Long id;
     
+    /**
+     * quantity A * ratio  = quantity B
+     */
     @Column(precision = 25, scale=10)
     private BigDecimal ratio;
     

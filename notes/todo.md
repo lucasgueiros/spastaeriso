@@ -1,22 +1,27 @@
 Em ordem:
 
+Colocando para funcionar
+ - Erro ao alterar uma compra para adicionar um comprovante à transação ou adicionar NF-e à compra
+   - Replacements (Units e Inputs)
+   - baixar arquivo com o detalhamento de todos os custos usados, e outro arquivo com o histórico de preços de cada insumo
+
+Bugs
+ - Erro ao fazer upload de NF-e para processamento
+
 Para o sistema básico
- 2 - Replacements (Units e Inputs)
- 5 - Pruchase NFCE -> Transformar em Transaction Voucher, mas manter alguma forma inteligente de deixar a NFe
    - Download quando não tem nada para baixar! TransactionVoucher
-baixar arquivo com o detalhamento de todos os custos usados, e outro arquivo com o histórico de preços de cada insumo
-relatório financeiro. O que precisa?
-filtros e paginação
+   - relatório financeiro. O que precisa?
+   - filtros e paginação
 
 Para terminar o básico de pedidos
 
- 3 - Exportar pedido para WhatsApp
  1 - Subtotal e total nos pedidos
- 6 - Pedido -> registrar automaticamente o gasto de insumos
+ 3 - Exportar pedido para WhatsApp
+ 6 - Pedido -> registrar o gasto de insumos
  7 - Preço por deliveryman e por bairro
  8 - Status de Pedido -> Cancelamento aceito, cancelado pelo usuário, cancelado pela pizzaria etc.
 
-Pedidos espeicias:
+Pedidos especias: (v2.0)
  - Integração Aiquefome
  - Emitir nota fiscal eletrônica
  - Recupear automaticamente as notas fiscais por CNPJ
