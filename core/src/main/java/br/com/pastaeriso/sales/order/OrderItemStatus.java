@@ -10,5 +10,5 @@ package br.com.pastaeriso.sales.order;
  * @author lucas
  */
 public enum OrderItemStatus {
-    UNREADY, PREPARING, READY, CANCELLED;
+    REQUESTED, PREPARING, READY, CANCELLED;
 }

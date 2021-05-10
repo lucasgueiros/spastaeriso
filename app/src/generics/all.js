@@ -34,3 +34,5 @@ export {default as StandaloneTextareaField} from './StandaloneTextareaField.js';
 export {default as TextareaField} from './TextareaField.js';
 export {default as Events} from './Events.js';
 export {NavigatorRelationView} from './NavigatorRelationView.js';
+
+export {FilterOptionsList} from './FilterOptionsList.js';

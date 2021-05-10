@@ -32,10 +32,12 @@ import javax.persistence.ManyToOne;
 
 import br.com.pastaeriso.products.product.Product;
 import br.com.pastaeriso.purchases.inventory.InventoryMovement;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -72,5 +74,13 @@ public class OrderItem {
     
     @OneToMany
     private List<OrderItem> subItems;
+    
+    @Transient
+    public BigDecimal getSubtotal (LocalDate date) {
+        if(quantity == null  || product == null || date == null ) {
+            return new BigDecimal(0);
+        }
+        return quantity.multiply(product.getPrice(date));
+    }
     
 }

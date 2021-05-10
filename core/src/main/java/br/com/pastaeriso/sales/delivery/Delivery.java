@@ -34,6 +34,7 @@ import javax.persistence.OneToMany;
 
 import br.com.pastaeriso.sales.delivery.deliveryman.Deliveryman;
 import br.com.pastaeriso.sales.order.OrderItem;
+import java.time.LocalDate;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -55,6 +56,7 @@ public class Delivery {
 	private Long id;
 	@ManyToOne
 	private Deliveryman deliveryman;
+        private LocalDate date;
         
         @OneToMany
         private List<DeliveryEvent> events;
