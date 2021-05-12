@@ -1,4 +1,4 @@
-import {FilterOptionsList,StandaloneDateField,MultipleComponentSelect,Events,SufixOptionsList,StandaloneTextareaField,StandaloneLinkSelect} from '../../generics/all.js';
+import {ListRelationView,TextField, NumberField, CheckboxField, FilterOptionsList,StandaloneDateField,MultipleComponentSelect,Events,SufixOptionsList,StandaloneTextareaField,StandaloneLinkSelect} from '../../generics/all.js';
 
 function filterByDate(o, date) {
   let r = false;
@@ -21,7 +21,7 @@ function filterByDate(o, date) {
     }
   }
   return r;
-  
+
 }
 
 export function Delivery (props) {return (
@@ -53,10 +53,29 @@ export function Delivery (props) {return (
       </FilterOptionsList>
     </SufixOptionsList>
 
+    <h4>Descontos</h4>
+    <ListRelationView {...props} property="modifiers" row={<OrderPriceModifier/>}>
+      <th>Valor</th>
+      <th>% ?</th>
+      <th>Inclui frete?</th>
+      <th>Descrição</th>
+    </ListRelationView>
+
     <StandaloneTextareaField {...props} property="comment" label="Comentários"/>
   </>
 );}
 
 export function SimplestDeliveryOrder(props) {return (
   <>{props.children}#{props.entity.id}</>
+);}
+
+export function OrderPriceModifier(props){return (
+  <tr>
+    {props.children}
+    <td><NumberField {...props} property="quantity"/></td>
+    <td><CheckboxField {...props} property="percentage"/></td>
+    <td><CheckboxField {...props} property="applyOnDeliveryFee"/></td>
+    <td><TextField {...props} property="description"/></td>
+  </tr>
+
 );}

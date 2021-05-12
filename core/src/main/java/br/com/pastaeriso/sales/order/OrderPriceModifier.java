@@ -1,7 +1,7 @@
-/* 
+/*
  * The MIT License
  *
- * Copyright 2021 Lucas Dantas Gueiros.
+ * Copyright 2021 lucas.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,43 +21,47 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package br.com.pastaeriso.sales.delivery.deliveryman.contract;
+package br.com.pastaeriso.sales.order;
 
-import java.time.LocalDate;
-
+import java.math.BigDecimal;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import java.math.BigDecimal;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+/**
+ *
+ * @author lucas
+ */
 @Entity
-@NoArgsConstructor
-@RequiredArgsConstructor
 @Getter
 @Setter
-@ToString
 @EqualsAndHashCode
-public class DeliverymanContract {
-	@Id
-	@GeneratedValue
-	private Long id;
-        
-	@NonNull
-	private LocalDate startDate;
-	private LocalDate endDate;
-        
-        private BigDecimal paymentForDelivery;
-	private BigDecimal minimumCiclePayment;
-        private BigDecimal fixedPaymentForCycle;
-	private Integer daysPerCycle;
-        
-	private String comments;
-        
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class OrderPriceModifier {
+    
+    @Id
+    @GeneratedValue
+    private Long id;
+    
+    @NonNull
+    @Column(unique = true)
+    private String description;
+    @Builder.Default
+    private Boolean percentage = false;
+    @Builder.Default
+    private Boolean applyOnDeliveryFee = false;
+    @Builder.Default
+    private BigDecimal quantity = new BigDecimal(0); // % or absolute value, can be negative
 }

@@ -12,6 +12,7 @@ import {Deliveryman} from './sales/Deliveryman.js';
 import {Delivery} from './sales/Delivery.js';
 import {Navigator} from '../generics/all.js';
 import {UnitQuantity} from './recipeBook/unit/UnitQuantity.js';
+import {DeliveryPricesByNeighborhoodListView} from './sales/DeliveryPriceByNeighborhood.js';
 
 export function Main(props) {
   return (
@@ -38,12 +39,16 @@ export function Main(props) {
                 <ul>
                   <li><Link to="/orders/deliveryman">Entregadores</Link></li>
                   <li><Link to="/orders/deliveries">Entregas</Link></li>
+                  <li><Link to="/orders/deliveryPrice">Preço por entrega</Link></li>
                 </ul>
               </li>
             </ul>
           </nav>
           <div>
             <Switch>
+              <Route path="/orders/deliveryPrice">
+                <DeliveryPricesByNeighborhoodListView {...props}/>
+              </Route>
               <Route path="/orders/deliveries">
                 <Navigator {...props} entity="deliveries" view={<Delivery/>}/>
               </Route>

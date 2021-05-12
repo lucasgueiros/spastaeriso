@@ -84,6 +84,11 @@ public class ClientOrder {
 	@OneToMany
         @Singular
 	private List<OrderItem> items;
+        
+        // Descontos e taxas
+        // Não inclui taxa de entrega
+        @OneToMany
+        private List<OrderPriceModifier> modifiers;
 	
 	// Forecast payment
 	@ManyToOne

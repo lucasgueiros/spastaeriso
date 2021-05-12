@@ -320,6 +320,10 @@ export default {
         name: 'deliveries',
         entity: 'deliveryOrders',
         type: 'oneToMany'
+      },{
+        name: 'modifiers',
+        entity: 'orderPriceModifiers',
+        type: 'manyToMany',
       }
     ]
   },
@@ -437,5 +441,15 @@ export default {
       }
     ]
   },
-  deliveryEvents: {relations: []}
+  deliveryEvents: {relations: []},
+  deliveryPricesByNeighborhood: {
+    relations: [
+      {
+        name: 'neighborhood',
+        entity: 'neighborhoods',
+        type: 'manyToOneLink'
+      }
+    ]
+  },
+  orderPriceModifiers: {relations: []}
 };
