@@ -323,7 +323,7 @@ export default {
       },{
         name: 'modifiers',
         entity: 'orderPriceModifiers',
-        type: 'manyToMany',
+        type: 'oneToMany',
       }
     ]
   },

@@ -1,4 +1,4 @@
-import {MultipleComponentSelect,RestrictOptionsList,InListRelationView,RadioComponentSelect,OptionSelectField,DateTimeFieldWithNowButton,StandaloneDateTimeFieldWithNowButton,TextField,NumberField,LinkSelect,StandaloneTextField,ListRelationView,StandaloneLinkSelect,StandaloneNumberField,Navigator,NavigatorRelationView} from '../../generics/all.js';
+import {CheckboxField,MultipleComponentSelect,RestrictOptionsList,InListRelationView,RadioComponentSelect,OptionSelectField,DateTimeFieldWithNowButton,StandaloneDateTimeFieldWithNowButton,TextField,NumberField,LinkSelect,StandaloneTextField,ListRelationView,StandaloneLinkSelect,StandaloneNumberField,Navigator,NavigatorRelationView} from '../../generics/all.js';
 import React from 'react';
 import {Transaction} from '../accounting/Transaction.js';
 
@@ -43,10 +43,18 @@ export function ClientOrder(props) {
         <th>Comentários</th>
       </ListRelationView>
 
+      <h4>Descontos</h4>
+      <ListRelationView {...props} property="modifiers" row={<OrderPriceModifier/>}>
+        <th>Descrição</th>
+        <th>Valor</th>
+        <th>% ?</th>
+        <th>Inclui frete?</th>
+      </ListRelationView>
+
       <h3>Entregas</h3>
       <RestrictOptionsList {...props} key={props.entity.client} key2={props.entity} relation="client" property="addresses" options="addresses" identifier="of_client">
         <RestrictOptionsList {...props} key={props.entity._links ? props.entity._links.self.href : ""} property="items" options="orderItems" identifier="of_order" projection="withId">
-          <NavigatorRelationView {...props}  property="deliveries" view={<DeliveryOrder/>}/>
+          <NavigatorRelationView {...props}  property="deliveries" view={<DeliveryOrder/>} />
         </RestrictOptionsList>
       </RestrictOptionsList>
 
@@ -169,7 +177,24 @@ export function DeliveryOrder (props) {return (
 
     <RadioComponentSelect {...props} property="deliveryAddress" view={<SimplerAddress/>} options="addresses" restricted="of_client" separator={<br/>}/>
 
-    <StandaloneNumberField {...props} property="deliveryPrice" label="Valor da entrega"/>
+    <label htmlFor={props.prefix + 'deliveryPrice'}>Valor de entrega: </label>
+    <input
+    id="deliveryPriceInput"
+    name={props.prefix + 'deliveryPrice'}
+    step="any"
+    type="number" value={props.entity.deliveryPrice == null ? '' : props.entity.deliveryPrice} onChange={props.onChange} readOnly={!props.editing}></input>
+    <button onClick={() => {
+      props.http.get(props.entity.deliveryAddress)
+      .then(
+        (r1) => props.http.get(r1.data._links.neighborhood.href)
+                  .then(
+                    (r2) =>  props.http.get('deliveryPricesByNeighborhood/search/findFirstByNeighborhoodOrderByDateDesc?neighborhood='+r2.data._links.self.href)
+                              .then(
+                                (r) => props.onChange({target: { type: 'number', value: r.data.price , name: props.prefix + 'deliveryPrice'}}))
+                  )
+      )
+
+    }}>Calcular</button>
 
     <StandaloneDateTimeFieldWithNowButton {...props} property="calculatedDeliveryTime" label="Tempo de entrega calculado"/>
     <StandaloneDateTimeFieldWithNowButton {...props} property="forecastedDeliveryTime" label="Tempo de entrega previsto"/>
@@ -249,4 +274,15 @@ export function DeliveryOrderEvent (props){return (
       <NumberField {...props} property="comments"/>
     </td>
   </tr>
+);}
+
+export function OrderPriceModifier(props){return (
+  <tr>
+    {props.children}
+    <td><TextField {...props} property="description"/></td>
+    <td><NumberField {...props} property="quantity"/></td>
+    <td><CheckboxField {...props} property="percentage"/></td>
+    <td><CheckboxField {...props} property="applyOnDeliveryFee"/></td>
+  </tr>
+
 );}

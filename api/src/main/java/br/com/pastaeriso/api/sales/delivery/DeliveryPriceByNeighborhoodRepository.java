@@ -5,7 +5,9 @@
  */
 package br.com.pastaeriso.api.sales.delivery;
 
+import br.com.pastaeriso.people.address.neighborhoods.Neighborhood;
 import br.com.pastaeriso.sales.delivery.DeliveryPriceByNeighborhood;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.stereotype.Repository;
@@ -18,5 +20,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 @RepositoryRestResource (collectionResourceRel = "deliveryPricesByNeighborhood", path = "deliveryPricesByNeighborhood")
 @CrossOrigin
 public interface DeliveryPriceByNeighborhoodRepository extends JpaRepository<DeliveryPriceByNeighborhood,Long>{
+    
+    public Optional<DeliveryPriceByNeighborhood> findFirstByNeighborhoodOrderByDateDesc(Neighborhood neighborhood);
     
 }
