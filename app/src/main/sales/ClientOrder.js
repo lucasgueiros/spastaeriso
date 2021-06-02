@@ -72,9 +72,21 @@ export function ClientOrder(props) {
 }
 
 const Resumo = (props) => {
-  const [resumo, setResumo] = useState('');
+  const [primeiraParte, setPrimeiraParte] = useState('');
+  const [segundaParte, setSegundaParte] = useState('');
+  const [maps, setMaps] = useState('');
+
+  let Resuminho = (props) => <p style={{'white-space': 'pre-line'}}>
+      {primeiraParte}
+      <a href={maps} target="_blank" >Abrir no Google Maps</a><br/>
+      {segundaParte}
+    </p>;
+  if(primeiraParte == '' || segundaParte == '' || maps == '') {
+    Resuminho = (props) => <></>;
+  }
+
   return <>
-    <p style={{'white-space': 'pre-line'}}>{resumo}</p>
+      <Resuminho/>
       <button onClick={async () => {
         let theResumo = 'Pedido no ' + (props.entity._links.self.href.match("[\s\S]+?\/([0-9]+)$")[1]) + '\n\n';
         theResumo = theResumo + 'Cliente: ' + props.entity._client.name + '\n';
@@ -83,6 +95,11 @@ const Resumo = (props) => {
         theResumo = theResumo + 'Endereço de entrega: ' + endereco.street + ', ' + endereco.number + ', ' + endereco.complement + ', ' + bairro + '\n';
         theResumo = theResumo + 'Comentários: ' + endereco.comments + '\n';
 
+        // URL do Google Maps
+        const enderecoCompleto = endereco.street + ', ' + endereco.number + ', ' + endereco.complement + ', ' + bairro + ', Garanhuns, PE';
+        setPrimeiraParte(theResumo);
+        setMaps('https://www.google.com/maps/search/?api=1&query=' + enderecoCompleto.replaceAll(' ','+'));
+        theResumo = '';
         let subtotal = 0;
         for(let i=0;i < props.entity.items.length; i++) {
           let product = (await props.http.get(props.entity.items[i].product)).data;
@@ -106,9 +123,9 @@ const Resumo = (props) => {
         theResumo = theResumo + 'Descontos - ' + subtotalDescontos + '\n';
         let total = subtotal + subtotalEntregas - subtotalDescontos;
         theResumo = theResumo + 'Total - ' + total + '\n';
-        setResumo(theResumo);
+        setSegundaParte(theResumo);
       }}>Resumir</button>
-      <button onClick={() => {navigator.clipboard.writeText(resumo)}}>Copiar resumo para WhatsApp</button><br/>
+      <button onClick={() => {navigator.clipboard.writeText(primeiraParte + '\nMaps: ' + maps + '\n' + segundaParte)}}>Copiar resumo para WhatsApp</button><br/>
   </>;
 }
 
