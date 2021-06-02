@@ -61,6 +61,7 @@ class BasicCrud {
     if(relatives == undefined) {
       return entity;
     }
+    //let _relationName = entity[relationName];
     entity = {...entity, [relationName]: relatives._embedded[this.url]};
     for(let j =0; j < entity[relationName].length; j++) {
       entity = await this.getRelationWithIndexOperation(j,relationName,entity);
@@ -122,16 +123,19 @@ class BasicCrud {
 
   async getRelationOperation(relationName, entity, uriOnly = false, sufix) {
     let toReturn;
+    let _relationName = entity[relationName];
     await this.http.get(entity._links[relationName].href.replace("{?projection}","") + sufix)
       .then( (response) => {
         toReturn = {
           ...entity,
+          ['_' + relationName]: _relationName,
           [relationName]: uriOnly ? response.data._links.self.href : response.data
         }
         toReturn._ok = true;
       }, (error) => {
         toReturn = {
           ...entity,
+          ['_' + relationName]: _relationName,
           [relationName]: uriOnly ? "" : {},
         };
         toReturn._ok = false;
@@ -243,11 +247,12 @@ class BasicCrud {
 
   async getManyToManyLinkRelationOperation(relation,owner, entity) {
     let links = [];
+    let entities = [];
     let toReturn = {};
     await this.http.get(owner._links[relation].href.replace("{?projection}","") + this.description.sufix)
       .then( (response) => {
         toReturn._ok = true;
-        let entities =  response.data._embedded[entity];
+        entities =  response.data._embedded[entity];
         for(let i = 0; i < entities.length; i++) {
           links.push(entities[i]._links.self.href);
         }
@@ -259,6 +264,7 @@ class BasicCrud {
       owner = {
         ...owner,
         ...toReturn,
+        ['_' + relation]: entities,
         [relation]: links,
       }
       return owner;

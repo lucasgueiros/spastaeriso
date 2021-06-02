@@ -1,4 +1,4 @@
-/* 
+/*
  * The MIT License
  *
  * Copyright 2021 Lucas Dantas Gueiros.
@@ -72,36 +72,37 @@ public class ClientOrder {
 	private Long id;
 	@ManyToOne
 	private Person client;
-        
+
         @ManyToOne
         private Person clerk;
-        
+        private BigDecimal total;
+
         @OneToMany
         @Singular
         private List<OrderEvent> events;
-        
+
         // Pedido
 	@OneToMany
         @Singular
 	private List<OrderItem> items;
-        
+
         // Descontos e taxas
         // Não inclui taxa de entrega
         @OneToMany
         private List<OrderPriceModifier> modifiers;
-	
+
 	// Forecast payment
 	@ManyToOne
 	private TransactionModality forecastPaymentModality;
 	private BigDecimal forecastChangeTo;
-	
+
 	private String comments;
-	
+
 	// Real payment
 	@OneToMany
         @Singular
 	private List<GenericTransaction> payments;
-        
+
         // Delivery?
         @OneToMany
         private List<DeliveryOrder> deliveries;

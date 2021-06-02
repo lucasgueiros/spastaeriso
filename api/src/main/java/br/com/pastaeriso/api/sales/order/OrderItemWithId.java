@@ -27,4 +27,5 @@ public interface OrderItemWithId {
     public Product getProduct();
     public BigDecimal getQuantity();
     public List<OrderItem> getSubItems();
+    public BigDecimal getSubtotal();
 }

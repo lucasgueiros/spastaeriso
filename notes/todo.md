@@ -1,25 +1,28 @@
 Em ordem:
 
+Apenas pedidos:
+ - Adicionar cliente, contato e endereço na página de Pedidos
+ - Uma forma melhor de selecionar o cliente, quando a lista aumentar pode ficar difícil
+ - Criar uma Delivery e adicionar a DeliveryOrder a ela (uma por entrega mesmo)
+ - Descontos por porcentagem
+ - Filtrar os pedidos por data igual no sistema antigo
+
+menos urgente:
+6 - Pedido -> registrar o gasto de insumos (precisa mesmo?)
+7 - Preço por deliveryman e por bairro
+8 - Status de Pedido -> Cancelamento aceito, cancelado pelo usuário, cancelado pela pizzaria etc.
+
 Colocando para funcionar
  - Erro ao alterar uma compra para adicionar um comprovante à transação ou adicionar NF-e à compra
    - Replacements (Units e Inputs)
-   - baixar arquivo com o detalhamento de todos os custos usados, e outro arquivo com o histórico de preços de cada insumo
+   - baixar arquivo com o detalhamento de todos os custos usados
+   - baixar arquivo com o histórico de preços de um insumo
 
 Bugs
  - Erro ao fazer upload de NF-e para processamento
 
 Para o sistema básico
-   - Download quando não tem nada para baixar! TransactionVoucher
    - relatório financeiro. O que precisa?
-   - filtros e paginação
-
-Para terminar o básico de pedidos
-
- 1 - Subtotal e total nos pedidos
- 3 - Exportar pedido para WhatsApp
- 6 - Pedido -> registrar o gasto de insumos
- 7 - Preço por deliveryman e por bairro
- 8 - Status de Pedido -> Cancelamento aceito, cancelado pelo usuário, cancelado pela pizzaria etc.
 
 Pedidos especias: (v2.0)
  - Integração Aiquefome

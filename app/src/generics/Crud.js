@@ -68,6 +68,7 @@ export default class Crud extends BasicCrud {
     if(urlOnly) {
       owner = {
         ...owner,
+        ['_' + relation]: entity,
         [relation]: entity._links.self.href,
       }
       return owner;

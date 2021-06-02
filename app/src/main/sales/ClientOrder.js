@@ -1,5 +1,5 @@
 import {CheckboxField,MultipleComponentSelect,RestrictOptionsList,InListRelationView,RadioComponentSelect,OptionSelectField,DateTimeFieldWithNowButton,StandaloneDateTimeFieldWithNowButton,TextField,NumberField,LinkSelect,StandaloneTextField,ListRelationView,StandaloneLinkSelect,StandaloneNumberField,Navigator,NavigatorRelationView} from '../../generics/all.js';
-import React from 'react';
+import React,{useState,useEffect} from 'react';
 import {Transaction} from '../accounting/Transaction.js';
 
 export function ClientOrderNavigator(props) {return (
@@ -12,6 +12,8 @@ export function ClientOrder(props) {
   return (
     <>
       <StandaloneLinkSelect {...props} property="client" label="Cliente" options="people"/>
+      <AddCliente {...props}/>
+
       <StandaloneTextField {...props} property="comments" label="Comentários"/>
 
       <StandaloneLinkSelect {...props} property="clerk" label="Atendente" options="people"/>
@@ -41,28 +43,172 @@ export function ClientOrder(props) {
         <th>Produto</th>
         <th>Quantidade</th>
         <th>Comentários</th>
+        <th></th>
+        <th></th>
+        <th></th>
       </ListRelationView>
 
       <h4>Descontos</h4>
       <ListRelationView {...props} property="modifiers" row={<OrderPriceModifier/>}>
         <th>Descrição</th>
         <th>Valor</th>
-        <th>% ?</th>
-        <th>Inclui frete?</th>
       </ListRelationView>
 
       <h3>Entregas</h3>
-      <RestrictOptionsList {...props} key={props.entity.client} key2={props.entity} relation="client" property="addresses" options="addresses" identifier="of_client">
-        <RestrictOptionsList {...props} key={props.entity._links ? props.entity._links.self.href : ""} property="items" options="orderItems" identifier="of_order" projection="withId">
+      <AddEndereco {...props}/>
+      <RestrictOptionsList {...props} key={props.entity._links ? props.entity._links.self.href : ""} property="items" options="orderItems" identifier="of_order" projection="withId">
+        <RestrictOptionsList {...props} key={props.entity.client} key2={props.entity} relation="client" property="addresses" options="addresses" identifier="of_client">
           <NavigatorRelationView {...props}  property="deliveries" view={<DeliveryOrder/>} />
         </RestrictOptionsList>
       </RestrictOptionsList>
 
       <StandaloneTextField {...props} property="comments" label="Comentários"/>
 
+      <h3>Resumo</h3>
+      <Resumo {...props}/>
 
     </>
   );
+}
+
+const Resumo = (props) => {
+  const [resumo, setResumo] = useState('');
+  return <>
+    <p style={{'white-space': 'pre-line'}}>{resumo}</p>
+      <button onClick={async () => {
+        let theResumo = 'Pedido no ' + (props.entity._links.self.href.match("[\s\S]+?\/([0-9]+)$")[1]) + '\n\n';
+        theResumo = theResumo + 'Cliente: ' + props.entity._client.name + '\n';
+        let endereco = props.entity.deliveries[0]._deliveryAddress;
+        let bairro = (await props.http.get(endereco._links.neighborhood.href)).data.name;
+        theResumo = theResumo + 'Endereço de entrega: ' + endereco.street + ', ' + endereco.number + ', ' + endereco.complement + ', ' + bairro + '\n';
+        theResumo = theResumo + 'Comentários: ' + endereco.comments + '\n';
+
+        let subtotal = 0;
+        for(let i=0;i < props.entity.items.length; i++) {
+          let product = (await props.http.get(props.entity.items[i].product)).data;
+          let subtotalItem = product.price * props.entity.items[i].quantity;
+          theResumo = theResumo + product.name + ' - ' + subtotalItem + '\n';
+          subtotal = subtotal + subtotalItem;
+        }
+        theResumo = theResumo + 'Subtotal - R$' + subtotal + '\n';
+        let subtotalEntregas = 0;
+        for(let i=0;i < props.entity.deliveries.length; i++){
+          let entrega = props.entity.deliveries[i];
+          subtotalEntregas += entrega.deliveryPrice;
+        }
+        theResumo = theResumo + 'Frete - ' + subtotalEntregas + '\n';
+
+        let subtotalDescontos = 0;
+        for(let i=0;i < props.entity.modifiers.length; i++){
+          let desconto = props.entity.modifiers[i];
+          subtotalDescontos += desconto.quantity;
+        }
+        theResumo = theResumo + 'Descontos - ' + subtotalDescontos + '\n';
+        let total = subtotal + subtotalEntregas - subtotalDescontos;
+        theResumo = theResumo + 'Total - ' + total + '\n';
+        setResumo(theResumo);
+      }}>Resumir</button>
+      <button onClick={() => {navigator.clipboard.writeText(resumo)}}>Copiar resumo para WhatsApp</button><br/>
+  </>;
+}
+
+const AddCliente = (props) => {
+  const [nome,setNome] = useState('');
+  const [message, setMessage] = useState('');
+  if(!props.editing) {
+    return <></>;
+  }
+  return <>
+    <label htmlFor="nome">Nome:</label>
+    <input name="nome" value={nome} onChange={(e) => setNome(e.target.value)} />
+    <button onClick={(e) => {
+      props.http.post('/people',{name: nome})
+      .then((d) => setMessage(d),(e) => setMessage(e));
+    }}
+      >
+      Adicionar
+    </button>
+
+  </>;
+
+}
+
+const AddEndereco = (props) => {
+  const [show, setShow] = useState(false);
+
+  // endereco basico
+  const [street, setStreet] = useState('');
+  const [neighborhood, setNeighborhood] = useState('');
+  const [number, setNumber] = useState('');
+  const [complement, setComplement] = useState('');
+  const [reference, setReference] = useState('');
+
+  // Option for Neighborhood
+  useEffect(() => {
+    if(props.addOptionsList) {
+      props.addOptionsList('neighborhoods', 'name');
+    }
+  }, []);
+
+  if(!props.editing) {
+    return <></>
+  }
+  if(!show) {
+    return <div><button onClick={(e) => setShow(true)}>Novo endereço</button></div>;
+  }
+  if(props.optionsLists == undefined || props.optionsLists.addresses == undefined){
+    return <>Carregando...</>;
+  }
+  return <div>
+    <label htmlFor="street">Rua</label>
+    <input name="street" type="text" value={street} onChange={(e) => setStreet(e.target.value)} />
+    <br/>
+    <label htmlFor="neighborhood">Bairro</label>
+    <select
+      value={neighborhood}
+      onChange={(e) => setNeighborhood(e.target.value)}>
+      {props.optionsLists.neighborhoods.map((entity, key) =>
+        <option key={key} value={entity._links.self.href}>
+          {entity.name}
+        </option>
+      )}
+    </select>
+    <br/>
+    <label htmlFor="number">No</label>
+    <input name="number" type="text" value={number} onChange={(e) => setNumber(e.target.value)} />
+    <br/>
+    <label htmlFor="complement">Complemento</label>
+    <input name="complement" type="text" value={complement} onChange={(e) => setComplement(e.target.value)} />
+    <br/>
+    <label htmlFor="reference">Ponto de Referência</label>
+    <input name="reference" type="text" value={reference} onChange={(e) => setReference(e.target.value)} />
+    <br/>
+    <button onClick={(e) => {
+      // salvar o endereço isolado
+      props.http.post('/addresses', {
+        street: street,
+        neighborhood: neighborhood,
+        number: number,
+        complement: complement,
+        reference: reference,
+      }).then((r) => {
+        const url = r.data._links.self.href;
+        // recuperar a lista de endereços do Cliente
+        props.http.get(props.entity._client._links.addresses.href)
+          .then((r) => {
+            const urls = [...r.data._embedded.addresses.map((a) => a._links.self.href),url];
+            const clientUrl = props.entity._client._links.self.href;
+            props.http.patch(clientUrl, {addresses: urls}).then((r) => {
+              setShow(false);
+            }, (e) => {
+              console.log(e);
+            })
+          }, (e) => console.log(e))
+      }, (e) => {
+        console.log(e);
+      });
+    }}>Salvar endereço</button>
+  </div>;
 }
 
 export function SimplerOrderItem (props) {return (
@@ -97,6 +243,9 @@ export function OrderItem (props) {
       <td>
         <TextField {...props} property="comments"/>
       </td>
+      <td></td>
+      <td></td>
+      <td></td>
     </tr>
     <tr>
       <th></th>
@@ -168,15 +317,21 @@ export function OrderItemEvent(props) {return (
   </>
 );}
 
-export function DeliveryOrder (props) {return (
+export function DeliveryOrder (props) {
+  let fetch = <button onClick={(e) => props.fetchAgain_addresses_of_client()}>Atualizar lista de endereços</button>;
+  if(!props.editing) {
+    fetch=<></>;
+  }
+  return (
   <div>
+    {fetch}
+    <br/>
     Identificador: #{props.entity.id}
     <StandaloneNumberField {...props} property="index" label="Posição"/>
 
     Endereço de entrega:
 
     <RadioComponentSelect {...props} property="deliveryAddress" view={<SimplerAddress/>} options="addresses" restricted="of_client" separator={<br/>}/>
-
     <label htmlFor={props.prefix + 'deliveryPrice'}>Valor de entrega: </label>
     <input
     id="deliveryPriceInput"
@@ -281,8 +436,6 @@ export function OrderPriceModifier(props){return (
     {props.children}
     <td><TextField {...props} property="description"/></td>
     <td><NumberField {...props} property="quantity"/></td>
-    <td><CheckboxField {...props} property="percentage"/></td>
-    <td><CheckboxField {...props} property="applyOnDeliveryFee"/></td>
   </tr>
 
 );}

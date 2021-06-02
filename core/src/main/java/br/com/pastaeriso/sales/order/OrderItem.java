@@ -71,16 +71,9 @@ public class OrderItem {
     @NonNull
     @Builder.Default
     private BigDecimal quantity = new BigDecimal(1);
+    private BigDecimal subtotal;
     
     @OneToMany
     private List<OrderItem> subItems;
-    
-    @Transient
-    public BigDecimal getSubtotal (LocalDate date) {
-        if(quantity == null  || product == null || date == null ) {
-            return new BigDecimal(0);
-        }
-        return quantity.multiply(product.getPrice(date));
-    }
     
 }

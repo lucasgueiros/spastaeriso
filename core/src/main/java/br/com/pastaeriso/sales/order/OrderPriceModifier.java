@@ -59,9 +59,5 @@ public class OrderPriceModifier {
     @Column(unique = true)
     private String description;
     @Builder.Default
-    private Boolean percentage = false;
-    @Builder.Default
-    private Boolean applyOnDeliveryFee = false;
-    @Builder.Default
-    private BigDecimal quantity = new BigDecimal(0); // % or absolute value, can be negative
+    private BigDecimal quantity = new BigDecimal(0); // can be negative
 }
