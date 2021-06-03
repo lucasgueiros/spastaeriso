@@ -426,6 +426,7 @@ public class SistemaPastaERisoApi {
             ClientOrder order = ClientOrder.builder()
                     .client(person1)
                     .item(orderProduct1)
+                    .serveDate(LocalDate.now())
                     .build();
             order = clientOrderRepository.save(order);
             

@@ -60,6 +60,7 @@ export function ClientOrder(props) {
       <ListRelationView {...props} property="modifiers" row={<OrderPriceModifier/>}>
         <th>Descrição</th>
         <th>Valor</th>
+        <th>% ?</th>
       </ListRelationView>
 
       <h3>Entregas</h3>
@@ -126,7 +127,11 @@ const Resumo = (props) => {
         let subtotalDescontos = 0;
         for(let i=0;i < props.entity.modifiers.length; i++){
           let desconto = props.entity.modifiers[i];
-          subtotalDescontos += desconto.quantity;
+          if(desconto.percentage) {
+            subtotalDescontos += (subtotal * (desconto.quantity/100));
+          } else {
+            subtotalDescontos += desconto.quantity;
+          }
         }
         theResumo = theResumo + 'Descontos - ' + subtotalDescontos + '\n';
         let total = subtotal + subtotalEntregas - subtotalDescontos;
@@ -461,6 +466,7 @@ export function OrderPriceModifier(props){return (
     {props.children}
     <td><TextField {...props} property="description"/></td>
     <td><NumberField {...props} property="quantity"/></td>
+    <td><CheckboxField {...props} property="percentage"/></td>
   </tr>
 
 );}

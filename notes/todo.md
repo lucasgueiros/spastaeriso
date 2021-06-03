@@ -1,11 +1,10 @@
 Em ordem:
 
 Apenas pedidos:
- - Adicionar cliente, contato e endereço na página de Pedidos
+ - Adicionar contato do cliente na página de Pedidos
  - Uma forma melhor de selecionar o cliente, quando a lista aumentar pode ficar difícil
  - Criar uma Delivery e adicionar a DeliveryOrder a ela (uma por entrega mesmo)
  - Descontos por porcentagem
- - Filtrar os pedidos por data igual no sistema antigo
 
 menos urgente:
 6 - Pedido -> registrar o gasto de insumos (precisa mesmo?)

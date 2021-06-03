@@ -60,4 +60,7 @@ public class OrderPriceModifier {
     private String description;
     @Builder.Default
     private BigDecimal quantity = new BigDecimal(0); // can be negative
+    @Builder.Default
+    private boolean percentage = false;
+    
 }
