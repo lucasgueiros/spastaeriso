@@ -9,7 +9,6 @@ Apenas pedidos:
 
 menos urgente:
 6 - Pedido -> registrar o gasto de insumos (precisa mesmo?)
-7 - Preço por deliveryman e por bairro
 8 - Status de Pedido -> Cancelamento aceito, cancelado pelo usuário, cancelado pela pizzaria etc.
 
 Colocando para funcionar

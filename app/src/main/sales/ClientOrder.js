@@ -1,10 +1,17 @@
-import {CheckboxField,MultipleComponentSelect,RestrictOptionsList,InListRelationView,RadioComponentSelect,OptionSelectField,DateTimeFieldWithNowButton,StandaloneDateTimeFieldWithNowButton,TextField,NumberField,LinkSelect,StandaloneTextField,ListRelationView,StandaloneLinkSelect,StandaloneNumberField,Navigator,NavigatorRelationView} from '../../generics/all.js';
+import {StandaloneDateField,CheckboxField,MultipleComponentSelect,RestrictOptionsList,InListRelationView,RadioComponentSelect,OptionSelectField,DateTimeFieldWithNowButton,StandaloneDateTimeFieldWithNowButton,TextField,NumberField,LinkSelect,StandaloneTextField,ListRelationView,StandaloneLinkSelect,StandaloneNumberField,Navigator,NavigatorRelationView} from '../../generics/all.js';
 import React,{useState,useEffect} from 'react';
 import {Transaction} from '../accounting/Transaction.js';
 
-export function ClientOrderNavigator(props) {return (
+export function ClientOrderNavigator(props) {
+
+  const [data,setData] = useState(new Date().toISOString().substring(0,10));
+  return (
   <div>
-    <Navigator {...props}  entity="clientOrders" view={<ClientOrder/>}/>
+    Data:
+    <input type="date" value={data} onChange={(e) => setData(e.target.value)}/>
+    <br/>
+    <h2>Pedidos</h2>
+    <Navigator {...props}  entity="clientOrders" view={<ClientOrder/>} sufix={'/search/findByServeDate?serveDate=' + data}/>
   </div>
 );}
 
@@ -15,6 +22,7 @@ export function ClientOrder(props) {
       <AddCliente {...props}/>
 
       <StandaloneTextField {...props} property="comments" label="Comentários"/>
+      <StandaloneDateField {...props} property="serveDate" label="Data da entrega"/>
 
       <StandaloneLinkSelect {...props} property="clerk" label="Atendente" options="people"/>
 

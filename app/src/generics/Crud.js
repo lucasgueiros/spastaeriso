@@ -24,9 +24,9 @@ export default class Crud extends BasicCrud {
     }
   }
 
-  async getOperation () {
+  async getOperation (sufix) {
     let entities;
-    entities = await super.getOperation(this.description.sufix);
+    entities = await super.getOperation(sufix || this.description.sufix);
     for(let i =0; i < entities.length; i++) {
       let entity = {...entities[i]};
       for(let j=0; j < this.description.relations.length; j++) {

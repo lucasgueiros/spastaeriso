@@ -42,6 +42,7 @@ import br.com.pastaeriso.accounting.transaction.modality.TransactionModality;
 import br.com.pastaeriso.accounting.transaction.voucher.TransactionVoucher;
 import br.com.pastaeriso.people.person.Person;
 import br.com.pastaeriso.purchases.inventory.PruducedProduct;
+import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToOne;
@@ -73,6 +74,8 @@ public class ClientOrder {
 	@ManyToOne
 	private Person client;
 
+        private LocalDate serveDate;
+        
         @ManyToOne
         private Person clerk;
         private BigDecimal total;

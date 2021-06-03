@@ -35,14 +35,17 @@ class Navigator extends React.Component {
     this.addToManyRelation = this.addToManyRelation.bind(this);
     this.removeToManyRelation = this.removeToManyRelation.bind(this);
     this.manyToManyChange = this.manyToManyChange.bind(this);
+    this.componentDidUpdate = this.componentDidUpdate.bind(this);
 
     this.addOptionsList = this.addOptionsList.bind(this);
     this.optionsListsNames = [];
 
-    if(this.props.entity) {
-      this.crud = this.props.crudFactory.get(this.props.entity);
+    if(this.props.entity && this.props.sufix) {
+        this.crud = this.props.crudFactory.get(this.props.entity, this.props.sufix);
+    } else if(this.props.entity) {
+        this.crud = this.props.crudFactory.get(this.props.entity);
     } else {
-      this.crud = this.props.crud;
+        this.crud = this.props.crud;
     }
 
   }
@@ -144,11 +147,17 @@ class Navigator extends React.Component {
     this.updateOptionsLists();
   }
 
+  componentDidUpdate(prevProps) {
+    if(prevProps.sufix !== this.props.sufix) {
+      this.fetchData();
+    }
+  }
+
   fetchData(toShow) {
     this.setState({
       fetchingData: true
     });
-    this.crud.getOperation().then(
+    this.crud.getOperation(this.props.sufix).then(
       (entities) => {
         if(entities.length === 0) {
           entities = [{}];
