@@ -3,12 +3,11 @@ Em ordem:
 Apenas pedidos:
  - Adicionar contato do cliente na página de Pedidos
  - Uma forma melhor de selecionar o cliente, quando a lista aumentar pode ficar difícil
- - Criar uma Delivery e adicionar a DeliveryOrder a ela (uma por entrega mesmo)
- - Descontos por porcentagem
 
 menos urgente:
 6 - Pedido -> registrar o gasto de insumos (precisa mesmo?)
 8 - Status de Pedido -> Cancelamento aceito, cancelado pelo usuário, cancelado pela pizzaria etc.
+- Criar uma Delivery e adicionar a DeliveryOrder a ela (uma por entrega mesmo)
 
 Colocando para funcionar
  - Erro ao alterar uma compra para adicionar um comprovante à transação ou adicionar NF-e à compra
