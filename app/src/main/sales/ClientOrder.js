@@ -16,10 +16,24 @@ export function ClientOrderNavigator(props) {
 );}
 
 export function ClientOrder(props) {
+  const [contatos,setContatos] = useState([]);
+
+  const fetchContatos = () => {
+    if(props.entity._client){
+      props.http.get(props.entity._client._links.contacts.href).then((r) => setContatos(r.data._embedded.contacts), (e) => console.log(e));
+    }
+  };
+
+  useEffect(()=> fetchContatos(),[props.entity]);
   return (
     <>
-      <StandaloneLinkSelect {...props} property="client" label="Cliente" options="people"/>
-      <AddCliente {...props}/>
+      <SelecionarCliente {...props}/><br/>
+
+      <h3>Contatos</h3>
+      {
+        contatos.map(c => <> - {c.name} - {c.contact} <br/></>)
+      }
+      <AddContato {...props} fetchContatos={fetchContatos}/>
 
       <StandaloneTextField {...props} property="comments" label="Comentários"/>
       <StandaloneDateField {...props} property="serveDate" label="Data da entrega"/>
@@ -142,25 +156,81 @@ const Resumo = (props) => {
   </>;
 }
 
-const AddCliente = (props) => {
+function editDistance(s1, s2) {
+  s1 = s1.toLowerCase();
+  s2 = s2.toLowerCase();
+
+  var costs = new Array();
+  for (var i = 0; i <= s1.length; i++) {
+    var lastValue = i;
+    for (var j = 0; j <= s2.length; j++) {
+      if (i == 0)
+        costs[j] = j;
+      else {
+        if (j > 0) {
+          var newValue = costs[j - 1];
+          if (s1.charAt(i - 1) != s2.charAt(j - 1))
+            newValue = Math.min(Math.min(newValue, lastValue),
+              costs[j]) + 1;
+          costs[j - 1] = lastValue;
+          lastValue = newValue;
+        }
+      }
+    }
+    if (i > 0)
+      costs[s2.length] = lastValue;
+  }
+  return costs[s2.length];
+}
+
+const SelecionarCliente = (props) => {
+  const [nomeSelecionado,setNomeSelecionado] = useState(props.entity._client.name || 'Nenhum');
   const [nome,setNome] = useState('');
   const [message, setMessage] = useState('');
+
+  const setCliente = (cliente) => {
+    setNomeSelecionado(cliente.name);
+    props.onChange({
+      target: {
+        name: 'client',
+        value: cliente._links.self.href,
+      }
+    });
+  };
+
+  useEffect(() => {
+    if(props.addOptionsList) {
+      props.addOptionsList('people', 'name');
+    }
+  });
+
   if(!props.editing) {
-    return <></>;
+    return <>Cliente: {nomeSelecionado}<br/></>;
   }
+  if(props.optionsLists == undefined || props.optionsLists.contactChannels == undefined){
+    return <>Carregando...</>;
+  }
+
+  //let distance = props.optionsLists.people.map((s) => editDistance(s.name, nome));
+  let clientes = props.optionsLists.people.sort((c1,c2) => editDistance(c1.name,nome) - editDistance(c2.name,nome));
+  let addButton = <></>;
+
   return <>
-    <label htmlFor="nome">Nome:</label>
-    <input name="nome" value={nome} onChange={(e) => setNome(e.target.value)} />
-    <button onClick={(e) => {
-      props.http.post('/people',{name: nome})
-      .then((d) => setMessage(d),(e) => setMessage(e));
-    }}
-      >
-      Adicionar
-    </button>
+    Cliente selecionado: {nomeSelecionado}<br/>
+    Pesquisar: <input name="nome" value={nome} onChange={(e) => {
+      setNome(e.target.value)
+    }} /><br/>
+    {clientes.map((c,i) =>{
+        if(i>9) return <></>;
+        return <> - {c.name} <button onClick={(e) => setCliente(c)}>Selecionar</button><br/></>;
+      })
+    }
+    <button onClick={(e) => props.http.post('/people',{name: nome}).then((d) => {
+      setMessage('Criado com sucesso');
+      setCliente(e.data);
+    },(e) => setMessage(e))}>Adicionar</button>
 
   </>;
-
 }
 
 const AddEndereco = (props) => {
@@ -238,6 +308,75 @@ const AddEndereco = (props) => {
         console.log(e);
       });
     }}>Salvar endereço</button>
+  </div>;
+}
+
+const AddContato = (props) => {
+  const [show, setShow] = useState(false);
+
+  // endereco basico
+  const [name, setName] = useState('Principal');
+  const [contact, setContact] = useState('');
+  const [channel, setChannel] = useState('https://localhost:8090/v1/contactChannels/43');
+
+  // Option for Channel
+  useEffect(() => {
+    if(props.addOptionsList) {
+      props.addOptionsList('contactChannels', 'name');
+    }
+  }, []);
+
+  if(!props.editing) {
+    return <></>
+  }
+  if(!show) {
+    return <div><button onClick={(e) => setShow(true)}>Novo contato</button></div>;
+  }
+  if(props.optionsLists == undefined || props.optionsLists.contactChannels == undefined){
+    return <>Carregando...</>;
+  }
+  return <div>
+    <label htmlFor="name">Marcador</label>
+    <input name="name" type="text" value={name} onChange={(e) => setName(e.target.value)} />
+    <br/>
+    <label htmlFor="contact">Contato</label>
+    <input name="contact" type="text" value={contact} onChange={(e) => setContact(e.target.value)} />
+    <br/>
+    <label htmlFor="channel">Canal</label>
+    <select
+      value={channel}
+      onChange={(e) => setChannel(e.target.value)}>
+      {props.optionsLists.contactChannels.map((entity, key) =>
+        <option key={key} value={entity._links.self.href}>
+          {entity.name}
+        </option>
+      )}
+    </select>
+    <br/>
+    <button onClick={(e) => {
+      // salvar o endereço isolado
+      props.http.post('/contacts', {
+        name: name,
+        contact: contact,
+        channel: channel
+      }).then((r) => {
+        const url = r.data._links.self.href;
+        // recuperar a lista de contatos do Cliente
+        props.http.get(props.entity._client._links.contacts.href)
+          .then((r) => {
+            const urls = [...r.data._embedded.contacts.map((a) => a._links.self.href),url];
+            const clientUrl = props.entity._client._links.self.href;
+            props.http.patch(clientUrl, {contacts: urls}).then((r) => {
+              setShow(false);
+              props.fetchContatos();
+            }, (e) => {
+              console.log(e);
+            })
+          }, (e) => console.log(e))
+      }, (e) => {
+        console.log(e);
+      });
+    }}>Salvar contato</button>
   </div>;
 }
 

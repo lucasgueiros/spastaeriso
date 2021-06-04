@@ -1,11 +1,6 @@
 Em ordem:
 
 Apenas pedidos:
- - Adicionar contato do cliente na página de Pedidos -> lista de contatos:
-    Principal: 87 9 8101-8929 (WhatsApp)
-    ....
-    [Adicionar outro]
-    Nome: [], Contato: [], Meio: [] [Salvar]
  - Uma forma melhor de selecionar o cliente, quando a lista aumentar pode ficar difícil
     Procurar nome?
     Procurar por telefone ou endereço?
