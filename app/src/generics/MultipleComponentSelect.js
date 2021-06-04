@@ -33,6 +33,15 @@ export default class MultipleComponentSelect extends React.Component {
     let options = this.props.optionsLists[this.state.options];
     let selecteds = Array(options.length+1).fill(false);
     //selecteds.fill(false,0,options.length+1);
+    let selectAllButton = <></>;
+    if(this.props.selectAllButton && this.props.editing) {
+      selectAllButton = <button onClick={(e) => {
+        this.props.manyToManyChange(this.props.prefix + this.props.property, options.map((e,i) => e._links.self.href), true);
+      }}>
+        {this.props.selectAllButton}
+      </button>;
+    }
+
 
     if(this.props.entity[this.props.property] == null) {
       selecteds[options.length] = true;
@@ -59,6 +68,7 @@ export default class MultipleComponentSelect extends React.Component {
         ),
         prefix: this.props.prefix + this.props.property + "."})
       )}
+      {selectAllButton}
       {this.props.separator}
       </>
     );

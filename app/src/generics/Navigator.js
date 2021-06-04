@@ -69,13 +69,16 @@ class Navigator extends React.Component {
         } else {
           newValue = [...entityHierarchy[i][names[i]],];
         }
-        if(add) {
+        if(add && Array.isArray(value)) {
+          newValue.push(...value);
+        } else if(add) {
           newValue.push(value);
         } else {
           let j = newValue.indexOf(value);
           newValue.splice(j,1);
         }
-        entityHierarchy[i][names[i]] = newValue;
+        // removendo os duplicados (o Spring rejeita!)
+        entityHierarchy[i][names[i]] = [...new Set(newValue)];
         finished = true;
         i--;
       } else if (!finished) {

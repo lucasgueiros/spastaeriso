@@ -398,7 +398,9 @@ export function DeliveryOrder (props) {
       options="orderItems"
       restricted="of_order"
       separator={<br/>}
+      selectAllButton="Selecionar todos"
       />
+
 
   </div>
 );}
