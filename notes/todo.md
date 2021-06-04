@@ -12,8 +12,6 @@ Apenas pedidos:
     Procurar cliente (telefone, nome ou endereço): [              ] [Procurar]
      - João: 87 9 81018929 (WhatsApp) , Rua Jajaja, n. 232, Heliópolis [Selecionar]
      - Maria: 87 9 81169886 (Telegram) , Rua Jejeje, n. 323, COHAB I [Selecionar]
- - Criar uma Delivery e adicionar a DeliveryOrder a ela (uma por entrega mesmo) -> apenas selecionar o nome do entregador. - Selecionar entregador e clicar no Botao "entregar agora" -> data de hoje, um envento SAIU, adicionar esse pedido
- Entregador: [Jonas v] [saiu para entrega agora].
 
 menos urgente:
 6 - Pedido -> registrar o gasto de insumos (precisa mesmo?)

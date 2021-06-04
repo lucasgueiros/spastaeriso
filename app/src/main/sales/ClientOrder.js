@@ -1,4 +1,4 @@
-import {StandaloneDateField,CheckboxField,MultipleComponentSelect,RestrictOptionsList,InListRelationView,RadioComponentSelect,OptionSelectField,DateTimeFieldWithNowButton,StandaloneDateTimeFieldWithNowButton,TextField,NumberField,LinkSelect,StandaloneTextField,ListRelationView,StandaloneLinkSelect,StandaloneNumberField,Navigator,NavigatorRelationView} from '../../generics/all.js';
+import {SufixOptionsList,StandaloneDateField,CheckboxField,MultipleComponentSelect,RestrictOptionsList,InListRelationView,RadioComponentSelect,OptionSelectField,DateTimeFieldWithNowButton,StandaloneDateTimeFieldWithNowButton,TextField,NumberField,LinkSelect,StandaloneTextField,ListRelationView,StandaloneLinkSelect,StandaloneNumberField,Navigator,NavigatorRelationView} from '../../generics/all.js';
 import React,{useState,useEffect} from 'react';
 import {Transaction} from '../accounting/Transaction.js';
 
@@ -348,6 +348,8 @@ export function OrderItemEvent(props) {return (
 );}
 
 export function DeliveryOrder (props) {
+  const [deliveryman,setDeliveryman] = useState("");
+  const [message,setMessage] = useState("");
   let fetch = <button onClick={(e) => props.fetchAgain_addresses_of_client()}>Atualizar lista de endereços</button>;
   if(!props.editing) {
     fetch=<></>;
@@ -400,8 +402,34 @@ export function DeliveryOrder (props) {
       separator={<br/>}
       selectAllButton="Selecionar todos"
       />
-
-
+    <SufixOptionsList {...props} options="deliverymen" identifier="withPersonOnly" projection="withPersonOnly">
+      <StandaloneLinkSelect {...props}
+        entity={{deliveryman: deliveryman}}
+        property="deliveryman"
+        label="Entregador"
+        options="deliverymen_withPersonOnly"
+        onChange={e => setDeliveryman(e.target.value)}
+        nameGen={(deliveryman) => deliveryman.person.name}/>
+    </SufixOptionsList>
+    <button onClick={(e) => {
+      var today = new Date();
+      today.setHours(today.getHours()-3);
+      today = today.toJSON();
+      props.http.post("deliveryEvents", {
+        datetime: today,
+        status: 'EXITED',
+        comments: ''
+      }).then((r) => {
+        props.http.post("deliveries", {
+          events: [r.data._links.self.href],
+          deliveryman: deliveryman,
+          date: new Date().toISOString().substring(0,10),
+          comment: '',
+          orders: [props.entity._links.self.href],
+        }).then((r1) => setMessage("Evento registrado"), e=> console.log(e));
+      }, e => console.log(e));
+    }}>Saiu para entrega</button>
+    {message}
   </div>
 );}
 
