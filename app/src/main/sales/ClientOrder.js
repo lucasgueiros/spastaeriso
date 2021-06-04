@@ -547,6 +547,7 @@ export function DeliveryOrder (props) {
         property="deliveryman"
         label="Entregador"
         options="deliverymen_withPersonOnly"
+        editing={true}
         onChange={e => setDeliveryman(e.target.value)}
         nameGen={(deliveryman) => deliveryman.person.name}/>
     </SufixOptionsList>
