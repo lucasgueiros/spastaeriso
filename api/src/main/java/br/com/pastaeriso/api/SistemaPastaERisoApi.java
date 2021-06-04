@@ -252,7 +252,7 @@ public class SistemaPastaERisoApi {
             Neighborhood neighborhood5 = neighborhoodRepository.save(new Neighborhood("Parque Fênix"));
             
             // EXEMPLE DATA
-            Entry entry1 = Entry.builder()
+            /*Entry entry1 = Entry.builder()
                     .account(account1).value(new BigDecimal(10)).build();
             Entry entry2 = Entry.builder()
                     .account(account2)
@@ -480,7 +480,7 @@ public class SistemaPastaERisoApi {
                     .item(orderProduct1)
                     .serveDate(LocalDate.now())
                     .build();
-            order = clientOrderRepository.save(order);
+            order = clientOrderRepository.save(order);*/
             
         }
 

@@ -27,7 +27,7 @@ THE SOFTWARE.
     <modelVersion>4.0.0</modelVersion>
     <groupId>br.com.pastaeriso</groupId>
     <artifactId>spastaeriso-core</artifactId>
-    <version>0.3</version>
+    <version>1.0.0</version>
     <packaging>jar</packaging>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

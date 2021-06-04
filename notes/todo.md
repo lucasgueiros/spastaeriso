@@ -1,13 +1,5 @@
 Em ordem:
 
-Apenas pedidos:
- - Uma forma melhor de selecionar o cliente, quando a lista aumentar pode ficar difícil
-    Procurar nome?
-    Procurar por telefone ou endereço?
-    Procurar cliente (telefone, nome ou endereço): [              ] [Procurar]
-     - João: 87 9 81018929 (WhatsApp) , Rua Jajaja, n. 232, Heliópolis [Selecionar]
-     - Maria: 87 9 81169886 (Telegram) , Rua Jejeje, n. 323, COHAB I [Selecionar]
-
 menos urgente:
 6 - Pedido -> registrar o gasto de insumos (precisa mesmo?)
 8 - Status de Pedido -> Cancelamento aceito, cancelado pelo usuário, cancelado pela pizzaria etc.
