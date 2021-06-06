@@ -30,11 +30,14 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 @Configuration
 public class GlobalRepositoryRestConfigurer implements RepositoryRestConfigurer {
 
+	@Value("${allowedOrigins")
+	private String allowedOrigins;
+
     @Override
     public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config, CorsRegistry corsRegistry) {
     	corsRegistry
                 .addMapping("/**")
-                  .allowedOrigins("http://localhost:3000")
+                  .allowedOrigins(allowedOrigins)
                   .allowedHeaders("*")
                   .allowCredentials(true)
                   .allowedMethods("GET","POST","HEAD","DELETE","PATCH")
