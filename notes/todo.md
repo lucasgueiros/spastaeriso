@@ -1,5 +1,8 @@
 Em ordem:
 
+separar ambiente de desenvolvimento e produção
+criar scripts de instalar e remover
+
 menos urgente:
 6 - Pedido -> registrar o gasto de insumos (precisa mesmo?)
 8 - Status de Pedido -> Cancelamento aceito, cancelado pelo usuário, cancelado pela pizzaria etc.
