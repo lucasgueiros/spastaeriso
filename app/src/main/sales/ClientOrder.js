@@ -184,7 +184,7 @@ function editDistance(s1, s2) {
 }
 
 const SelecionarCliente = (props) => {
-  const [nomeSelecionado,setNomeSelecionado] = useState(props.entity._client.name || 'Nenhum');
+  const [nomeSelecionado,setNomeSelecionado] = useState((props.entity._client ? props.entity._client.name : 'Nenhum') || 'Nenhum');
   const [nome,setNome] = useState('');
   const [message, setMessage] = useState('');
 
