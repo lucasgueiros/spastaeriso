@@ -2,6 +2,8 @@ import {SufixOptionsList,StandaloneDateField,CheckboxField,MultipleComponentSele
 import React,{useState,useEffect} from 'react';
 import {Transaction} from '../accounting/Transaction.js';
 
+const { REACT_APP_API_BASE_URL: baseUrl} = process.env;
+
 export function ClientOrderNavigator(props) {
 
   const [data,setData] = useState(new Date().toISOString().substring(0,10));
@@ -317,7 +319,7 @@ const AddContato = (props) => {
   // endereco basico
   const [name, setName] = useState('Principal');
   const [contact, setContact] = useState('');
-  const [channel, setChannel] = useState('https://localhost:8090/v1/contactChannels/43');
+  const [channel, setChannel] = useState(baseUrl + '/contactChannels/43');
 
   // Option for Channel
   useEffect(() => {
