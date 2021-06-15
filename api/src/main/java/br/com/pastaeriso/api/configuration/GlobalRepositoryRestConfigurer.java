@@ -23,21 +23,25 @@
  */
 package br.com.pastaeriso.api.configuration;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurer;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+
 @Configuration
 public class GlobalRepositoryRestConfigurer implements RepositoryRestConfigurer {
 
-	@Value("${allowedOrigins")
-	private String allowedOrigins;
+	@Autowired
+        private Environment env;
 
     @Override
     public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config, CorsRegistry corsRegistry) {
     	corsRegistry
                 .addMapping("/**")
-                  .allowedOrigins(allowedOrigins)
+                  .allowedOrigins(env.getProperty("allowedOrigins"))//"http://localhost:3000")
                   .allowedHeaders("*")
                   .allowCredentials(true)
                   .allowedMethods("GET","POST","HEAD","DELETE","PATCH")
