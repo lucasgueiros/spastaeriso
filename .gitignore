@@ -142,3 +142,7 @@ sketch
 
 app/.eslintcache
 logs/*
+
+# definidos por mim
+install/
+auth/
