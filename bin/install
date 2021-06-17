@@ -1,0 +1,48 @@
+#!/bin/bash
+# Installing Docker and git
+
+apt-get install -y uidmap git\
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    gnupg \
+    lsb-release
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+echo \
+  "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
+  $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
+apt-get update
+apt-get install -y docker-ce docker-ce-cli containerd.io
+
+# crie um grupo docker
+groupadd docker
+mkdir /var/docker
+adduser --home /var/docker dockeruser --gecos "First Last,RoomNumber,WorkPhone,HomePhone" --disabled-login
+chown -R dockeruser /var/docker/
+chgrp -R dockeruser /var/docker/
+systemctl stop docker.service
+systemctl disable docker.service
+
+# setando rootless
+su dockeruser -c 'dockerd-rootless-setuptool.sh install'
+su dockeruser -c 'export PATH=/usr/bin:\$PATH'
+su dockeruser -c 'export DOCKER_HOST=unix:///run/user/1000/docker.sock'
+su dockeruser --preserve-environment -c 'printf "# rootless docker\nexport PATH=/usr/bin:\$PATH\nexport DOCKER_HOST=unix:///run/user/1000/docker.sock" >> /var/docker/.bashrc'
+su dockeruser --preserve-environment -c 'source /var/docker/.bashrc'
+su dockeruser --preserve-environment -c 'systemctl --user start docker.service'
+
+# Crie um novo usuário e faça login nele
+mkdir /var/spastaeriso
+adduser --home /var/spastaeriso spastaeriso --gecos "First Last,RoomNumber,WorkPhone,HomePhone" --disabled-password
+usermod -aG docker spastaeriso
+chown -R spastaeriso /var/spastaeriso/
+chgrp -R spastaeriso /var/spastaeriso/
+
+# faça commit no repositório
+git clone https://github.com/lucasgueiros/spastaeriso.git /var/spastaerio/src
+
+# 
+
+# Resetando owner e groups
+chown -R spastaeriso /var/spastaeriso/
+chgrp -R spastaeriso /var/spastaeriso/
