@@ -1,0 +1,14 @@
+#!/bin/bash
+cd "$(dirname "$0")"
+cd ..
+cd core
+mvn install
+cd ../api
+mvn package
+VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+mkdir ../install/api
+cp target/spastaeriso-api-$VERSION.jar ../install/api/
+cd ../app
+mkdir ../install/app
+npm run build
+cp -r build/* ../install/app/

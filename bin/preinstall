@@ -1,0 +1,4 @@
+#!/bin/bash
+dockerd-rootless-setuptool.sh install
+printf "# rootless docker\nexport PATH=/usr/bin:\$PATH\nexport DOCKER_HOST=unix:///run/user/1000/docker.sock" >> ~/.bashrc
+source ~/.bashrc
