@@ -25,6 +25,7 @@ Pedidos especias: (v2.0)
  - Recupear automaticamente as notas fiscais por CNPJ
 
 Para o sistema avançado
+ 1 - integração entre os usuários do KEYCLOAK e as PESSOAS no sistema. Permitir login de entregadores, atendentes e clientes!
  9 - Melhorar as listas (reordenar mais fácil, colocar automaticamente o index etc.)
  8 - Planning e Lista de Compras
  1 - Functionary e tudo o que vem junto
