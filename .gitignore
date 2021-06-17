@@ -1,19 +1,6 @@
 # Created by https://www.toptal.com/developers/gitignore/api/java,java-web,eclipse,maven,git,react
 # Edit at https://www.toptal.com/developers/gitignore?templates=java,java-web,eclipse,maven,git,react
 
-### Eclipse ###
-.metadata
-bin/
-tmp/
-*.tmp
-*.bak
-*.swp
-*~.nib
-local.properties
-.settings/
-.loadpath
-.recommenders
-
 # External tool builders
 .externalToolBuilders/
 
