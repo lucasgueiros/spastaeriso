@@ -1,7 +1,7 @@
 import Keycloak from 'keycloak-js'
 const keycloakConfig = {
-   url: 'http://localhost:8080/auth',
-   realm: 'spastaeriso',
-   clientId: 'react-app'
+   url: 'http://auth:8080/auth',
+   realm: 'spastaeriso-realm',
+   clientId: 'spastaeriso-app-client'
 }
 export const keycloak = new Keycloak(keycloakConfig);
