@@ -39,13 +39,13 @@ public class GlobalRepositoryRestConfigurer implements RepositoryRestConfigurer 
 
     @Override
     public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config, CorsRegistry corsRegistry) {
-    	corsRegistry
+    	/*corsRegistry
                 .addMapping("/**")
-                  .allowedOrigins(env.getProperty("allowedOrigins"))//"http://localhost:3000")
+                  .allowedOrigins("*")//env.getProperty("my.allowed.origins"))
                   .allowedHeaders("*")
                   .allowCredentials(true)
                   .allowedMethods("GET","POST","HEAD","DELETE","PATCH")
-                ;
+                ;*/
      }
 
 }

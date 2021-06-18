@@ -23,72 +23,11 @@
  */
 package br.com.pastaeriso.api;
 
-import br.com.pastaeriso.accounting.account.Account;
-import br.com.pastaeriso.accounting.transaction.Entry;
-import br.com.pastaeriso.accounting.transaction.GenericTransaction;
-import br.com.pastaeriso.accounting.transaction.modality.TransactionModality;
-import br.com.pastaeriso.api.accounting.account.AccountRepository;
-import br.com.pastaeriso.api.accounting.entry.EntryRepository;
-import br.com.pastaeriso.api.accounting.transaction.TransactionModalityRepository;
-import br.com.pastaeriso.api.people.address.type.AddressTypeRepository;
-import br.com.pastaeriso.api.people.contact.channel.ContactChannelRepository;
-import br.com.pastaeriso.api.purchases.provider.ProviderRepository;
-import br.com.pastaeriso.api.purchases.purchase.PurchaseRepository;
-import br.com.pastaeriso.api.purchases.purchase.items.PurchaseItemRepository;
-import br.com.pastaeriso.api.recipeBook.input.InputRepository;
-import br.com.pastaeriso.api.recipeBook.unit.UnitRepository;
-import br.com.pastaeriso.purchases.provider.Provider;
-import br.com.pastaeriso.purchases.purchase.Purchase;
-import br.com.pastaeriso.purchases.purchase.items.PurchaseItem;
-import br.com.pastaeriso.recipeBook.input.Input;
-import br.com.pastaeriso.recipeBook.unit.UnitQuantity;
-import br.com.pastaeriso.recipeBook.unit.Unit;
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.Month;
-import javax.annotation.PostConstruct;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
-import br.com.pastaeriso.api.accounting.transaction.GenericTransactionRepository;
-import br.com.pastaeriso.api.people.address.neighborhoods.NeighborhoodRepository;
-import br.com.pastaeriso.api.people.functionary.function.FunctionaryFunctionRepository;
-import br.com.pastaeriso.api.people.functionary.workingTime.FunctionaryWorkingTimeRepository;
-import br.com.pastaeriso.api.people.person.PersonRepository;
-import br.com.pastaeriso.api.products.category.ProductCategoryRepository;
-import br.com.pastaeriso.api.products.product.ProductRepository;
-import br.com.pastaeriso.api.products.product.items.ProductItemRepository;
-import br.com.pastaeriso.api.products.product.price.ProductPriceRepository;
-import br.com.pastaeriso.api.purchases.inventory.InventoryMovementEventHandler;
-import br.com.pastaeriso.api.purchases.inventory.InventoryMovementRepository;
-import br.com.pastaeriso.api.recipeBook.item.ItemRepository;
-import br.com.pastaeriso.api.recipeBook.recipe.RecipeRepository;
-import br.com.pastaeriso.api.recipeBook.recipe.ingredient.IngredientRepository;
-import br.com.pastaeriso.api.recipeBook.recipe.intruction.InstructionRepository;
-import br.com.pastaeriso.api.recipeBook.unit.UnitQuantityRepository;
-import br.com.pastaeriso.api.sales.order.ClientOrderRepository;
-import br.com.pastaeriso.people.address.neighborhoods.Neighborhood;
-import br.com.pastaeriso.people.address.type.AddressType;
-import br.com.pastaeriso.people.contact.channel.ContactChannel;
-import br.com.pastaeriso.people.functionary.function.FunctionaryFunction;
-import br.com.pastaeriso.people.functionary.workingTime.FunctionaryWorkingTime;
-import br.com.pastaeriso.people.person.Person;
-import br.com.pastaeriso.products.category.ProductCategory;
-import br.com.pastaeriso.products.product.Product;
-import br.com.pastaeriso.products.product.items.ProductItem;
-import br.com.pastaeriso.products.product.price.ProductPrice;
-import br.com.pastaeriso.purchases.inventory.InventoryMovement;
-import br.com.pastaeriso.recipeBook.item.Item;
-import br.com.pastaeriso.recipeBook.recipe.Recipe;
-import br.com.pastaeriso.recipeBook.recipe.ingredient.Ingredient;
-import br.com.pastaeriso.recipeBook.recipe.intruction.Instruction;
-import br.com.pastaeriso.sales.order.ClientOrder;
-import br.com.pastaeriso.sales.order.OrderItem;
-import java.time.LocalDateTime;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import br.com.pastaeriso.api.sales.order.OrderItemRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -103,7 +42,7 @@ public class SistemaPastaERisoApi {
             SpringApplication.run(SistemaPastaERisoApi.class, args);
 	}
         
-        @Bean
+/*        @Bean
 	public WebMvcConfigurer corsConfigurer() {
 		return new WebMvcConfigurer() {
 			@Override
@@ -114,9 +53,9 @@ public class SistemaPastaERisoApi {
                                         .allowedMethods("OPTIONS","HEAD","GET","POST","PUT","PATCH","DELETE");
 			}
 		};
-	}
+	}*/
         
-        @Autowired
+        /*@Autowired
         private UnitRepository unitRepository;
         @Autowired
         private InputRepository inputRepository;
@@ -176,7 +115,7 @@ public class SistemaPastaERisoApi {
         @PostConstruct
         public void insertToDatabase() {
             // BASIC DATA
-            
+            /*
             UnitQuantity quantityVolume = UnitQuantity.builder().name("volume").build();
             UnitQuantity quantityPeso = UnitQuantity.builder().name("peso").build();
             UnitQuantity quantityTempo = UnitQuantity.builder().name("tempo").build();
@@ -334,7 +273,7 @@ public class SistemaPastaERisoApi {
                            .additionalValue(BigDecimal.ZERO)
                            .transaction(transaction1)
                            .build());
-            
+
             // Ingredients
             Ingredient ingredient1 = Ingredient.builder().index(1).input(input5).quantity(new BigDecimal(1)).unit(unitUN).build();
             Ingredient ingredient2 = Ingredient.builder().index(2).input(input6).quantity(new BigDecimal(1)).unit(unitkg).build();
@@ -481,7 +420,7 @@ public class SistemaPastaERisoApi {
                     .serveDate(LocalDate.now())
                     .build();
             order = clientOrderRepository.save(order);*/
-            
-        }
+           
+        //}
 
 }

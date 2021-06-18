@@ -33,7 +33,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @RepositoryRestResource
-@CrossOrigin (origins = "http://localhost:3000/")
+@CrossOrigin
 public interface AccountRepository extends JpaRepository<Account, Long> {
 
 	public Optional<Account> findByNameIgnoreCase(String name);
