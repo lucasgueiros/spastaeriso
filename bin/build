@@ -1,14 +1,43 @@
 #!/bin/bash
-cd "$(dirname "$0")"
-cd ..
-cd core
-mvn install
-cd ../api
-mvn package
-VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
-mkdir ../install/api
-cp target/spastaeriso-api-$VERSION.jar ../install/api/
-cd ../app
-mkdir ../install/app
-npm run build
-cp -r build/* ../install/app/
+if [[ $1 == 'app' ]]
+then
+	cd app
+	npm run build
+	if [[ $2 == 'production' ]] 
+	then
+		export REACT_APP_API_BASE_URL=https://localhost:8090/v1
+	fi
+	cp -r build/* ../install/app/html/
+elif [[ $1 == 'api' ]]
+then
+	cd api
+	mvn package
+	VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+	cp target/spastaeriso-api-$VERSION.jar ../install/api/spastaeriso-api-latest.jar
+	cp src/main/docker/Dockerfile ../install/api/Dockerfile
+else
+	mkdir install
+	mkdir install/app
+	mkdir install/app/html
+	mkdir install/app/conf
+	mkdir install/api
+	mkdir install/db/
+	mkdir install/db/init
+	mkdir install/auth
+	cd core
+	mvn install
+	cd ../api
+	mvn package
+	VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+	cp target/spastaeriso-api-$VERSION.jar ../install/api/spastaeriso-api-latest.jar
+	cp src/main/docker/Dockerfile ../install/api/Dockerfile
+	cd ../app
+	npm run build
+	cp -r build/* ../install/app/html/
+	cp -r conf/* ../install/app/conf/
+	cd ..
+	cp auth/* install/auth/
+	cp -r db/* install/db
+	cp compose.yml install/compose.yml
+fi
+

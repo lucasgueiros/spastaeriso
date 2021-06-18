@@ -131,8 +131,4 @@ app/.eslintcache
 logs/*
 
 # definidos por mim
-install/api/*.jar
-install/db/*.sql
-install/auth/*.json
-install/app/*
-!install/app/.gitkeep
+install/*

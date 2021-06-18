@@ -1,0 +1,8 @@
+sudo docker-compose down
+sudo docker rm -f $(sudo docker ps -a -q)
+sudo docker volume rm $(sudo docker volume ls -q)
+sudo rm -R db/data
+sudo docker-compose build --no-cache
+sudo docker-compose up
+
+https://docs.tibco.com/pub/mash-local/4.1.1/doc/html/docker/GUID-BD850566-5B79-4915-987E-430FC38DAAE4.html
