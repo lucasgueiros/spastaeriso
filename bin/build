@@ -30,6 +30,7 @@ else
 	cd ../api
 	mvn package
 	VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+	cp src/main/resources/application-production.properties ../install/api/application.properties
 	cp target/spastaeriso-api-$VERSION.jar ../install/api/spastaeriso-api-latest.jar
 	cp src/main/docker/Dockerfile ../install/api/Dockerfile
 	cd ../app

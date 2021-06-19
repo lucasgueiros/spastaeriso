@@ -1,3 +1,10 @@
+# Setup Server
+sudo apt install net-tools
+
+# Setup SSHd
+sudo vim /etc/ssh/sshd_config
+sudo service sshd restart
+
 # https://docs.docker.com/engine/install/ubuntu/
 
 sudo apt-get -y remove docker docker-engine docker.io containerd runc
@@ -30,6 +37,11 @@ sudo adduser --home /var/spastaeriso spastaeriso --gecos "First Last,RoomNumber,
 sudo usermod -aG docker spastaeriso
 sudo chown -R spastaeriso /var/spastaeriso/
 sudo chgrp -R spastaeriso /var/spastaeriso/
+sudo usermod -aG sudo spastaeriso
+
+#Defina uma password
+sudo passwd spastaeriso
+
 sudo apt -y install unzip zip
 
 # mude de usuário e local
@@ -75,3 +87,5 @@ git clone https://github.com/lucasgueiros/spastaeriso.git ~/src
 cd spastaeriso
 ./bin/build
 
+# rode!
+sudo docker-compose up
