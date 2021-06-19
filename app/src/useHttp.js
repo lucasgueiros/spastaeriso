@@ -1,13 +1,12 @@
 import axios from 'axios';
 import { useKeycloak } from '@react-keycloak/web';
-const { REACT_APP_API_BASE_URL } = process.env;
 
 export function useHttp () {
   const { keycloak, initialized } = useKeycloak();
   const bearerToken = 'Bearer ' + keycloak.token;
 
   return axios.create({
-    baseURL: REACT_APP_API_BASE_URL,
+    baseURL: "https://api.pastaeriso.com.br/v1",
     headers: {
       'Content-Type': 'application/json',
       //'Access-Control-Allow-Origin': '*',

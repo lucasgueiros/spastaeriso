@@ -26,22 +26,23 @@ services:
         KEYCLOAK_USER: spastaeriso-kc
         KEYCLOAK_PASSWORD: spastaeriso-pw
         KEYCLOAK_IMPORT:  /tmp/auth/keycloak-spastaeriso-realm.json
-        KEYCLOAK_FRONTEND_URL: http://auth:8080/auth
+        KEYCLOAK_FRONTEND_URL: https://auth.pastaeriso.com.br/auth
+        PROXY_ADDRESS_FORWARDING: "true"
         # Uncomment the line below if you want to specify JDBC parameters. The parameter below is just an example, and it shouldn't be used in production without knowledge. It is highly recommended that you read the PostgreSQL JDBC driver documentation in order to use it.
         #JDBC_PARAMS: "ssl=true"
-      ports:
-        - 8080:8080
+      expose:
+        - "8080"
       volumes:
         - ./auth/:/tmp/auth
       depends_on:
         - db
-  api:
+  api.pastaeriso.com.br:
     image: 'docker-spring-boot-postgres:latest'
     build:
       context: ./api/
-    container_name: api
-    ports:
-      - 8090:8090
+    container_name: api.pastaeriso.com.br
+    expose:
+      - "80"
     depends_on:
       - db
       - auth
@@ -56,7 +57,7 @@ services:
       context: ./app
       dockerfile: Dockerfile
     ports:
-      - 80:80
+      - 443:443
     depends_on:
-      - api
+      - api.pastaeriso.com.br
       - auth
