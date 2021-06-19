@@ -93,14 +93,13 @@ cd spastaeriso
 cd install
 sudo docker-compose up -d
 
-# Setup dns server
-cd ../dns
-sudo docker-compose up -d
+exit
+exit
 
 # NO SEU PC
 # teste o dns
 # sudo apt update && sudo apt install dnsutils
-# troque aqui o IP!
+# troque aqui o IP!cd
 dig pastaeriso.com.br @192.168.0.161
 dig api.pastaeriso.com.br @192.168.0.161
 dig app.pastaeriso.com.br @192.168.0.161
