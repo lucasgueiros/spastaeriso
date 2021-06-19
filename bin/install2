@@ -1,9 +1,16 @@
-# Setup Server
+z# Setup Server
 sudo apt install net-tools
 
 # Setup SSHd
 sudo vim /etc/ssh/sshd_config
+
+# Match Address 192.168.0.*
+#       PasswordAuthentication yes
+# Match Address !192.168.0.*
+#       PasswordAuthentication no
+
 sudo service sshd restart
+
 
 # https://docs.docker.com/engine/install/ubuntu/
 
@@ -16,9 +23,9 @@ echo \
   $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 sudo apt-get update
 sudo apt-get -y install docker-ce docker-ce-cli containerd.io
-
-# TESTE
 sudo docker run hello-world
+# TESTE
+
 
 # https://docs.docker.com/compose/install/
 
@@ -38,11 +45,10 @@ sudo usermod -aG docker spastaeriso
 sudo chown -R spastaeriso /var/spastaeriso/
 sudo chgrp -R spastaeriso /var/spastaeriso/
 sudo usermod -aG sudo spastaeriso
+sudo apt -y install unzip zip
 
 #Defina uma password
 sudo passwd spastaeriso
-
-sudo apt -y install unzip zip
 
 # mude de usuário e local
 sudo su spastaeriso
@@ -53,16 +59,15 @@ cd
 # Java e Maven
 curl -s "https://get.sdkman.io" | bash
 source "/var/spastaeriso/.sdkman/bin/sdkman-init.sh"
-
-# teste
 sdk help
+# teste
 
 # continuando
 sdk install java
 sdk install maven
-
-# teste
 mvn -v
+# teste
+
 # verifique Maven home e Java version
 
 # https://linuxize.com/post/how-to-install-node-js-on-ubuntu-18.04/
@@ -73,22 +78,33 @@ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
-
-# version
 nvm --version
+# TESTE
 
 # node
 nvm install node
+node -v
+# TESTE
 
 # faça commit no repositório
-git clone https://github.com/lucasgueiros/spastaeriso.git ~/src
-
-# build
+git clone https://github.com/lucasgueiros/spastaeriso.git
 cd spastaeriso
 ./bin/build
-
-# rode!
+cd install
 sudo docker-compose up -d
+
+# Setup dns server
+cd ../dns
+sudo docker-compose up -d
+
+# NO SEU PC
+# teste o dns
+# sudo apt update && sudo apt install dnsutils
+# troque aqui o IP!
+dig pastaeriso.com.br @192.168.0.161
+dig api.pastaeriso.com.br @192.168.0.161
+dig app.pastaeriso.com.br @192.168.0.161
+dig auth.pastaeriso.com.br @192.168.0.161
 
 # go to auth.pastaeriso.com.br
 # access with this user:
