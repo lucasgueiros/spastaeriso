@@ -14,6 +14,7 @@ then
 	cd api
 	mvn package
 	VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+	cp src/main/resources/application-production.properties ../install/api/application.properties
 	cp target/spastaeriso-api-$VERSION.jar ../install/api/spastaeriso-api-latest.jar
 	cp src/main/docker/Dockerfile ../install/api/Dockerfile
 else
@@ -36,6 +37,7 @@ else
 	cd ../app
 	npm install
 	npm run build
+	cp Dockerfile ../install/app/
 	cp -r build/* ../install/app/html/
 	cp -r conf/* ../install/app/conf/
 	cd ..
