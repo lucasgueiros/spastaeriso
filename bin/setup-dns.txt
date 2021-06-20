@@ -1,4 +1,13 @@
+sudo vim /etc/systemd/resolved.conf
+# DNS=127.0.0.1
+# FallbackDNS=8.8.8.8
+# DNSStubListener=no
+sudo ln -sf /run/systemd/resolve/resolv.conf /etc/resolv.conf
+sudo systemctl restart systemd-resolved.service
+
 # Setup dns server
 cd ../dns
 sudo docker-compose up -d
+
+# no seu computador teste
 

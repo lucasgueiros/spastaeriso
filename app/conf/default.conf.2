@@ -50,3 +50,17 @@ server {
   }
 
 }
+
+server {
+  listen 443 ssl;
+  server_name db.pastaeriso.com.br;
+
+  ssl_certificate     /etc/nginx/pastaeriso.com.crt;
+  ssl_certificate_key /etc/nginx/pastaeriso.com.key;
+
+  location / {
+    proxy_pass http://dbadmin;
+  }
+}
+
+
