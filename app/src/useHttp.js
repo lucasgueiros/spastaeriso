@@ -6,7 +6,7 @@ export function useHttp () {
   const bearerToken = 'Bearer ' + keycloak.token;
 
   return axios.create({
-    baseURL: "https://api.pastaeriso.com.br/v1",
+    baseURL: "http://api.pastaeriso.com.br/v1",
     headers: {
       'Content-Type': 'application/json',
       //'Access-Control-Allow-Origin': '*',

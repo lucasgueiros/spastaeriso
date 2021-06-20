@@ -1,6 +1,6 @@
 import Keycloak from 'keycloak-js'
 const keycloakConfig = {
-   url: 'https://auth.pastaeriso.com.br/auth',
+   url: 'http://auth.pastaeriso.com.br/auth',
    realm: 'spastaeriso-realm',
    clientId: 'spastaeriso-app-client'
 }

@@ -4,9 +4,9 @@ then
 	cd app
 	npm install
 	npm run build
-	if [[ $2 == 'production' ]] 
+	if [[ $2 == 'production' ]]
 	then
-		export REACT_APP_API_BASE_URL=https://localhost:8090/v1
+		export REACT_APP_API_BASE_URL=http://localhost:8090/v1
 	fi
 	cp -r build/* ../install/app/html/
 elif [[ $1 == 'api' ]]
@@ -45,4 +45,3 @@ else
 	cp -r db/* install/db
 	cp compose.yml install/compose.yml
 fi
-
