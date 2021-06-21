@@ -13,7 +13,7 @@ export function ClientOrderNavigator(props) {
     <input type="date" value={data} onChange={(e) => setData(e.target.value)}/>
     <br/>
     <h2>Pedidos</h2>
-    <Navigator {...props}  entity="clientOrders" view={<ClientOrder/>} sufix={'/search/findByServeDate?serveDate=' + data}/>
+    <Navigator {...props} theData={data} entity="clientOrders" view={<ClientOrder/>} sufix={'/search/findByServeDate?serveDate=' + data}/>
   </div>
 );}
 
@@ -35,10 +35,11 @@ export function ClientOrder(props) {
       {
         contatos.map(c => <> - {c.name} - {c.contact} <br/></>)
       }
+      <button onClick={(e) => fetchContatos()}>Atualizar</button>
       <AddContato {...props} fetchContatos={fetchContatos}/>
 
       <StandaloneTextField {...props} property="comments" label="Comentários"/>
-      <StandaloneDateField {...props} property="serveDate" label="Data da entrega"/>
+      <StandaloneDateField {...props} property="serveDate" label="Data da entrega" default={props.theData}/>
 
       <StandaloneLinkSelect {...props} property="clerk" label="Atendente" options="people"/>
 
@@ -198,13 +199,19 @@ const SelecionarCliente = (props) => {
         value: cliente._links.self.href,
       }
     });
+    props.onChange({
+      target: {
+        name: '_client',
+        value: cliente,
+      }
+    });
   };
 
   useEffect(() => {
     if(props.addOptionsList) {
       props.addOptionsList('people', 'name');
     }
-  });
+  },[]);
 
   if(!props.editing) {
     return <>Cliente: {nomeSelecionado}<br/></>;
@@ -227,10 +234,10 @@ const SelecionarCliente = (props) => {
         return <> - {c.name} <button onClick={(e) => setCliente(c)}>Selecionar</button><br/></>;
       })
     }
-    <button onClick={(e) => props.http.post('/people',{name: nome}).then((d) => {
+    <button onClick={(event) => props.http.post('/people',{name: nome}).then((response) => {
       setMessage('Criado com sucesso');
-      setCliente(e.data);
-    },(e) => setMessage(e))}>Adicionar</button>
+      setCliente(response.data);
+    },(error) => setMessage(error))}>Adicionar</button>
 
   </>;
 }
@@ -504,7 +511,7 @@ export function DeliveryOrder (props) {
 
     Endereço de entrega:
 
-    <RadioComponentSelect {...props} property="deliveryAddress" view={<SimplerAddress/>} options="addresses" restricted="of_client" separator={<br/>}/>
+    <RadioComponentSelect {...props} property="deliveryAddress" view={<SimplerAddress/>} options="addresses" restricted="of_client" separator={<br/>} useDefault={true}/>
     <label htmlFor={props.prefix + 'deliveryPrice'}>Valor de entrega: </label>
     <input
     id="deliveryPriceInput"
@@ -548,7 +555,8 @@ export function DeliveryOrder (props) {
         entity={{deliveryman: deliveryman}}
         property="deliveryman"
         label="Entregador"
-        options="deliverymen_withPersonOnly"
+        options="deliverymen"
+        restricted="withPersonOnly"
         editing={true}
         onChange={e => setDeliveryman(e.target.value)}
         nameGen={(deliveryman) => deliveryman.person.name}/>

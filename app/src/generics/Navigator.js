@@ -272,8 +272,8 @@ class Navigator extends React.Component {
     }
     return (
       <div className="navigator">
+        {this.renderButtons()}<br/>
         {theChild}
-        {this.renderButtons()}
         <p>{this.state.message}</p>
       </div>
     );

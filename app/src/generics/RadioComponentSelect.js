@@ -58,6 +58,16 @@ export default class RadioComponentSelect extends React.Component {
       }
     }
 
+    if(this.props.useDefault && !(selecteds.reduce((a,b) => a || b))) {
+      this.props.onChange((e) => {
+        return {target: {
+          type: 'radio',
+          checked: true,
+          name: this.props.prefix + this.props.property
+        }}
+      });
+    }
+
     let none = <></>;
     if(!this.props.notNull) {
       none =<> <input

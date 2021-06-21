@@ -21,6 +21,14 @@ export default class LinkSelect extends React.Component {
     if(!this.props.notNull) {
       none = <option key={this.props.optionsLists[this.state.options].length} value={"none"}>Nenhuma</option>
     }
+    if((!this.props.entity[this.props.property]) && this.props.default) {
+      this.props.onChange({
+        target: {
+          value: this.props.default,
+          name: this.props.prefix + this.props.property,
+        }
+      });
+    }
       return (
           <select
             name={this.props.prefix + this.props.property}
