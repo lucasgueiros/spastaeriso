@@ -1,4 +1,3 @@
-import './InputNavigator.css';
 import Input from './Input.js';
 import Navigator from '../../../generics/Navigator.js';
 import BasicCrud from '../../../generics/BasicCrud.js';

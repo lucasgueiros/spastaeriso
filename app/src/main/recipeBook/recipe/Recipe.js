@@ -1,4 +1,3 @@
-import './Recipe.css';
 import React from 'react';
 import Ingredient from './ingredient/Ingredient.js';
 import Item from './item/Item.js';

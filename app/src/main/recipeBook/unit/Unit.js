@@ -1,4 +1,3 @@
-import './Unit.css';
 import React from 'react';
 import StandaloneCheckboxField from '../../../generics/StandaloneCheckboxField.js';
 import StandaloneTextField from '../../../generics/StandaloneTextField.js';
