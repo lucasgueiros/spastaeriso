@@ -55,8 +55,7 @@ export function Main(props) {
 
       <Router>
         <div>
-          <h1>Home</h1>
-          <nav>
+          <nav id="sidebar">
             <ul>
               <li><NavLink to="/">Home</NavLink></li>
               <li>
@@ -122,7 +121,7 @@ export function Main(props) {
               </li>
             </ul>
           </nav>
-          <div>
+          <div id="main-content">
             <Switch>
 
               // Orders
@@ -147,7 +146,7 @@ export function Main(props) {
                 <Navigator {...props}  entity="products" view={<Product/>} />
               </Route>
               <Route path="/products/">
-                <p>Selecione algo.</p>
+                <h3>Produtos</h3>
               </Route>
 
               // Accouting
@@ -167,7 +166,7 @@ export function Main(props) {
                 <AccountNavigator {...props}/>
               </Route>
               <Route path="/accounting/">
-                <p>Selecione algo.</p>
+                <h3>Finanças</h3>
               </Route>
 
               // Recipe Book
@@ -184,7 +183,7 @@ export function Main(props) {
                 <InputNavigator {...props}/>
               </Route>
               <Route path="/recipeBook/">
-                <p>Selecione algo.</p>
+                <h3>Livro de Receitas</h3>
               </Route>
 
               // Purchases
@@ -216,7 +215,7 @@ export function Main(props) {
                 <PurchaseNavigator {...props}/>
               </Route>
               <Route path="/purchases/">
-                <p>Selecione algo.</p>
+                <h3>Compras</h3>
               </Route>
 
               // People
@@ -247,12 +246,12 @@ export function Main(props) {
                 <Navigator {...props}  entity="functionaryContractTemplates" view={<FunctionaryContractTemplate/>} />
               </Route>
               <Route path="/people/">
-                <p>Selecione algo.</p>
+                <h3>Pessoas</h3>
               </Route>
 
               // Home
               <Route path="/">
-                <p>Essa é a Homepage</p>
+                <h3>Home</h3>
               </Route>
             </Switch>
           </div>

@@ -13,7 +13,7 @@ export function Authentication (props) {
 
   return (
     <div>
-      <p>Autenticado como: {keycloak.idTokenParsed.name}</p>
+      Autenticado como: {keycloak.idTokenParsed.name || keycloak.idTokenParsed.preferred_username} &nbsp;
       <button type="button" onClick={() => keycloak.logout()}>
         Sair
       </button>

@@ -9,6 +9,7 @@ function App() {
   return (
     <div>
       <Authentication/>
+      <h2>Sistema Pasta e Riso</h2>
       <Main http={useHttp()} crudFactory={new CrudFactory(ModelDescription,useHttp())}/>
     </div>
   );

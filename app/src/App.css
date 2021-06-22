@@ -1,12 +1,46 @@
-li {
-  float: left;
+/* The NAV bar */
+#sidebar {
+  margin: 0;
+  margin-left: 0px;
+  padding: 0;
+  width: 200px;
+  position: fixed;
+  height: 100%;
+  overflow: auto;
+  background-color: green;
 }
-
-a {
+nav > ul {
+  margin-left: -30px;
+  background-color: green;
+}
+li > ul {
+  margin-left: -20px;
+}
+li {
+  list-style-type: none;
+}
+li a {
   display: block;
-  padding: 8px;
-  background-color: #dddddd;
+  width: 190px;
+  overflow: auto;
 }
 li ul {
   display: none;
+}
+a,a.hover, a.visited {
+  color: black;
+}
+a.active {
+  color: blue;
+}
+a.active + ul {
+  display: block;
+}
+
+
+/* The content */
+div#main-content {
+  margin-left: 200px;
+  padding: 1px 16px;
+  height: 100%.
 }
