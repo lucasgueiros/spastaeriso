@@ -1,5 +1,5 @@
 import React from 'react';
-import {StandaloneLinkSelect, StandaloneNumberField,StandaloneTextField,StandaloneCheckboxField,Navigator} from '../../../generics/all.js';
+import {StandaloneLinkSelect, StandaloneNumberField,StandaloneTextField,StandaloneCheckboxField,Navigator} from '../../../old_generics/all.js';
 
 export function PurchaseProductNavigator (props) {
   return (

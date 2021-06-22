@@ -1,4 +1,4 @@
-import {ListView,LinkSelect,DateField,NumberField} from '../../generics/all.js';
+import {ListView,LinkSelect,DateField,NumberField} from '../../old_generics/all.js';
 
 export function DeliveryPricesByNeighborhoodListView (props){return (<>
   <h3>Preços de entrega por bairro</h3>

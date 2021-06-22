@@ -1,5 +1,5 @@
 import {PurchaseItem} from './Purchase';
-import {ListView,NumberField} from '../../../generics/all.js';
+import {ListView,NumberField} from '../../../old_generics/all.js';
 
 export function PurchaseItemStatement (props) {
   return (

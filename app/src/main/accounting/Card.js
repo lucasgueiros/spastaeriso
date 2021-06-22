@@ -1,4 +1,4 @@
-import {StandaloneLinkSelect,StandaloneTextField,StandaloneCheckboxField,Navigator} from '../../generics/all.js';
+import {StandaloneLinkSelect,StandaloneTextField,StandaloneCheckboxField,Navigator} from '../../old_generics/all.js';
 
 export function Card (props) {
   return (

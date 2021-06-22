@@ -1,5 +1,5 @@
 import React from 'react';
-import {LinkSelect,NumberField,TextField} from '../../../../generics/all.js';
+import {LinkSelect,NumberField,TextField} from '../../../../old_generics/all.js';
 
 class WorkingTime extends React.Component {
 

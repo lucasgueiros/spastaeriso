@@ -1,6 +1,6 @@
 import Unit from './Unit.js';
-import Navigator from '../../../generics/Navigator.js';
-import BasicCrud from '../../../generics/BasicCrud.js';
+import Navigator from '../../../old_generics/Navigator.js';
+import BasicCrud from '../../../old_generics/BasicCrud.js';
 
 function UnitNavigator(props) {
   return (

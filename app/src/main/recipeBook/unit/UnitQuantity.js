@@ -1,4 +1,4 @@
-import {StandaloneLinkSelect,StandaloneTextField} from '../../../generics/all.js';
+import {StandaloneLinkSelect,StandaloneTextField} from '../../../old_generics/all.js';
 
 export function UnitQuantity (props) {return (
   <div>

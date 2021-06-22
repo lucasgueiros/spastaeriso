@@ -1,7 +1,7 @@
 import React from 'react';
-import StandaloneCheckboxField from '../../../generics/StandaloneCheckboxField.js';
-import StandaloneTextField from '../../../generics/StandaloneTextField.js';
-import {StandaloneLinkSelect} from '../../../generics/all.js';
+import StandaloneCheckboxField from '../../../old_generics/StandaloneCheckboxField.js';
+import StandaloneTextField from '../../../old_generics/StandaloneTextField.js';
+import {StandaloneLinkSelect} from '../../../old_generics/all.js';
 
 class Unit extends React.Component {
   render () {

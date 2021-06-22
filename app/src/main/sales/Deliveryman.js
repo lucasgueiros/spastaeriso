@@ -1,4 +1,4 @@
-import {StandaloneCheckboxField,StandaloneMultipleOptionSelectField,RelationView,ListRelationView,DateField,NumberField,TextField} from '../../generics/all.js';
+import {StandaloneCheckboxField,StandaloneMultipleOptionSelectField,RelationView,ListRelationView,DateField,NumberField,TextField} from '../../old_generics/all.js';
 import {Person} from '../people/Person.js';
 
 export function Deliveryman (props) {return (

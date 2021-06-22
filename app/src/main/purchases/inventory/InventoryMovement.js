@@ -1,4 +1,4 @@
-import {ListView,LinkSelect,NumberField,TextField,DateTimeField} from '../../../generics/all.js';
+import {ListView,LinkSelect,NumberField,TextField,DateTimeField} from '../../../old_generics/all.js';
 
 export function InventoryMovementListView (props) {
   return (

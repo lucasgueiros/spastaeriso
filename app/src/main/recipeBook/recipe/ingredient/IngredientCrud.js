@@ -1,4 +1,4 @@
-import BasicCrud from '../../../../generics/BasicCrud.js';
+import BasicCrud from '../../../../old_generics/BasicCrud.js';
 
 class IngredientCrud extends BasicCrud{
 

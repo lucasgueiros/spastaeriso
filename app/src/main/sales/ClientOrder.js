@@ -1,4 +1,4 @@
-import {SufixOptionsList,StandaloneDateField,CheckboxField,MultipleComponentSelect,RestrictOptionsList,InListRelationView,RadioComponentSelect,OptionSelectField,DateTimeFieldWithNowButton,StandaloneDateTimeFieldWithNowButton,TextField,NumberField,LinkSelect,StandaloneTextField,ListRelationView,StandaloneLinkSelect,StandaloneNumberField,Navigator,NavigatorRelationView} from '../../generics/all.js';
+import {SufixOptionsList,StandaloneDateField,CheckboxField,MultipleComponentSelect,RestrictOptionsList,InListRelationView,RadioComponentSelect,OptionSelectField,DateTimeFieldWithNowButton,StandaloneDateTimeFieldWithNowButton,TextField,NumberField,LinkSelect,StandaloneTextField,ListRelationView,StandaloneLinkSelect,StandaloneNumberField,Navigator,NavigatorRelationView} from '../../old_generics/all.js';
 import React,{useState,useEffect} from 'react';
 import {Transaction} from '../accounting/Transaction.js';
 

@@ -1,7 +1,7 @@
 import './App.css';
 import {Main} from './main/Main.js';
 import {Authentication} from './main/misc/Authentication.js';
-import {CrudFactory} from './generics/CrudFactory.js';
+import {CrudFactory} from './old_generics/CrudFactory.js';
 import ModelDescription from './ModelDescription.js';
 import {useHttp} from './useHttp.js';
 

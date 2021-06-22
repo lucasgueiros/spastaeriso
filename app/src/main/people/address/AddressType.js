@@ -1,4 +1,4 @@
-import {StandaloneTextField} from '../../../generics/all.js';
+import {StandaloneTextField} from '../../../old_generics/all.js';
 
 export default function AddressTypes (props){
   return (

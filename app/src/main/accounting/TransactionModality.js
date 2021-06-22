@@ -1,4 +1,4 @@
-import {StandaloneLinkSelect,StandaloneTextField,Navigator} from '../../generics/all.js';
+import {StandaloneLinkSelect,StandaloneTextField,Navigator} from '../../old_generics/all.js';
 
 export function TransactionModalityNavigator (props) {
   return (<Navigator {...props}  entity="transactionModalities" view={<TransactionModality/>}/> );

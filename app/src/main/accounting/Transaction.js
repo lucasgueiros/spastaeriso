@@ -1,4 +1,4 @@
-import {RelationView,FileField,LinkSelect,InListRelationView,TextField,DateTimeField,NumberField,ListView} from '../../generics/all.js';
+import {RelationView,FileField,LinkSelect,InListRelationView,TextField,DateTimeField,NumberField,ListView} from '../../old_generics/all.js';
 
 export function TransactionListView (props) {
     return (

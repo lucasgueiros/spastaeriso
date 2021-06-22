@@ -1,8 +1,8 @@
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Link, NavLink } from 'react-router-dom';
 import { useKeycloak } from '@react-keycloak/web';
-import {Navigator} from '../generics/all.js';
-import {ListView} from '../generics/all.js';
+import {Navigator} from '../old_generics/all.js';
+import {ListView} from '../old_generics/all.js';
 
 // RecipeBook
 import InputNavigator from './recipeBook/input/InputNavigator.js';
@@ -37,6 +37,7 @@ import Product from './products/product/Product.js';
 import ProductCosts from './products/product/ProductCosts.js';
 
 // sales
+import {ClientOrderSimplified} from './sales/ClientOrderSimplified.js';
 import {ClientOrderNavigator} from './sales/ClientOrder.js';
 import {Deliveryman} from './sales/Deliveryman.js';
 import {Delivery} from './sales/Delivery.js';
@@ -114,6 +115,8 @@ export function Main(props) {
               <li>
                 <NavLink to="/orders">Pedidos</NavLink>
                 <ul>
+                  <li><NavLink to="/orders/simple">Visão simplificada</NavLink></li>
+                  <li><NavLink to="/orders/details">Visão detalhada</NavLink></li>
                   <li><NavLink to="/orders/deliveryman">Entregadores</NavLink></li>
                   <li><NavLink to="/orders/deliveries">Entregas</NavLink></li>
                   <li><NavLink to="/orders/deliveryPrice">Preço por entrega</NavLink></li>
@@ -134,8 +137,14 @@ export function Main(props) {
               <Route path="/orders/deliveryman">
                 <Navigator {...props} entity="deliverymen" view={<Deliveryman/>}/>
               </Route>
-              <Route path="/orders">
+              <Route path="/orders/simple">
+                <ClientOrderSimplified {...props}/>
+              </Route>
+              <Route path="/orders/details">
                 <ClientOrderNavigator {...props}/>
+              </Route>
+              <Route path="/orders">
+                <h3>Pedidos</h3>
               </Route>
 
               // Products

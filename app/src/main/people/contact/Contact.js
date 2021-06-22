@@ -1,4 +1,4 @@
-import {StandaloneTextField,StandaloneLinkSelect,Navigator} from '../../../generics/all.js';
+import {StandaloneTextField,StandaloneLinkSelect,Navigator} from '../../../old_generics/all.js';
 
 export function ContactNavigator(props) {
   return (

@@ -1,4 +1,4 @@
-import {RestrictOptionsList,NavigatorRelationView,StandaloneTextField,StandaloneLinkSelect,Navigator,TextField,LinkSelect,ListRelationView} from '../../generics/all.js';
+import {RestrictOptionsList,NavigatorRelationView,StandaloneTextField,StandaloneLinkSelect,Navigator,TextField,LinkSelect,ListRelationView} from '../../old_generics/all.js';
 import Address from './address/Address.js';
 
 export function PersonNavigator(props) {

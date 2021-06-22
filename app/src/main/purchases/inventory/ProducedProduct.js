@@ -1,4 +1,4 @@
-import {Navigator,ListRelationView,StandaloneTextField,StandaloneDateField} from '../../../generics/all.js';
+import {Navigator,ListRelationView,StandaloneTextField,StandaloneDateField} from '../../../old_generics/all.js';
 import {InventoryMovement} from './InventoryMovement.js';
 
 export function ProducedProductNavigator (props) {

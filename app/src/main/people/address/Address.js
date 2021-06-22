@@ -1,4 +1,4 @@
-import {StandaloneTextField,StandaloneLinkSelect} from '../../../generics/all.js';
+import {StandaloneTextField,StandaloneLinkSelect} from '../../../old_generics/all.js';
 
 export default function Address (props){
   return (

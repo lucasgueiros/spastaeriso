@@ -1,7 +1,7 @@
 import React from 'react';
 import Provider from './Provider.js';
-import Navigator from '../../../generics/Navigator.js';
-import BasicCrud from '../../../generics/BasicCrud.js';
+import Navigator from '../../../old_generics/Navigator.js';
+import BasicCrud from '../../../old_generics/BasicCrud.js';
 
 class ProviderNavigator extends React.Component {
   render() {

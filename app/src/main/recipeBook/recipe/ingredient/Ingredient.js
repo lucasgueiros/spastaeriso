@@ -1,5 +1,5 @@
 import React from 'react';
-import {LinkSelect} from '../../../../generics/all.js';
+import {LinkSelect} from '../../../../old_generics/all.js';
 
 function Item (props) {
   return (<>

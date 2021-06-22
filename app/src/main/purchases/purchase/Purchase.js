@@ -1,4 +1,4 @@
-import {DateTimeField, ListRelationView, RelationView, StandaloneLinkSelect, StandaloneNumberField,Navigator,FileField,LinkSelect,NumberField,TextField, StandaloneTextField} from '../../../generics/all.js';
+import {DateTimeField, ListRelationView, RelationView, StandaloneLinkSelect, StandaloneNumberField,Navigator,FileField,LinkSelect,NumberField,TextField, StandaloneTextField} from '../../../old_generics/all.js';
 import React from 'react';
 import {Transaction} from '../../accounting/Transaction.js';
 

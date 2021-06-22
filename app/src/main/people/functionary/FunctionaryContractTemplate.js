@@ -1,8 +1,8 @@
 import React from 'react';
-import StandaloneLinkSelect from '../../../generics/StandaloneLinkSelect.js';
-import StandaloneNumberField from '../../../generics/StandaloneNumberField.js';
-import StandaloneDateField from '../../../generics/StandaloneDateField.js';
-import StandaloneTextField from '../../../generics/StandaloneTextField.js';
+import StandaloneLinkSelect from '../../../old_generics/StandaloneLinkSelect.js';
+import StandaloneNumberField from '../../../old_generics/StandaloneNumberField.js';
+import StandaloneDateField from '../../../old_generics/StandaloneDateField.js';
+import StandaloneTextField from '../../../old_generics/StandaloneTextField.js';
 
 export default function FunctionaryContractTemplate (props) {
 

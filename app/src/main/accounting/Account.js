@@ -1,5 +1,5 @@
 import React from 'react';
-import {StandaloneTextField,StandaloneLinkSelect,StandaloneDateField,Navigator} from '../../generics/all.js';
+import {StandaloneTextField,StandaloneLinkSelect,StandaloneDateField,Navigator} from '../../old_generics/all.js';
 
 export function AccountNavigator(props) {
   return (

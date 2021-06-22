@@ -1,4 +1,4 @@
-import {TextField,StandaloneTextField,StandaloneDateField,DateField,LinkSelect,NumberField,ListRelationView,StandaloneLinkSelect,StandaloneMultipleLinkSelect} from '../../../generics/all.js';
+import {TextField,StandaloneTextField,StandaloneDateField,DateField,LinkSelect,NumberField,ListRelationView,StandaloneLinkSelect,StandaloneMultipleLinkSelect} from '../../../old_generics/all.js';
 import Item from '../../recipeBook/recipe/item/Item.js';
 
 function ProductPrice (props) {

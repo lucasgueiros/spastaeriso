@@ -4,10 +4,10 @@ import Item from './item/Item.js';
 import Instruction from './instruction/Instruction.js';
 import WorkingTime from '../../people/functionary/workingTime/WorkingTime.js';
 
-import StandaloneTextField from '../../../generics/StandaloneTextField.js';
-import StandaloneDateField from '../../../generics/StandaloneDateField.js';
-import StandaloneNumberField from '../../../generics/StandaloneNumberField.js';
-import ListRelationView from '../../../generics/ListRelationView.js';
+import StandaloneTextField from '../../../old_generics/StandaloneTextField.js';
+import StandaloneDateField from '../../../old_generics/StandaloneDateField.js';
+import StandaloneNumberField from '../../../old_generics/StandaloneNumberField.js';
+import ListRelationView from '../../../old_generics/ListRelationView.js';
 
 class Recipe extends React.Component {
   render () {

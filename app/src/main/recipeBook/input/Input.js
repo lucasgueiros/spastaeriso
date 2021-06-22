@@ -1,7 +1,7 @@
 import './Input.css';
 import './InputAux.js';
 import React from 'react';
-import {StandaloneTextField, StandaloneLinkSelect, StandaloneDateField, DateField, NumberField, LinkSelect, ListRelationView} from '../../../generics/all.js';
+import {StandaloneTextField, StandaloneLinkSelect, StandaloneDateField, DateField, NumberField, LinkSelect, ListRelationView} from '../../../old_generics/all.js';
 
 function InputPrice (props) {
   return (

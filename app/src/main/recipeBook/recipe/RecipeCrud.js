@@ -1,5 +1,5 @@
 import axios from 'axios';
-import BasicCrud from '../../../generics/BasicCrud.js';
+import BasicCrud from '../../../old_generics/BasicCrud.js';
 import ItemCrud from './item/ItemCrud.js';
 import IngredientCrud from './ingredient/IngredientCrud.js';
 import WorkingTimeCrud from '../../people/functionary/workingTime/WorkingTimeCrud.js';

@@ -1,4 +1,4 @@
-import {ListRelationView,TextField, NumberField, CheckboxField, FilterOptionsList,StandaloneDateField,MultipleComponentSelect,Events,SufixOptionsList,StandaloneTextareaField,StandaloneLinkSelect} from '../../generics/all.js';
+import {ListRelationView,TextField, NumberField, CheckboxField, FilterOptionsList,StandaloneDateField,MultipleComponentSelect,Events,SufixOptionsList,StandaloneTextareaField,StandaloneLinkSelect} from '../../old_generics/all.js';
 
 function filterByDate(o, date) {
   let r = false;
