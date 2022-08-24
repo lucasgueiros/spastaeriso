@@ -1,5 +1,5 @@
 apt-get update
-apt-get install maven apache2 openjdk-11-jdk postgresql-10
+apt-get install -y maven apache2 openjdk-11-jdk postgresql-10
 
 mkdir -p /opt/spastaeriso
 cp db/init/create.sql /opt/spastaeriso/initdb.sql
