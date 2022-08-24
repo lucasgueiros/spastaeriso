@@ -1,9 +1,5 @@
 apt-get update
-apt-get install git maven apache2 openjdk-11-jdk postgresql-10
-
-git clone https://github.com/lucasgueiros/spastaeriso
-cd spastaeriso
-git checkout tags/v1.0 -b master
+apt-get install maven apache2 openjdk-11-jdk postgresql-10
 
 mkdir -p /opt/spastaeriso
 cp db/init/create.sql /opt/spastaeriso/initdb.sql
