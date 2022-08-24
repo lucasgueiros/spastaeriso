@@ -1,9 +1,5 @@
 apt-get update
-apt-get install git maven apache2 openjdk-11-jdk postgresql-10
-
-git clone https://github.com/lucasgueiros/spastaeriso
-cd spastaeriso
-git checkout tags/v1.0 -b master
+apt-get install -y maven apache2 openjdk-11-jdk postgresql
 
 mkdir -p /opt/spastaeriso
 cp db/init/create.sql /opt/spastaeriso/initdb.sql
@@ -24,6 +20,13 @@ systemctl enable spastaeriso
 cd ../..
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
 nvm install 13
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+source ~/.bashrc
+source ~/.profile
+
 cd spastaeriso/app
 npm install
 npm run build
