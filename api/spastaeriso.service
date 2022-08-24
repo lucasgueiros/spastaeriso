@@ -1,0 +1,10 @@
+[Unit]
+Description=Sistema pasta e riso API
+
+[Service]
+User=spastaeriso
+ExecStart=/usr/bin/java -jar /opt/spastaeriso/spastaeriso-api.jar
+ExitStatus=143
+
+[Install]
+WantedBy=multi-user.target
